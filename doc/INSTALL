@@ -1,0 +1,23 @@
+
+
+Requirement
+===========
+
+* Apache with mod_rewrite 
+    # a2enmod rewrite && apache2ctl restart
+
+* APC with option "apc.rfc1867 = on". See below.
+
+
+
+Apache virtual host example
+===========================
+
+
+
+
+Installing and configuring APC 
+==============================
+
+
+
