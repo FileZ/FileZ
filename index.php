@@ -8,18 +8,28 @@ set_include_path (get_include_path ().PATH_SEPARATOR.dirname (__FILE__).'/lib');
 require_once 'Zend/Locale.php';
 require_once 'Zend/Date.php';
 
-function configure() // Called by limonade
+/**
+ * Configuration of the limonade framework. Automatically called.
+ */
+function configure()
 {
-    $root_dir = dirname (app_file());
-    option ('session'           , 'filez'); // enable with a specific session name
-    option ('base_uri'          , option ('base_path')); // because we use url_rewriting
+    $fz_conf = fz_config_load (); // loading filez.ini
+
+    option ('session'           , 'filez'); // specific session name
     option ('views_dir'         , option ('root_dir').'/app/view/');
     option ('controllers_dir'   , option ('root_dir').'/app/controller/');
     option ('models_dir'        , option ('root_dir').'/app/model/');
     option ('upload_dir'        , option ('root_dir').'/uploaded_files/');
 
-    // Database configuration // TODO utiliser le fichier de conf
-    $db = new PDO('mysql:host=localhost;dbname=filez', 'filez', 'filez');
+    require_once_dir (option ('models_dir'));
+
+    if ($fz_conf['app']['use_url_rewriting'])
+      option ('base_uri'          , option ('base_path'));
+
+    // Database configuration
+    $db = new PDO ($fz_conf['db']['dsn'], $fz_conf['db']['user'],
+                                          $fz_conf['db']['password']);
+
     // TODO gérer les erreurs de connexion
     //$db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

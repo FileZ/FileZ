@@ -87,6 +87,9 @@ section#new-file div#start-from {
   width: 25%;
   position: absolute; top: 0;
 }
+section#new-file div#file {
+  width: 40%;
+}
 section#new-file div#file       ,
 section#new-file div#duration   ,
 section#new-file div#start-from {
@@ -143,9 +146,6 @@ section#new-file div#upload-loading {
 	width: 220px; height: 19px;
 	background: transparent url('../images/ajax-loader.gif') no-repeat center center;
 	margin: 0 auto;
-}
-section#new-file #input-file {
-	width: 20%;
 }
 .ui-datepicker {
 	font-size:80%;

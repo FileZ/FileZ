@@ -334,11 +334,11 @@ function run($env = null)
   ini_set('display_errors', 1);
   set_error_handler('error_handler_dispatcher', E_ALL ^ E_NOTICE);
   
-  # 2. Set user configuration
-  call_if_exists('configure');
-  
-  # 3. Loading libs
+  # 2. Loading libs
   require_once_dir(option('lib_dir'));
+
+  # 3. Set user configuration
+  call_if_exists('configure');
   
   # 4. Starting session
   if(!defined('SID') && option('session'))
@@ -377,7 +377,6 @@ function run($env = null)
       params($route['params']);
       
       # 6.2 Load controllers dir
-      require_once_dir(option('models_dir'));
       require_once_dir(option('controllers_dir'));
       
       if(function_exists($route['function']))
