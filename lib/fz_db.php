@@ -1,15 +1,17 @@
 <?php
 
+/**
+ * TODO Documented this
+ * 
+ */
 abstract class fzTableRow {
 
-    protected $updatedColumns   = array ();
-    protected $exists           = false;
-
-    public abstract function getTableName ();
-    public abstract function getTableColumns ();
+    protected $_updatedColumns  = array ();
+    protected $_exists          = false;
+    protected $_tableClass      ;
 
     public function __construct ($exists = false) {
-        $this->exists = $exists;
+        $this->_exists = $exists;
     }
 
     public function __get ($var) {
@@ -23,7 +25,7 @@ abstract class fzTableRow {
         else
             $this->$var = $value;
 
-        $this->updatedColumns [] = $var;
+        $this->_updatedColumns [] = $var;
         return $value;
     }
 
@@ -36,17 +38,17 @@ abstract class fzTableRow {
     }
 
     public function getUpdatedColumns () {
-        return $this->updatedColumns;
+        return $this->_updatedColumns;
     }
 
     public function save () {
-        if ($exists)
+        if ($this->_exists)
             $this->update ();
         else
             $this->insert ();
 
-        $this->updatedColumns = array ();
-        $this->exists = true;
+        $this->_updatedColumns = array ();
+        $this->_exists = true;
     }
 
     protected function update () {
@@ -90,7 +92,7 @@ abstract class fzTableRow {
 
     public function delete () {
         $db = option ('db_conn');
-        if ($this->exists === false) return;
+        if ($this->_exists === false) return;
         $stmt = $db->prepare ('DELETE FROM `'.$this->getTableName ().'` WHERE id = ?');
         $stmt->execute (array ($this->id));
     }
@@ -101,53 +103,97 @@ abstract class fzTableRow {
             echo $c.': '.$this->$c."\n";
         }
     }
+
+    public function getTableName () {
+        return $this->getTable ()->getTableName ();
+    }
+
+    public function getTable () {
+        return fzDb::getTable ($this->_tableClass);
+    }
+
+    public function getTableColumns () {
+        return $this->getTable ()->getTableColumns ();
+    }
 }
 
 
 abstract class fzTable {
 
-// TODO
+    protected $_rowClass;
+    protected $_name;
+    protected $_columns;
 
+    public function getTableName () {
+        return $this->_name;
+    }
+
+    public function getTableColumns () {
+        return $this->_columns;
+    }
+
+    public function getRowClass () {
+        return $this->_rowClass;
+    }
+
+    public function findAll () {
+        $sql = "SELECT * FROM ".$this->getTableName ();
+        return fzDb::findObjectsBySQL ($sql, $this->getRowClass ());
+    }
+
+    public function findBydId ($id) {
+        $sql = "SELECT * FROM ".$this->getTableName ().' WHERE id = ?';
+        return fzDb::findObjectBySQL ($sql, $this->getRowClass (), array ($id));
+    }
+
+    public function rowExists ($id) {
+        $db   = option ('db_conn');
+        $sql  = 'SELECT id FROM `'.$this->getTableName ().'` WHERE id = ?';
+        $stmt = $db->prepare ($sql);
+        $stmt->execute (array ($id));
+        return $stmt->fetchColumn () === false ? false : true;
+    }
+
+    protected function getClass () {
+        return get_class ($this);
+    }
 }
 
-function fz_db_find_objects_by_sql ($sql = '', $class_name = PDO::FETCH_OBJ, $params = array ()) {
-    $db = option ('db_conn');
+class fzDb {
 
-    $result = array ();
-    $stmt = $db->prepare ($sql);
-    if ($stmt->execute ($params)) {
-        while ($obj = $stmt->fetchObject ($class_name, array (true))) {
-            $result[] = $obj;
+    protected static $_tables;
+
+    public static function findObjectsBySQL ($sql, $class_name = PDO::FETCH_OBJ, $params = array (), $limit = 0) {
+        $db = option ('db_conn');
+
+        if ($limit > 1)
+            $sql .= ' LIMIT '.$limit;
+
+        $result = array ();
+        $stmt = $db->prepare ($sql);
+        if ($stmt->execute ($params)) {
+            while ($obj = $stmt->fetchObject ($class_name, array (true))) {
+                $result[] = $obj;
+            }
         }
+
+        return ($limit == 1 ?
+            (count ($result) > 0 ? $result [0] : null) :
+            $result
+        );
     }
-    return $result;
-}
 
-function fz_db_find_object_by_sql ($sql = '', $class_name = PDO::FETCH_OBJ, $params = array ()) {
-    $db = option ('db_conn');
-
-    $stmt = $db->prepare ($sql);
-    if ($stmt->execute ($params) && $obj = $stmt->fetchObject ($class_name, array (true))) {
-        return $obj;
+    public static function findObjectBySQL ($sql, $class_name = PDO::FETCH_OBJ, $params = array ()) {
+        return self::findObjectsBySQL ($sql, $class_name, $params, 1);
     }
-    return null;
-}
 
-function fz_db_make_model_object ($params, $obj = null) {
-    if (is_null ($obj)) {
-        $obj = new stdClass ();
+    public static function getTable ($tableClass) {
+        if (! self::$_tables [$tableClass])
+            self::$_tables [$tableClass] = new $tableClass ();
+
+        return self::$_tables [$tableClass];
     }
-    foreach ($params as $key => $value) {
-        $obj->$key = $value;
-    }
-    return $obj;
-}
 
-function fz_db_delete_object_by_id ($obj_id, $table) {
-    $db = option ('db_conn');
-
-    $stmt = $db->prepare ("DELETE FROM `$table` WHERE id = ?");
-    $stmt->execute (array ($obj_id));
 }
 
 function fz_db_add_colon ($x) { return ':' . $x; };
@@ -156,11 +202,4 @@ function fz_db_add_colon ($x) { return ':' . $x; };
 function fz_db_name_eq_colon_name ($x) { return $x . ' = :' . $x; };
 
 
-function fz_db_id_exists ($id, $table) {
-    $db   = option ('db_conn');
-    $sql  = 'SELECT id FROM `'.$table.'` WHERE id = ?';
-    $stmt = $db->prepare ($sql);
-    $stmt->execute (array ($id));
-    return $stmt->fetchColumn () === false ? false : true;
-}
 

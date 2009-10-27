@@ -6,18 +6,45 @@ Requirement
 * Apache with mod_rewrite 
     # a2enmod rewrite && apache2ctl restart
 
-* APC with option "apc.rfc1867 = on". See below.
+* APC is required if you want to enable the progress bar during file upload. 
+  See 'Installing and configuring APC' section.
 
 
+Installation
+============
+
+TODO ceci est une ébauche
+
+* upload ...
+* configure your virtual host. See 'Notes::Apache virtual host example'.
+* point your browser on the server where you uploaded filez.
+
+
+Notes
+=====
 
 Apache virtual host example
-===========================
+---------------------------
 
 
 
 
-Installing and configuring APC 
-==============================
+Installing and configuring APC
+------------------------------
+
+Install required tools. On debian :
+
+  # apt-get install build-essential php5-dev php-pear apache2-prefork-dev
+  
+Build and install apc extension :
+
+  # pecl install apc
+
+Enable extension and specific option :
+
+  # echo "extension = apc.so" >> /etc/php5/apache2/conf.d/apc.ini
+  # echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
+
 
 
 

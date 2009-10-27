@@ -39,14 +39,19 @@
     /**
      * Function called on form submission
      */
-    function onFileUploadStart () {
+    function onFileUploadStart (data, form, options) {
       console.log ('upload starts...');
+
+      // We alter the request to let the server know that this is a (false) xhr request
+      data.push ({name: 'is_xhr', value: true});
+
       $('#start-upload').hide();
       $("#upload-loading").show ();
       $("#upload-progress").progressBar({
         barImage: 'resources/images/progressbg_green.gif',
         boxImage: 'resources/images/progressbar.gif'
       });
+
       progressChecker = setInterval (function () {
       $.getJSON('<?php echo url_for ('upload/progress/'.$upload_id) ?>', 
         function(data){
@@ -125,26 +130,18 @@
 <h2 id="uploaded-files-title">Vos fichiers déjà déposés :</h2>
 <section id="uploaded-files">
   <ul id="files">
-    <li class="file odd">
-      <p class="filename"><a href="#">Home.avi</a></p>
-      <p class="download-counter">Téléchargé 817 fois</p>
-      <p class="availability">disponible du 18 au <b>27 octobre</b></p>
-      <ul class="actions">
-        <li><a href="#" class="send-by-email">Envoyer par email</a></li> 
-        <li><a href="#" class="delete">Supprimer</a></li> 
-        <li><a href="#" class="extend">Rendre disponible un jour de plus</a></li>
-      </ul>
-    </li>
-    <li class="file even">
-      <p class="filename"><a href="#">Home.avi</a></p>
-      <p class="download-counter">Téléchargé 817 fois</p>
-      <p class="availability">disponible du 18 au <b>27 octobre</b></p>
-      <ul class="actions">
-        <li><a href="#" class="send-by-email">Envoyer par email</a></li> 
-        <li><a href="#" class="delete">Supprimer</a></li> 
-        <li><a href="#" class="extend">Rendre disponible un jour de plus</a></li>
-      </ul>
-    </li>
+    <?php $odd = true; foreach ($files as $file): ?>
+    <li class="file <?php echo $odd ? 'odd' : 'even'; $odd = ! $odd; ?>">
+        <p class="filename"><a href="#"><?php echo $file->file_name ?></a></p>
+        <p class="download-counter">Téléchargé <?php echo $file->download_count ?> fois</p>
+        <p class="availability">disponible du 18 au <b>27 octobre</b></p>
+        <ul class="actions">
+          <li><a href="#" class="send-by-email">Envoyer par email</a></li> 
+          <li><a href="#" class="delete">Supprimer</a></li> 
+          <li><a href="#" class="extend">Rendre disponible un jour de plus</a></li>
+        </ul>
+      </li>
+    <?php endforeach ?>
   </ul>
 </section>
 

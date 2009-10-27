@@ -16,6 +16,15 @@ function fz_config_load () {
 }
 
 /**
+ * Return a config var
+ */
+function fz_config_get ($section, $var, $default = null) {
+    $conf = option ('fz_config');
+    return array_key_exists ($section, $conf) ?
+        (array_key_exists ($var, $conf[$section]) ? $conf [$section][$var] : null) : null;
+}
+
+/**
  * Write config to the config/filez.ini file.
  * (Used in installer).
  */
