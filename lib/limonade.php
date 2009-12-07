@@ -55,7 +55,7 @@
 /**
  * Limonade version
  */
-define('LIMONADE',              '0.4.3');
+define('LIMONADE',              '0.4.6');
 define('LIM_START_MICROTIME',   (float)substr(microtime(), 0, 10));
 define('LIM_SESSION_NAME',      'Fresh_and_Minty_Limonade_App');
 define('LIM_SESSION_FLASH_KEY', '_lim_flash_messages');
@@ -192,16 +192,16 @@ dispatch(array("/_lim_public/**", array('_lim_public_file')), 'render_limonade_f
  */
 function option($name = null, $values = null)
 {
-   static $options = array();
-   $args = func_get_args();
-   $name = array_shift($args);
-   if(is_null($name)) return $options;
-   if(!empty($args))
-   {
-     $options[$name] = count($args) > 1 ? $args : $args[0];
-   }
-   if(array_key_exists($name, $options)) return $options[$name];
-   return;
+  static $options = array();
+  $args = func_get_args();
+  $name = array_shift($args);
+  if(is_null($name)) return $options;
+  if(!empty($args))
+  {
+    $options[$name] = count($args) > 1 ? $args : $args[0];
+  }
+  if(array_key_exists($name, $options)) return $options[$name];
+  return;
 }
 
 /**
@@ -306,21 +306,21 @@ function run($env = null)
   if(is_null($env)) $env = env();
    
   # 0. Set default configuration
-  $root_dir = dirname(app_file());
-  $base_path = dirname($env['SERVER']['SCRIPT_NAME']);
+  $root_dir  = dirname(app_file());
+  $base_path = dirname(file_path($env['SERVER']['SCRIPT_NAME']));
   $base_file = basename($env['SERVER']['SCRIPT_NAME']);
-  $base_uri  = $base_path . '/'
-             . ($base_file == 'index.php') ? '?' : $base_file.'?';
+  $base_uri  = file_path($base_path, (($base_file == 'index.php') ? '?' : $base_file.'?'));
+  $lim_dir   = dirname(__FILE__);
   option('root_dir',           $root_dir);
   option('base_path',          $base_path);
   option('base_uri',           $base_uri); // set it manually if you use url_rewriting
-  option('limonade_dir',       dirname(__FILE__).'/');
-  option('limonade_views_dir', dirname(__FILE__).'/limonade/views/');
-  option('limonade_public_dir',dirname(__FILE__).'/limonade/public/');
-  option('public_dir',         $root_dir.'/public/');
-  option('views_dir',          $root_dir.'/views/');
-  option('controllers_dir',    $root_dir.'/controllers/');
-  option('lib_dir',            $root_dir.'/lib/');
+  option('limonade_dir',       file_path($lim_dir));
+  option('limonade_views_dir', file_path($lim_dir, 'limonade', 'views'));
+  option('limonade_public_dir',file_path($lim_dir, 'limonade', 'public'));
+  option('public_dir',         file_path($root_dir, 'public'));
+  option('views_dir',          file_path($root_dir, 'views'));
+  option('controllers_dir',    file_path($root_dir, 'controllers'));
+  option('lib_dir',            file_path($root_dir, 'lib'));
   option('error_views_dir',    option('limonade_views_dir'));
   option('env',                ENV_PRODUCTION);
   option('debug',              true);
@@ -329,24 +329,24 @@ function run($env = null)
   option('x-sendfile',         0); // 0: disabled, 
                                    // X-SENDFILE: for Apache and Lighttpd v. >= 1.5,
                                    // X-LIGHTTPD-SEND-FILE: for Apache and Lighttpd v. < 1.5
-  
+
   # 1. Set error handling
   ini_set('display_errors', 1);
   set_error_handler('error_handler_dispatcher', E_ALL ^ E_NOTICE);
-  
-  # 2. Loading libs
+
+  # 2. Set user configuration
+  call_if_exists('configure');
+
+  # 3. Loading libs
   require_once_dir(option('lib_dir'));
 
-  # 3. Set user configuration
-  call_if_exists('configure');
-  
   # 4. Starting session
   if(!defined('SID') && option('session'))
   {
     if(!is_bool(option('session'))) session_name(option('session'));
     if(!session_start()) trigger_error("An error occured while trying to start the session", E_USER_WARNING);
   }
-  
+
   # 5. Set some default methods if needed
   if(!function_exists('after'))
   {
@@ -362,28 +362,28 @@ function run($env = null)
       halt(NOT_FOUND, "($request_method) $request_uri");
     }
   }
-  
+
   # 6. Check request
   if($rm = request_method())
   {
     if(request_is_head()) ob_start(); // then no output
-    
+
     if(!request_method_is_allowed($rm))
       halt(HTTP_NOT_IMPLEMENTED, "The requested method <code>'$rm'</code> is not implemented");
-    
+
     # 6.1 Check matching route
     if($route = route_find($rm, request_uri()))
     {
       params($route['params']);
-      
+
       # 6.2 Load controllers dir
       require_once_dir(option('controllers_dir'));
-      
-      if(function_exists($route['function']))
+
+      if(is_callable($route['function']))
       {
         # 6.3 Call before function
         call_if_exists('before');
-        
+
         # 6.4 Call matching controller function and output result
         if($output = call_user_func($route['function']))
         {
@@ -394,10 +394,9 @@ function run($env = null)
       else halt(SERVER_ERROR, "Routing error: undefined function '{$route['function']}'", $route);      
     }
     else route_missing($rm, request_uri());
-    
+
   }
   else halt(HTTP_NOT_IMPLEMENTED, "The requested method <code>'$rm'</code> is not implemented");
-  
 }
 
 /**
@@ -447,11 +446,23 @@ function env($reset = null)
     $args = func_get_args();
     if(is_null($args[0])) $env = array();
   }
-  
+
   if(empty($env))
   {
+    if(empty($GLOBALS['_SERVER']))
+    {
+      // Fixing empty $GLOBALS['_SERVER'] bug 
+      // http://sofadesign.lighthouseapp.com/projects/29612-limonade/tickets/29-env-is-empty
+      $GLOBALS['_SERVER']  =& $_SERVER;
+      $GLOBALS['_FILES']   =& $_FILES;
+      $GLOBALS['_REQUEST'] =& $_REQUEST;
+      $GLOBALS['_SESSION'] =& $_SESSION;
+      $GLOBALS['_ENV']     =& $_ENV;
+      $GLOBALS['_COOKIE']  =& $_COOKIE;
+    }
+
     $glo_names = array('SERVER', 'FILES', 'REQUEST', 'SESSION', 'ENV', 'COOKIE');
-      
+
     $vars = array_merge($glo_names, request_methods());
     foreach($vars as $var)
     {
@@ -494,7 +505,7 @@ function app_file()
     $stacktrace = array_pop(debug_backtrace());
     $file = $stacktrace['file'];
   }
-  return $file;
+  return file_path($file);
 }
 
 
@@ -586,7 +597,7 @@ function error_handler_dispatcher($errno, $errstr, $errfile, $errline)
       break;
     }
   }  
-  
+
   # Notices and warning won't halt execution
   if(error_wont_halt_app($errno))
   {
@@ -629,7 +640,7 @@ function error_default_handler($errno, $errstr, $errfile, $errline)
 {
   $is_http_err = http_response_status_is_valid($errno);
   $http_error_code = $is_http_err ? $errno : SERVER_ERROR;
-    
+
   status($http_error_code);
 
   return $http_error_code == NOT_FOUND ?
@@ -696,8 +707,8 @@ function error_server_error_output($errno, $errstr, $errfile, $errline)
       $args = compact('errno', 'errstr', 'errfile', 'errline', 'is_http_error');
       option('views_dir', option('limonade_views_dir'));
       $html = render('error.html.php', null, $args);	
-    	option('views_dir', option('error_views_dir'));
-    	return html($html, error_layout(), $args);
+      option('views_dir', option('error_views_dir'));
+      return html($html, error_layout(), $args);
     }
   }
   return server_error($errno, $errstr, $errfile, $errline);
@@ -753,7 +764,7 @@ function error_notices_render()
     option('views_dir', option('limonade_views_dir'));
     $o = render('_notices.html.php', null, array('notices' => $notices));
     option('views_dir', $c_view_dir); // restore current views dir
-    
+
     return $o;
   }
 }
@@ -928,7 +939,7 @@ function request_is_head($env = null)
  */
 function request_methods()
 {
-   return array("GET","POST","PUT","DELETE", "HEAD");
+  return array("GET","POST","PUT","DELETE", "HEAD");
 }
 
 /**
@@ -960,28 +971,28 @@ function request_uri($env = null)
   // {
   //  $uri = key($env['GET']);
   // }
-	else
-	{
+  else
+  {
     $app_file = app_file();
     $path_info = isset($env['SERVER']['PATH_INFO']) ? $env['SERVER']['PATH_INFO'] : @getenv('PATH_INFO');
     $query_string =  isset($env['SERVER']['QUERY_STRING']) ? $env['SERVER']['QUERY_STRING'] : @getenv('QUERY_STRING');
-    
-	  // Is there a PATH_INFO variable?
+
+    // Is there a PATH_INFO variable?
   	// Note: some servers seem to have trouble with getenv() so we'll test it two ways
   	if (trim($path_info, '/') != '' && $path_info != "/".$app_file)
   	{
-  		$uri = $path_info;
+  	  $uri = $path_info;
   	}
   	// No PATH_INFO?... What about QUERY_STRING?
   	elseif (trim($query_string, '/') != '')
   	{
-  		$uri = $query_string;
+  	  $uri = $query_string;
   	}
   	elseif(array_key_exists('REQUEST_URI', $env['SERVER']) && !empty($env['SERVER']['REQUEST_URI']))
   	{
   	  $request_uri = rtrim(rawurldecode($env['SERVER']['REQUEST_URI']), '?/').'/';
   	  $base_path = $env['SERVER']['SCRIPT_NAME'];
-  	  
+
       if($request_uri."index.php" == $base_path) $request_uri .= "index.php";
   	  $uri = str_replace($base_path, '', $request_uri);
   	}
@@ -989,7 +1000,7 @@ function request_uri($env = null)
     {
       $uri = $env['SERVER']['argv'][1];
     }
-	}
+  }
 
   $uri = rtrim($uri, "/"); # removes ending /
   if(empty($uri))
@@ -1047,7 +1058,7 @@ function dispatch_get($path_or_array, $function)
  */
 function dispatch_post($path_or_array, $function)
 {
-   route("POST", $path_or_array, $function);
+  route("POST", $path_or_array, $function);
 }
 
 /**
@@ -1059,7 +1070,7 @@ function dispatch_post($path_or_array, $function)
  */
 function dispatch_put($path_or_array, $function)
 {
-   route("PUT", $path_or_array, $function);
+  route("PUT", $path_or_array, $function);
 }
 
 /**
@@ -1071,7 +1082,7 @@ function dispatch_put($path_or_array, $function)
  */
 function dispatch_delete($path_or_array, $function)
 {
-   route("DELETE", $path_or_array, $function);
+  route("DELETE", $path_or_array, $function);
 }
 
 
@@ -1088,24 +1099,23 @@ function dispatch_delete($path_or_array, $function)
  */
 function route()
 {
-	static $routes = array();
-	$nargs = func_num_args();
-	if( $nargs > 0)
-	{
-	  $args = func_get_args();
-	  if($nargs === 1 && is_null($args[0])) $routes = array();
-	  else if($nargs < 3) trigger_error("Missing arguments for route()", E_USER_ERROR);
-	  else
-	  {
-	    $method        = $args[0];
-  	  $path_or_array = $args[1];
-  	  $func          = $args[2];
+  static $routes = array();
+  $nargs = func_num_args();
+  if( $nargs > 0)
+  {
+    $args = func_get_args();
+    if($nargs === 1 && is_null($args[0])) $routes = array();
+    else if($nargs < 3) trigger_error("Missing arguments for route()", E_USER_ERROR);
+    else
+    {
+      $method        = $args[0];
+      $path_or_array = $args[1];
+      $func          = $args[2];
 
-  	  $routes[] = route_build($method, $path_or_array, $func);
-	  }
-	  
-	}
-	return $routes;
+      $routes[] = route_build($method, $path_or_array, $func);
+    }
+  }
+  return $routes;
 }
 
 /**
@@ -1130,97 +1140,96 @@ function route_reset()
  */
 function route_build($method, $path_or_array, $func)
 {
-   $method = strtoupper($method);
-   if(!in_array($method, request_methods())) 
-      trigger_error("'$method' request method is unkown or unavailable.", E_USER_WARNING);
-      
-   
-   if(is_array($path_or_array))
-   {
-      $path  = array_shift($path_or_array);
-      $names = $path_or_array[0];
-   }
-   else
-   {
-      $path  = $path_or_array;
-      $names = array();
-   }
-   
-   $single_asterisk_subpattern   = "(?:/([^\/]*))?";
-   $double_asterisk_subpattern   = "(?:/(.*))?";
-   $optionnal_slash_subpattern   = "(?:/*?)";
-   $no_slash_asterisk_subpattern = "(?:([^\/]*))?";
-   
-   if($path[0] == "^")
-   {
-     if($path{strlen($path) - 1} != "$") $path .= "$";
+  $method = strtoupper($method);
+  if(!in_array($method, request_methods())) 
+    trigger_error("'$method' request method is unkown or unavailable.", E_USER_WARNING);
+
+  if(is_array($path_or_array))
+  {
+    $path  = array_shift($path_or_array);
+    $names = $path_or_array[0];
+  }
+  else
+  {
+    $path  = $path_or_array;
+    $names = array();
+  }
+
+  $single_asterisk_subpattern   = "(?:/([^\/]*))?";
+  $double_asterisk_subpattern   = "(?:/(.*))?";
+  $optionnal_slash_subpattern   = "(?:/*?)";
+  $no_slash_asterisk_subpattern = "(?:([^\/]*))?";
+
+  if($path[0] == "^")
+  {
+    if($path{strlen($path) - 1} != "$") $path .= "$";
      $pattern = "#".$path."#i";
-   }
-   else if(empty($path) || $path == "/")
-   {
-     $pattern = "#^".$optionnal_slash_subpattern."$#";
-   }
-   else
-   {
-     $parsed = array();
-     $elts = explode('/', $path);
-     
-     $parameters_count = 0;
-     
-     foreach($elts as $elt)
-     {
-       if(empty($elt)) continue;
-       
-       $name = null; 
-       
-       # extracting double asterisk **
-       if($elt == "**"):
-         $parsed[] = $double_asterisk_subpattern;
-         $name = $parameters_count;
-       
-       # extracting single asterisk *
-       elseif($elt == "*"):
-         $parsed[] = $single_asterisk_subpattern;
-         $name = $parameters_count;
+  }
+  else if(empty($path) || $path == "/")
+  {
+    $pattern = "#^".$optionnal_slash_subpattern."$#";
+  }
+  else
+  {
+    $parsed = array();
+    $elts = explode('/', $path);
+
+    $parameters_count = 0;
+
+    foreach($elts as $elt)
+    {
+      if(empty($elt)) continue;
+
+      $name = null; 
+
+      # extracting double asterisk **
+      if($elt == "**"):
+        $parsed[] = $double_asterisk_subpattern;
+        $name = $parameters_count;
+
+      # extracting single asterisk *
+      elseif($elt == "*"):
+        $parsed[] = $single_asterisk_subpattern;
+        $name = $parameters_count;
                
-       # extracting named parameters :my_param 
-       elseif($elt[0] == ":"):
-         if(preg_match('/^:([^\:]+)$/', $elt, $matches))
-         {
-           $parsed[] = $single_asterisk_subpattern;
-           $name = $matches[1];
-         };
-       
-       elseif(strpos($elt, '*') !== false):
-         $sub_elts = explode('*', $elt);
-         $parsed_sub = array();
-         foreach($sub_elts as $sub_elt)
-         {
-           $parsed_sub[] = preg_quote($sub_elt, "#");
-           $name = $parameters_count;
-         }
-         // 
-         $parsed[] = "/".implode($no_slash_asterisk_subpattern, $parsed_sub);
-       
-       else:
-         $parsed[] = "/".preg_quote($elt, "#");
-         
-       endif;
-       
-       /* set parameters names */ 
-       if(is_null($name)) continue;
-       if(!array_key_exists($parameters_count, $names) || is_null($names[$parameters_count]))
-         $names[$parameters_count] = $name;
-       $parameters_count++;
-     }
-     
-     $pattern = "#^".implode('', $parsed).$optionnal_slash_subpattern."?$#i";
-   }
-   
-   return array( "method"       => $method,
-                 "pattern"      => $pattern,
-                 "names"        => $names,
-                 "function"     => $func     );
+      # extracting named parameters :my_param 
+      elseif($elt[0] == ":"):
+        if(preg_match('/^:([^\:]+)$/', $elt, $matches))
+        {
+          $parsed[] = $single_asterisk_subpattern;
+          $name = $matches[1];
+        };
+
+      elseif(strpos($elt, '*') !== false):
+        $sub_elts = explode('*', $elt);
+        $parsed_sub = array();
+        foreach($sub_elts as $sub_elt)
+        {
+          $parsed_sub[] = preg_quote($sub_elt, "#");
+          $name = $parameters_count;
+        }
+        // 
+        $parsed[] = "/".implode($no_slash_asterisk_subpattern, $parsed_sub);
+
+      else:
+        $parsed[] = "/".preg_quote($elt, "#");
+
+      endif;
+
+      /* set parameters names */ 
+      if(is_null($name)) continue;
+      if(!array_key_exists($parameters_count, $names) || is_null($names[$parameters_count]))
+        $names[$parameters_count] = $name;
+      $parameters_count++;
+    }
+
+    $pattern = "#^".implode('', $parsed).$optionnal_slash_subpattern."?$#i";
+  }
+
+  return array( "method"       => $method,
+                "pattern"      => $pattern,
+                "names"        => $names,
+                "function"     => $func     );
 }
 
 /**
@@ -1235,35 +1244,35 @@ function route_build($method, $path_or_array, $func)
  */
 function route_find($method, $path)
 {
-   $routes = route();
-   $method = strtoupper($method);
-   foreach($routes as $route)
-   {
-     if($method == $route["method"] && preg_match($route["pattern"], $path, $matches))
-     {
-       $params = array();
-       if(count($matches) > 1)
-       {
-         array_shift($matches);
-         $n_matches = count($matches);
-         $names     = array_values($route["names"]);
-         $n_names   = count($names);
-         if( $n_matches < $n_names )
-         {
-           $a = array_fill(0, $n_names - $n_matches, null);
-           $matches = array_merge($matches, $a);
-         }
-         else if( $n_matches > $n_names )
-         {
-           $names = range($n_names, $n_matches - 1);
-         }
-         $params = array_combine($names, $matches);
-       }
-       $route["params"] = $params;
-       return $route;
-     }
-   }
-   return false;
+  $routes = route();
+  $method = strtoupper($method);
+  foreach($routes as $route)
+  {
+    if($method == $route["method"] && preg_match($route["pattern"], $path, $matches))
+    {
+      $params = array();
+      if(count($matches) > 1)
+      {
+        array_shift($matches);
+        $n_matches = count($matches);
+        $names     = array_values($route["names"]);
+        $n_names   = count($names);
+        if( $n_matches < $n_names )
+        {
+          $a = array_fill(0, $n_names - $n_matches, null);
+          $matches = array_merge($matches, $a);
+        }
+        else if( $n_matches > $n_names )
+        {
+          $names = range($n_names, $n_matches - 1);
+        }
+        $params = array_combine($names, $matches);
+      }
+      $route["params"] = $params;
+      return $route;
+    }
+  }
+  return false;
 }
 
 
@@ -1289,21 +1298,21 @@ function route_find($method, $path)
  */
 function render($content_or_func, $layout = '', $locals = array())
 {
-	$args = func_get_args();
-	$content_or_func = array_shift($args);
-	$layout = count($args) > 0 ? array_shift($args) : layout();
-	$view_path = file_path(option('views_dir'),$content_or_func);
-	$vars = array_merge(set(), $locals);
-	
-	$flash = flash_now();
-	if(array_key_exists('flash', $vars)) trigger_error('A $flash variable is already passed to view. Flash messages will only be accessible through flash_now()', E_USER_NOTICE);  
-	else if(!empty($flash)) $vars['flash'] = $flash;
+  $args = func_get_args();
+  $content_or_func = array_shift($args);
+  $layout = count($args) > 0 ? array_shift($args) : layout();
+  $view_path = file_path(option('views_dir'),$content_or_func);
+  $vars = array_merge(set(), $locals);
+
+  $flash = flash_now();
+  if(array_key_exists('flash', $vars)) trigger_error('A $flash variable is already passed to view. Flash messages will only be accessible through flash_now()', E_USER_NOTICE);  
+  else if(!empty($flash)) $vars['flash'] = $flash;
 
   $infinite_loop = false;
-  
+
   # Avoid infinite loop: this function is in the backtrace ?
   if(function_exists($content_or_func))
-	{
+  {
     $back_trace = debug_backtrace();
     while($trace = array_shift($back_trace))
     {
@@ -1316,26 +1325,41 @@ function render($content_or_func, $layout = '', $locals = array())
   }
 
   if(function_exists($content_or_func) && !$infinite_loop)
-	{
-		ob_start();
-		call_user_func($content_or_func, $vars);
-		$content = ob_get_clean();
-	}
-	elseif(file_exists($view_path))
-	{
-		ob_start();
-		extract($vars);
-		include $view_path;
-		$content = ob_get_clean();
-	}
-	else
-	{
-	  $content = vsprintf($content_or_func, $vars);
-	}
+  {
+    ob_start();
+    call_user_func($content_or_func, $vars);
+    $content = ob_get_clean();
+  }
+  elseif(file_exists($view_path))
+  {
+    ob_start();
+    extract($vars);
+    include $view_path;
+    $content = ob_get_clean();
+  }
+  else
+  {
+    if(substr_count($content_or_func, '%') !== count($vars)) $content = $content_or_func;
+    else $content = vsprintf($content_or_func, $vars);
+  }
 
-	if(empty($layout)) return $content;
+  if(empty($layout)) return $content;
 
-	return render($layout, null, array('content' => $content));
+  return render($layout, null, array('content' => $content));
+}
+
+/**
+ * Returns a string to output
+ * 
+ * Shortcut to render with no layout.
+ *
+ * @param string $content_or_func 
+ * @param string $locals 
+ * @return string
+ */
+function render_partial($content_or_func, $locals = array())
+{
+  return render($content_or_func, null, $locals);
 }
 
 /**
@@ -1348,9 +1372,9 @@ function render($content_or_func, $layout = '', $locals = array())
  */ 
 function html($content_or_func, $layout = '', $locals = array())
 {
-   if(!headers_sent()) header('Content-Type: text/html; charset='.strtolower(option('encoding')));
-   $args = func_get_args();
-   return call_user_func_array('render', $args);
+  if(!headers_sent()) header('Content-Type: text/html; charset='.strtolower(option('encoding')));
+  $args = func_get_args();
+  return call_user_func_array('render', $args);
 }
 
 /**
@@ -1361,9 +1385,9 @@ function html($content_or_func, $layout = '', $locals = array())
  */
 function layout($function_or_file = null)
 {
-	static $layout = null;
-	if(func_num_args() > 0) $layout = $function_or_file;
-	return $layout;
+  static $layout = null;
+  if(func_num_args() > 0) $layout = $function_or_file;
+  return $layout;
 }
 
 /**
@@ -1391,9 +1415,9 @@ function xml($data)
  */
 function css($content_or_func, $layout = '', $locals = array())
 {
-   if(!headers_sent()) header('Content-Type: text/css; charset='.strtolower(option('encoding')));
-   $args = func_get_args();
-   return call_user_func_array('render', $args);
+  if(!headers_sent()) header('Content-Type: text/css; charset='.strtolower(option('encoding')));
+  $args = func_get_args();
+  return call_user_func_array('render', $args);
 }
 
 /**
@@ -1406,9 +1430,9 @@ function css($content_or_func, $layout = '', $locals = array())
  */
 function txt($content_or_func, $layout = '', $locals = array())
 {
-   if(!headers_sent()) header('Content-Type: text/plain; charset='.strtolower(option('encoding')));
-   $args = func_get_args();
-   return call_user_func_array('render', $args);
+  if(!headers_sent()) header('Content-Type: text/plain; charset='.strtolower(option('encoding')));
+  $args = func_get_args();
+  return call_user_func_array('render', $args);
 }
 
 /**
@@ -1420,8 +1444,8 @@ function txt($content_or_func, $layout = '', $locals = array())
  */
 function json($data, $json_option = 0)
 {
-   if(!headers_sent()) header('Content-Type: application/x-javascript; charset='.strtolower(option('encoding')));
-   return version_compare(PHP_VERSION, '5.3.0', '>=') ? json_encode($data, $json_option) : json_encode($data);
+  if(!headers_sent()) header('Content-Type: application/x-javascript; charset='.strtolower(option('encoding')));
+  return version_compare(PHP_VERSION, '5.3.0', '>=') ? json_encode($data, $json_option) : json_encode($data);
 }
 
 /**
@@ -1444,11 +1468,12 @@ function render_file($filename, $return = false)
   // {
   //   
   // }
+  $filename = str_replace('../', '', $filename);
   if(file_exists($filename))
   {
     $content_type = mime_type(file_extension($filename));
     $header = 'Content-type: '.$content_type;
-    if(file_is_text($filename)) $header .= 'charset='.strtolower(option('encoding'));
+    if(file_is_text($filename)) $header .= '; charset='.strtolower(option('encoding'));
     if(!headers_sent()) header($header);
     return file_read($filename, $return);
   }
@@ -1493,10 +1518,10 @@ function url_for($params = null)
     $p = explode('/',$param);
     foreach($p as $v)
     {
-      if(!empty($v)) $paths[] = rawurlencode($v);
+      if(!empty($v)) $paths[] = str_replace('%23', '#', rawurlencode($v));
     }
   }
-  
+
   $path = rtrim(implode('/', $paths), '/');
   
   if(!filter_var($path , FILTER_VALIDATE_URL)) 
@@ -1505,7 +1530,7 @@ function url_for($params = null)
     $base_uri = option('base_uri');
     $path = file_path($base_uri, $path);
   }
-  
+
   if(DIRECTORY_SEPARATOR != '/') $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
 
   return $path;
@@ -1522,8 +1547,8 @@ function url_for($params = null)
  */
 function h($str, $quote_style = ENT_NOQUOTES, $charset = null)
 {
-	if(is_null($charset)) $charset = strtoupper(option('encoding'));
-	return htmlspecialchars($str, $quote_style, $charset); 
+  if(is_null($charset)) $charset = strtoupper(option('encoding'));
+  return htmlspecialchars($str, $quote_style, $charset); 
 }
 
 /**
@@ -1606,6 +1631,48 @@ function flash_sweep()
   }
 }
 
+/**
+ * Starts capturing block of text
+ *
+ * Calling without params stops capturing (same as end_content_for()).
+ * After capturing the captured block is put into a variable
+ * named $name for later use in layouts. If second parameter
+ * is supplied, its content will be used instead of capturing
+ * a block of text.
+ *
+ * @param string $name
+ * @param string $content
+ * @return void
+ */
+function content_for($name = null, $content = null)
+{
+  static $_name = null;
+  if(is_null($name) && !is_null($_name))
+  {
+    set($_name, ob_get_clean());
+    $_name = null;	
+  }
+  elseif(!is_null($name) && !isset($content))
+  {
+    $_name = $name;	
+    ob_start();
+  }
+  elseif(isset($name, $content))
+  {
+    set($name, $content);
+  }
+}
+
+/**
+ * Stops capturing block of text
+ *
+ * @return void
+ */
+function end_content_for()
+{
+  content_for();
+}
+
 
 
 
@@ -1681,6 +1748,7 @@ function require_once_dir($path, $pattern = "*.php")
 {
   if($path[strlen($path) - 1] != "/") $path .= "/";
   $filenames = glob($path.$pattern);
+  if(!is_array($filenames)) $filenames = array();
   foreach($filenames as $filename) require_once $filename;
   return $filenames;
 }
@@ -1752,11 +1820,11 @@ define( 'HTTP_NOT_EXTENDED',                  510 );
  */
 function status($code = 500)
 {
-	if(!headers_sent())
-	{
-	  $str = http_response_status_code($code);
-  	header($str);
-	}
+  if(!headers_sent())
+  {
+    $str = http_response_status_code($code);
+    header($str);
+  }
 }
 
 /**
@@ -1772,10 +1840,10 @@ function redirect_to($params)
   # relative URIs. You can usually use $_SERVER['HTTP_HOST'],
   # $_SERVER['PHP_SELF'] and dirname() to make an absolute URI from a relative
   # one yourself.
-  
+
   # TODO make absolute uri
   if(!headers_sent())
-	{
+  {
     $params = func_get_args();
     $uri = call_user_func_array('url_for', $params);
     stop_and_exit(false);
@@ -2075,11 +2143,12 @@ function file_mime_content_type($filename)
 {
   $ext = file_extension($filename); /* strtolower isn't necessary */
   if($mime = mime_type($ext)) return $mime;
-  elseif (function_exists('finfo_open')) {
-      $finfo = finfo_open(FILEINFO_MIME);
-      $mime = finfo_file($finfo, $filename);
-      finfo_close($finfo);
-      return $mime;
+  elseif (function_exists('finfo_open'))
+  {
+    $finfo = finfo_open(FILEINFO_MIME);
+    $mime = finfo_file($finfo, $filename);
+    finfo_close($finfo);
+    return $mime;
   }
   else return 'application/octet-stream';
 }
@@ -2102,25 +2171,26 @@ function file_read_chunked($filename, $retbytes = true)
   $cnt       = 0;
   $handle    = fopen($filename, 'rb');
   if ($handle === false) return false;
-  
-	ob_start();
-    while (!feof($handle)) {
-  	  $buffer = fread($handle, $chunksize);
-      echo $buffer;
-      ob_flush();
-  	  flush();
-      if ($retbytes) $cnt += strlen($buffer);
-  	  set_time_limit(0);
-    }
-	ob_end_flush();
-	
+
+  ob_start();
+  while (!feof($handle)) {
+    $buffer = fread($handle, $chunksize);
+    echo $buffer;
+    ob_flush();
+    flush();
+    if ($retbytes) $cnt += strlen($buffer);
+    set_time_limit(0);
+  }
+  ob_end_flush();
+
   $status = fclose($handle);
   if ($retbytes && $status) return $cnt; // return num. bytes delivered like readfile() does.
   return $status;
 }
 
 /**
- * Create a file path by concatenation of given arguments
+ * Create a file path by concatenation of given arguments.
+ * Windows paths with backslash directory separators are normalized in *nix paths.
  *
  * @param string $path, ... 
  * @return string normalized path
@@ -2128,8 +2198,10 @@ function file_read_chunked($filename, $retbytes = true)
 function file_path($path)
 {
   $args = func_get_args();
-  $ds = DIRECTORY_SEPARATOR;
+  $ds = '/'; 
+  $win_ds = '\\';
   $n_path = count($args) > 1 ? implode($ds, $args) : $path;
+  if(strpos($n_path, $win_ds) !== false) $n_path = str_replace( $win_ds, $ds, $n_path );
   $n_path = preg_replace( '/'.preg_quote($ds, $ds).'{2,}'.'/', 
                           $ds, 
                           $n_path);
@@ -2144,9 +2216,9 @@ function file_path($path)
  */
 function file_extension($filename)
 {
-	$pos = strrpos($filename, '.');
-	if($pos !== false) return substr($filename, $pos + 1);
-	return false;
+  $pos = strrpos($filename, '.');
+  if($pos !== false) return substr($filename, $pos + 1);
+  return false;
 }
 
 /**
@@ -2157,8 +2229,8 @@ function file_extension($filename)
  */
 function file_is_text($filename)
 {
-	if($mime = file_mime_content_type($filename)) return substr($mime,0,5) == "text/";
-	return null;
+  if($mime = file_mime_content_type($filename)) return substr($mime,0,5) == "text/";
+  return null;
 }
 
 /**
@@ -2169,8 +2241,8 @@ function file_is_text($filename)
  */
 function file_is_binary($filename)
 {
-	$is_text = file_is_text($filename);
-	return is_null($is_text) ? null : !$is_text;
+  $is_text = file_is_text($filename);
+  return is_null($is_text) ? null : !$is_text;
 }
 
 /**
@@ -2182,9 +2254,9 @@ function file_is_binary($filename)
 
 function file_read($filename, $return = false)
 {
-	if(!file_exists($filename)) trigger_error("$filename doesn't exists", E_USER_ERROR);
-	if($return) return file_get_contents($filename);
-	return file_read_chunked($filename);
+  if(!file_exists($filename)) trigger_error("$filename doesn't exists", E_USER_ERROR);
+  if($return) return file_get_contents($filename);
+  return file_read_chunked($filename);
 }
 
 /**
@@ -2195,16 +2267,16 @@ function file_read($filename, $return = false)
  */
 function file_list_dir($dir)
 {
-	$files = array(); 
-	if ($handle = opendir($dir))
-	{
-		while (false !== ($file = readdir($handle)))
-		{
-			if ($file[0] != "." && $file != "..") $files[] = $file;
-		}
-		closedir($handle);
-	}
-	return $files;
+  $files = array(); 
+  if ($handle = opendir($dir))
+  {
+    while (false !== ($file = readdir($handle)))
+    {
+      if ($file[0] != "." && $file != "..") $files[] = $file;
+    }
+    closedir($handle);
+  }
+  return $files;
 }
 
 
