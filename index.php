@@ -8,21 +8,22 @@ set_include_path (get_include_path ().PATH_SEPARATOR.dirname (__FILE__).'/lib');
 require_once 'Zend/Locale.php';
 require_once 'Zend/Date.php';
 
+
 /**
  * Configuration of the limonade framework. Automatically called.
  */
 function configure()
 {
-    $fz_conf = fz_config_load (); // loading filez.ini
-
     option ('session'           , 'filez'); // specific session name
     option ('views_dir'         , option ('root_dir').'/app/view/');
     option ('controllers_dir'   , option ('root_dir').'/app/controller/');
     option ('models_dir'        , option ('root_dir').'/app/model/');
     option ('upload_dir'        , option ('root_dir').'/uploaded_files/');
 
+    require_once_dir (option ('lib_dir'));
     require_once_dir (option ('models_dir'));
 
+    $fz_conf = fz_config_load (); // loading filez.ini
     if ($fz_conf['app']['use_url_rewriting'])
       option ('base_uri'          , option ('base_path'));
 

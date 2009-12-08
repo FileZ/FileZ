@@ -28,12 +28,12 @@ class fzFile extends fzTableRow {
 
     protected function setAvailableUntil ($date) {
         $this->available_until = $date instanceof Zend_Date ?
-            $date->get (Zend_Date::ISO_8601) : $data;
+            $date->get (Zend_Date::ISO_8601) : $date;
     }
 
     protected function setAvailableFrom ($date) {
         $this->available_from = $date instanceof Zend_Date ?
-            $date->get (Zend_Date::ISO_8601) : $data;
+            $date->get (Zend_Date::ISO_8601) : $date;
     }
 }
 

@@ -31,98 +31,100 @@
     <div id="upload-progress" style="display: none;"></div>
   </div>
 
-  <script type="text/javascript">
+  <?php if (0 /* TODO $use_async_upload */): ?>
+    <script type="text/javascript">
 
-    // @var interval ID
-    var progressChecker = 0;
+      // TODO mettre ce code dans un fichier
 
-    /**
-     * Function called on form submission
-     */
-    function onFileUploadStart (data, form, options) {
-      console.log ('upload starts...');
+      // @var interval ID
+      var progressChecker = 0;
 
-      // We alter the request to let the server know that this is a (false) xhr request
-      data.push ({name: 'is_xhr', value: true});
+      /**
+       * Function called on form submission
+       */
+      function onFileUploadStart (data, form, options) {
+        console.log ('upload starts...');
 
-      $('#start-upload').hide();
-      $("#upload-loading").show ();
-      $("#upload-progress").progressBar({
-        barImage: 'resources/images/progressbg_green.gif',
-        boxImage: 'resources/images/progressbar.gif'
-      });
+        $('#start-upload').hide();
+        $("#upload-loading").show ();
+        $("#upload-progress").progressBar({
+          barImage: 'resources/images/progressbg_green.gif',
+          boxImage: 'resources/images/progressbar.gif'
+        });
 
-      progressChecker = setInterval (function () {
-      $.getJSON('<?php echo url_for ('upload/progress/'.$upload_id) ?>', 
-        function(data){
-          console.log (data);
+        progressChecker = setInterval (function () {
+        $.getJSON('<?php echo url_for ('upload/progress/'.$upload_id) ?>', 
+          function(data){
+            console.log (data);
 
-          if (data == false) {
-            // we assume APC and "apc.rfc1867 = on" is not configured
-            clearInterval (progressChecker); // We don't need to call the progress checker again
-            return;
+            if (data == false) {
+              // we assume APC and "apc.rfc1867 = on" is not configured
+              clearInterval (progressChecker); // We don't need to call the progress checker again
+              return;
+            }
+
+            $("#upload-loading").hide ();
+            $('#upload-progress').show();
+
+            if (data.done == 1)
+              clearInterval (progressChecker); 
+
+            var percentage = Math.floor(100 * parseInt(data.current) / parseInt(data.total));
+            $("#upload-progress").progressBar(percentage);
           }
+        )}, 750);
+      }
 
-          $("#upload-loading").hide ();
-          $('#upload-progress').show();
+      /**
+       * Function called once the file has been successfully uploaded
+       */
+      function onFileUploadEnd (data, status) {
+        console.log ('upload ends.');
+        clearInterval (progressChecker);
+        $('#start-upload').show();
+        $("#upload-progress").progressBar(0);
+        $('#upload-progress').hide();
+        $('#upload-loading').hide();
+        $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
+        console.log (data);
 
-          if (data.done == 1)
-            clearInterval (progressChecker); 
-
-          var percentage = Math.floor(100 * parseInt(data.current) / parseInt(data.total));
-          $("#upload-progress").progressBar(percentage);
+        if (data.status == 'ok') {
+          var files = $('ul#files');
+          var cssClass = files.children('li:first').hasClass ('odd') ? 'even' : 'odd' ;
+     
+          files.prepend (
+            '<li class="file ' + cssClass + '" style="display: none;">' +
+            '  <p class="filename"><a href="#">' + data.filename + '</a></p>' +
+            '  <p class="download-counter">Téléchargé 0 fois</p>' +
+            '  <p class="availability">disponible du 18 au <b>27 octobre</b></p>' +
+            '  <ul class="actions">' +
+            '    <li><a href="#" class="send-by-email">Envoyer par email</a></li> ' +
+            '    <li><a href="#" class="delete">Supprimer</a></li> ' +
+            '    <li><a href="#" class="extend">Rendre disponible un jour de plus</a></li>' +
+            '  </ul>' +
+            '</li>'
+          );
+          files.children('li:first').slideDown (500);
         }
-      )}, 750);
-    }
-
-    /**
-     * Function called once the file has been successfully uploaded
-     */
-    function onFileUploadEnd (data, status) {
-      console.log ('upload ends.');
-      clearInterval (progressChecker);
-      $('#start-upload').show();
-      $("#upload-progress").progressBar(0);
-      $('#upload-progress').hide();
-      $('#upload-loading').hide();
-      $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
-      console.log (data);
-
-      if (data.status == 'ok') {
-        var files = $('ul#files');
-        var cssClass = files.children('li:first').hasClass ('odd') ? 'even' : 'odd' ;
-   
-        files.prepend (
-          '<li class="file ' + cssClass + '" style="display: none;">' +
-          '  <p class="filename"><a href="#">' + data.filename + '</a></p>' +
-          '  <p class="download-counter">Téléchargé 0 fois</p>' +
-          '  <p class="availability">disponible du 18 au <b>27 octobre</b></p>' +
-          '  <ul class="actions">' +
-          '    <li><a href="#" class="send-by-email">Envoyer par email</a></li> ' +
-          '    <li><a href="#" class="delete">Supprimer</a></li> ' +
-          '    <li><a href="#" class="extend">Rendre disponible un jour de plus</a></li>' +
-          '  </ul>' +
-          '</li>'
-        );
-        files.children('li:first').slideDown (500);
+        else {
+        }
       }
-      else {
-      }
-    }
 
-    var ajaxFormOptions = { 
-      beforeSubmit: onFileUploadStart, // pre-submit callback 
-      success:      onFileUploadEnd,   // post-submit callback 
-      resetForm:    true,              // reset the form after successful submit 
-      iframe:       true,              // force the form to be submitted using an iframe 
-                                       // even if no file has been selected
-      dataType: 'json'                 // force response type to JSON
-    }; 
- 
-    $(document).ready (function () {
-      $('#upload-form').ajaxForm(ajaxFormOptions);
-    });
-  </script>
+      var ajaxFormOptions = { 
+        beforeSubmit: onFileUploadStart, // pre-submit callback 
+        success:      onFileUploadEnd,   // post-submit callback 
+        resetForm:    true,              // reset the form after successful submit 
+        iframe:       true,              // force the form to be submitted using an iframe 
+                                         // even if no file has been selected
+        dataType: 'json'                 // force response type to JSON
+      }; 
+    
+      $(document).ready (function () {
+        $('#upload-form').ajaxForm(ajaxFormOptions);
+        $('#upload-form').append ('<input type="hidden" name="is_async" value="1" />');
+      });
+    </script>
+  <?php endif // use_async_upload ?>
 
   </form>
 </section>
