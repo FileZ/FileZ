@@ -31,7 +31,7 @@
     <div id="upload-progress" style="display: none;"></div>
   </div>
 
-  <?php if (0 /* TODO $use_async_upload */): ?>
+  <?php if ($use_async_upload): ?>
     <script type="text/javascript">
 
       // TODO mettre ce code dans un fichier
@@ -93,16 +93,7 @@
           var cssClass = files.children('li:first').hasClass ('odd') ? 'even' : 'odd' ;
      
           files.prepend (
-            '<li class="file ' + cssClass + '" style="display: none;">' +
-            '  <p class="filename"><a href="#">' + data.filename + '</a></p>' +
-            '  <p class="download-counter">Téléchargé 0 fois</p>' +
-            '  <p class="availability">disponible du 18 au <b>27 octobre</b></p>' +
-            '  <ul class="actions">' +
-            '    <li><a href="#" class="send-by-email">Envoyer par email</a></li> ' +
-            '    <li><a href="#" class="delete">Supprimer</a></li> ' +
-            '    <li><a href="#" class="extend">Rendre disponible un jour de plus</a></li>' +
-            '  </ul>' +
-            '</li>'
+            '<li class="file '+cssClass+'" style="display: none;">'+data.html+'</li>'
           );
           files.children('li:first').slideDown (500);
         }
@@ -133,15 +124,8 @@
 <section id="uploaded-files">
   <ul id="files">
     <?php $odd = true; foreach ($files as $file): ?>
-    <li class="file <?php echo $odd ? 'odd' : 'even'; $odd = ! $odd; ?>">
-        <p class="filename"><a href="#"><?php echo $file->file_name ?></a></p>
-        <p class="download-counter">Téléchargé <?php echo $file->download_count ?> fois</p>
-        <p class="availability">disponible du 18 au <b>27 octobre</b></p>
-        <ul class="actions">
-          <li><a href="#" class="send-by-email">Envoyer par email</a></li> 
-          <li><a href="#" class="delete">Supprimer</a></li> 
-          <li><a href="#" class="extend">Rendre disponible un jour de plus</a></li>
-        </ul>
+      <li class="file <?php echo $odd ? 'odd' : 'even'; $odd = ! $odd; ?>">
+        <?php echo render_partial ('main/_file_row.php', array ('file' => $file)) ?> 
       </li>
     <?php endforeach ?>
   </ul>

@@ -5,7 +5,7 @@ class fzFile extends fzTableRow {
     protected $_tableClass = 'fzFileTable';
 
     public function getHash () {
-        return fz_model_file_id2hash ($this->id);
+        return $this->getTable ()->idToHash ($this->id);
     }
 
     public function __toString () {
@@ -35,6 +35,11 @@ class fzFile extends fzTableRow {
         $this->available_from = $date instanceof Zend_Date ?
             $date->get (Zend_Date::ISO_8601) : $date;
     }
+
+    public function getDownloadUrl () {
+        return 'http://'.$_SERVER["SERVER_NAME"].url_for('/').$this->getHash ();
+    }
+
 }
 
 class fzFileTable extends fzTable {
@@ -63,7 +68,7 @@ class fzFileTable extends fzTable {
     }
 
     public function getFreeId () {
-        $min = 0;
+        $min = base_convert ('aaaa' , 36, 10);
         $max = base_convert ('zzzzz', 36, 10); // hash is 5 chars max
         $id = rand ($min, $max);
         while ($this->rowExists ($id))

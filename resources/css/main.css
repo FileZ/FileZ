@@ -210,6 +210,16 @@ section#uploaded-files ul li p.filename a {
   font-size: 1.3em;
   letter-spacing: -0.05em;
 }
+section#uploaded-files ul li:hover p.filename span.filename {
+	display: none;
+}
+section#uploaded-files ul li:hover p.filename span.url {
+	display: inline;
+}
+section#uploaded-files ul li p.filename span.url {
+	display: none;
+	color: black;
+}
 section#uploaded-files ul li p.download-counter {
   display: inline;
   position: absolute; top: 0.9em; right: 1.3em;

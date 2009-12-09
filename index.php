@@ -63,5 +63,12 @@ dispatch_get  ('/install'                   , 'fz_action_install_index');
 dispatch_get ('/:file_hash'                 , 'fz_action_download_preview');
 dispatch_get ('/:file_hash/download'        , 'fz_action_download_start');
 
+// File controller
+dispatch_get ('/:file_hash/email'           , 'fz_action_file_email');
+dispatch_get ('/:file_hash/delete'          , 'fz_action_file_delete');
+
+// Filez-1.x url compatibility. à tester
+dispatch_get ('/download.php'               , 'fz_action_download_start_old1');
+
 run ();
 

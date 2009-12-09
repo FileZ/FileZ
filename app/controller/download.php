@@ -21,4 +21,5 @@ function fz_action_download_start () {
  */
 function fz_action_download_start_old1 () {
     // TODO
+    $file_hash = $_GET ['ad'];
 }
