@@ -1,13 +1,23 @@
 <?php 
 
-// Loading Limonade
+/**
+ * Loading Zend for i18n classes and autoloader
+ */
+$base = PATH_SEPARATOR.dirname (__FILE__).PATH_SEPARATOR;
+set_include_path (get_include_path ().$base.'lib');
+
+require_once 'Zend/Loader/Autoloader.php';
+// Autoloading for Fz_* classes in lib/ dir
+Zend_Loader_Autoloader::getInstance()->registerNamespace('Fz_'); ;
+// Autoloading for App_Model_* & App_Controller_* classes in app/ dir
+//(automagicaly added to Zend autoloaders)
+new Zend_Application_Module_Autoloader (array (
+    'basePath'=>'app', 'namespace'=>'App'));
+
+/**
+ * Loading Limonade PHP
+ */
 require_once 'lib/limonade.php';
-
-// Loading Zend for i18n classes
-set_include_path (get_include_path ().PATH_SEPARATOR.dirname (__FILE__).'/lib');
-require_once 'Zend/Locale.php';
-require_once 'Zend/Date.php';
-
 
 /**
  * Configuration of the limonade framework. Automatically called.
