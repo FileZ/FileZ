@@ -17,7 +17,7 @@
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/filez.js') ?>"></script>
 
     <script type="text/javascript">
-      $(document).ready(function() {
+      $(document).ready (function () {
       });
     </script>
   </head>

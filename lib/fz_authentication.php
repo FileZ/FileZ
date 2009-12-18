@@ -1,11 +1,12 @@
 <?php
 
-abstract class fzAbstractAuthentication {
+abstract class fzAuthenticationAbstract {
 
+    /*
     protected static $_currentUser;
 
-    public abstract static function secure ();
-    public abstract static function getCurrentUser ();
-    public abstract static function setCurrentUser ();
-
+    public    abstract static function secure ();
+    public    abstract static function getCurrentUser ();
+    protected abstract static function setCurrentUser ();
+     */
 }

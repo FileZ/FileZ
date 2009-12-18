@@ -1,9 +1,11 @@
 <?php
 
+
+
 /**
  * fzTableRow
  */
-abstract class fzTableRow {
+abstract class Fz_Db_Table_Row_Abstract {
 
     protected $_updatedColumns  = array ();
     protected $_exists          = false;
@@ -12,7 +14,7 @@ abstract class fzTableRow {
     /**
      * Constructor
      *
-     * @return fzTableRow
+     * @return Fz_Table_Row
      */
     public function __construct () {
     }
@@ -21,7 +23,7 @@ abstract class fzTableRow {
      * Table row getter from column name. ex: $row->column_name
      *
      * @param  string   $var    Column name
-     * @return mixed            Column value 
+     * @return mixed            Column value
      */
     public function __get ($var) {
         return $this->$var;
@@ -35,16 +37,16 @@ abstract class fzTableRow {
             return call_user_func_array (array ($this, $method), $args);
 
         if (substr ($method, 0, 3) != 'get')
-            throw new Exception('Unknown method "'.$method.'"');
+            throw new Exception ('Unknown method "'.$method.'"');
 
         $var = substr ($method, 3);
 
-        $var[0] = strtolower($var[0]);
-        $func = create_function('$c', 'return "_" . strtolower($c[1]);');
-        $var = preg_replace_callback('/([A-Z])/', $func, $var);
+        $var[0] = strtolower ($var[0]);
+        $func = create_function ('$c', 'return "_" . strtolower ($c[1]);');
+        $var = preg_replace_callback ('/ ([A-Z])/', $func, $var);
 
         if (! property_exists ($this, $var))
-            throw new Exception('Unknown table attribute "'.$var.'"');
+            throw new Exception ('Unknown table attribute "'.$var.'"');
 
         return $this->$var;
     }
@@ -72,7 +74,7 @@ abstract class fzTableRow {
     /**
      * Transform a string from underscore_format to CamelFormat
      *
-     * @param   string $var 
+     * @param   string $var
      * @return  string
      */
     private static function camelify ($var) {
@@ -215,10 +217,10 @@ abstract class fzTableRow {
     /**
      * Return the table object of the current row
      *
-     * @return fzTable
+     * @return Fz_Table
      */
     public function getTable () {
-        return fzDb::getTable ($this->_tableClass);
+        return Fz_Db::getTable ($this->_tableClass);
     }
 
     /**
@@ -239,169 +241,3 @@ abstract class fzTableRow {
         $this->_exists = $exists;
     }
 }
-
-/**
- * fzTable
- *
- * TODO document
- */
-abstract class fzTable {
-
-    protected $_rowClass;
-    protected $_name;
-    protected $_columns;
-
-    /**
-     * Return current table name
-     *
-     * @return  string
-     */
-    public function getTableName () {
-        return $this->_name;
-    }
-
-    /**
-     * Return all columns name from the current table 
-     *
-     * @return  array table columns
-     */
-    public function getTableColumns () {
-        return $this->_columns;
-    }
-
-    /**
-     * Return the row class used
-     *
-     * @return  string
-     */
-    public function getRowClass () {
-        return $this->_rowClass;
-    }
-
-    /**
-     * Retrieve all rows of the current table
-     *
-     * @return array  Array of fzTableRow
-     */
-    public function findAll () {
-        $sql = "SELECT * FROM ".$this->getTableName ();
-        return fzDb::findObjectsBySQL ($sql, $this->getRowClass ());
-    }
-
-    /**
-     * Retrieve a table row by its id
-     *
-     * @param   int     $id 
-     * @return  fzTableRow
-     */
-    public function findBydId ($id) {
-        $sql = "SELECT * FROM ".$this->getTableName ().' WHERE id = ?';
-        return fzDb::findObjectBySQL ($sql, $this->getRowClass (), array ($id));
-    }
-
-    /**
-     * Return true or false wheter a row of id $id exists or not.
-     *
-     * @param   int     $id
-     * @return  boolean
-     */
-    public function rowExists ($id) {
-        $db   = option ('db_conn');
-        $sql  = 'SELECT id FROM `'.$this->getTableName ().'` WHERE id = ?';
-        $stmt = $db->prepare ($sql);
-        $stmt->execute (array ($id));
-        return $stmt->fetchColumn () === false ? false : true;
-    }
-
-    /**
-     * Return the class of the current table
-     *
-     * @return  string
-     */
-    protected function getClass () {
-        return get_class ($this);
-    }
-}
-
-/**
- * fzDb
- */
-class fzDb {
-
-    protected static $_tables;
-
-    /**
-     * Generic function to retrieve multiple rows and create objects
-     *
-     * @param   string $sql 
-     * @param   string $class_name  Class used for object instanciation (?) 
-     * @param   string $params      Params used to prepare the query
-     * @param   string $limit       Limit the number of result (default: O = no limit)
-     *
-     * @return  array   Array of $class_name objects
-     */
-    public static function findObjectsBySQL ($sql, $class_name = PDO::FETCH_OBJ, $params = array (), $limit = 0) {
-        $db = option ('db_conn');
-
-        if ($limit > 1)
-            $sql .= ' LIMIT '.$limit;
-
-        $result = array ();
-        $stmt = $db->prepare ($sql);
-        if ($stmt->execute ($params)) {
-            while ($obj = $stmt->fetchObject ($class_name)) {
-                $obj->setExist (true);
-                $result[] = $obj;
-            }
-        }
-
-        return ($limit == 1 ?
-            (count ($result) > 0 ? $result [0] : null) :
-            $result
-        );
-    }
-
-    /**
-     * Generic function to retrieve one row
-     *
-     * @param   string $sql 
-     * @param   string $class_name  Class used for object instanciation (?) 
-     * @param   string $params      Params used to prepare the query
-     *
-     * @return  object  Object of clas $class_name
-     */
-    public static function findObjectBySQL ($sql, $class_name = PDO::FETCH_OBJ, $params = array ()) {
-        return self::findObjectsBySQL ($sql, $class_name, $params, 1);
-    }
-
-    /**
-     * Return an instance of a table
-     *
-     * @param   string $tableClass 
-     * @return  object 
-     */
-    public static function getTable ($tableClass) {
-        if (! self::$_tables [$tableClass])
-            self::$_tables [$tableClass] = new $tableClass ();
-
-        return self::$_tables [$tableClass];
-    }
-
-    /**
-     * Helper for writing prepared queries
-     *
-     * @param   string $x 
-     * @return  string 
-     */
-    public static function addColon ($x) { return ':' . $x; }
-
-    /**
-     * Helper for writing prepared queries
-     *
-     * @param   string $x 
-     * @return  string 
-     */
-    public static function nameEqColonName ($x) { return $x . ' = :' . $x; }
-}
-
-

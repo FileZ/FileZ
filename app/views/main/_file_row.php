@@ -2,7 +2,7 @@
 <p class="filename">
   <?php // TODO add a copy to clipboard button ?>
   <a href="http://<?php echo $file->getDownloadUrl () ?>">
-    <span class="filename"><?php echo h($file->file_name) ?></span>
+    <span class="filename"><?php echo h ($file->file_name) ?></span>
     <span class="url"     ><?php echo $file->getDownloadUrl () ?></span>
   </a>
 </p>

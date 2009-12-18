@@ -45,16 +45,16 @@
       function onFileUploadStart (data, form, options) {
         console.log ('upload starts...');
 
-        $('#start-upload').hide();
+        $('#start-upload').hide ();
         $("#upload-loading").show ();
-        $("#upload-progress").progressBar({
+        $("#upload-progress").progressBar ({
           barImage: 'resources/images/progressbg_green.gif',
           boxImage: 'resources/images/progressbar.gif'
         });
 
         progressChecker = setInterval (function () {
-        $.getJSON('<?php echo url_for ('upload/progress/'.$upload_id) ?>', 
-          function(data){
+        $.getJSON ('<?php echo url_for ('upload/progress/'.$upload_id) ?>', 
+          function (data){
             console.log (data);
 
             if (data == false) {
@@ -64,13 +64,13 @@
             }
 
             $("#upload-loading").hide ();
-            $('#upload-progress').show();
+            $('#upload-progress').show ();
 
             if (data.done == 1)
               clearInterval (progressChecker); 
 
-            var percentage = Math.floor(100 * parseInt(data.current) / parseInt(data.total));
-            $("#upload-progress").progressBar(percentage);
+            var percentage = Math.floor (100 * parseInt (data.current) / parseInt (data.total));
+            $("#upload-progress").progressBar (percentage);
           }
         )}, 750);
       }
@@ -81,21 +81,21 @@
       function onFileUploadEnd (data, status) {
         console.log ('upload ends.');
         clearInterval (progressChecker);
-        $('#start-upload').show();
-        $("#upload-progress").progressBar(0);
-        $('#upload-progress').hide();
-        $('#upload-loading').hide();
+        $('#start-upload').show ();
+        $("#upload-progress").progressBar (0);
+        $('#upload-progress').hide ();
+        $('#upload-loading').hide ();
         $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
         console.log (data);
 
         if (data.status == 'ok') {
           var files = $('ul#files');
-          var cssClass = files.children('li:first').hasClass ('odd') ? 'even' : 'odd' ;
+          var cssClass = files.children ('li:first').hasClass ('odd') ? 'even' : 'odd' ;
      
           files.prepend (
             '<li class="file '+cssClass+'" style="display: none;">'+data.html+'</li>'
           );
-          files.children('li:first').slideDown (500);
+          files.children ('li:first').slideDown (500);
         }
         else {
         }
@@ -111,7 +111,7 @@
       }; 
     
       $(document).ready (function () {
-        $('#upload-form').ajaxForm(ajaxFormOptions);
+        $('#upload-form').ajaxForm (ajaxFormOptions);
         $('#upload-form').append ('<input type="hidden" name="is_async" value="1" />');
       });
     </script>

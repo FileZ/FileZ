@@ -1,5 +1,6 @@
 <?php
 
-class fzAuthenticationCas extends fzAuthentication {
+class fzAuthenticationLdap extends fzAuthenticationAbstract {
 
 }
+
