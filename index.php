@@ -3,8 +3,8 @@
 /**
  * Loading Zend for i18n classes and autoloader
  */
-$base = PATH_SEPARATOR.dirname (__FILE__).PATH_SEPARATOR;
-set_include_path (get_include_path ().$base.'lib');
+set_include_path (get_include_path ().PATH_SEPARATOR
+    .dirname (__FILE__).DIRECTORY_SEPARATOR.'lib');
 
 require_once 'Zend/Loader/Autoloader.php';
 // Autoloading for Fz_* classes in lib/ dir
@@ -21,15 +21,9 @@ $autoloader->addResourceTypes (array ('controller' => array (
 )));
 
 /**
- * Loading Limonade PHP
+ * Configuration of the limonade framework. Automatically called by run()
  */
-require_once 'lib/limonade.php';
-
-/**
- * Configuration of the limonade framework. Automatically called.
- */
-function configure()
-{
+function configure() {
     option ('session'           , 'filez'); // specific session name
     option ('views_dir'         , option ('root_dir').'/app/views/');
     option ('upload_dir'        , option ('root_dir').'/uploaded_files/');
@@ -59,29 +53,40 @@ function configure()
 }
 
 
+/**
+ * Loading Limonade PHP
+ */
+require_once 'lib/limonade.php';
+require_once 'lib/fz_limonade.php';
+
+
+//                                              //             // 
+// Url Schema                                   // Controller  // Action
+//                                              //             // 
+// ---------------------------------------------------------------------------
 // Main controller
-dispatch ('/'                               , array ('App_Controller_Main'     ,'indexAction'));
+fz_dispatch ('/'                                ,'Main'        ,'index');
 
 // Upload controller
-dispatch_post ('/upload'                    , array ('App_Controller_Upload'   ,'startAction'));
-dispatch_get  ('/upload/progress/:upload_id', array ('App_Controller_Upload'   ,'get_progressAction'));
+fz_dispatch_post ('/upload'                     ,'Upload'      ,'start');
+fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 
 // Backend controller
-dispatch_get  ('/admin'                     , array ('App_Controller_Admin'    ,'indexAction'));
+fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
 
 // Install controller
-dispatch_get  ('/install'                   , array ('App_Controller_Install'  ,'indexAction'));
+fz_dispatch_get  ('/install'                    ,'Install'     ,'index');
 
 // Download controller
-dispatch_get ('/:file_hash'                 , array ('App_Controller_Download' ,'previewAction'));
-dispatch_get ('/:file_hash/download'        , array ('App_Controller_Download' ,'startAction'));
+fz_dispatch_get ('/:file_hash'                  ,'Download'    ,'preview');
+fz_dispatch_get ('/:file_hash/download'         ,'Download'    ,'start');
 
 // File controller
-dispatch_get ('/:file_hash/email'           , array ('App_Controller_File'     ,'emailAction'));
-dispatch_get ('/:file_hash/delete'          , array ('App_Controller_File'     ,'deleteAction'));
+fz_dispatch_get ('/:file_hash/email'            ,'File'        ,'email');
+fz_dispatch_get ('/:file_hash/delete'           ,'File'        ,'delete');
 
-// Filez-1.x url compatibility. à tester
-dispatch_get ('/download.php'               , array ('App_Controller_Download' ,'startFzOneAction'));
+// Filez-1.x url compatibility
+fz_dispatch_get ('/download.php'                ,'Download'    ,'startFzOne');
 
 run ();
 

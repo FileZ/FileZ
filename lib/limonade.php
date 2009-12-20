@@ -55,10 +55,11 @@
 /**
  * Limonade version
  */
-define('LIMONADE',              '0.4.6');
+define('LIMONADE',              '0.5.0');
 define('LIM_START_MICROTIME',   (float)substr(microtime(), 0, 10));
 define('LIM_SESSION_NAME',      'Fresh_and_Minty_Limonade_App');
 define('LIM_SESSION_FLASH_KEY', '_lim_flash_messages');
+define('LIM_START_MEMORY',      memory_get_usage());
 define('E_LIM_HTTP',            32768);
 define('E_LIM_PHP',             65536);
 define('E_LIM_DEPRECATED',      35000);
@@ -118,7 +119,7 @@ if (get_magic_quotes_gpc())
   ini_set('magic_quotes_gpc', 0);
 }
 
-if(get_magic_quotes_runtime()) set_magic_quotes_runtime(false);
+if(function_exists('set_magic_quotes_runtime') && get_magic_quotes_runtime()) set_magic_quotes_runtime(false);
 
 # C. Disable error display
 #    by default, no error reporting; it will be switched on later in run().
@@ -385,7 +386,7 @@ function run($env = null)
         call_if_exists('before');
 
         # 6.4 Call matching controller function and output result
-        if($output = call_user_func($route['function']))
+        if($output = call_user_func_array($route['function'], array_values($route['options'])))
         {
           echo after(error_notices_render() . $output);
         }
@@ -1011,7 +1012,7 @@ function request_uri($env = null)
   {
     $uri = '/' . $uri; # add a leading slash
   }
-  return $uri;
+  return rawurldecode($uri);
 }
 
 
@@ -1027,62 +1028,66 @@ function request_uri($env = null)
 # ============================================================================ #
  
 /**
- * an alias of dispatch_get
+ * An alias of {@link dispatch_get()}
  *
  * @return void
  */
-function dispatch($path_or_array, $function)
+function dispatch($path_or_array, $function, $options = array())
 {
-  dispatch_get($path_or_array, $function);
+  dispatch_get($path_or_array, $function, $options);
 }
 
 /**
  * Add a GET route. Also automatically defines a HEAD route.
  *
  * @param string $path_or_array 
- * @param string $function 
+ * @param string $function
+ * @param array $options (optional). See {@link route()} for available options.
  * @return void
  */
-function dispatch_get($path_or_array, $function)
+function dispatch_get($path_or_array, $function, $options = array())
 {
-  route("GET", $path_or_array, $function);
-  route("HEAD", $path_or_array, $function);
+  route("GET", $path_or_array, $function, $options);
+  route("HEAD", $path_or_array, $function, $options);
 }
 
 /**
  * Add a POST route
  *
  * @param string $path_or_array 
- * @param string $function 
+ * @param string $function
+ * @param array $options (optional). See {@link route()} for available options.
  * @return void
  */
-function dispatch_post($path_or_array, $function)
+function dispatch_post($path_or_array, $function, $options = array())
 {
-  route("POST", $path_or_array, $function);
+  route("POST", $path_or_array, $function, $options);
 }
 
 /**
  * Add a PUT route
  *
  * @param string $path_or_array 
- * @param string $function 
+ * @param string $function
+ * @param array $options (optional). See {@link route()} for available options.
  * @return void
  */
-function dispatch_put($path_or_array, $function)
+function dispatch_put($path_or_array, $function, $options = array())
 {
-  route("PUT", $path_or_array, $function);
+  route("PUT", $path_or_array, $function, $options);
 }
 
 /**
  * Add a DELETE route
  *
  * @param string $path_or_array 
- * @param string $function 
+ * @param string $function
+ * @param array $options (optional). See {@link route()} for available options.
  * @return void
  */
-function dispatch_delete($path_or_array, $function)
+function dispatch_delete($path_or_array, $function, $options = array())
 {
-  route("DELETE", $path_or_array, $function);
+  route("DELETE", $path_or_array, $function, $options);
 }
 
 
@@ -1091,10 +1096,12 @@ function dispatch_delete($path_or_array, $function)
  * Delete all routes if null is passed as a unique argument
  * Return all routes
  * 
+ * @see route_build()
  * @access private
  * @param string $method 
- * @param string $path_or_array 
- * @param string $func
+ * @param string|array $path_or_array 
+ * @param callback $func
+ * @param array $options (optional)
  * @return array
  */
 function route()
@@ -1111,8 +1118,9 @@ function route()
       $method        = $args[0];
       $path_or_array = $args[1];
       $func          = $args[2];
+      $options       = $nargs > 3 ? $args[3] : array();
 
-      $routes[] = route_build($method, $path_or_array, $func);
+      $routes[] = route_build($method, $path_or_array, $func, $options);
     }
   }
   return $routes;
@@ -1133,12 +1141,18 @@ function route_reset()
  * Build a route and return it
  *
  * @access private
- * @param string $method 
- * @param string $path_or_array 
- * @param string $func
- * @return array
+ * @param string $method allowed http method (one of those returned by {@link request_methods()})
+ * @param string|array $path_or_array 
+ * @param callback $func callback function called when route is found. It can be
+ *   a function, an object method, a static method or a closure.
+ *   See {@link http://php.net/manual/en/language.pseudo-types.php#language.types.callback php documentation}
+ *   to learn more about callbacks.
+ * @param array $options (optional). Available options: 
+ *   - 'params' key with an array of parameters: for parametrized routes.
+ *     those parameters will be merged with routes parameters.
+ * @return array array with keys "method", "pattern", "names", "function", "options"
  */
-function route_build($method, $path_or_array, $func)
+function route_build($method, $path_or_array, $func, $options = array())
 {
   $method = strtoupper($method);
   if(!in_array($method, request_methods())) 
@@ -1191,7 +1205,7 @@ function route_build($method, $path_or_array, $func)
       elseif($elt == "*"):
         $parsed[] = $single_asterisk_subpattern;
         $name = $parameters_count;
-               
+
       # extracting named parameters :my_param 
       elseif($elt[0] == ":"):
         if(preg_match('/^:([^\:]+)$/', $elt, $matches))
@@ -1229,7 +1243,8 @@ function route_build($method, $path_or_array, $func)
   return array( "method"       => $method,
                 "pattern"      => $pattern,
                 "names"        => $names,
-                "function"     => $func     );
+                "function"     => $func,
+                "options"      => $options  );
 }
 
 /**
@@ -1239,7 +1254,7 @@ function route_build($method, $path_or_array, $func)
  *
  * @access private
  * @param string $method 
- * @param string $path 
+ * @param string $path
  * @return array,false
  */
 function route_find($method, $path)
@@ -1250,7 +1265,8 @@ function route_find($method, $path)
   {
     if($method == $route["method"] && preg_match($route["pattern"], $path, $matches))
     {
-      $params = array();
+      $options = $route["options"];
+      $params = array_key_exists('params', $options) ? $options["params"] : array();
       if(count($matches) > 1)
       {
         array_shift($matches);
@@ -1266,7 +1282,7 @@ function route_find($method, $path)
         {
           $names = range($n_names, $n_matches - 1);
         }
-        $params = array_combine($names, $matches);
+        $params = array_replace($params, array_combine($names, $matches));
       }
       $route["params"] = $params;
       return $route;
@@ -1357,7 +1373,7 @@ function render($content_or_func, $layout = '', $locals = array())
  * @param string $locals 
  * @return string
  */
-function render_partial($content_or_func, $locals = array())
+function partial($content_or_func, $locals = array())
 {
   return render($content_or_func, null, $locals);
 }
@@ -1688,7 +1704,10 @@ function end_content_for()
 /**
  * Calls a function if exists
  *
- * @param string $func the function name
+ * @param callback $func a function stored in a string variable, 
+ *   or an object and the name of a method within the object
+ *   See {@link http://php.net/manual/en/language.pseudo-types.php#language.types.callback php documentation}
+ *   to learn more about callbacks.
  * @param mixed $arg,.. (optional)
  * @return mixed
  */
@@ -1696,7 +1715,7 @@ function call_if_exists($func)
 {
   $args = func_get_args();
   $func = array_shift($args);
-  if(function_exists($func)) return call_user_func_array($func, $args);
+  if(is_callable($func)) return call_user_func_array($func, $args);
   return;
 }
 
@@ -1742,14 +1761,17 @@ function v($value, $default)
  *
  * @param string $path Path in which are the file to load
  * @param string $pattern a regexp pattern that filter files to load
+ * @param bool $prevents_output security option that prevents output
  * @return array paths of loaded files
  */
-function require_once_dir($path, $pattern = "*.php")
+function require_once_dir($path, $pattern = "*.php", $prevents_output = true)
 {
   if($path[strlen($path) - 1] != "/") $path .= "/";
   $filenames = glob($path.$pattern);
   if(!is_array($filenames)) $filenames = array();
+  if($prevents_output) ob_start();
   foreach($filenames as $filename) require_once $filename;
+  if($prevents_output) ob_end_clean();
   return $filenames;
 }
 
@@ -2267,7 +2289,7 @@ function file_read($filename, $return = false)
  */
 function file_list_dir($dir)
 {
-  $files = array(); 
+  $files = array();
   if ($handle = opendir($dir))
   {
     while (false !== ($file = readdir($handle)))
@@ -2279,7 +2301,42 @@ function file_list_dir($dir)
   return $files;
 }
 
+## Extra utils  ________________________________________________________________
 
+if(!function_exists('array_replace'))
+{
+  /**
+   * For PHP 5 < 5.3.0 (backward compatibility)
+   * (from {@link http://www.php.net/manual/fr/function.array-replace.php#92549 this php doc. note})
+   * 
+   * @see array_replace()
+   * @param string $array 
+   * @param string $array1 
+   * @return $array
+   */
+  function array_replace( array &$array, array &$array1 )
+  {
+    $args  = func_get_args();
+    $count = func_num_args();
+
+    for ($i = 0; $i < $count; ++$i)
+    {
+      if(is_array($args[$i]))
+      {
+        foreach ($args[$i] as $key => $val) $array[$key] = $val;
+      }
+      else
+      {
+        trigger_error(
+          __FUNCTION__ . '(): Argument #' . ($i+1) . ' is not an array',
+          E_USER_WARNING
+        );
+        return null;
+      }
+    }
+    return $array;
+  }
+}
 
 
 
