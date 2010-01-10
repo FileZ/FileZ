@@ -26,7 +26,12 @@ abstract class Fz_Db_Table_Row_Abstract {
      * @return mixed            Column value
      */
     public function __get ($var) {
-        return $this->$var;
+        if (property_exists ($this, $var))
+            return $this->$var;
+        else if (in_array ($var, $this->getTable()->getTableColumns ()))
+            return null;
+        else
+            throw new Exception ('Unknown table attribute "'.$var.'"');
     }
 
     /**
@@ -45,10 +50,7 @@ abstract class Fz_Db_Table_Row_Abstract {
         $func = create_function ('$c', 'return "_" . strtolower ($c[1]);');
         $var = preg_replace_callback ('/ ([A-Z])/', $func, $var);
 
-        if (! property_exists ($this, $var))
-            throw new Exception ('Unknown table attribute "'.$var.'"');
-
-        return $this->$var;
+        return $this->__get ($var);
     }
 
 
@@ -172,14 +174,18 @@ abstract class Fz_Db_Table_Row_Abstract {
             "INSERT INTO `$table` (" .
             implode (', ', $obj_columns) .
             ') VALUES (' .
-            implode (', ', array_map (array ('fzDb','addColon'), $obj_columns)) . ')';
+            implode (', ', array_map (array ('Fz_Db','addColon'), $obj_columns)) . ')';
 
         $stmt = $db->prepare ($sql);
         foreach ($obj_columns as $column) {
             $stmt->bindValue (':' . $column, $this->$column);
         }
 
-        $stmt->execute ();
+        if ($stmt->execute () === false) {
+            // TODO Lever une exeception
+            print_r($stmt->errorInfo ());
+        }
+
         return $db->lastInsertId ();
     }
 
@@ -217,7 +223,7 @@ abstract class Fz_Db_Table_Row_Abstract {
     /**
      * Return the table object of the current row
      *
-     * @return Fz_Table
+     * @return Fz_Table_Abstract
      */
     public function getTable () {
         return Fz_Db::getTable ($this->_tableClass);

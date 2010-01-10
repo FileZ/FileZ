@@ -2,13 +2,12 @@
 
 /**
  * Application controller
- *
- * Everything is static (and uggly) but limonade PHP needs callback to execute actions.
- *
  */
 class Fz_Controller {
 
     protected static $_user = null;
+    protected static $_userFactory = null;
+    protected static $_authHandler = null;
 
     /**
      * Check if the current user is authenticated and forward
@@ -16,24 +15,36 @@ class Fz_Controller {
      *
      * @param string  $credential
      */
-    protected function secure ($credential) {
-        if (! $this->getUser ()->isAuthenticated ()) {
-            // TODO use Zend plugin loader
-            $authClass = fz_config_get ('auth', 'handler_class', 'Fz_User_Authentication_Cas');
-            call_user_func_array (array ($authClass, 'secure'));
-        }
-        else {
-            // TODO check credentials
-        }
+    protected function secure ($credential = null) {
+        $this->getAuthHandler ()->secure ();
+        // TODO check credentials
     }
 
     /**
      * Return the current user profile
      */
     protected function getUser () {
-        if (self::$user === null) {
-            // TODO init the user
+        $auth = $this->getAuthHandler ();
+        if (self::$_user === null && $auth->isSecured ()) {
+            self::$_user = $this->buildUserProfile (
+                           $this->getUserFactory ()->findById ($auth->getUserId ()));
         }
+        return self::$_user;
+    }
+
+    /**
+     * Translate profile var name from their original name.
+     *
+     * @param array   $profile
+     * @return array            Translated profile
+     */
+    protected function buildUserProfile ($profile) {
+        $p = array ();
+        $translation = fz_config_get ('user_attributes_translation', null, array ());
+        foreach ($profile as $key => $value)
+            if (array_key_exists ($key, $translation))
+                    $p [$translation [$key]] = $value;
+        return $p;
     }
 
     /**
@@ -41,6 +52,38 @@ class Fz_Controller {
      */
     protected function getConfig () {
 
+    }
+
+    /**
+     * Return an instance of the authentication handler class
+     * 
+     * @return Fz_Controller_Security_Abstract
+     */
+    protected function getAuthHandler () {
+        if (self::$_authHandler === null) {
+            $authClass = fz_config_get ('auth', 'handler_class',
+                                        'Fz_Controller_Security_Cas');
+            self::$_authHandler = new $authClass ();
+            self::$_authHandler->setOptions (
+                                fz_config_get ('auth_options', null, array ()));
+        }
+        return self::$_authHandler;
+    }
+
+    /**
+     * Return an instance of the user factory
+     *
+     * @return Fz_User_Factory_Abstract
+     */
+    protected function getUserFactory () {
+        if (self::$_userFactory === null) {
+            $factoryClass = fz_config_get ('user_factory', 'user_factory_class',
+                                           'Fz_User_Factory_Ldap');
+            self::$_userFactory = new $factoryClass ();
+            self::$_userFactory->setOptions (
+                        fz_config_get ('user_factory_options', null, array ()));
+        }
+        return self::$_userFactory;
     }
 }
 

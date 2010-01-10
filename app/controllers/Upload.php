@@ -13,63 +13,84 @@ class App_Controller_Upload extends Fz_Controller {
         UPLOAD_ERR_EXTENSION  => 'File upload stopped by extension.',
     );
 
+    /**
+     * Action called when uploading a file
+     * @return string   json if request is made async or html otherwise
+     */
     public function startAction () {
-        $jsonData     = array ();
-        $uploadDir    = fz_config_get ('app', 'upload_dir');
+        $this->secure ();
+        $jsonData  = array (); // returned data
 
-        $availableFrom  = new Zend_Date ($_POST['start-from'], Zend_Date::DATE_SHORT);
-        $availableUntil = clone ($availableFrom);
-        $availableUntil->add ((int) $_POST['duration'], Zend_Date::DAY);
-
-        $file = new App_Model_File ();
-        $file->file_name        = $_FILES['file']['name'];
-        $file->file_size        = $_FILES['file']['size'];
-        $file->available_from   = $availableFrom;
-        $file->available_until  = $availableUntil;
-        // TODO commentaire, auteur, date d'upload ...
-        $file->save ();
-
+        $file = $this->saveFile ($_POST, $_FILES);
         // Let's move the file to its final destination
-        if (move_uploaded_file ($_FILES['file']['tmp_name'], $uploadDir.'/'.$file->id)) {
-            // returned data
-            $jsonData['status']      = 'ok';
-            $jsonData['status_text'] = 'The file has been successuly uploaded';
-            $jsonData['html']        = render_partial ('main/_file_row.php', array ('file' => $file));
-        } else {
+        if (move_uploaded_file ($_FILES['file']['tmp_name'],
+                fz_config_get ('app', 'upload_dir').'/'.$file->id)) {
 
+            $jsonData['status']      = 'ok';
+            $jsonData['statusText']  = 'The file has been successuly uploaded';
+            $jsonData['html']        = partial ('main/_file_row.php', array ('file' => $file));
+            
+        } else { // Errors happened while moving the uploaded file
+            $file->delete ();
             // Logging error if needed
-            if (in_array ($_FILES['file']['error'], array (UPLOAD_ERR_CANT_WRITE, UPLOAD_ERR_NO_TMP_DIR)))
+            if ($_FILES['file']['error'] == UPLOAD_ERR_CANT_WRITE ||
+                $_FILES['file']['error'] == UPLOAD_ERR_NO_TMP_DIR)
                 fz_log ('upload error ('.$this->uploadErrors [$_FILES['file']['error']].')', FZ_LOG_ERROR);
 
             // returned data
             $jsonData['status']     = 'error';
             $jsonData['filename']   = $_FILES['file']['name'];
-            $jsonData['debug']      = $_REQUEST;
-            $jsonData['statusText'] = $_FILES['file']['error'] != 0 ?
-                $this->uploadErrors [$_FILES['file']['error']]   :
-                'Can\'t move the file to "'.$uploadDir.'"' ;
+            $jsonData['statusText'] = 'Can\'t move the file';
         }
 
-        
         if (array_key_exists ('is_async', $_REQUEST) && $_REQUEST['is_async']) {
             // The response is embedded inside a textarea to prevent some browsers :
             // quirks : http://www.malsup.com/jquery/form/#file-upload
             // JQuery Form Plugin will handle the response transparently.
-            return '<textarea>'.json_encode ($jsonData).'</textarea>';
+            return html("<textarea>\n".json_encode ($jsonData)."\n</textarea>",'');
         }
         else {
-            // We can redirect the user to the home page
-            // TODO set flash message
-            // redirect ('/');
+            flash ('notification', 'Votre fichier a été envoyé.'); // TODO i18n
+            redirect_to ('/');
         }
     }
 
+    /**
+     * Action called from the javascript to request file upload progress
+     * @return string (json)
+     */
     public function getProgressAction () {
+        $this->secure ();
         $upload_id = params ('upload_id');
         if (!$upload_id)
             halt (NOT_FOUND, 'This upload does not exist');
           
-        return json ((public function_exists ('apc_fetch') ? apc_fetch ('upload_'.$upload_id) : false));
+        return json (function_exists ('apc_fetch') ? apc_fetch ('upload_'.$upload_id) : false);
+    }
+
+    /**
+     * @param array $post       =~ $_POST
+     * @param array $files      =~ $_FILES
+     * @return App_Model_File
+     */
+    private function saveFile ($post, $files) {
+        $availableFrom  = new Zend_Date ($post ['start-from'], Zend_Date::DATE_SHORT);
+        $availableUntil = clone ($availableFrom);
+        $availableUntil->add ((int) $post ['duration'], Zend_Date::DAY);
+
+        $user = $this->getUser ();
+
+        $file = new App_Model_File ();
+        $file->file_name        = $files ['file']['name'];
+        $file->file_size        = $files ['file']['size'];
+        $file->available_from   = $availableFrom;
+        $file->available_until  = $availableUntil;
+        $file->comment          = $post ['comment'];
+        $file->created_at       = new Zend_Date ();
+        $file->uploader_uid     = $user ['id'];
+        $file->save ();
+
+        return $file;
     }
 }
 

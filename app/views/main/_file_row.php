@@ -1,12 +1,13 @@
 
 <p class="filename">
   <?php // TODO add a copy to clipboard button ?>
-  <a href="http://<?php echo $file->getDownloadUrl () ?>">
+  <?php // TODO add $file->comment ?>
+  <a href="<?php echo $file->getDownloadUrl () ?>">
     <span class="filename"><?php echo h ($file->file_name) ?></span>
     <span class="url"     ><?php echo $file->getDownloadUrl () ?></span>
   </a>
 </p>
-<p class="download-counter">Téléchargé <?php echo $file->download_count ?> fois</p>
+<p class="download-counter">Téléchargé <?php echo (int) $file->download_count ?> fois</p>
 <p class="availability">disponible du 
   <?php if ($file->getAvailableFrom  ()->get (Zend_Date::MONTH) ==
             $file->getAvailableUntil ()->get (Zend_Date::MONTH)): ?>

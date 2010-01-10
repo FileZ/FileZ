@@ -18,10 +18,16 @@ function fz_config_load () {
 /**
  * Return a config var
  */
-function fz_config_get ($section, $var, $default = null) {
+function fz_config_get ($section, $var = null, $default = null) {
     $conf = option ('fz_config');
-    return array_key_exists ($section, $conf) ?
-        (array_key_exists ($var, $conf[$section]) ? $conf [$section][$var] : null) : null;
+    if (array_key_exists ($section, $conf)) {
+        if (array_key_exists ($var, $conf[$section]))
+            return $conf [$section][$var];
+        else if ($var === null)
+            return $conf [$section];
+    }
+
+    return null;
 }
 
 /**

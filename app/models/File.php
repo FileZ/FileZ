@@ -26,6 +26,10 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         return new Zend_Date ($this->available_from, Zend_Date::ISO_8601);
     }
 
+    public function getCreatedAt () {
+        return new Zend_Date ($this->created_at, Zend_Date::ISO_8601);
+    }
+
     protected function setAvailableUntil ($date) {
         $this->available_until = $date instanceof Zend_Date ?
             $date->get (Zend_Date::ISO_8601) : $date;
@@ -33,6 +37,11 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
     protected function setAvailableFrom ($date) {
         $this->available_from = $date instanceof Zend_Date ?
+            $date->get (Zend_Date::ISO_8601) : $date;
+    }
+
+    protected function setCreatedAt ($date) {
+        $this->created_at = $date instanceof Zend_Date ?
             $date->get (Zend_Date::ISO_8601) : $date;
     }
 

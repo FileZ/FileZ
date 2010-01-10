@@ -3,8 +3,10 @@
 /**
  * Loading Zend for i18n classes and autoloader
  */
-set_include_path (get_include_path ().PATH_SEPARATOR
-    .dirname (__FILE__).DIRECTORY_SEPARATOR.'lib');
+set_include_path (get_include_path ()
+    .PATH_SEPARATOR.dirname (__FILE__).DIRECTORY_SEPARATOR.'lib'
+    .PATH_SEPARATOR.dirname (__FILE__).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'pear'
+    .PATH_SEPARATOR.dirname (__FILE__).DIRECTORY_SEPARATOR.'plugins');
 
 require_once 'Zend/Loader/Autoloader.php';
 // Autoloading for Fz_* classes in lib/ dir
@@ -57,6 +59,9 @@ function configure() {
  * Loading Limonade PHP
  */
 require_once 'lib/limonade.php';
+error_reporting(E_ALL);
+ini_set ('display_errors',TRUE);
+
 require_once 'lib/fz_limonade.php';
 
 

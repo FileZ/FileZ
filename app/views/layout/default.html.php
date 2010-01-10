@@ -9,23 +9,23 @@
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/jquery.ui/css/cupertino/jquery-ui-1.7.2.custom.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/main.css') ?>" type="text/css" media="all" />
 
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery-1.3.2.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery-1.3.2.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.form.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.progressbar.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/jquery-ui-1.7.2.custom.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') // FIXME ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/filez.js') ?>"></script>
 
-    <script type="text/javascript">
-      $(document).ready (function () {
-      });
-    </script>
   </head>
   <body>
 
     <header>
       <h1><img src="<?php echo public_url_for ('resources/images/filez-logo.png') ?>" title="filez" /></h1>
       <p>Cette application vous permet de déposer des fichiers pour une durée limitée.</p>
+
+      <?php if (array_key_exists ('notification', $flash)): ?>
+        <p class="notif ok"><?php echo $flash ['notification'] ?></p>
+      <?php endif ?>
     </header>
 
     <article>

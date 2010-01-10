@@ -603,7 +603,7 @@ function error_handler_dispatcher($errno, $errstr, $errfile, $errline)
   if(error_wont_halt_app($errno))
   {
     error_notice($errno, $errstr, $errfile, $errline);
-  	return;
+    return;
   }
   else
   {
@@ -707,7 +707,7 @@ function error_server_error_output($errno, $errstr, $errfile, $errline)
       $is_http_error = http_response_status_is_valid($errno);
       $args = compact('errno', 'errstr', 'errfile', 'errline', 'is_http_error');
       option('views_dir', option('limonade_views_dir'));
-      $html = render('error.html.php', null, $args);	
+      $html = render('error.html.php', null, $args);
       option('views_dir', option('error_views_dir'));
       return html($html, error_layout(), $args);
     }
@@ -952,6 +952,8 @@ function request_methods()
  */
 function request_uri($env = null)
 {
+  return $_SERVER['REQUEST_URI'];
+  
   static $uri = null;
   if(is_null($env))
   {
@@ -975,29 +977,34 @@ function request_uri($env = null)
   else
   {
     $app_file = app_file();
+    $redirect_url = isset($env['SERVER']['REDIRECT_URL']) ? $env['SERVER']['REDIRECT_URL'] : @getenv('REDIRECT_URL');
     $path_info = isset($env['SERVER']['PATH_INFO']) ? $env['SERVER']['PATH_INFO'] : @getenv('PATH_INFO');
     $query_string =  isset($env['SERVER']['QUERY_STRING']) ? $env['SERVER']['QUERY_STRING'] : @getenv('QUERY_STRING');
 
+    if (trim($redirect_url, '/') != '' && $redirect_url != "/".$app_file)
+    {
+      $uri = $redirect_url;
+    }
     // Is there a PATH_INFO variable?
-  	// Note: some servers seem to have trouble with getenv() so we'll test it two ways
-  	if (trim($path_info, '/') != '' && $path_info != "/".$app_file)
-  	{
-  	  $uri = $path_info;
-  	}
-  	// No PATH_INFO?... What about QUERY_STRING?
-  	elseif (trim($query_string, '/') != '')
-  	{
-  	  $uri = $query_string;
-  	}
-  	elseif(array_key_exists('REQUEST_URI', $env['SERVER']) && !empty($env['SERVER']['REQUEST_URI']))
-  	{
-  	  $request_uri = rtrim(rawurldecode($env['SERVER']['REQUEST_URI']), '?/').'/';
-  	  $base_path = $env['SERVER']['SCRIPT_NAME'];
+    // Note: some servers seem to have trouble with getenv() so we'll test it two ways
+    elseif (trim($path_info, '/') != '' && $path_info != "/".$app_file)
+    {
+      $uri = $path_info;
+    }
+    // No PATH_INFO?... What about QUERY_STRING?
+    elseif (trim($query_string, '/') != '')
+    {
+      $uri = $query_string;
+    }
+    elseif(array_key_exists('REQUEST_URI', $env['SERVER']) && !empty($env['SERVER']['REQUEST_URI']))
+    {
+      $request_uri = rtrim(rawurldecode($env['SERVER']['REQUEST_URI']), '?/').'/';
+      $base_path = $env['SERVER']['SCRIPT_NAME'];
 
       if($request_uri."index.php" == $base_path) $request_uri .= "index.php";
-  	  $uri = str_replace($base_path, '', $request_uri);
-  	}
-  	elseif($env['SERVER']['argc'] > 1 && trim($env['SERVER']['argv'][1], '/') != '')
+      $uri = str_replace($base_path, '', $request_uri);
+    }
+    elseif($env['SERVER']['argc'] > 1 && trim($env['SERVER']['argv'][1], '/') != '')
     {
       $uri = $env['SERVER']['argv'][1];
     }
@@ -1261,6 +1268,9 @@ function route_find($method, $path)
 {
   $routes = route();
   $method = strtoupper($method);
+  if (($pos = strpos ($path, '?')) !== false)
+    $path = substr ($path, 0, $pos);
+
   foreach($routes as $route)
   {
     if($method == $route["method"] && preg_match($route["pattern"], $path, $matches))
@@ -1666,11 +1676,11 @@ function content_for($name = null, $content = null)
   if(is_null($name) && !is_null($_name))
   {
     set($_name, ob_get_clean());
-    $_name = null;	
+    $_name = null;
   }
   elseif(!is_null($name) && !isset($content))
   {
-    $_name = $name;	
+    $_name = $name;
     ob_start();
   }
   elseif(isset($name, $content))
@@ -2270,8 +2280,8 @@ function file_is_binary($filename)
 /**
  * Return or output file content
  *
- * @return 	string, int
- *				
+ * @return   string, int
+ *
  **/
 
 function file_read($filename, $return = false)

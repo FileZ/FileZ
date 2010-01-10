@@ -15,6 +15,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         'notify_uploader',
         'uploader_uid',
         'extends_count',
+        'created_at',
     );
 
     public function hashToId ($hash) {
@@ -34,14 +35,14 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         return $id;
     }
 
-    public static function findByHash ($hash) {
+    public function findByHash ($hash) {
         $id = $this->hashToId ($hash);
         return $this->findById ($id);
     }
 
-    public static function findByOwner ($uid) {
-        $sql = "SELECT FROM fz_file WHERE uploader_uid=:uid";
-        return fz_db_find_object_by_sql ($sql, App_Model_File::$TABLE_NAME, array (':uid' => $uid));
+    public function findByOwnerOrderByUploadDateDesc ($uid) {
+        $sql = "SELECT FROM fz_file WHERE uploader_uid=:uid ORDER BY created_at DESC";
+        return $this->findBySql ($sql, array (':uid' => $uid));
     }
 }
 

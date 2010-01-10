@@ -63,12 +63,13 @@ header p {
 	-moz-border-radius:		 10px;
 	-webkit-border-radius: 10px;
 	padding: 1em;
+        margin-top: 2em;
+	background: #fffec2; /* notif ok */
+	border: 1px solid #E5E4AD; /* notif ok */
 }
 .notif.error {
 	background: #f2e1dc;
 	border: 1px solid #f3c5c1;
-  -moz-box-shadow:    2px 3px 3px rgba(0,0,0,0.08);
-  -webkit-box-shadow: 2px 3px 3px rgba(0,0,0,0.08); 
 }
 .notif.error h1 {
 	color: #AC342B;

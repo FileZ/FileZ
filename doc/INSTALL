@@ -27,6 +27,13 @@ Apache virtual host example
 ---------------------------
 
 
+Security strategies
+------------------
+
+  CAS Server
+  ----------
+
+  apt-get install php5-curl
 
 
 Installing and configuring APC
@@ -44,6 +51,7 @@ Enable extension and specific option :
 
   # echo "extension = apc.so" >> /etc/php5/apache2/conf.d/apc.ini
   # echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
+  # apache2ctl restart
 
 
 

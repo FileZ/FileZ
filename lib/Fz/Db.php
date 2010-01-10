@@ -59,7 +59,7 @@ class Fz_Db {
      * @return  object 
      */
     public static function getTable ($table) {
-        if (! self::$_tables [$table]) {
+        if (! array_key_exists($table, self::$_tables)) {
             $prefix = 'App_Model_DbTable_';
             $tableClass = substr ($table, 0, strlen ($prefix)) == $prefix ?
                                 $table : ($prefix.$table);

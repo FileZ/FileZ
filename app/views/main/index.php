@@ -98,6 +98,9 @@
           files.children ('li:first').slideDown (500);
         }
         else {
+          $('header').append ('<p class="notif error">'
+            +'Une erreur s\'est produite, veuillez réessayer'
+            +'</p>');
         }
       }
 
@@ -105,7 +108,7 @@
         beforeSubmit: onFileUploadStart, // pre-submit callback 
         success:      onFileUploadEnd,   // post-submit callback 
         resetForm:    true,              // reset the form after successful submit 
-        iframe:       true,              // force the form to be submitted using an iframe 
+        iframe:       true,              // force the form to be submitted using an iframe
                                          // even if no file has been selected
         dataType: 'json'                 // force response type to JSON
       }; 
@@ -125,7 +128,7 @@
   <ul id="files">
     <?php $odd = true; foreach ($files as $file): ?>
       <li class="file <?php echo $odd ? 'odd' : 'even'; $odd = ! $odd; ?>">
-        <?php echo render_partial ('main/_file_row.php', array ('file' => $file)) ?> 
+        <?php echo partial ('main/_file_row.php', array ('file' => $file)) ?> 
       </li>
     <?php endforeach ?>
   </ul>

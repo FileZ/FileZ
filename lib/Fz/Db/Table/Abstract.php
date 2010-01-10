@@ -41,7 +41,7 @@ abstract class Fz_Db_Table_Abstract {
     /**
      * Retrieve all rows of the current table
      *
-     * @return array  Array of fzTableRow
+     * @return array  Array of Fz_Table_Row_Abstrat
      */
     public function findAll () {
         $sql = "SELECT * FROM ".$this->getTableName ();
@@ -52,11 +52,21 @@ abstract class Fz_Db_Table_Abstract {
      * Retrieve a table row by its id
      *
      * @param   int     $id
-     * @return  Fz_Table_Row
+     * @return  Fz_Table_Row_Abstrat
      */
     public function findBydId ($id) {
         $sql = "SELECT * FROM ".$this->getTableName ().' WHERE id = ?';
-        return Fz_Db::findObjectBySQL ($sql, $this->getRowClass (), array ($id));
+        return $this->findBySQL ($sql, array ($id));
+    }
+
+    /**
+     * Retrieve table rows from a sql query
+     *
+     * @param   string  $sql
+     * @return  Fz_Table_Row_Abstrat
+     */
+    public function findBydSql ($sql, $data = array ()) {
+        return $this->findBySQL ($sql, $this->getRowClass (), $data);
     }
 
     /**
