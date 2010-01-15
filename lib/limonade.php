@@ -2175,7 +2175,8 @@ function mime_type($ext = null)
     'xyz'     => 'chemical/x-xyz',
     'zip'     => 'application/zip'
   );
-  return is_null($ext) ? $types : $types[strtolower($ext)];
+  if(is_null($ext)) return $types;
+  return array_key_exists($ext, $types) ? $types[strtolower($ext)] : 'application/octet-stream';
 }
 
 /**

@@ -31,28 +31,30 @@
     <div id="upload-progress" style="display: none;"></div>
   </div>
 
-  <?php if ($use_async_upload): ?>
-    <script type="text/javascript">
+  <script type="text/javascript">
 
-      // TODO mettre ce code dans un fichier
+    // TODO mettre ce code dans un fichier
 
-      // @var interval ID
-      var progressChecker = 0;
+    // @var interval ID
+    var progressChecker = 0;
 
-      /**
-       * Function called on form submission
-       */
-      function onFileUploadStart (data, form, options) {
-        console.log ('upload starts...');
+    // @var boolean 
+    var uploadFinished = true;
 
-        $('#start-upload').hide ();
-        $("#upload-loading").show ();
-        $("#upload-progress").progressBar ({
-          barImage: 'resources/images/progressbg_green.gif',
-          boxImage: 'resources/images/progressbar.gif'
-        });
+    /**
+     * Function called on form submission
+     */
+    function onFileUploadStart (data, form, options) {
+      console.log ('upload starts...');
+      uploadFinished = false;
+      $('#start-upload').hide ();
+      $("#upload-loading").show ();
+      $("#upload-progress").progressBar ({
+        barImage: 'resources/images/progressbg_green.gif',
+        boxImage: 'resources/images/progressbar.gif'
+      });
 
-        progressChecker = setInterval (function () {
+      progressChecker = setInterval (function () {
         $.getJSON ('<?php echo url_for ('upload/progress/'.$upload_id) ?>', 
           function (data){
             console.log (data);
@@ -66,59 +68,73 @@
             $("#upload-loading").hide ();
             $('#upload-progress').show ();
 
-            if (data.done == 1)
+            if (data.done == 1) {
               clearInterval (progressChecker); 
-
-            var percentage = Math.floor (100 * parseInt (data.current) / parseInt (data.total));
-            $("#upload-progress").progressBar (percentage);
+              if (uploadFinished) {
+                reloadUploadForm ();
+              }
+              else {
+                $("#upload-loading").show ();
+                $('#upload-progress').hide ();
+              }
+            }
+            else {
+              var percentage = Math.floor (100 * parseInt (data.current) / parseInt (data.total));
+              $("#upload-progress").progressBar (percentage);
+            }
           }
-        )}, 750);
+        )}, <?php echo $refresh_rate ?>);
+    }
+
+    /**
+     * Function called once the file has been successfully uploaded
+     */
+    function onFileUploadEnd (data, status) {
+      console.log ('upload ends.');
+      uploadFinished = true;
+      clearInterval (progressChecker); 
+      reloadUploadForm ();
+      console.log (data);
+
+      if (data.status == 'ok') {
+        var files = $('ul#files');
+        var cssClass = files.children ('li:first').hasClass ('odd') ? 'even' : 'odd' ;
+   
+        files.prepend (
+          '<li class="file '+cssClass+'" style="display: none;">'+data.html+'</li>'
+        );
+        files.children ('li:first').slideDown (500);
       }
-
-      /**
-       * Function called once the file has been successfully uploaded
-       */
-      function onFileUploadEnd (data, status) {
-        console.log ('upload ends.');
-        clearInterval (progressChecker);
-        $('#start-upload').show ();
-        $("#upload-progress").progressBar (0);
-        $('#upload-progress').hide ();
-        $('#upload-loading').hide ();
-        $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
-        console.log (data);
-
-        if (data.status == 'ok') {
-          var files = $('ul#files');
-          var cssClass = files.children ('li:first').hasClass ('odd') ? 'even' : 'odd' ;
-     
-          files.prepend (
-            '<li class="file '+cssClass+'" style="display: none;">'+data.html+'</li>'
-          );
-          files.children ('li:first').slideDown (500);
-        }
-        else {
-          $('header').append ('<p class="notif error">'
-            +'Une erreur s\'est produite, veuillez réessayer'
-            +'</p>');
-        }
+      else {
+        $('header').append ('<p class="notif error">'
+          +'Une erreur s\'est produite, veuillez réessayer'
+          +'</p>');
       }
+    }
 
-      var ajaxFormOptions = { 
-        beforeSubmit: onFileUploadStart, // pre-submit callback 
-        success:      onFileUploadEnd,   // post-submit callback 
-        resetForm:    true,              // reset the form after successful submit 
-        iframe:       true,              // force the form to be submitted using an iframe
-                                         // even if no file has been selected
-        dataType: 'json'                 // force response type to JSON
-      }; 
-    
-      $(document).ready (function () {
-        $('#upload-form').ajaxForm (ajaxFormOptions);
-        $('#upload-form').append ('<input type="hidden" name="is_async" value="1" />');
-      });
-    </script>
-  <?php endif // use_async_upload ?>
+    function reloadUploadForm () {
+      //clearInterval (progressChecker);
+      $('#start-upload').show ();
+      $("#upload-progress").progressBar (0);
+      $('#upload-progress').hide ();
+      $('#upload-loading').hide ();
+      $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
+    }
+
+    var ajaxFormOptions = { 
+      beforeSubmit: onFileUploadStart, // pre-submit callback 
+      success:      onFileUploadEnd,   // post-submit callback 
+      resetForm:    true,              // reset the form after successful submit 
+      iframe:       true,              // force the form to be submitted using an iframe
+                                       // even if no file has been selected
+      dataType: 'json'                 // force response type to JSON
+    }; 
+  
+    $(document).ready (function () {
+      $('#upload-form').ajaxForm (ajaxFormOptions);
+      $('#upload-form').append ('<input type="hidden" name="is_async" value="1" />');
+    });
+  </script>
 
   </form>
 </section>

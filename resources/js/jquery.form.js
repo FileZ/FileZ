@@ -1,6 +1,6 @@
 /*
  * jQuery Form Plugin
- * version: 2.33 (22-SEP-2009)
+ * version: 2.36 (07-NOV-2009)
  * @requires jQuery v1.2.6 or later
  *
  * Examples and documentation at: http://malsup.com/jquery/form/
@@ -62,7 +62,8 @@ $.fn.ajaxSubmit = function(options) {
 
 	options = $.extend({
 		url:  url,
-		type: this.attr('method') || 'GET'
+		type: this.attr('method') || 'GET',
+		iframeSrc: /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
 	}, options || {});
 
 	// hook for manipulating the form data before it is extracted;
@@ -146,7 +147,8 @@ $.fn.ajaxSubmit = function(options) {
 //	multipart = ($form.attr('enctype') == mp || $form.attr('encoding') == mp);
 
 	// options.iframe allows user to force iframe mode
-   if (options.iframe || found || multipart) {
+	// 06-NOV-09: now defaulting to iframe mode if file input is detected
+   if ((files.length && options.iframe !== false) || options.iframe || found || multipart) {
 	   // hack to fix Safari hang (thanks to Tim Molendijk for this)
 	   // see:  http://groups.google.com/group/jquery-dev/browse_thread/thread/36395b7ab510dd5d
 	   if (options.closeKeepAlive)
@@ -175,7 +177,7 @@ $.fn.ajaxSubmit = function(options) {
 		var s = $.extend(true, {}, $.extend(true, {}, $.ajaxSettings), opts);
 
 		var id = 'jqFormIO' + (new Date().getTime());
-		var $io = $('<iframe id="' + id + '" name="' + id + '" src="about:blank" />');
+		var $io = $('<iframe id="' + id + '" name="' + id + '" src="'+ opts.iframeSrc +'" />');
 		var io = $io[0];
 
 		$io.css({ position: 'absolute', top: '-1000px', left: '-1000px' });
@@ -191,7 +193,7 @@ $.fn.ajaxSubmit = function(options) {
 			setRequestHeader: function() {},
 			abort: function() {
 				this.aborted = 1;
-				$io.attr('src','about:blank'); // abort op in progress
+				$io.attr('src', opts.iframeSrc); // abort op in progress
 			}
 		};
 
@@ -377,13 +379,18 @@ $.fn.ajaxForm = function(options) {
 		$(this).ajaxSubmit(options);
 		return false;
 	}).bind('click.form-plugin', function(e) {
-		var $el = $(e.target);
+		var target = e.target;
+		var $el = $(target);
 		if (!($el.is(":submit,input:image"))) {
-			return;
+			// is this a child element of the submit el?  (ex: a span within a button)
+			var t = $el.closest(':submit');
+			if (t.length == 0)
+				return;
+			target = t[0];
 		}
 		var form = this;
-		form.clk = e.target;
-		if (e.target.type == 'image') {
+		form.clk = target;
+		if (target.type == 'image') {
 			if (e.offsetX != undefined) {
 				form.clk_x = e.offsetX;
 				form.clk_y = e.offsetY;
@@ -392,12 +399,12 @@ $.fn.ajaxForm = function(options) {
 				form.clk_x = e.pageX - offset.left;
 				form.clk_y = e.pageY - offset.top;
 			} else {
-				form.clk_x = e.pageX - e.target.offsetLeft;
-				form.clk_y = e.pageY - e.target.offsetTop;
+				form.clk_x = e.pageX - target.offsetLeft;
+				form.clk_y = e.pageY - target.offsetTop;
 			}
 		}
 		// clear form vars
-		setTimeout(function() { form.clk = form.clk_x = form.clk_y = null; }, 10);
+		setTimeout(function() { form.clk = form.clk_x = form.clk_y = null; }, 100);
 	});
 };
 

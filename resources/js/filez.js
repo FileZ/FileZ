@@ -1,4 +1,7 @@
 
+if (! console)
+  var console = {log: function (txt) {}};
+
 function uniqid (prefix, more_entropy) {
     // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
     // +    revised by: Kankrelune (http://www.webfaktory.info/)
