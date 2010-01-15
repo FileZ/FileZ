@@ -33,7 +33,7 @@ Security strategies
   CAS Server
   ----------
 
-  apt-get install php5-curl
+  apt-get install curl php5-curl
 
 
 Installing and configuring APC

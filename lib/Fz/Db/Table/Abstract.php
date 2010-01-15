@@ -54,19 +54,29 @@ abstract class Fz_Db_Table_Abstract {
      * @param   int     $id
      * @return  Fz_Table_Row_Abstrat
      */
-    public function findBydId ($id) {
+    public function findById ($id) {
         $sql = "SELECT * FROM ".$this->getTableName ().' WHERE id = ?';
-        return $this->findBySQL ($sql, array ($id));
+        return $this->findOneBySQL ($sql, array ($id));
     }
 
     /**
      * Retrieve table rows from a sql query
      *
      * @param   string  $sql
-     * @return  Fz_Table_Row_Abstrat
+     * @return  array of Fz_Table_Row_Abstrat
      */
-    public function findBydSql ($sql, $data = array ()) {
-        return $this->findBySQL ($sql, $this->getRowClass (), $data);
+    public function findBySql ($sql, $data = array ()) {
+        return Fz_Db::findObjectsBySQL ($sql, $this->getRowClass (), $data);
+    }
+
+    /**
+     * Retrieve a table row from a sql query
+     *
+     * @param   string  $sql
+     * @return  Fz_Table_Row_Abstrat or null
+     */
+    public function findOneBySql ($sql, $data = array ()) {
+        return Fz_Db::findObjectBySQL ($sql, $this->getRowClass (), $data);
     }
 
     /**

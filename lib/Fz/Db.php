@@ -27,8 +27,7 @@ class Fz_Db {
         $result = array ();
         $stmt = $db->prepare ($sql);
         if ($stmt->execute ($params)) {
-            while ($obj = $stmt->fetchObject ($class_name)) {
-                $obj->setExist (true);
+            while ($obj = $stmt->fetchObject ($class_name, array (true))) {
                 $result[] = $obj;
             }
         }

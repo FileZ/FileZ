@@ -20,7 +20,11 @@
   <body>
 
     <header>
-      <h1><img src="<?php echo public_url_for ('resources/images/filez-logo.png') ?>" title="filez" /></h1>
+      <h1>
+        <a href="<?php echo public_url_for('/') ?>">
+          <img src="<?php echo public_url_for ('resources/images/filez-logo.png') ?>" title="filez" />
+        </a>
+      </h1>
       <p>Cette application vous permet de déposer des fichiers pour une durée limitée.</p>
 
       <?php if (array_key_exists ('notification', $flash)): ?>

@@ -85,5 +85,13 @@ class Fz_Controller {
         }
         return self::$_userFactory;
     }
+
+    /**
+     *
+     * @return boolean
+     */
+    protected function isXhrRequest () {
+        return ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+    }
 }
 

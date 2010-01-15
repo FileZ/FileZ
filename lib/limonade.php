@@ -952,7 +952,20 @@ function request_methods()
  */
 function request_uri($env = null)
 {
-  return $_SERVER['REQUEST_URI'];
+  $str_size = min(strlen($_SERVER['REQUEST_URI']), strlen($_SERVER['SCRIPT_NAME']));
+  $start = 0;
+  for(; $start < $str_size; ++$start)
+  {
+    if($_SERVER['REQUEST_URI'][$start] !== $_SERVER['SCRIPT_NAME'][$start])
+    {
+       break;
+    }
+  }
+  $uri = substr($_SERVER['REQUEST_URI'], $start);
+  if (strlen($uri == 0) || $uri[0] !== '/')
+      $uri = '/'.$uri;
+
+  return $uri;
   
   static $uri = null;
   if(is_null($env))

@@ -49,4 +49,18 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         return 'http://'.$_SERVER["SERVER_NAME"].url_for ('/').$this->getHash ();
     }
 
+    /**
+     *
+     */
+    public function getReadableFileSize ($precision = 2) {
+        $units = array('B', 'KB', 'MB', 'GB', 'TB'); // TODO i18n
+
+        $bytes = $this->file_size;
+        $pow = floor (($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
+    }
 }

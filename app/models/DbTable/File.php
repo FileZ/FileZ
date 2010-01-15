@@ -19,7 +19,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     );
 
     public function hashToId ($hash) {
-        return base_convert ($hash, 10, 36);
+        return base_convert ($hash, 36, 10);
     }
 
     public function idToHash ($id) {
@@ -27,6 +27,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     }
 
     public function getFreeId () {
+        // TODO put hash config in filez.ini
         $min = base_convert ('aaaa' , 36, 10);
         $max = base_convert ('zzzzz', 36, 10); // hash is 5 chars max
         $id = rand ($min, $max);
@@ -36,12 +37,11 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     }
 
     public function findByHash ($hash) {
-        $id = $this->hashToId ($hash);
-        return $this->findById ($id);
+        return $this->findById ($this->hashToId ($hash));
     }
 
     public function findByOwnerOrderByUploadDateDesc ($uid) {
-        $sql = "SELECT FROM fz_file WHERE uploader_uid=:uid ORDER BY created_at DESC";
+        $sql = "SELECT * FROM fz_file WHERE uploader_uid=:uid ORDER BY created_at DESC";
         return $this->findBySql ($sql, array (':uid' => $uid));
     }
 }

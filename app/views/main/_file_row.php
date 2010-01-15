@@ -3,11 +3,14 @@
   <?php // TODO add a copy to clipboard button ?>
   <?php // TODO add $file->comment ?>
   <a href="<?php echo $file->getDownloadUrl () ?>">
-    <span class="filename"><?php echo h ($file->file_name) ?></span>
+    <span class="filename"><?php echo h ($file->file_name) // TODO truncate if too long ?></span>
     <span class="url"     ><?php echo $file->getDownloadUrl () ?></span>
   </a>
 </p>
-<p class="download-counter">Téléchargé <?php echo (int) $file->download_count ?> fois</p>
+<p class="file-info">    
+    <span class="filesize">(<?php echo $file->getReadableFileSize () ?>)</span>
+    <span class="download-counter">Téléchargé <?php echo (int) $file->download_count ?> fois</span>
+</p>
 <p class="availability">disponible du 
   <?php if ($file->getAvailableFrom  ()->get (Zend_Date::MONTH) ==
             $file->getAvailableUntil ()->get (Zend_Date::MONTH)): ?>

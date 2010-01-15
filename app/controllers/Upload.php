@@ -19,9 +19,8 @@ class App_Controller_Upload extends Fz_Controller {
      */
     public function startAction () {
         $this->secure ();
-        $jsonData  = array (); // returned data
-
-        $file = $this->saveFile ($_POST, $_FILES);
+        $jsonData = array (); // returned data
+        $file     = $this->saveFile ($_POST, $_FILES);
         // Let's move the file to its final destination
         if (move_uploaded_file ($_FILES['file']['tmp_name'],
                 fz_config_get ('app', 'upload_dir').'/'.$file->id)) {

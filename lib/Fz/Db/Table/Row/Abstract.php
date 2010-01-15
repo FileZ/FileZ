@@ -16,7 +16,8 @@ abstract class Fz_Db_Table_Row_Abstract {
      *
      * @return Fz_Table_Row
      */
-    public function __construct () {
+    public function __construct ($exists = false) {
+        $this->_exists = $exists;
     }
 
     /**
@@ -48,9 +49,9 @@ abstract class Fz_Db_Table_Row_Abstract {
 
         $var[0] = strtolower ($var[0]);
         $func = create_function ('$c', 'return "_" . strtolower ($c[1]);');
-        $var = preg_replace_callback ('/ ([A-Z])/', $func, $var);
+        $var = preg_replace_callback ('/([A-Z])/', $func, $var);
 
-        return $this->__get ($var);
+        return $this->$var;
     }
 
 
@@ -146,7 +147,7 @@ abstract class Fz_Db_Table_Row_Abstract {
 
         $sql =
             "UPDATE `$table` SET " .
-            implode (', ', array_map (array ('fzDb','nameEqColonName'), $obj_columns)) .
+            implode (', ', array_map (array ('Fz_Db','nameEqColonName'), $obj_columns)) .
             ' WHERE id = :id';
 
         $stmt = $db->prepare ($sql);
