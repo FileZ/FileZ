@@ -15,6 +15,7 @@ class App_Controller_File extends Fz_Controller {
      */
     public function previewAction () {
         $file = $this->getFile();
+        // TODO vérifier $file->available_until & available_from !!!
         set ('file', $file);
         return html ('download/preview.php');
     }
@@ -24,6 +25,7 @@ class App_Controller_File extends Fz_Controller {
      */
     public function downloadAction () {
         $file = $this->getFile ();
+        // TODO vérifier $file->available_until & available_from !!!
         $file->download_count = $file->download_count + 1;
         $file->save ();
         return $this->sendFile ($file);
@@ -33,8 +35,9 @@ class App_Controller_File extends Fz_Controller {
      * Allows to download file with filez-1.x urls
      */
     public function downloadFzOneAction () {
-        // TODO
+        // TODO vérifier $file->available_until & available_from !!!
         $file_hash = $_GET ['ad'];
+        // TODO
         // $file = ...
         return $this->sendFile ($file);
     }

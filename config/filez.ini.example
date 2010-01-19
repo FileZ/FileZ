@@ -11,6 +11,8 @@ user     = filez
 password = filez
 
 [email]
+from_email=filez@univ-avignon.fr
+from_name=Filez
 host=smtp.univ-avignon.fr
 ; auth=login ; possible values = crammd5, login, plain
 ; port=25
