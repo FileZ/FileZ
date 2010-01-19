@@ -1,2 +1,7 @@
 
-Refactor var names according to the coding conventions
+* Refactor var names according to the coding conventions
+* Permettre l'ouverture d'un client de messagerie "non web" (avec mailto:)
+* Remplacer les texte "envoyer par email" par "partager" ?
+* Dans la liste des fichiers, remplacer le nom du fichier par le commentaire s'il existe
+  * Limiter le nombre de caractère des commentaires
+* Présenter le formulaire d'upload d'un fichier dans une modal box
