@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Controller used to upload files and monitor progression
+ */
 class App_Controller_Upload extends Fz_Controller {
 
     protected $uploadErrors = array (
@@ -26,9 +29,24 @@ class App_Controller_Upload extends Fz_Controller {
                 fz_config_get ('app', 'upload_dir').'/'.$file->id)) {
 
             $jsonData['status']      = 'ok';
-            $jsonData['statusText']  = 'The file has been successuly uploaded';
+            $jsonData['statusText']  = 'The file has been successfuly uploaded';
             $jsonData['html']        = partial ('main/_file_row.php', array ('file' => $file));
-            
+
+            // Notify the uploader by mail
+            $user = $this->getUser ();
+            $subject = '[FileZ] Dépôt du fichier "%file_name%"'; // TODO i18n
+            $subject = str_replace ('%file_name%', $file->file_name, $subject);
+            $msg = 'email_upload_success (%file_name%, %file_url%, %filez_url%)'; // TODO i18n
+            $msg = str_replace ('%file_name%', $file->file_name, $msg);
+            $msg = str_replace ('%file_url%' , $file->getDownloadUrl(), $msg);
+            $msg = str_replace ('%filez_url%', 'http://'.$_SERVER["SERVER_NAME"]
+                                                          .url_for ('/'), $msg);
+            $mail = $this->createMail();
+            $mail->setBodyText ($msg);
+            $mail->setSubject  ($subject);
+            $mail->addTo ($user ['email'], $user['firstname'].' '.$user['lastname']);
+            $mail->send ();
+
         } else { // Errors happened while moving the uploaded file
             $file->delete ();
             // Logging error if needed
@@ -39,7 +57,7 @@ class App_Controller_Upload extends Fz_Controller {
             // returned data
             $jsonData['status']     = 'error';
             $jsonData['filename']   = $_FILES['file']['name'];
-            $jsonData['statusText'] = 'Can\'t move the file';
+            $jsonData['statusText'] = $this->uploadErrors [$_FILES['file']['error']];
         }
 
         if (array_key_exists ('is_async', $_REQUEST) && $_REQUEST['is_async']) {

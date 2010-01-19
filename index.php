@@ -64,7 +64,6 @@ ini_set ('display_errors',TRUE);
 
 require_once 'lib/fz_limonade.php';
 
-
 //                                              //             // 
 // Url Schema                                   // Controller  // Action
 //                                              //             // 
@@ -77,21 +76,23 @@ fz_dispatch_post ('/upload'                     ,'Upload'      ,'start');
 fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 
 // Backend controller
-fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
+fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index'); // TODO
 
 // Install controller
-fz_dispatch_get  ('/install'                    ,'Install'     ,'index');
+fz_dispatch_get  ('/install'                    ,'Install'     ,'index'); // TODO
 
 // Download controller
-fz_dispatch_get ('/:file_hash'                  ,'Download'    ,'preview');
-fz_dispatch_get ('/:file_hash/download'         ,'Download'    ,'start');
-
-// File controller
-fz_dispatch_get ('/:file_hash/email'            ,'File'        ,'email');
-fz_dispatch_get ('/:file_hash/delete'           ,'File'        ,'delete');
+fz_dispatch_get  ('/:file_hash'                 ,'File'        ,'preview');
+fz_dispatch_get  ('/:file_hash/download'        ,'File'        ,'download');
 
 // Filez-1.x url compatibility
-fz_dispatch_get ('/download.php'                ,'Download'    ,'startFzOne');
+fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne'); // TODO
+
+// File controller
+fz_dispatch_get    ('/:file_hash/email'         ,'File'        ,'email'); // TODO
+fz_dispatch_post   ('/:file_hash/email'         ,'File'        ,'email');
+fz_dispatch_delete ('/:file_hash/delete'        ,'File'        ,'delete');
+
 
 run ();
 

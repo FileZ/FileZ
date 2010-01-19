@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Main controller
+ */
 class App_Controller_Main extends Fz_Controller {
 
     public function indexAction () {

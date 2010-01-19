@@ -1,5 +1,18 @@
 <?php 
 
+/**
+ * @property boolean $del_notif_sent
+ * @property string  $file_name
+ * @property string  $uploader_email
+ * @property int     $file_size
+ * @property string  $available_from    DATE
+ * @property string  $available_until   DATE
+ * @property int     $download_count
+ * @property boolean $notify_uploader
+ * @property string  $uploader_uid
+ * @property int     $extends_count
+ * @property int     $created_at        TIMESTAMP
+ */
 class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
     protected $_tableClass = 'App_Model_DbTable_File';

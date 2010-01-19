@@ -5,9 +5,12 @@
  */
 class Fz_Controller {
 
+    // Most of this attributes are static in order to share data between controllers
+    // while forwarding request for example
     protected static $_user = null;
     protected static $_userFactory = null;
     protected static $_authHandler = null;
+    protected static $_mailTransportSet = false;
 
     /**
      * Check if the current user is authenticated and forward
@@ -87,11 +90,30 @@ class Fz_Controller {
     }
 
     /**
-     *
+     * 
      * @return boolean
      */
     protected function isXhrRequest () {
         return ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+    }
+
+    /**
+     * Create an instance of Zend_Mail, set the default transport and the sender
+     * info.
+     *
+     * @return Zend_Mail
+     */
+    protected function createMail () {
+        if (self::$_mailTransportSet === false) {
+            $config = fz_config_get ('email');
+            $config ['name'] = 'filez';
+            $transport = new Zend_Mail_Transport_Smtp ($config ['host'], $config);
+            Zend_Mail::setDefaultTransport ($transport);
+            self::$_mailTransportSet = true;
+        }
+        $mail = new Zend_Mail ('utf-8');
+        $mail->setFrom ($config ['from_email'], $config ['from_name']);
+        return $mail;
     }
 }
 
