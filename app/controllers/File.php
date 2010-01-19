@@ -23,7 +23,7 @@ class App_Controller_File extends Fz_Controller {
      * Send a file
      */
     public function downloadAction () {
-        $file = $this->getFile();
+        $file = $this->getFile ();
         $file->download_count = $file->download_count + 1;
         $file->save ();
         return $this->sendFile ($file);
@@ -61,7 +61,7 @@ class App_Controller_File extends Fz_Controller {
      */
     public function deleteAction () {
         $this->secure ();
-        $file = $this->getFile();
+        $file = $this->getFile ();
         $user = $this->getUser ();
         $this->checkOwner ($file, $user);
         $file->delete();
@@ -77,10 +77,10 @@ class App_Controller_File extends Fz_Controller {
     /**
      * Share a file url by mail
      */
-    public function mailAction () {
+    public function emailAction () {
         $this->secure ();
         $user = $this->getUser ();
-        $file = $this->getFile();
+        $file = $this->getFile ();
         $this->checkOwner ($file, $user);
 
         // Send mails
@@ -97,7 +97,8 @@ class App_Controller_File extends Fz_Controller {
         $mail->setSubject  ($subject);
 
         $emailValidator = new Zend_Validate_EmailAddress();
-        foreach (explode (',', $_POST ['to']) as $email) {
+        foreach (explode (',', $_POST['to']) as $email) {
+            $email = trim ($email);
             if ($emailValidator->isValid ($email))
                 $mail->addBcc ($email);
         }
@@ -125,8 +126,9 @@ class App_Controller_File extends Fz_Controller {
      * @param App_Model_File $file
      * @param array $user
      */
-    protected function checkOwner (App_Model_File $file, $user) {
-        if ($file->uploader_email == $user ['email'])
+    protected function checkOwner (App_Model_File $file, $user) {        
+        if ($file->uploader_email == $user ['email'] // check for invited users
+         || $file->uploader_uid   == $user ['id']) // or registered users
             return;
 
         halt (HTTP_UNAUTHORIZED, 'You are not the owner of the file');

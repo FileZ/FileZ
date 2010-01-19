@@ -35,6 +35,50 @@
 
     // TODO mettre ce code dans un fichier
 
+    var emailModalConf = {
+      content: {
+        title: {
+          text: 'Envoyer le fichier par email', // TODO i18n
+          button: 'Annuler'
+        },
+        text: '<p><label for="to">Destinataires séparés par des virgules :</label><input type="text" class="to" name="to" /></p>'+
+              '<p><label for="msg">Message :</label><textarea name="msg"></textarea></p>' +
+              '<p><input type="submit" value="Envoyer" /></p>'
+      },
+      position: {
+        target: $(document.body), // Position it via the document body...
+        corner: 'center' // ...at the center of the viewport
+      },
+      show: {
+        when: 'click', // Show it on click
+        solo: true // And hide all other tooltips
+      },
+      hide: false,
+      style: {
+        width: { min: 500, max: 500 },
+        padding: '14px',
+        border: {
+          width: 9,
+          radius: 9,
+          color: '#666666'
+        },
+        name: 'light'
+      },
+      api: {
+        beforeShow: function() {
+          // Fade in the modal "blanket" using the defined show speed
+          $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+        },
+        beforeHide: function() {
+          // Fade out the modal "blanket" using the defined hide speed
+          $('#qtip-blanket').fadeOut(this.options.hide.effect.length);
+        },
+        onShow: function () {
+          //$('form', $(this).elements.content).ajaxForm ();
+        }
+      }
+    };
+
     // @var interval ID
     var progressChecker = 0;
 
@@ -104,6 +148,7 @@
           '<li class="file '+cssClass+'" style="display: none;">'+data.html+'</li>'
         );
         files.children ('li:first').slideDown (500);
+        $('.file:first .actions .send-by-email', files).each (configureEmailModal);
       }
       else {
         $('header').append ('<p class="notif error">'
@@ -121,6 +166,14 @@
       $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
     }
 
+    function configureEmailModal () {
+      var config = emailModalConf;
+      config.content.text = '<form class="send-email-form" action="'+$(this).attr ('href')+'" method="POST">'
+        + config.content.text + '</form>';
+      $(this).click (function (e) {e.preventDefault()});
+      $(this).qtip (config);
+    }
+
     var ajaxFormOptions = { 
       beforeSubmit: onFileUploadStart, // pre-submit callback 
       success:      onFileUploadEnd,   // post-submit callback 
@@ -133,6 +186,22 @@
     $(document).ready (function () {
       $('#upload-form').ajaxForm (ajaxFormOptions);
       $('#upload-form').append ('<input type="hidden" name="is_async" value="1" />');
+      $('.file .actions .send-by-email').each (configureEmailModal);
+
+      // Create the modal backdrop on document load so all modal tooltips can use it
+      $('<div id="qtip-blanket">').css({
+        position: 'absolute',
+        top: $(document).scrollTop(), // Use document scrollTop so it's on-screen even if the window is scrolled
+        left: 0,
+        height: $(document).height(), // Span the full document height...
+        width: '100%', // ...and full width
+        opacity: 0.7, // Make it slightly transparent
+        backgroundColor: 'black',
+        zIndex: 5000  // Make sure the zIndex is below 6000 to keep it below tooltips!
+      })
+      .appendTo(document.body) // Append to the document body
+      .hide(); // Hide it initially
+      
     });
   </script>
 

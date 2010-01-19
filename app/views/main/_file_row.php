@@ -21,8 +21,8 @@
   au <b><?php echo $file->getAvailableUntil ()->toString ('d MMMM') // TODO i18n ?></b>
 </p>
 <ul class="actions">
-  <li><a href="#" class="send-by-email">Envoyer par email</a></li> 
-  <li><a href="#" class="delete">Supprimer</a></li> 
-  <li><a href="#" class="extend">Rendre disponible un jour de plus</a></li>
+  <li><a href="<?php echo $file->getDownloadUrl () ?>/email"   class="send-by-email">Envoyer par email</a></li>
+  <li><a href="<?php echo $file->getDownloadUrl () ?>/delete"  class="delete">Supprimer</a></li>
+  <li><a href="<?php echo $file->getDownloadUrl () ?>/extends" class="extend">Rendre disponible un jour de plus</a></li>
 </ul>
 

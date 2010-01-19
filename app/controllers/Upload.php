@@ -105,6 +105,7 @@ class App_Controller_Upload extends Fz_Controller {
         $file->comment          = $post ['comment'];
         $file->created_at       = new Zend_Date ();
         $file->uploader_uid     = $user ['id'];
+        $file->uploader_email   = $user ['id'];
         $file->save ();
 
         return $file;
