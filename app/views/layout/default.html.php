@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/jquery.ui/css/cupertino/jquery-ui-1.7.2.custom.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/main.css') ?>" type="text/css" media="all" />
 
+    <!--[if lte IE 8]>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/html5.js') ?>"></script>
+    <![endif]-->
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery-1.3.2.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.form.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.qtip-1.0.0-rc3.min.js') ?>"></script>
