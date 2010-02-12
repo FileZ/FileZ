@@ -20,6 +20,11 @@
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') // FIXME ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/filez.js') ?>"></script>
 
+
+    <!-- Loading plupload and third party scripts -->
+    <script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/plupload/js/gears_init.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/plupload/js/plupload.full.min.js') ?>"></script>
   </head>
   <body>
 

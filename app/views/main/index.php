@@ -5,7 +5,10 @@
   <input type="hidden" name="APC_UPLOAD_PROGRESS" id="upload-id"  value="<?php echo $upload_id ?>" />
   <div id="file">
     <label for="file">Fichier :</label>
-    <div id="input-file"><input type="file" name="file" value="" alt="Fichier à déposer" /></div>
+    <div id="input-file">
+      <input type="button" value="Sélectionnez un fichier" id="choose-file-button" style="display: none;" />
+      <input type="file" id="file-input" name="file" value="" alt="Fichier à déposer" />
+    </div>
   </div>
   <div id="duration">
     <label for="duration">Durée :</label>
@@ -31,6 +34,7 @@
     <div id="upload-progress" style="display: none;"></div>
   </div>
 
+  <!--
   <script type="text/javascript">
 
     // TODO mettre ce code dans un fichier
@@ -94,8 +98,8 @@
       $('#start-upload').hide ();
       $("#upload-loading").show ();
       $("#upload-progress").progressBar ({
-        barImage: 'resources/images/progressbg_green.gif',
-        boxImage: 'resources/images/progressbar.gif'
+        barImage: 'resources/images/progressbg_green.gif', // FIXME URI
+        boxImage: 'resources/images/progressbar.gif' // FIXME URI
       });
 
       progressChecker = setInterval (function () {
@@ -204,6 +208,7 @@
       
     });
   </script>
+  -->
 
   </form>
 </section>
