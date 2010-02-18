@@ -24,6 +24,7 @@ class App_Controller_Upload extends Fz_Controller {
         $this->secure ();
         $jsonData = array (); // returned data
         $file     = $this->saveFile ($_POST, $_FILES);
+        
         // Let's move the file to its final destination
         if (move_uploaded_file ($_FILES['file']['tmp_name'],
                 fz_config_get ('app', 'upload_dir').'/'.$file->id)) {
@@ -32,20 +33,7 @@ class App_Controller_Upload extends Fz_Controller {
             $jsonData['statusText']  = 'The file has been successfuly uploaded';
             $jsonData['html']        = partial ('main/_file_row.php', array ('file' => $file));
 
-            // Notify the uploader by mail
-            $user = $this->getUser ();
-            $subject = '[FileZ] Dépôt du fichier "%file_name%"'; // TODO i18n
-            $subject = str_replace ('%file_name%', $file->file_name, $subject);
-            $msg = 'email_upload_success (%file_name%, %file_url%, %filez_url%)'; // TODO i18n
-            $msg = str_replace ('%file_name%', $file->file_name, $msg);
-            $msg = str_replace ('%file_url%' , $file->getDownloadUrl(), $msg);
-            $msg = str_replace ('%filez_url%', 'http://'.$_SERVER["SERVER_NAME"]
-                                                          .url_for ('/'), $msg);
-            $mail = $this->createMail();
-            $mail->setBodyText ($msg);
-            $mail->setSubject  ($subject);
-            $mail->addTo ($user ['email'], $user['firstname'].' '.$user['lastname']);
-            $mail->send ();
+            $this->sendFileUploadedMail ($file);
 
         } else { // Errors happened while moving the uploaded file
             $file->delete ();
@@ -78,37 +66,71 @@ class App_Controller_Upload extends Fz_Controller {
      */
     public function getProgressAction () {
         $this->secure ();
+
+        if (function_exists ('apc_fetch'))
+             halt (HTTP_NOT_IMPLEMENTED, 'APC not installed');
+
         $upload_id = params ('upload_id');
-        if (!$upload_id)
-            halt (NOT_FOUND, 'This upload does not exist');
-          
-        return json (function_exists ('apc_fetch') ? apc_fetch ('upload_'.$upload_id) : false);
+        if (! $upload_id)
+            halt (HTTP_BAD_REQUEST, 'A file id must be specified');
+
+        $progress = apc_fetch ('upload_'.$upload_id);
+        if (! is_array ($progress))
+            halt (NOT_FOUND);
+
+        return json ($progress);
     }
 
     /**
-     * @param array $post       =~ $_POST
-     * @param array $files      =~ $_FILES
+     * Create a new File object from posted values and store it into the database.
+     *
+     * @param array $post       ~= $_POST
+     * @param array $files      ~= $_FILES
      * @return App_Model_File
      */
-    private function saveFile ($post, $files) {
-        $availableFrom  = new Zend_Date ($post ['start-from'], Zend_Date::DATE_SHORT);
+    private function saveFile ($post, $file) {
+        // Computing default values
+        $availableFrom  = array_key_exists ('start-from', $post) ? $post['start-from'] : null;
+        $availableFrom  = new Zend_Date ($startFrom, Zend_Date::DATE_SHORT);
         $availableUntil = clone ($availableFrom);
-        $availableUntil->add ((int) $post ['duration'], Zend_Date::DAY);
+        $availableUntil->add ($lifetime, Zend_Date::DAY);
+        $comment        = array_key_exists ('comment',  $post) ? $post['comment'] : '';
+        $lifetime       = array_key_exists ('lifetime', $post) ?
+          (int) $post['lifetime'] : fz_config_get ('app', 'default_file_lifetime', 10);
 
-        $user = $this->getUser ();
-
+        // Storing values
         $file = new App_Model_File ();
-        $file->file_name        = $files ['file']['name'];
-        $file->file_size        = $files ['file']['size'];
+        $file->setFileInfo      ($file);
+        $file->setUploader      ($this->getUser ());
+        $file->created_at       = new Zend_Date ();
+        $file->comment          = $comment;
         $file->available_from   = $availableFrom;
         $file->available_until  = $availableUntil;
-        $file->comment          = $post ['comment'];
-        $file->created_at       = new Zend_Date ();
-        $file->uploader_uid     = $user ['id'];
-        $file->uploader_email   = $user ['id'];
         $file->save ();
 
         return $file;
+    }
+
+    /**
+     * Notify the user by email that its file has been uploaded
+     *
+     * @param App_Model_File $file
+     */
+    private function sendFileUploadedMail ($file) {
+        $user = $this->getUser ();
+        $subject = '[FileZ] Dépôt du fichier "%file_name%"'; // TODO i18n
+        $subject = str_replace ('%file_name%', $file->file_name, $subject);
+        $msg = 'email_upload_success (%file_name%, %file_url%, %filez_url%)'; // TODO i18n
+        $msg = str_replace ('%file_name%', $file->file_name, $msg);
+        $msg = str_replace ('%file_url%' , $file->getDownloadUrl(), $msg);
+        $msg = str_replace ('%filez_url%', 'http://'.$_SERVER["SERVER_NAME"]
+                                                      .url_for ('/'), $msg);
+        
+        $mail = $this->createMail();
+        $mail->setBodyText ($msg);
+        $mail->setSubject  ($subject);
+        $mail->addTo ($user ['email'], $user['firstname'].' '.$user['lastname']);
+        $mail->send ();
     }
 }
 

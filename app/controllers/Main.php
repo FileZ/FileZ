@@ -13,7 +13,7 @@ class App_Controller_Main extends Fz_Controller {
         set ('refresh_rate', 2000);
         set ('files'       , Fz_Db::getTable ('File')
                               ->findByOwnerOrderByUploadDateDesc ($user['id']));
-        set ('use_async_upload', (function_exists ('apc_fetch')
+        set ('use_progress_bar', (function_exists ('apc_fetch')
                                  && ini_get ('apc.rfc1867')));
         return html ('main/index.php');
     }

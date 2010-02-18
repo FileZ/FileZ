@@ -15,6 +15,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         'notify_uploader',
         'uploader_uid',
         'extends_count',
+        'comment',
         'created_at',
     );
 

@@ -92,12 +92,12 @@ section#new-file div#file {
   width: 40%;
 }
 section#new-file div#file       ,
-section#new-file div#duration   ,
+section#new-file div#lifetime   ,
 section#new-file div#start-from {
 
 }
 section#new-file div#file       input ,
-section#new-file div#duration   select ,
+section#new-file div#lifetime   select ,
 section#new-file div#comment    input ,
 section#new-file div#start-from input {
   box-sizing:         border-box;
@@ -109,7 +109,7 @@ section#new-file div#file       { left:  1.3em; }
 section#new-file div#start-from { right: 1.3em; }
 section#new-file div#file input {
 }
-section#new-file div#duration {
+section#new-file div#lifetime {
   width: 18%;
   margin: 0 32% 0 auto;
 }

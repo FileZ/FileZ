@@ -1,9 +1,11 @@
 
 [app]
-use_url_rewriting = true
-upload_dir        = /tmp
-log_dir           = log
-filez1_compat     = true
+use_url_rewriting       = true
+upload_dir              = /tmp
+log_dir                 = log
+filez1_compat           = true
+max_file_lifetime       = 20 
+default_file_lifetime   = 10
 
 [db]
 dsn      = "mysql:host=localhost;dbname=filez"

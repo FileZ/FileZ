@@ -8,6 +8,7 @@
  * @property string  $available_from    DATE
  * @property string  $available_until   DATE
  * @property int     $download_count
+ * @property string  $comment
  * @property boolean $notify_uploader
  * @property string  $uploader_uid
  * @property int     $extends_count
@@ -75,5 +76,30 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         $bytes /= pow(1024, $pow);
 
         return round($bytes, $precision) . ' ' . $units[$pow];
+    }
+
+    /**
+     * Initialise file attributes from an array.
+     * 
+     * @param array $file       Associative array with the following keys :
+     *                              - name
+     *                              - size
+     * @return void
+     *
+     */
+    public function setFileInfo (array $file) {
+        $this->file_name = $file ['name'];
+        $this->file_size = $file ['size'];
+    }
+
+    /**
+     * Set the uploader of the file from an associative array containing
+     * 'id' & 'email' keys.
+     * 
+     * @param array $user
+     */
+    public function setUploader (array $user) {
+        $this->uploader_uid     = $user ['id'];
+        $this->uploader_email   = $user ['email'];
     }
 }
