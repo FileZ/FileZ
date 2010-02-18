@@ -39,6 +39,9 @@
       <?php if (array_key_exists ('notification', $flash)): ?>
         <p class="notif ok"><?php echo $flash ['notification'] ?></p>
       <?php endif ?>
+      <?php if (array_key_exists ('error', $flash)): ?>
+        <p class="notif error"><?php echo $flash ['error'] ?></p>
+      <?php endif ?>
     </header>
 
     <article>

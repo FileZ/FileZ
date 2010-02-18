@@ -46,6 +46,9 @@ h2 {
   font-weight: normal;
   font-size: 1.1em;
 }
+h2 span.filename {
+  font-size: 0.8em;
+}
 
 /* Header */
 header {

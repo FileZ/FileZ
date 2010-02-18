@@ -17,7 +17,7 @@ class App_Controller_File extends Fz_Controller {
         $file = $this->getFile();
         // TODO vérifier $file->available_until & available_from !!!
         set ('file', $file);
-        return html ('download/preview.php');
+        return html ('file/preview.php');
     }
 
     /**
@@ -42,23 +42,6 @@ class App_Controller_File extends Fz_Controller {
         return $this->sendFile ($file);
     }
 
-
-    /**
-     * Send a file through the standart output
-     * @param App_Model_File $file      File to send
-     */
-    protected function sendFile (App_Model_File $file) {
-        $mime = file_mime_content_type ($file->getFileName ());
-        header('Content-Type: '.$mime);
-        header('Content-Disposition: attachment; filename="'.$file->getFileName ().'"');
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
-        header('Content-Length: '.$file->file_size);
-        return file_read (fz_config_get ('app', 'upload_dir').'/'.$file->getId ());
-    }
-
     /**
      * Delete a file
      */
@@ -78,6 +61,18 @@ class App_Controller_File extends Fz_Controller {
     }
 
     /**
+     * Share a file url by mail (show email form only)
+     */
+    public function emailFormAction () {
+        $this->secure ();
+        $user = $this->getUser ();
+        $file = $this->getFile ();
+        $this->checkOwner ($file, $user);
+        set ('file', $file);
+        return html ('file/email.php');
+    }
+
+    /**
      * Share a file url by mail
      */
     public function emailAction () {
@@ -85,6 +80,7 @@ class App_Controller_File extends Fz_Controller {
         $user = $this->getUser ();
         $file = $this->getFile ();
         $this->checkOwner ($file, $user);
+        set ('file', $file);
 
         // Send mails
         $user = $this->getUser ();
@@ -104,10 +100,26 @@ class App_Controller_File extends Fz_Controller {
             $email = trim ($email);
             if ($emailValidator->isValid ($email))
                 $mail->addBcc ($email);
+            else {
+                $msg = 'L\'adresse email "%email%" est invalide, veuillez la corriger'; // TODO i18n
+                flash_now ('error', str_replace ('%email%', $email, $msg));
+                return html ('file/email.php');
+            }
         }
-        $mail->send ();
 
-        return json (array ('status' => 'ok'));
+        try {
+            $mail->send ();
+            
+            if ($this->isXhrRequest ()) {
+                return json (array ('status' => 'ok'));
+            } else {
+                redirect_to ('/');
+            }
+        }
+        catch (Exception $e) {
+            flash ('error', 'Une erreur s\'est produit pendant l\'envoi du mail, veuillez réessayer.'); // TODO i18n
+            return html ('file/email.php');
+        }
     }
 
     /**
@@ -121,6 +133,22 @@ class App_Controller_File extends Fz_Controller {
         if ($file === null)
             halt (NOT_FOUND, 'There is no file for this hash code');
         return $file;
+    }
+
+    /**
+     * Send a file through the standart output
+     * @param App_Model_File $file      File to send
+     */
+    protected function sendFile (App_Model_File $file) {
+        $mime = file_mime_content_type ($file->getFileName ());
+        header('Content-Type: '.$mime);
+        header('Content-Disposition: attachment; filename="'.$file->getFileName ().'"');
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+        header('Content-Length: '.$file->file_size);
+        return file_read (fz_config_get ('app', 'upload_dir').'/'.$file->getId ());
     }
 
     /**

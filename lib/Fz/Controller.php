@@ -115,5 +115,12 @@ class Fz_Controller {
         $mail->setFrom ($config ['from_email'], $config ['from_name']);
         return $mail;
     }
+
+    /**
+     * Redirect the user to the previous page
+     */
+    protected function goBack () {
+        redirect ($_SERVER["HTTP_REFERER"]);
+    }
 }
 
