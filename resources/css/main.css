@@ -41,6 +41,12 @@ section {
   margin-top:     0.4em;
   margin-bottom: 1.5em;
 }
+.qtip section {
+  -moz-border-radius:    0;
+  -webkit-border-radius: 0;
+  border: none;
+  margin: 0;
+}
 h2 {
   letter-spacing: -0.05em;
   font-weight: normal;
@@ -79,55 +85,59 @@ header p {
 }
 
 /* Section new-file */
-section#new-file {
+section.new-file {
   -moz-box-shadow:    inset 0 20px 20px rgba(0,0,0,0.04);
-  -webkit-box-shadow: inset 0 20px 20px rgba(0,0,0,0.04); 
+  -webkit-box-shadow: inset 0 20px 20px rgba(0,0,0,0.04);
 }
-section#new-file form {
+.qtip section.new-file {
+  -moz-box-shadow:    none;
+  -webkit-box-shadow: none;
+}
+section.new-file form {
   position: relative;
 }
-section#new-file div#file ,
-section#new-file div#start-from {
+section.new-file div#file ,
+section.new-file div#start-from {
   width: 25%;
   position: absolute; top: 0;
 }
-section#new-file div#file {
+section.new-file div#file {
   width: 40%;
 }
-section#new-file div#file       ,
-section#new-file div#lifetime   ,
-section#new-file div#start-from {
+section.new-file div#file       ,
+section.new-file div#lifetime   ,
+section.new-file div#start-from {
 
 }
-section#new-file div#file       input ,
-section#new-file div#lifetime   select ,
-section#new-file div#comment    input ,
-section#new-file div#start-from input {
+section.new-file div#file       input ,
+section.new-file div#lifetime   select ,
+section.new-file div#comment    input ,
+section.new-file div#start-from input {
   box-sizing:         border-box;
   -moz-box-sizing:    border-box;
   -webkit-box-sizing: border-box;
   width: 100%;
 }
-section#new-file div#file       { left:  1.3em; }
-section#new-file div#start-from { right: 1.3em; }
-section#new-file div#file input {
+section.new-file div#file       { left:  1.3em; }
+section.new-file div#start-from { right: 1.3em; }
+section.new-file div#file input {
 }
-section#new-file div#lifetime {
+section.new-file div#lifetime {
   width: 18%;
   margin: 0 32% 0 auto;
 }
-section#new-file div#start-from input {
+section.new-file div#start-from input {
   background: transparent url(../images/icons/office-calendar.png) no-repeat 6px center;
   padding-left: 28px;
 }
-section#new-file div#comment {
+section.new-file div#comment {
   padding: 0 1.3em;
 }
-section#new-file label {
+section.new-file label {
   padding-top: 0.8em;
   display: block;
 }
-section#new-file div#upload {
+section.new-file div#upload {
   background: #F6F8FB;
   -moz-border-radius-bottomright:     5px;
   -webkit-border-radius-bottomright:  5px;
@@ -144,15 +154,45 @@ section#new-file div#upload {
   border-style: solid;
   border-color: #EDF2F7;
 }
-section#new-file div#upload * {
+section.new-file div#upload * {
 }
-section#new-file div#upload-loading {
+section.new-file div#upload-loading {
 	width: 220px; height: 19px;
 	background: transparent url('../images/ajax-loader.gif') no-repeat center center;
 	margin: 0 auto;
 }
 .ui-datepicker {
 	font-size:80%;
+}
+
+h2.new-file a.awesome {
+  background-color: #DAD5D0;
+  background-color: #CEC9C4;
+  background-image: url(../images/icons/upload.png);
+  background-position: center 10px;
+  background-repeat: no-repeat;
+  display: block;
+  text-align: center;
+  padding: 80px 0 10px 0;
+  margin-bottom: 2em;
+  text-shadow: 0 0 7px #FFF;
+  border-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-box-shadow:    inset 0 20px 20px rgba(255,255,255,0.3);
+  -webkit-box-shadow: inset 0 20px 20px rgba(255,255,255,0.3);
+  border: 1px solid #CFCBC6;
+  border-top: 1px solid #F5F4F3;
+  border-bottom: 2px solid #B9B5B1;
+  color: #4A4947;
+  font-size: 0.9em;
+  letter-spacing: -1px;
+}
+h2.new-file a.awesome:hover {
+  background-color: rgba(0,0,0,0.20);
+}
+.qtip-new-file-content {
+    padding: 0;
 }
  
 /* form */

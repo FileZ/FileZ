@@ -2,6 +2,10 @@
 if (! console) // In case the browser don't have a console
     var console = {log: function (txt) {}};
 
+$('document').ready (function () {
+    $('.notif').hideNotifDelayed();
+});
+
 (function($) {
 
 // Default settings
@@ -21,35 +25,10 @@ var progressCheckerLoop = 0;
  */
 $.fn.initFilez = function (options) {
 
-    var emailAjaxFormOptions = {success: onEmailFormSent, dataType: 'json'};
-
     settings = jQuery.extend(true, {
         refreshRate: 2000,
-        useProgressBar: false,
-        emailModalConf: {
-            position:     {target: $(document.body), corner: 'center'},
-            show:         {when: 'click', solo: true},
-            hide:         false,
-            style: {
-                width:    {min: 500, max: 500},
-                padding:  '14px',
-                border:   {width: 9, radius: 9, color: '#666666'},
-                name:     'light'
-            },
-            api: {
-                beforeShow: function() {
-                    $('#modal-background').fadeIn(this.options.show.effect.length);
-                },
-                onShow: function () {
-                    $('form', $(this.elements.content))
-                        .data('qtip', this.elements.target[0])
-                        .ajaxForm (emailAjaxFormOptions);
-                },
-                beforeHide: function() {$('#modal-background').fadeOut(this.options.hide.effect.length);}
-            }
-        }
+        useProgressBar: false
     }, options);
-    console.log(settings);
 
     $(this).ajaxForm ({
         beforeSubmit: onFormSubmit,     // pre-submit callback
@@ -67,6 +46,8 @@ $.fn.initFilez = function (options) {
 
     // Initialise actions event handlers
     $('.file .actions').initFileActions();
+
+    return $(this);
 };
 
 /**
@@ -74,24 +55,59 @@ $.fn.initFilez = function (options) {
  */
 $.fn.initFileActions = function () {
     var emailLink = $('.send-by-email', this);
-    var config = settings.emailModalConf;
-    config.content.text =
-        '<form class="send-email-form" action="'+emailLink.attr ('href')+'" method="POST">'+
-            config.content.text +
-        '</form>';
-    emailLink.click (function (e) {e.preventDefault();})
-             .qtip  (config);
+    var options   = {api: {onShow: function () {
+        $(this.elements.content).wrapInner ('<form class="send-email-form" action="'+emailLink.attr ('href')+'" method="POST"></form>');
+        $('form', $(this.elements.content))
+            .data('qtip', this.elements.target[0])
+            .ajaxForm ( {success: onEmailFormSent, dataType: 'json'});
+    }}};
+    emailLink.click     (function (e) {e.preventDefault();})
+             .qtipModal ($.extend (true, settings.emailModalConf, options));
 
-    var deleteLink = $('.delete', this);
-    deleteLink.click (function (e) {
+    $('.delete', this).click (function (e) {
+        if (confirm ('Êtes vous sûr de vouloir supprimer ce fichier ?')) // TODO i18n
+            $('<form action="'+$(this).attr('href')+'" method="post"></form>').submit();
         e.preventDefault();
     });
 
-    var extendLink = $('.extend', this);
-    extendLink.click (function (e) {
+    $('.extend', this).click (function (e) {
+        // TODO
         e.preventDefault();
     });
 
+    return $(this);
+}
+
+$.fn.qtipModal = function (options) {
+    var defaults = {
+        position:     {target: $(document.body), corner: 'center'},
+        show:         {when: 'click', solo: true},
+        hide:         false,
+        style: {
+            width:    {min: 500, max: 500},
+            padding:  '14px',
+            border:   {width: 9, radius: 9, color: '#666666'},
+            name:     'light'
+        },
+        content: {title: {button: 'Annuler'}}, // TODO i18n
+        api: {
+            beforeShow: function() {
+                $('#modal-background').fadeIn();
+            },
+            beforeHide: function() {
+                $('#modal-background').fadeOut();
+            }
+        }
+    };
+    return $(this).qtip ($.extend(true, defaults, options));
+};
+
+$.fn.hideNotifDelayed = function () {
+    $(this).delay (10000).animate({
+        opacity: 'toggle', height: 'toggle',
+        paddingTop: 0, paddingBottom: 0,
+        marginTop: 0, marginBottom: 0
+    }, 3000);
 }
 
 
@@ -113,7 +129,6 @@ var onEmailFormSent = function (data, status, form) {
     } else {
         alert ('Unknown error.');
     }
-
 }
 
 /**
@@ -225,12 +240,23 @@ var reloadUploadForm = function () {
     $(settings.progressBox).hide ();
     $(settings.loadingBox).hide ();
     $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
-}
+};
 
 
+/**
+ * Display an error notification and register the delete handler
+ */
 var notifyError = function (msg) {
-    $('header').append ('<p class="notif error">'+msg+'</p>');
-}
+    $('<p class="notif error">'+msg+'</p>').appendTo ($('header')).hideNotifDelayed();
+};
+
+/**
+ * Display a success notification and register the delete handler
+ */
+var notify = function (msg) {
+    $('<p class="notif ok">'+msg+'</p>').appendTo ($('header')).hideNotifDelayed();
+};
+
 
 /* -----------------------------------------------------------------------------
  * MISC

@@ -6,7 +6,7 @@
   <!-- TODO i18n -->
   <p>
     <label for="to">Destinataires séparés par des virgules :</label>
-    <input type="text" class="to" name="to" value="<?php echo params('to') ?>"/>
+    <input type="text" class="to" name="to" value="<?php echo params ('to') ?>"/>
   </p>
   <p>
     <label for="msg">Message (l'adresse du fichier sera ajoutée automatiquement) :</label>

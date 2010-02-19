@@ -42,6 +42,19 @@ class App_Controller_File extends Fz_Controller {
         return $this->sendFile ($file);
     }
 
+
+    /**
+     * Delete a file
+     */
+    public function confirmDeleteAction () {
+        $this->secure ();
+        $file = $this->getFile ();
+        $user = $this->getUser ();
+        $this->checkOwner ($file, $user);
+        set ('file', $file);
+
+        return html ('file/confirmDelete.php');
+    }
     /**
      * Delete a file
      */

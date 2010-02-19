@@ -89,9 +89,10 @@ fz_dispatch_get  ('/:file_hash/download'        ,'File'        ,'download');
 fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne'); // TODO
 
 // File controller
-fz_dispatch_get    ('/:file_hash/email'         ,'File'        ,'emailForm');
-fz_dispatch_post   ('/:file_hash/email'         ,'File'        ,'email');
-fz_dispatch_delete ('/:file_hash/delete'        ,'File'        ,'delete');
+fz_dispatch_get  ('/:file_hash/email'         ,'File'        ,'emailForm');
+fz_dispatch_post ('/:file_hash/email'         ,'File'        ,'email');
+fz_dispatch_get  ('/:file_hash/delete'        ,'File'        ,'confirmDelete');
+fz_dispatch_post ('/:file_hash/delete'        ,'File'        ,'delete');
 
 
 run ();

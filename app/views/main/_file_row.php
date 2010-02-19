@@ -3,7 +3,7 @@
   <?php // TODO add a copy to clipboard button ?>
   <?php // TODO add $file->comment ?>
   <a href="<?php echo $file->getDownloadUrl () ?>">
-    <span class="filename"><?php echo h ($file->file_name) // TODO truncate if too long ?></span>
+    <span class="filename"><?php echo h ( truncate_string ($file->file_name, 40)) ?></span>
     <span class="url"     ><?php echo $file->getDownloadUrl () ?></span>
   </a>
 </p>
@@ -21,7 +21,7 @@
   au <b><?php echo $file->getAvailableUntil ()->toString ('d MMMM') // TODO i18n ?></b>
 </p>
 <ul class="actions">
-  <li><a href="<?php echo $file->getDownloadUrl () ?>/email"   class="send-by-email">Envoyer par email</a></li>
+  <li><a href="<?php echo $file->getDownloadUrl () ?>/email"   class="send-by-email">Envoyer l'adresse par email</a></li>
   <li><a href="<?php echo $file->getDownloadUrl () ?>/delete"  class="delete">Supprimer</a></li>
   <li><a href="<?php echo $file->getDownloadUrl () ?>/extends" class="extend">Rendre disponible un jour de plus</a></li>
 </ul>

@@ -1,6 +1,6 @@
 
-<h2>Déposer un nouveau fichier :</h2> 
-<section id="new-file">
+<h2 class="new-file">Déposer un nouveau fichier</h2>
+<section class="new-file">
 <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
   <input type="hidden" name="APC_UPLOAD_PROGRESS" id="upload-id"  value="<?php echo $upload_id ?>" />
   <div id="file">
@@ -15,7 +15,7 @@
       <?php $default = fz_config_get ('app', 'default_file_lifetime', 10);
             $max     = fz_config_get ('app', 'max_file_lifetime',     20);
             for ($i = 1; $i <= $max; ++$i  ): ?>
-        <option value="<?php echo $i.'"'.($i == $default ? ' selected="selected" ' : '').'>'.$i ?> jours</option>
+        <option value=<?php echo "\"$i\"".($i == $default ? ' selected="selected" ' : '').'>'.$i ?> jours</option>
       <?php endfor ?>
     </select>
   </div>
@@ -32,9 +32,22 @@
     <div id="upload-loading"  style="display: none;"></div>
     <div id="upload-progress" style="display: none;"></div>
   </div>
+  </form>
+</section>
 
-  <script type="text/javascript">
+<h2 id="uploaded-files-title">Vos fichiers déjà déposés</h2>
+<section id="uploaded-files">
+  <ul id="files">
+    <?php $odd = true; foreach ($files as $file): ?>
+      <li class="file <?php echo $odd ? 'odd' : 'even'; $odd = ! $odd ?>" id="<?php echo 'file-'.$file->getHash() ?>">
+        <?php echo partial ('main/_file_row.php', array ('file' => $file)) ?> 
+      </li>
+    <?php endforeach ?>
+  </ul>
+</section>
 
+
+<script type="text/javascript">
     $(document).ready (function () {
       $('#input-start-from').datepicker ();
       $('#upload-form').initFilez ({
@@ -49,31 +62,25 @@
           progressUrl:  '<?php echo url_for ('upload/progress/') ?>'
         },
         emailModalConf: {
-          content:{
-            title: {
-              text: 'Envoyer le fichier par email', // TODO i18n
-              button: 'Annuler'
-            },
+          content: {
+            title: {text: 'Envoyer le fichier par email' /* TODO i18n */},
             text: '<p><label for="to">Destinataires séparés par des virgules :</label><input type="text" class="to" name="to" /></p>'+
                   '<p><label for="msg">Message :</label><textarea name="msg"></textarea></p>' +
                   '<p><input type="submit" value="Envoyer" /></p>'
           }
         }
       });
+      // On transforme le titre de la section "new-file" en lien (bouton)
+      $('h2.new-file').wrapInner ($('<a href="#" class="awesome large"></a>'));
+      $('h2.new-file a').click (function (e) {e.preventDefault();});
+      $('h2.new-file a').qtipModal ({
+        content: {
+          title: {text: 'Ajouter un fichier' /* TODO i18n */},
+          text: $('section.new-file')
+        },
+        style: {padding: '0', classes: {content: 'qtip-content qtip-new-file-content'}}
+      });
+      $('section.new-file').hide ();
     });
-  </script>
-
-  </form>
-</section>
-
-<h2 id="uploaded-files-title">Vos fichiers déjà déposés :</h2>
-<section id="uploaded-files">
-  <ul id="files">
-    <?php $odd = true; foreach ($files as $file): ?>
-      <li class="file <?php echo $odd ? 'odd' : 'even'; $odd = ! $odd; ?>">
-        <?php echo partial ('main/_file_row.php', array ('file' => $file)) ?> 
-      </li>
-    <?php endforeach ?>
-  </ul>
-</section>
+</script>
 
