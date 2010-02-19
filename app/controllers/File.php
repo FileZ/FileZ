@@ -53,7 +53,7 @@ class App_Controller_File extends Fz_Controller {
         $file->delete();
 
         if ($this->isXhrRequest())
-            return json (array ('status' => 'ok'));
+            return json (array ('status' => 'success'));
         else {
             flash ('notification', 'Le fichier a été supprimé.'); // TODO i18n
             redirect_to ('/');
@@ -102,23 +102,38 @@ class App_Controller_File extends Fz_Controller {
                 $mail->addBcc ($email);
             else {
                 $msg = 'L\'adresse email "%email%" est invalide, veuillez la corriger'; // TODO i18n
-                flash_now ('error', str_replace ('%email%', $email, $msg));
-                return html ('file/email.php');
+                return $this->returnError (str_replace ('%email%', $email, $msg), 'file/email.php');
             }
         }
 
         try {
             $mail->send ();
-            
-            if ($this->isXhrRequest ()) {
-                return json (array ('status' => 'ok'));
-            } else {
-                redirect_to ('/');
-            }
+            return $this->returnSuccessOrRedirect ('/');
         }
         catch (Exception $e) {
-            flash ('error', 'Une erreur s\'est produit pendant l\'envoi du mail, veuillez réessayer.'); // TODO i18n
-            return html ('file/email.php');
+            $msg = 'Une erreur s\'est produit pendant l\'envoi du mail, veuillez réessayer.'; // TODO i18n
+            return $this->returnError ($msg, 'file/email.php');
+        }
+    }
+
+    // TODO documenter les fonctions suivantes et ? les passer dans la classe controleur
+
+    private function returnError ($msg, $template) {
+        if ($this->isXhrRequest ()) {
+            return json (array (
+                'status' => 'error',
+                'statusText' => $msg
+            ));
+        } else {
+            flash_now ('error', $msg);
+            return html ($template);
+        }
+    }
+    private function returnSuccessOrRedirect ($url) {
+        if ($this->isXhrRequest ()) {
+            return json (array ('status' => 'success'));
+        } else {
+            redirect_to ($url);
         }
     }
 

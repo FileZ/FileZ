@@ -14,7 +14,7 @@
     <![endif]-->
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery-1.3.2.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.form.js') ?>"></script>
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.qtip-1.0.0-rc3.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.qtip-1.0.0-rc3.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.progressbar.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/jquery-ui-1.7.2.custom.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') // FIXME ?>"></script>
@@ -54,5 +54,6 @@
       Université d'Avignon et des Pays de Vaucluse
     </footer>
 
+    <div id="modal-background"></div>
   </body>
 </html>

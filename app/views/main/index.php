@@ -6,7 +6,6 @@
   <div id="file">
     <label for="file">Fichier :</label>
     <div id="input-file">
-      <input type="button" value="Sélectionnez un fichier" id="choose-file-button" style="display: none;" />
       <input type="file" id="file-input" name="file" value="" alt="Fichier à déposer" />
     </div>
   </div>

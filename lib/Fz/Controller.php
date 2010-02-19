@@ -94,7 +94,8 @@ class Fz_Controller {
      * @return boolean
      */
     protected function isXhrRequest () {
-        return ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+        return (array_key_exists ('HTTP_X_REQUESTED_WITH', $_SERVER)
+                      && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
     }
 
     /**

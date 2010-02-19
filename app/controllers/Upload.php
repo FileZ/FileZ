@@ -29,7 +29,7 @@ class App_Controller_Upload extends Fz_Controller {
         if (move_uploaded_file ($_FILES['file']['tmp_name'],
                 fz_config_get ('app', 'upload_dir').'/'.$file->id)) {
 
-            $jsonData['status']      = 'ok';
+            $jsonData['status']      = 'success';
             $jsonData['statusText']  = 'The file has been successfuly uploaded';
             $jsonData['html']        = partial ('main/_file_row.php', array ('file' => $file));
 
@@ -43,9 +43,7 @@ class App_Controller_Upload extends Fz_Controller {
                 fz_log ('upload error ('.$this->uploadErrors [$_FILES['file']['error']].')', FZ_LOG_ERROR);
 
             // returned data
-            $jsonData['status']     = 'error';
-            $jsonData['filename']   = $_FILES['file']['name'];
-            $jsonData['statusText'] = $this->uploadErrors [$_FILES['file']['error']];
+            halt (HTTP_INTERNAL_SERVER_ERROR, $this->uploadErrors [$_FILES['file']['error']]);
         }
 
         if (array_key_exists ('is_async', $_REQUEST) && $_REQUEST['is_async']) {
