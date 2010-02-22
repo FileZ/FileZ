@@ -29,3 +29,12 @@ function truncate_string ($str, $maxSize) {
     return $str;
 }
 
+
+/**
+ * Translate a string
+ * @param string
+ * @return string
+ */
+function __($msg) {
+    return $msg; // TODO
+}

@@ -91,6 +91,7 @@ fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne')
 // File controller
 fz_dispatch_get  ('/:file_hash/email'         ,'File'        ,'emailForm');
 fz_dispatch_post ('/:file_hash/email'         ,'File'        ,'email');
+
 fz_dispatch_get  ('/:file_hash/delete'        ,'File'        ,'confirmDelete');
 fz_dispatch_post ('/:file_hash/delete'        ,'File'        ,'delete');
 

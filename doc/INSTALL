@@ -35,6 +35,12 @@ Security strategies
 
   apt-get install curl php5-curl
 
+  Database
+  --------
+
+  LDAP server
+  -----------
+
 
 Installing and configuring APC
 ------------------------------

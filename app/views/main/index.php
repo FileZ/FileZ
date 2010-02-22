@@ -1,8 +1,7 @@
 
 <h2 class="new-file">Déposer un nouveau fichier</h2>
 <section class="new-file">
-<form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
-  <input type="hidden" name="APC_UPLOAD_PROGRESS" id="upload-id"  value="<?php echo $upload_id ?>" />
+  <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
   <div id="file">
     <label for="file">Fichier :</label>
     <div id="input-file">
@@ -65,7 +64,7 @@
           content: {
             title: {text: 'Envoyer le fichier par email' /* TODO i18n */},
             text: '<p><label for="to">Destinataires séparés par des virgules :</label><input type="text" class="to" name="to" /></p>'+
-                  '<p><label for="msg">Message :</label><textarea name="msg"></textarea></p>' +
+                  '<p><label for="msg">Message (l\'adresse du fichier sera automatiquement ajoutée) :</label><textarea name="msg"></textarea></p>' +
                   '<p><input type="submit" value="Envoyer" /></p>'
           }
         }

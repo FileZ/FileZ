@@ -64,6 +64,7 @@ class App_Controller_File extends Fz_Controller {
         $user = $this->getUser ();
         $this->checkOwner ($file, $user);
         $file->delete();
+        // Delete the file on disk or tag it as "waiting for deletion"
 
         if ($this->isXhrRequest())
             return json (array ('status' => 'success'));

@@ -39,10 +39,11 @@ $.fn.initFilez = function (options) {
     });
 
     if (settings.progressBar.enable) {
-        // let the server knows it has to return JSON
-        $(this).append ('<input type="hidden" name="is_async" value="1" />');
         $(this).append ('<input type="hidden" name="APC_UPLOAD_PROGRESS" id="upload-id"  value="'+uniqid ()+'" />');
     }
+    
+    // let the server knows it has to return JSON
+    $(this).append ('<input type="hidden" name="is-async" value="1" />');
 
     // Initialise actions event handlers
     $('.file .actions').initFileActions();
@@ -66,7 +67,7 @@ $.fn.initFileActions = function () {
 
     $('.delete', this).click (function (e) {
         if (confirm ('Êtes vous sûr de vouloir supprimer ce fichier ?')) // TODO i18n
-            $('<form action="'+$(this).attr('href')+'" method="post"></form>').submit();
+            $('<form action="'+$(this).attr('href')+'" method="post"></form>').appendTo('body').submit();
         e.preventDefault();
     });
 
@@ -92,10 +93,10 @@ $.fn.qtipModal = function (options) {
         content: {title: {button: 'Annuler'}}, // TODO i18n
         api: {
             beforeShow: function() {
-                $('#modal-background').fadeIn();
+                $('#modal-background').show();
             },
             beforeHide: function() {
-                $('#modal-background').fadeOut();
+                $('#modal-background').hide();
             }
         }
     };
@@ -159,13 +160,15 @@ var onCheckProgressError = function (xhr, textStatus, errorThrown) {
     if (xhr.status == 501)
     {
         // APC is missing
+        console.log ('PHP extension (APC) not installed.')
     }
     else if (xhr.status == 404)
     {
         // Upload not found
+        console.log ('Upload progress not found.')
     }
 
-    notifyError (textStatus);
+    //notifyError (textStatus);
 };
 
 /**
@@ -186,10 +189,10 @@ var onFormSubmit = function (data, form, options) {
         // Checking progress
         progressCheckerLoop = setInterval (function () {
             $.ajax({
-                url:        settings.progressBar.progressUrl + $('#upload-id').val (),
-                dataType:   "json",
-                error:      onCheckProgressError,
-                success:    onFileUpoadProgress
+                url:      settings.progressBar.progressUrl + '/' + $('#upload-id').val (),
+                dataType: "json",
+                error:    onCheckProgressError,
+                success:  onFileUpoadProgress
             });
         }, settings.progressBar.refreshRate);
 
@@ -208,11 +211,17 @@ var onFileUploadEnd = function (data, status) {
     reloadUploadForm ();
     console.log (data);
 
-    if (data.status && data.status == 'success') {
+    if (data.status == undefined) {
+        notifyError ('An unknown error hapenned while uploading the file'); // TODO i18n
+    } else if (data.status == 'success') {
         appendFile (data.html);
-    } else {
-        notifyError ('Une erreur inconnue s\'est produite, veuillez réessayer'); // TODO i18n
+        notify (data.statusText);
+    } else if (data.status == 'error'){
+        notifyError (data.statusText);
     }
+
+    // Hide the modal box
+    $('div.qtip').qtip('hide');
 };
 
 /*------------------------------------------------------------------------------
@@ -228,10 +237,10 @@ var appendFile = function (html) {
 
     files.prepend (
         '<li class="file '+cssClass+'" style="display: none;">'+html+'</li>'
-        );
+    );
     files.children ('li:first').slideDown (500);
     $('.file:first .actionsemail', files).initFileActions();
-}
+};
 
 var reloadUploadForm = function () {
     //clearInterval (progressCheckerLoop);

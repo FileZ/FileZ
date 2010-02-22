@@ -5,10 +5,14 @@
  */
 class App_Controller_Upload extends Fz_Controller {
 
+    /**
+     * Descriptions of possibles upload errors easily understandable by the end user.
+     * @var array
+     */
     protected $uploadErrors = array (
         UPLOAD_ERR_OK         => 'There is no error, the file uploaded with success.',
-        UPLOAD_ERR_INI_SIZE   => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
-        UPLOAD_ERR_FORM_SIZE  => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+        UPLOAD_ERR_INI_SIZE   => 'The uploaded file exceeds the max file size.',
+        UPLOAD_ERR_FORM_SIZE  => 'The uploaded file exceeds the max file size.',
         UPLOAD_ERR_PARTIAL    => 'The uploaded file was only partially uploaded.',
         UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
         UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder.',
@@ -23,37 +27,51 @@ class App_Controller_Upload extends Fz_Controller {
     public function startAction () {
         $this->secure ();
         $jsonData = array (); // returned data
-        $file     = $this->saveFile ($_POST, $_FILES);
-        
-        // Let's move the file to its final destination
-        if (move_uploaded_file ($_FILES['file']['tmp_name'],
-                fz_config_get ('app', 'upload_dir').'/'.$file->id)) {
+        $file     = $this->saveFile ($_POST, $_FILES['file']);
+        $tmpName  = $_FILES['file']['tmp_name'];
+        $filename = fz_config_get ('app', 'upload_dir').'/'.$file->id;
 
-            $jsonData['status']      = 'success';
-            $jsonData['statusText']  = 'The file has been successfuly uploaded';
-            $jsonData['html']        = partial ('main/_file_row.php', array ('file' => $file));
+        // Let's move the file to its final destination
+        if ($_FILES['file']['error'] === UPLOAD_ERR_OK && is_uploaded_file($tmpName) &&
+            move_uploaded_file ($tmpName, $filename)) {
+
+            $jsonData['status']     = 'success';
+            $jsonData['statusText'] = 'The file has been successfuly uploaded';
+            $jsonData['html']       = partial ('main/_file_row.php', array ('file' => $file));
 
             $this->sendFileUploadedMail ($file);
 
         } else { // Errors happened while moving the uploaded file
             $file->delete ();
-            // Logging error if needed
-            if ($_FILES['file']['error'] == UPLOAD_ERR_CANT_WRITE ||
-                $_FILES['file']['error'] == UPLOAD_ERR_NO_TMP_DIR)
-                fz_log ('upload error ('.$this->uploadErrors [$_FILES['file']['error']].')', FZ_LOG_ERROR);
 
-            // returned data
-            halt (HTTP_INTERNAL_SERVER_ERROR, $this->uploadErrors [$_FILES['file']['error']]);
+            $jsonData['status']     = 'error';
+            $jsonData['statusText'] = __('An error occured while uploading the file.');
+
+            switch ($_FILES['file']['error']) {
+                case UPLOAD_ERR_NO_TMP_DIR:
+                case UPLOAD_ERR_CANT_WRITE:
+                    fz_log ('upload error ('. // Logging error if needed
+                        $this->uploadErrors [$_FILES['file']['error']].')', FZ_LOG_ERROR);
+                    break;
+
+                // These errors come from the client side, let him know what's wrong
+                case UPLOAD_ERR_INI_SIZE:
+                case UPLOAD_ERR_FORM_SIZE:
+                case UPLOAD_ERR_PARTIAL:
+                case UPLOAD_ERR_NO_FILE:
+                    $jsonData['statusText'] .= __('Details').' : '
+                        . __($this->uploadErrors [$_FILES['file']['error']]);
+            }                
         }
 
-        if (array_key_exists ('is_async', $_REQUEST) && $_REQUEST['is_async']) {
+        if (array_key_exists ('is-async', $_POST) && $_POST['is-async']) {
             // The response is embedded inside a textarea to prevent some browsers :
             // quirks : http://www.malsup.com/jquery/form/#file-upload
             // JQuery Form Plugin will handle the response transparently.
             return html("<textarea>\n".json_encode ($jsonData)."\n</textarea>",'');
         }
         else {
-            flash ('notification', 'Votre fichier a été envoyé.'); // TODO i18n
+            flash ('notification', __('Votre fichier a été envoyé.'));
             redirect_to ('/');
         }
     }
@@ -65,7 +83,7 @@ class App_Controller_Upload extends Fz_Controller {
     public function getProgressAction () {
         $this->secure ();
 
-        if (function_exists ('apc_fetch'))
+        if (! function_exists ('apc_fetch'))
              halt (HTTP_NOT_IMPLEMENTED, 'APC not installed');
 
         $upload_id = params ('upload_id');
@@ -86,19 +104,19 @@ class App_Controller_Upload extends Fz_Controller {
      * @param array $files      ~= $_FILES
      * @return App_Model_File
      */
-    private function saveFile ($post, $file) {
+    private function saveFile ($post, $uploadedFile) {
         // Computing default values
-        $availableFrom  = array_key_exists ('start-from', $post) ? $post['start-from'] : null;
-        $availableFrom  = new Zend_Date ($startFrom, Zend_Date::DATE_SHORT);
-        $availableUntil = clone ($availableFrom);
-        $availableUntil->add ($lifetime, Zend_Date::DAY);
         $comment        = array_key_exists ('comment',  $post) ? $post['comment'] : '';
         $lifetime       = array_key_exists ('lifetime', $post) ?
           (int) $post['lifetime'] : fz_config_get ('app', 'default_file_lifetime', 10);
+        $availableFrom  = array_key_exists ('start-from', $post) ? $post['start-from'] : null;
+        $availableFrom  = new Zend_Date ($availableFrom, Zend_Date::DATE_SHORT);
+        $availableUntil = clone ($availableFrom);
+        $availableUntil->add ($lifetime, Zend_Date::DAY);
 
         // Storing values
         $file = new App_Model_File ();
-        $file->setFileInfo      ($file);
+        $file->setFileInfo      ($uploadedFile);
         $file->setUploader      ($this->getUser ());
         $file->created_at       = new Zend_Date ();
         $file->comment          = $comment;
@@ -116,7 +134,7 @@ class App_Controller_Upload extends Fz_Controller {
      */
     private function sendFileUploadedMail ($file) {
         $user = $this->getUser ();
-        $subject = '[FileZ] Dépôt du fichier "%file_name%"'; // TODO i18n
+        $subject = __('[FileZ] Dépôt du fichier "%file_name%"');
         $subject = str_replace ('%file_name%', $file->file_name, $subject);
         $msg = 'email_upload_success (%file_name%, %file_url%, %filez_url%)'; // TODO i18n
         $msg = str_replace ('%file_name%', $file->file_name, $msg);
