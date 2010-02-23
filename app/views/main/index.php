@@ -1,6 +1,6 @@
 
 <h2 class="new-file">Déposer un nouveau fichier</h2>
-<section class="new-file">
+<section class="new-file fz-modal">
   <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
   <div id="file">
     <label for="file">Fichier :</label>
@@ -45,6 +45,10 @@
   </ul>
 </section>
 
+<div id="email-modal" class="fz-modal" style="display: none;">
+  <?php echo partial ('file/_mailForm.php', array ('file' => $file)) ?>
+</div>
+
 
 <script type="text/javascript">
     $(document).ready (function () {
@@ -59,26 +63,23 @@
           boxImage:     '<?php echo public_url_for ('resources/images/progressbar.gif') ?>',
           refreshRate:   <?php echo $refresh_rate ?>,
           progressUrl:  '<?php echo url_for ('upload/progress/') ?>'
-        },
-        emailModalConf: {
-          content: {
-            title: {text: 'Envoyer le fichier par email' /* TODO i18n */},
-            text: '<p><label for="to">Destinataires séparés par des virgules :</label><input type="text" class="to" name="to" /></p>'+
-                  '<p><label for="msg">Message (l\'adresse du fichier sera automatiquement ajoutée) :</label><textarea name="msg"></textarea></p>' +
-                  '<p><input type="submit" value="Envoyer" /></p>'
-          }
         }
       });
-      // On transforme le titre de la section "new-file" en lien (bouton)
-      $("section.new-file").dialog({
-        title: 'Ajouter un nouveau fichier',
+
+      // Modal box generic configuration
+      $(".fz-modal").dialog({
         bgiframe: true,
         autoOpen: false,
         resizable: false,
-        //height: 300,
         width: '560px',
         modal: true
       });
+
+      // Set title for each modal
+      $('section.new-file').dialog ('option', 'title', <?php echo json_encode(__('Ajouter un nouveau fichier')) ?>);
+      $('#email-modal').dialog ('option', 'title', <?php echo json_encode(__('Envoyer un email')) ?>);
+
+      // Replace upload form with on big button, and open a modal box on click
       $('h2.new-file').wrapInner ($('<a href="#" class="awesome large"></a>'));
       $('h2.new-file a').click (function (e) {
         $('section.new-file').dialog ('open');

@@ -96,12 +96,12 @@ section.new-file {
 section.new-file form {
   position: relative;
 }
-section.new-file div#file ,
 section.new-file div#start-from {
-  width: 25%;
+  width: 20%;
   position: absolute; top: 0;
 }
 section.new-file div#file {
+  position: absolute; top: 0;
   width: 40%;
 }
 section.new-file div#file       ,
@@ -124,7 +124,7 @@ section.new-file div#file input {
 }
 section.new-file div#lifetime {
   width: 18%;
-  margin: 0 32% 0 auto;
+  margin: 0 28% 0 auto;
 }
 section.new-file div#start-from input {
   background: transparent url(../images/icons/office-calendar.png) no-repeat 6px center;
@@ -157,9 +157,9 @@ section.new-file div#upload {
 section.new-file div#upload * {
 }
 section.new-file div#upload-loading {
-	width: 220px; height: 19px;
-	background: transparent url('../images/ajax-loader.gif') no-repeat center center;
-	margin: 0 auto;
+  width: 220px; height: 19px;
+  background: transparent url('../images/ajax-loader.gif') no-repeat center center;
+  margin: 0 auto;
 }
 
 h2.new-file a.awesome {
@@ -195,6 +195,7 @@ h2.new-file a.awesome:hover {
  
 /* form */
 select ,
+textarea ,
 input {
   padding: 0.4em;
   border-width: 1px;
@@ -318,12 +319,27 @@ section#uploaded-files ul li.file:hover {
 .send-email-form label {
   display: block;
 }
+.send-email-form textarea ,
 .send-email-form input.to {
-  width: 80%;
+  width: 97%;
 }
 .send-email-form textarea {
-  width: 90%;
   height: 4em;
+}
+
+#email-modal form p {
+  padding: 1em 1.5em 0 1.5em;
+}
+#email-modal form p.submit {
+ background: #F6F8FB;
+  -moz-box-shadow:    inset 0 20px 20px rgba(63,109,177,0.05);
+  -webkit-box-shadow: inset 0 20px 20px rgba(63,109,177,0.05);
+  padding: 0.7em;
+  margin-top: 1em;
+  text-align: center;
+  border-width: 1px 0 0 0;
+  border-style: solid;
+  border-color: #EDF2F7;
 }
 
 /* Section #preview-file */
@@ -406,10 +422,12 @@ footer {
         z-index: 10000;
 }
 
-
-
 /* Dialog
 ----------------------------------*/
+.ui-widget-overlay {
+    opacity: 0.5;
+    filter:alpha(opacity=50);
+}
 .ui-dialog { 
     position: relative; padding: 0; width: 300px; background: #FFF;
   -moz-box-shadow:    0 5px 20px rgba(0,0,0,0.2);
@@ -418,13 +436,15 @@ footer {
   font-family: Arial, sans-serif;
   font-size: 100%;
 }
-.ui-dialog .ui-dialog-titlebar { padding: .5em .3em .3em 1em; position: relative; border: none;
+.ui-dialog .ui-dialog-titlebar { padding: .5em .3em .5em 1em; position: relative; border: none;
     -moz-border-radius-bottomleft: 0; -webkit-border-bottom-left-radius: 0;
     -moz-border-radius-bottomright: 0; -webkit-border-bottom-right-radius: 0;
     -moz-box-shadow:    inset 0 10px 10px rgba(255,255,255,0.06);
     -webkit-box-shadow: inset 0 10px 10px rgba(255,255,255,0.06);
     background: #333;
     color: #999;
+    font-size:0.9em;
+    text-shadow: 0 0 4px #000;
 }
 .ui-dialog .ui-dialog-title { float: left; margin: 0; }
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }

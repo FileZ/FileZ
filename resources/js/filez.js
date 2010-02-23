@@ -38,7 +38,7 @@ $.fn.initFilez = function (options) {
     });
 
     if (settings.progressBar.enable) {
-        $(this).append ('<input type="hidden" name="APC_UPLOAD_PROGRESS" id="upload-id"  value="'+uniqid ()+'" />');
+        $(this).prepend ('<input type="hidden" name="APC_UPLOAD_PROGRESS" id="upload-id"  value="'+uniqid ()+'" />');
     }
     
     // let the server knows it has to return JSON
@@ -47,6 +47,9 @@ $.fn.initFilez = function (options) {
     // Initialise actions event handlers
     $('.file .actions').initFileActions();
 
+    // Initialise email modal box
+    $('.email-modal form').ajaxForm ({success: onEmailFormSent, dataType: 'json'});
+    
     return $(this);
 };
 
@@ -54,15 +57,12 @@ $.fn.initFilez = function (options) {
  *
  */
 $.fn.initFileActions = function () {
-    var emailLink = $('.send-by-email', this);
-    var options   = {api: {onShow: function () {
-        $(this.elements.content).wrapInner ('<form class="send-email-form" action="'+emailLink.attr ('href')+'" method="POST"></form>');
-        $('form', $(this.elements.content))
-            .data('qtip', this.elements.target[0])
-            .ajaxForm ( {success: onEmailFormSent, dataType: 'json'});
-    }}};
-    emailLink.click     (function (e) {e.preventDefault();})
-             .qtipModal ($.extend (true, settings.emailModalConf, options));
+    $('.send-by-email', this).click     (function (e) {
+        console.log ('hi');
+        $('#email-modal').dialog ('open');
+        $('#email-modal form').attr ('href', $(this).attr ('href'));
+        e.preventDefault();
+    }),
 
     $('.delete', this).click (function (e) {
         if (confirm ('Êtes vous sûr de vouloir supprimer ce fichier ?')) // TODO i18n

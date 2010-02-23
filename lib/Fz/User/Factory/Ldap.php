@@ -7,7 +7,7 @@ class Fz_User_Factory_Ldap extends Fz_User_Factory_Abstract {
     
     protected $_ldapCon = null;
 
-    public function findById ($id) {
+    public function _findById ($id) {
         $entry = $this->getLdap()->getEntry ('uid='.$id.','.$this->getOption('baseDn'));
         foreach ($entry as $k => $v)
             if (is_array ($v) && count ($v) === 1)

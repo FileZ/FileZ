@@ -60,6 +60,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
     }
 
     public function getDownloadUrl () {
+        // TODO passer en https si nécessaire
         return 'http://'.$_SERVER["SERVER_NAME"].url_for ('/').$this->getHash ();
     }
 
@@ -67,7 +68,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      *
      */
     public function getReadableFileSize ($precision = 2) {
-        $units = array('B', 'KB', 'MB', 'GB', 'TB'); // TODO i18n
+        $units = array(__('B'), __('KB'), __('MB'), __('GB'), __('TB'));
 
         $bytes = $this->file_size;
         $pow = floor (($bytes ? log($bytes) : 0) / log(1024));
@@ -108,7 +109,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @return array $user
      */
     public function getUploader () {
-        return option ('userFactory')->findById ($user ['id']);
+        return option ('userFactory')->findById ($this->uploader_uid);
 
         // TODO retrieve user from database if he has been invited
     }
@@ -120,8 +121,8 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @return boolean
      */
     public function isOwner ($user) {
-        return ($file->uploader_email == $user ['email'] // check for invited users
-         || $file->uploader_uid   == $user ['id']); // or registered users
+        return ($this->uploader_email == $user ['email'] // check for invited users
+             || $this->uploader_uid   == $user ['id']); // or registered users
     }
 
     /**

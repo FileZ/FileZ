@@ -59,7 +59,7 @@ class App_Controller_Upload extends Fz_Controller {
                 case UPLOAD_ERR_FORM_SIZE:
                 case UPLOAD_ERR_PARTIAL:
                 case UPLOAD_ERR_NO_FILE:
-                    $jsonData['statusText'] .= __('Details').' : '
+                    $jsonData['statusText'] .= ' '.__('Details').' : '
                         . __($this->uploadErrors [$_FILES['file']['error']]);
             }                
         }

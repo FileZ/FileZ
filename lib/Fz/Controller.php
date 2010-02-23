@@ -28,25 +28,9 @@ class Fz_Controller {
     protected function getUser () {
         $auth = $this->getAuthHandler ();
         if (self::$_user === null && $auth->isSecured ()) {
-            self::$_user = $this->buildUserProfile (
-                           $this->getUserFactory ()->findById ($auth->getUserId ()));
+            self::$_user = $this->getUserFactory ()->findById ($auth->getUserId ());
         }
         return self::$_user;
-    }
-
-    /**
-     * Translate profile var name from their original name.
-     *
-     * @param array   $profile
-     * @return array            Translated profile
-     */
-    protected function buildUserProfile ($profile) {
-        $p = array ();
-        $translation = fz_config_get ('user_attributes_translation', null, array ());
-        foreach ($profile as $key => $value)
-            if (array_key_exists ($key, $translation))
-                    $p [$translation [$key]] = $value;
-        return $p;
     }
 
     /**

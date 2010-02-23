@@ -28,9 +28,8 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     }
 
     public function getFreeId () {
-        // TODO put hash config in filez.ini
-        $min = base_convert ('aaaa' , 36, 10);
-        $max = base_convert ('zzzzz', 36, 10); // hash is 5 chars max
+        $min = pow (36, fz_config_get('app', 'min_hash_size') - 1);
+        $max = pow (36, fz_config_get('app', 'max_hash_size')) - 1;
         $id = rand ($min, $max);
         while ($this->rowExists ($id))
             $id = rand ($min, $max);

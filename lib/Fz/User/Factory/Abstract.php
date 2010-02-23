@@ -9,11 +9,39 @@ abstract class Fz_User_Factory_Abstract {
 
     /**
      * Find one user by its ID
-     * 
+     *
      * @param string $id    User id
      * @return array        User attributes
      */
-    abstract public function findById ($id);
+    abstract protected function _findById ($id);
+
+    /**
+     * Find one user by its ID
+     *
+     * @param string $id    User id
+     * @return array        User attributes
+     */
+    public function findById ($id) {
+        if (null === ($p = $this->_findById ($id)))
+            return null;
+        
+        return $this->buildUserProfile ($p);
+    }
+
+    /**
+     * Translate profile var name from their original name.
+     *
+     * @param array   $profile
+     * @return array            Translated profile
+     */
+    protected function buildUserProfile (array $profile) {
+        $p = array ();
+        $translation = fz_config_get ('user_attributes_translation', null, array ());
+        foreach ($profile as $key => $value)
+            if (array_key_exists ($key, $translation))
+                    $p [$translation [$key]] = $value;
+        return $p;
+    }
 
     public function setOptions ($options = array ()) {
         $this->_options = $options;

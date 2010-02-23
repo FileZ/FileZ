@@ -5,7 +5,7 @@
 </h2>
 <section id="preview-file">
   <p>
-    Déposé par : <?php echo $file->getUploader ()['firstname'].' '.$file->getUploader ()['lastname'] ?>
+    Déposé par : <?php echo $uploader['firstname'].' '.$uploader['lastname'] ?>
   </p>
   <?php if ($file->comment): ?>
     <p>Commentaire associé au fichier: <?php echo h($file->comment) ?></p>

@@ -3,8 +3,6 @@
 /**
  * Controller used to do various actions on files (delete, email, download)
  *
- *
- * TODO vérifier si l'utilisateur n'est pas un robot (imposer un délais d'attente exponentiel lorsque qu'il y a plus de 3 requêtes en moins de 5 secondes)
  * TODO vérifier mot de passe s'il y a lieu
  * TODO vérifier si l'utilisateur est passé par download preview
  */
@@ -18,6 +16,7 @@ class App_Controller_File extends Fz_Controller {
         set ('file', $file);
         $available = $file->isAvailable () || $file->isOwner ($this->getUser ());
         set ('available', $available);
+        set ('uploader', $file->getUploader ());
         return html ('file/preview.php');
     }
 
@@ -41,10 +40,14 @@ class App_Controller_File extends Fz_Controller {
      * Allows to download file with filez-1.x urls
      */
     public function downloadFzOneAction () {
-        // TODO vérifier $file->available_until & available_from !!!
         $file_hash = $_GET ['ad'];
         // TODO
         // $file = ...
+        $available = $file->isAvailable () || $file->isOwner ($this->getUser ());
+        set ('available', $available);
+        if ($available) {
+
+        }
         return $this->sendFile ($file);
     }
 
@@ -75,7 +78,7 @@ class App_Controller_File extends Fz_Controller {
         if ($this->isXhrRequest())
             return json (array ('status' => 'success'));
         else {
-            flash ('notification', 'Le fichier a été supprimé.'); // TODO i18n
+            flash ('notification', __('Le fichier a été supprimé.'));
             redirect_to ('/');
         }
     }
@@ -105,7 +108,7 @@ class App_Controller_File extends Fz_Controller {
         // Send mails
         $user = $this->getUser ();
         $mail = $this->createMail();
-        $subject = '[FileZ] Dépôt du fichier "%file_name%"';   // TODO i18n
+        $subject = __('[FileZ] Dépôt du fichier "%file_name%"');
         $subject = str_replace ('%file_name%', $file->file_name, $subject);
         $msg = 'email_share_file (%file_name%, %file_url%, %sender%, %msg%)'; // TODO i18n
         $msg = str_replace ('%file_name%', $file->file_name, $msg);
@@ -121,7 +124,7 @@ class App_Controller_File extends Fz_Controller {
             if ($emailValidator->isValid ($email))
                 $mail->addBcc ($email);
             else {
-                $msg = 'L\'adresse email "%email%" est invalide, veuillez la corriger'; // TODO i18n
+                $msg = __('L\'adresse email "%email%" est invalide, veuillez la corriger');
                 return $this->returnError (str_replace ('%email%', $email, $msg), 'file/email.php');
             }
         }
@@ -131,7 +134,7 @@ class App_Controller_File extends Fz_Controller {
             return $this->returnSuccessOrRedirect ('/');
         }
         catch (Exception $e) {
-            $msg = 'Une erreur s\'est produit pendant l\'envoi du mail, veuillez réessayer.'; // TODO i18n
+            $msg = __('Une erreur s\'est produit pendant l\'envoi du mail, veuillez réessayer.');
             return $this->returnError ($msg, 'file/email.php');
         }
     }
@@ -165,8 +168,9 @@ class App_Controller_File extends Fz_Controller {
      */
     protected function getFile () {
         $file = Fz_Db::getTable('File')->findByHash (params ('file_hash'));
-        if ($file === null)
-            halt (NOT_FOUND, 'There is no file for this hash code');
+        if ($file === null) {
+            halt (NOT_FOUND, __('There is no file for this code'));
+        }
         return $file;
     }
 
@@ -196,7 +200,7 @@ class App_Controller_File extends Fz_Controller {
         if ($file->isOwner ($user))
             return;
 
-        halt (HTTP_UNAUTHORIZED, 'You are not the owner of the file');
+        halt (HTTP_UNAUTHORIZED, __('You are not the owner of the file'));
     }
 
 

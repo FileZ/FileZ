@@ -1,11 +1,23 @@
 
 [app]
-use_url_rewriting       = true
-upload_dir              = /tmp
-log_dir                 = log
-filez1_compat           = true
-max_file_lifetime       = 20 
-default_file_lifetime   = 10
+use_url_rewriting = true
+
+; Must be writtable by the web server
+upload_dir = /tmp
+
+; Must be writtable by the web server
+log_dir = log
+
+; Allow downloading file sent with filez 1.x
+filez1_compat = true
+
+; Max and default lifetime of a file on the server
+max_file_lifetime     = 20 
+default_file_lifetime = 10
+
+; Min/Max size of files hash codes
+min_hash_size = 5
+max_hash_size = 8
 
 [db]
 dsn      = "mysql:host=localhost;dbname=filez"
@@ -22,20 +34,37 @@ host=smtp.univ-avignon.fr
 ; password=pwd
 
 [auth]
+; Name of the class used to authenticate the user. Built-in handler are :
+;  * Fz_Controller_Security_Cas
+;  * Fz_Controller_Security_Ldap
+;  * Fz_Controller_Security_Db
 handler_class = Fz_Controller_Security_Cas
 
 [auth_options]
+; Parameters passed to the authentication handler. See per handler conf in doc/
 cas_server_host = cas.univ-avignon.fr
 
 [user_factory]
+; Name of the class used to authenticate the user. Built-in handler are :
+;  * Fz_User_Factory_Ldap
+;  * Fz_User_Factory_Db
 user_factory_class = Fz_User_Factory_Ldap
 
 [user_factory_options]
+; Parameters passed to the user factory. See per handler conf in doc/
 host = ldap.univ-avignon.fr
 useSsl = false
 baseDn = "ou=people,dc=univ-avignon,dc=fr"
 
 [user_attributes_translation]
+; In order to make the application schema agnostic with differents user storage
+; facilities, each user attributes is translated from its original name to the
+; application name. The syntax is as follow : original_name = application_name.
+; This attributes are required by filez :
+;  * firstname
+;  * lastname
+;  * email
+;  * id
 givenname = firstname
 sn = lastname
 mail = email
