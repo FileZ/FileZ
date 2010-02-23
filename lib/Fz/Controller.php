@@ -8,7 +8,6 @@ class Fz_Controller {
     // Most of this attributes are static in order to share data between controllers
     // while forwarding request for example
     protected static $_user = null;
-    protected static $_userFactory = null;
     protected static $_authHandler = null;
     protected static $_mailTransportSet = false;
 
@@ -79,14 +78,7 @@ class Fz_Controller {
      * @return Fz_User_Factory_Abstract
      */
     protected function getUserFactory () {
-        if (self::$_userFactory === null) {
-            $factoryClass = fz_config_get ('user_factory', 'user_factory_class',
-                                           'Fz_User_Factory_Ldap');
-            self::$_userFactory = new $factoryClass ();
-            self::$_userFactory->setOptions (
-                        fz_config_get ('user_factory_options', null, array ()));
-        }
-        return self::$_userFactory;
+        return option ('userFactory');
     }
 
     /**

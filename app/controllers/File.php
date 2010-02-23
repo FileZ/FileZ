@@ -15,8 +15,9 @@ class App_Controller_File extends Fz_Controller {
      */
     public function previewAction () {
         $file = $this->getFile();
-        // TODO vérifier $file->available_until & available_from !!!
         set ('file', $file);
+        $available = $file->isAvailable () || $file->isOwner ($this->getUser ());
+        set ('available', $available);
         return html ('file/preview.php');
     }
 
@@ -25,10 +26,15 @@ class App_Controller_File extends Fz_Controller {
      */
     public function downloadAction () {
         $file = $this->getFile ();
-        // TODO vérifier $file->available_until & available_from !!!
-        $file->download_count = $file->download_count + 1;
-        $file->save ();
-        return $this->sendFile ($file);
+        $available = $file->isAvailable () || $file->isOwner ($this->getUser ());
+        set ('available', $available);
+        if ($available) {
+            $file->download_count = $file->download_count + 1;
+            $file->save ();
+            return $this->sendFile ($file);
+        } else {
+            halt (HTTP_FORBIDDEN, __('File is not available for download'));
+        }
     }
 
     /**
@@ -187,12 +193,13 @@ class App_Controller_File extends Fz_Controller {
      * @param array $user
      */
     protected function checkOwner (App_Model_File $file, $user) {        
-        if ($file->uploader_email == $user ['email'] // check for invited users
-         || $file->uploader_uid   == $user ['id']) // or registered users
+        if ($file->isOwner ($user))
             return;
 
         halt (HTTP_UNAUTHORIZED, 'You are not the owner of the file');
     }
+
+
 }
 
 ?>

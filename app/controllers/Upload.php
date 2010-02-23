@@ -106,9 +106,17 @@ class App_Controller_Upload extends Fz_Controller {
      */
     private function saveFile ($post, $uploadedFile) {
         // Computing default values
-        $comment        = array_key_exists ('comment',  $post) ? $post['comment'] : '';
-        $lifetime       = array_key_exists ('lifetime', $post) ?
-          (int) $post['lifetime'] : fz_config_get ('app', 'default_file_lifetime', 10);
+        $comment = array_key_exists ('comment',  $post) ? $post['comment'] : '';
+
+        // Validating lifetime
+        $lifetime = fz_config_get ('app', 'default_file_lifetime', 10);
+        if (array_key_exists ('lifetime', $post) && is_numeric ($post['lifetime'])) {
+            $lifetime = intval ($post['lifetime']);
+            $maxLifetime = intval (fz_config_get ('app', 'max_file_lifetime', 20));
+            if ($lifetime > $maxLifetime)
+                $lifetime = $maxLifetime;
+        }
+
         $availableFrom  = array_key_exists ('start-from', $post) ? $post['start-from'] : null;
         $availableFrom  = new Zend_Date ($availableFrom, Zend_Date::DATE_SHORT);
         $availableUntil = clone ($availableFrom);
@@ -148,5 +156,6 @@ class App_Controller_Upload extends Fz_Controller {
         $mail->addTo ($user ['email'], $user['firstname'].' '.$user['lastname']);
         $mail->send ();
     }
+
 }
 

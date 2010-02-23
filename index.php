@@ -49,6 +49,13 @@ function configure() {
     Zend_Locale::setDefault ('fr');
     option ('locale', new Zend_Locale ('auto'));
 
+    // Initialise and save the user factory
+    $factoryClass = fz_config_get ('user_factory', 'user_factory_class',
+                               'Fz_User_Factory_Ldap');
+    $userFactory = new $factoryClass ();
+    $userFactory->setOptions (fz_config_get ('user_factory_options', null, array ()));
+    option ('userFactory', $userFactory);
+
     // Layout settings
     error_layout ('layout/error.html.php');
     layout       ('layout/default.html.php');

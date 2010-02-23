@@ -70,16 +70,20 @@
         }
       });
       // On transforme le titre de la section "new-file" en lien (bouton)
-      $('h2.new-file').wrapInner ($('<a href="#" class="awesome large"></a>'));
-      $('h2.new-file a').click (function (e) {e.preventDefault();});
-      $('h2.new-file a').qtipModal ({
-        content: {
-          title: {text: 'Ajouter un fichier' /* TODO i18n */},
-          text: $('section.new-file')
-        },
-        style: {padding: '0', classes: {content: 'qtip-content qtip-new-file-content'}}
+      $("section.new-file").dialog({
+        title: 'Ajouter un nouveau fichier',
+        bgiframe: true,
+        autoOpen: false,
+        resizable: false,
+        //height: 300,
+        width: '560px',
+        modal: true
       });
-      $('section.new-file').hide ();
+      $('h2.new-file').wrapInner ($('<a href="#" class="awesome large"></a>'));
+      $('h2.new-file a').click (function (e) {
+        $('section.new-file').dialog ('open');
+        e.preventDefault();
+      });
     });
 </script>
 

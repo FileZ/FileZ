@@ -95,11 +95,44 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
     /**
      * Set the uploader of the file from an associative array containing
      * 'id' & 'email' keys.
-     * 
+     *
      * @param array $user
      */
     public function setUploader (array $user) {
         $this->uploader_uid     = $user ['id'];
         $this->uploader_email   = $user ['email'];
+    }
+    /**
+     * Return file uploader info 
+     *
+     * @return array $user
+     */
+    public function getUploader () {
+        return option ('userFactory')->findById ($user ['id']);
+
+        // TODO retrieve user from database if he has been invited
+    }
+
+    /**
+     * Checks if the user passed is the owner of the file
+     *
+     * @param array $user
+     * @return boolean
+     */
+    public function isOwner ($user) {
+        return ($file->uploader_email == $user ['email'] // check for invited users
+         || $file->uploader_uid   == $user ['id']); // or registered users
+    }
+
+    /**
+     * Checks if the file is available for download now
+     *
+     * @return boolean
+     */
+    public function isAvailable () {
+        $now = new Zend_Date ();
+        return ($this->getAvailableFrom()->compare ($now) <= 0
+             && $this->getAvailableUntil()->compare ($now) >= 0);
+
     }
 }
