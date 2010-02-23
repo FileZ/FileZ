@@ -161,9 +161,6 @@ section.new-file div#upload-loading {
 	background: transparent url('../images/ajax-loader.gif') no-repeat center center;
 	margin: 0 auto;
 }
-.ui-datepicker {
-	font-size:80%;
-}
 
 h2.new-file a.awesome {
   background-color: #DAD5D0;
@@ -191,9 +188,10 @@ h2.new-file a.awesome {
 h2.new-file a.awesome:hover {
   background-color: rgba(0,0,0,0.20);
 }
-.qtip-new-file-content {
-    padding: 0;
+.ui-dialog section.new-file {
+    margin: 0;
 }
+
  
 /* form */
 select ,
@@ -397,3 +395,47 @@ footer {
   padding: 6px 20px 6px 20px;
 }
 
+
+/* jQuery UI css extend
+----------------------------------*/
+
+/* Datepicker
+----------------------------------*/
+.ui-datepicker {
+	font-size:80%;
+        z-index: 10000;
+}
+
+
+
+/* Dialog
+----------------------------------*/
+.ui-dialog { 
+    position: relative; padding: 0; width: 300px; background: #FFF;
+  -moz-box-shadow:    0 5px 20px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  border: 0;
+  font-family: Arial, sans-serif;
+  font-size: 100%;
+}
+.ui-dialog .ui-dialog-titlebar { padding: .5em .3em .3em 1em; position: relative; border: none;
+    -moz-border-radius-bottomleft: 0; -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius-bottomright: 0; -webkit-border-bottom-right-radius: 0;
+    -moz-box-shadow:    inset 0 10px 10px rgba(255,255,255,0.06);
+    -webkit-box-shadow: inset 0 10px 10px rgba(255,255,255,0.06);
+    background: #333;
+    color: #999;
+}
+.ui-dialog .ui-dialog-title { float: left; margin: 0; }
+.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.ui-dialog .ui-dialog-content { border: 0; padding: 0; background: none; overflow: auto; zoom: 1; }
+.ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
+.ui-dialog .ui-dialog-buttonpane button { float: right; margin: .5em .4em .5em 0; cursor: pointer; padding: .2em .6em .3em .6em; line-height: 1.4em; width:auto; overflow:visible; }
+.ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
+.ui-draggable .ui-dialog-titlebar { cursor: move; }
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+  font-size: 0.8em;
+}

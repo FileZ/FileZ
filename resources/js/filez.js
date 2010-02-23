@@ -2,9 +2,8 @@
 if (! console) // In case the browser don't have a console
     var console = {log: function (txt) {}};
 
-$('document').ready (function () {
-    $('.notif').hideNotifDelayed();
-});
+// Auto hide current notifications
+$('document').ready (function () {$('.notif').hideNotifDelayed();});
 
 (function($) {
 
@@ -221,7 +220,7 @@ var onFileUploadEnd = function (data, status) {
     }
 
     // Hide the modal box
-    $('div.qtip').qtip('hide');
+    $('.ui-dialog-content').dialog('close');
 };
 
 /*------------------------------------------------------------------------------
