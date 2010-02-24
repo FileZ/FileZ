@@ -26,9 +26,9 @@ $autoloader->addResourceTypes (array ('controller' => array (
  * Configuration of the limonade framework. Automatically called by run()
  */
 function configure() {
-    option ('session'           , 'filez'); // specific session name
-    option ('views_dir'         , option ('root_dir').'/app/views/');
-    option ('upload_dir'        , option ('root_dir').'/uploaded_files/');
+    option ('session'   , 'filez'); // specific session name
+    option ('views_dir' , option ('root_dir').'/app/views/');
+    option ('upload_dir', option ('root_dir').'/uploaded_files/');
 
     require_once_dir (option ('lib_dir'));
 
@@ -45,9 +45,13 @@ function configure() {
     $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     option ('db_conn', $db);
 
-    // We save the locale for later use
-    Zend_Locale::setDefault ('fr');
-    option ('locale', new Zend_Locale ('auto'));
+    // I18N
+    Zend_Locale::setDefault ($fz_conf['app']['default_locale']);
+    $currentLocale = new Zend_Locale ('auto');
+    $translate     = new Zend_Translate ('gettext', option ('root_dir').'/i18n', $currentLocale,
+        array('scan' => Zend_Translate::LOCALE_DIRECTORY));
+    option ('translate', $translate);
+    option ('locale'   , $currentLocale);
 
     // Initialise and save the user factory
     $factoryClass = fz_config_get ('user_factory', 'user_factory_class',

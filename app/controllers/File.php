@@ -78,7 +78,7 @@ class App_Controller_File extends Fz_Controller {
         if ($this->isXhrRequest())
             return json (array ('status' => 'success'));
         else {
-            flash ('notification', __('Le fichier a été supprimé.'));
+            flash ('notification', __('File deleted.'));
             redirect_to ('/');
         }
     }
@@ -108,13 +108,14 @@ class App_Controller_File extends Fz_Controller {
         // Send mails
         $user = $this->getUser ();
         $mail = $this->createMail();
-        $subject = __('[FileZ] Dépôt du fichier "%file_name%"');
-        $subject = str_replace ('%file_name%', $file->file_name, $subject);
-        $msg = 'email_share_file (%file_name%, %file_url%, %sender%, %msg%)'; // TODO i18n
-        $msg = str_replace ('%file_name%', $file->file_name, $msg);
-        $msg = str_replace ('%file_url%' , $file->getDownloadUrl(), $msg);
-        $msg = str_replace ('%msg%'      , $_POST ['msg'], $msg);
-        $msg = str_replace ('%sender%'   , $user['firstname'].' '.$user['lastname'], $msg);
+        $subject = __r('[FileZ] "%sender%" wants to share a file with you',
+            'sender' => $user['firstname'].' '.$user['lastname']);
+        $msg = __r('email_share_file (%file_name%, %file_url%, %sender%, %msg%)', array(
+            'file_name' => $file->file_name,
+            'file_url'  => $file->getDownloadUrl(),
+            'msg'       => $_POST ['msg'],
+            'sender'    => $user['firstname'].' '.$user['lastname'],
+        ));
         $mail->setBodyText ($msg);
         $mail->setSubject  ($subject);
 
@@ -124,8 +125,9 @@ class App_Controller_File extends Fz_Controller {
             if ($emailValidator->isValid ($email))
                 $mail->addBcc ($email);
             else {
-                $msg = __('L\'adresse email "%email%" est invalide, veuillez la corriger');
-                return $this->returnError (str_replace ('%email%', $email, $msg), 'file/email.php');
+                $msg = __r('Email address "%email%" is incorrect, please correct it.',
+                    array ('email' => $email));
+                return $this->returnError ($msg, 'file/email.php');
             }
         }
 
@@ -134,7 +136,7 @@ class App_Controller_File extends Fz_Controller {
             return $this->returnSuccessOrRedirect ('/');
         }
         catch (Exception $e) {
-            $msg = __('Une erreur s\'est produit pendant l\'envoi du mail, veuillez réessayer.');
+            $msg = __('An error occured during email submission. Please try again.');
             return $this->returnError ($msg, 'file/email.php');
         }
     }

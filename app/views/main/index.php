@@ -1,40 +1,42 @@
 
-<h2 class="new-file">Déposer un nouveau fichier</h2>
+<h2 class="new-file"><?php echo __('Upload a new file') ?></h2>
 <section class="new-file fz-modal">
   <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
   <div id="file">
-    <label for="file">Fichier :</label>
+    <label for="file"><?php echo __('File') ?> :</label>
     <div id="input-file">
-      <input type="file" id="file-input" name="file" value="" alt="Fichier à déposer" />
+      <input type="file" id="file-input" name="file" value="" alt="<?php echo __('File') ?>" />
     </div>
   </div>
   <div id="lifetime">
-    <label for="lifetime">Durée :</label>
-    <select id="select-lifetime" name="lifetime" alt="Sélectionnez une durée">
+    <label for="lifetime"><?php echo __('Lifetime') ?> :</label>
+    <select id="select-lifetime" name="lifetime" alt="<?php echo __('Select a lifetime') ?>">
       <?php $default = fz_config_get ('app', 'default_file_lifetime', 10);
             $max     = fz_config_get ('app', 'max_file_lifetime',     20);
             for ($i = 1; $i <= $max; ++$i  ): ?>
-        <option value=<?php echo "\"$i\"".($i == $default ? ' selected="selected" ' : '').'>'.$i ?> jours</option>
+        <option value=<?php echo "\"$i\"".($i == $default ? ' selected="selected" ' : '') ?>>
+          <?php echo $i //__r(array ('%n% day', '%n% days', $i), $i) ?>
+        </option>
       <?php endfor ?>
     </select>
   </div>
   <div id="start-from">
-    <label for="start-from">Date de début :</label>
-    <input type="text" id="input-start-from" name="start-from" value="<?php echo $start_from ?>" alt="Sélectionnez une date de début" />
+    <label for="start-from"><?php echo __('Starts from') ?> :</label>
+    <input type="text" id="input-start-from" name="start-from" value="<?php echo $start_from ?>" alt="<?php echo __('Select a starting date') ?>" />
   </div>
   <div id="comment">
-    <label for="comment">Commentaire :</label>
-    <input type="text" id="input-comment" name="comment" value="" alt="Ajoutez un commentaire (facultatif)" />
+    <label for="comment"><?php echo __('Comments') ?> :</label>
+    <input type="text" id="input-comment" name="comment" value="" alt="<?php echo __('Add a comment (optional)') ?>" />
   </div>
   <div id="upload">
-    <input type="submit" id="start-upload" name="upload" class="awesome blue large" value="&raquo; Envoyer le fichier" />
+    <input type="submit" id="start-upload" name="upload" class="awesome blue large" value="&raquo; <?php echo __('Upload') ?>" />
     <div id="upload-loading"  style="display: none;"></div>
     <div id="upload-progress" style="display: none;"></div>
   </div>
   </form>
 </section>
 
-<h2 id="uploaded-files-title">Vos fichiers déjà déposés</h2>
+<h2 id="uploaded-files-title"><?php echo __('Uploaded files') ?></h2>
 <section id="uploaded-files">
   <ul id="files">
     <?php $odd = true; foreach ($files as $file): ?>
@@ -76,8 +78,8 @@
       });
 
       // Set title for each modal
-      $('section.new-file').dialog ('option', 'title', <?php echo json_encode(__('Ajouter un nouveau fichier')) ?>);
-      $('#email-modal').dialog ('option', 'title', <?php echo json_encode(__('Envoyer un email')) ?>);
+      $('section.new-file').dialog ('option', 'title', <?php echo json_encode(__('Upload a new file')) ?>);
+      $('#email-modal').dialog ('option', 'title', <?php echo json_encode(__('Send by email')) ?>);
 
       // Replace upload form with on big button, and open a modal box on click
       $('h2.new-file').wrapInner ($('<a href="#" class="awesome large"></a>'));

@@ -19,10 +19,17 @@ default_file_lifetime = 10
 min_hash_size = 5
 max_hash_size = 8
 
+; Default langage when no translation exists for the user local
+default_locale = fr
+
+
+
 [db]
 dsn      = "mysql:host=localhost;dbname=filez"
 user     = filez
 password = filez
+
+
 
 [email]
 from_email=filez@univ-avignon.fr
@@ -33,6 +40,8 @@ host=smtp.univ-avignon.fr
 ; username=user
 ; password=pwd
 
+
+
 [auth]
 ; Name of the class used to authenticate the user. Built-in handler are :
 ;  * Fz_Controller_Security_Cas
@@ -40,9 +49,13 @@ host=smtp.univ-avignon.fr
 ;  * Fz_Controller_Security_Db
 handler_class = Fz_Controller_Security_Cas
 
+
+
 [auth_options]
 ; Parameters passed to the authentication handler. See per handler conf in doc/
 cas_server_host = cas.univ-avignon.fr
+
+
 
 [user_factory]
 ; Name of the class used to authenticate the user. Built-in handler are :

@@ -10,14 +10,14 @@ class App_Controller_Upload extends Fz_Controller {
      * @var array
      */
     protected $uploadErrors = array (
-        UPLOAD_ERR_OK         => 'There is no error, the file uploaded with success.',
-        UPLOAD_ERR_INI_SIZE   => 'The uploaded file exceeds the max file size.',
-        UPLOAD_ERR_FORM_SIZE  => 'The uploaded file exceeds the max file size.',
-        UPLOAD_ERR_PARTIAL    => 'The uploaded file was only partially uploaded.',
-        UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
-        UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder.',
-        UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk.',
-        UPLOAD_ERR_EXTENSION  => 'File upload stopped by extension.',
+        UPLOAD_ERR_OK         => __('There is no error, the file uploaded with success.'),
+        UPLOAD_ERR_INI_SIZE   => __('The uploaded file exceeds the max file size.'),
+        UPLOAD_ERR_FORM_SIZE  => __('The uploaded file exceeds the max file size.'),
+        UPLOAD_ERR_PARTIAL    => __('The uploaded file was only partially uploaded.'),
+        UPLOAD_ERR_NO_FILE    => __('No file was uploaded.'),
+        UPLOAD_ERR_NO_TMP_DIR => __('Missing a temporary folder.'),
+        UPLOAD_ERR_CANT_WRITE => __('Failed to write file to disk.'),
+        UPLOAD_ERR_EXTENSION  => __('File upload stopped by extension.'),
     );
 
     /**
@@ -36,7 +36,7 @@ class App_Controller_Upload extends Fz_Controller {
             move_uploaded_file ($tmpName, $filename)) {
 
             $jsonData['status']     = 'success';
-            $jsonData['statusText'] = 'The file has been successfuly uploaded';
+            $jsonData['statusText'] = __('The file was successfuly uploaded');
             $jsonData['html']       = partial ('main/_file_row.php', array ('file' => $file));
 
             $this->sendFileUploadedMail ($file);
@@ -71,7 +71,7 @@ class App_Controller_Upload extends Fz_Controller {
             return html("<textarea>\n".json_encode ($jsonData)."\n</textarea>",'');
         }
         else {
-            flash ('notification', __('Votre fichier a été envoyé.'));
+            flash ('notification', __('Your file was uploaded successfuly.'));
             redirect_to ('/');
         }
     }
@@ -142,14 +142,16 @@ class App_Controller_Upload extends Fz_Controller {
      */
     private function sendFileUploadedMail ($file) {
         $user = $this->getUser ();
-        $subject = __('[FileZ] Dépôt du fichier "%file_name%"');
-        $subject = str_replace ('%file_name%', $file->file_name, $subject);
-        $msg = 'email_upload_success (%file_name%, %file_url%, %filez_url%)'; // TODO i18n
-        $msg = str_replace ('%file_name%', $file->file_name, $msg);
-        $msg = str_replace ('%file_url%' , $file->getDownloadUrl(), $msg);
-        $msg = str_replace ('%filez_url%', 'http://'.$_SERVER["SERVER_NAME"]
-                                                      .url_for ('/'), $msg);
-        
+        $subject = __r('[FileZ] "%file_name%" uploaded successfuly',
+            array('file_name' => $file->file_name));
+        $msg = __r('email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)',
+            array('file_name' => $file->file_name,
+                  'available_from'  => $file->getAvailableFrom()->toString  (Zend_Date::DATE_LONG),
+                  'available_until' => $file->getAvailableUntil()->toString (Zend_Date::DATE_LONG),
+                  'file_url'  => $file->getDownloadUrl(),
+                  'filez_url' => 'http://'.$_SERVER["SERVER_NAME"].url_for ('/')));
+                                // TODO use https if needed        
+
         $mail = $this->createMail();
         $mail->setBodyText ($msg);
         $mail->setSubject  ($subject);

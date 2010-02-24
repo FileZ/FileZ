@@ -36,5 +36,31 @@ function truncate_string ($str, $maxSize) {
  * @return string
  */
 function __($msg) {
-    return $msg; // TODO
+    return option ('translate')->translate ($msg);
+}
+
+/**
+ * Translate a string with different plural form
+ * @param string    $sing Singular form
+ * @param string    $plur Plural form
+ * @param integer   
+ * @return string
+ */
+function __p($sing, $plur, $nb) {
+    return option ('translate')->plural ($sing, $plur, $nb);
+}
+
+/**
+ * Translate a string and subtitute values defined in $subtitution
+ * 
+ * @param string    $msg
+ * @param array     $subtitutions   ex: array('var'=>'real value') will replace
+ *                                  %var% by 'real value
+ * @return string
+ */
+function __r($msg, array $subtitutions) {
+    $msg = __($msg);
+    foreach ($subtitutions as $key => $value)
+        $msg = str_replace ("%$key%", $value, $msg);
+    return $msg;
 }
