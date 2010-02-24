@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: filez-2.0-RC1\n"
 "Report-Msgid-Bugs-To: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "POT-Creation-Date: 2010-02-24 17:31+0100\n"
-"PO-Revision-Date: 2010-02-24 18:24+0100\n"
+"PO-Revision-Date: 2010-02-24 19:25+0100\n"
 "Last-Translator: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "MIME-Version: 1.0\n"
@@ -23,8 +23,4 @@ msgstr "Bonjour,Votre fichier %file_name% a bien été déposé sur la plateform
 #: /media/data/dev/filez-cru/trunk/app/controllers/File.php:113
 msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
 msgstr "Bonjour, %sender% souhaite partager le fichier \"%file_name%\" avec vous. Vous pourrez le télécharger à l'adresse : %file_url% .Voici le contenu de son message :%msg"
-
-#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:12
-msgid "Lifetime"
-msgstr "BlahBlah"
 
