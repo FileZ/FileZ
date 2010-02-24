@@ -2,8 +2,7 @@
 
 /**
  * Fz_Db_Table_Abstract
- *
- * TODO document
+ * Abstract class to represent a table from the database
  */
 abstract class Fz_Db_Table_Abstract {
 
