@@ -6,21 +6,6 @@
 class App_Controller_Upload extends Fz_Controller {
 
     /**
-     * Descriptions of possibles upload errors easily understandable by the end user.
-     * @var array
-     */
-    protected $uploadErrors = array (
-        UPLOAD_ERR_OK         => __('There is no error, the file uploaded with success.'),
-        UPLOAD_ERR_INI_SIZE   => __('The uploaded file exceeds the max file size.'),
-        UPLOAD_ERR_FORM_SIZE  => __('The uploaded file exceeds the max file size.'),
-        UPLOAD_ERR_PARTIAL    => __('The uploaded file was only partially uploaded.'),
-        UPLOAD_ERR_NO_FILE    => __('No file was uploaded.'),
-        UPLOAD_ERR_NO_TMP_DIR => __('Missing a temporary folder.'),
-        UPLOAD_ERR_CANT_WRITE => __('Failed to write file to disk.'),
-        UPLOAD_ERR_EXTENSION  => __('File upload stopped by extension.'),
-    );
-
-    /**
      * Action called when uploading a file
      * @return string   json if request is made async or html otherwise
      */
@@ -51,7 +36,7 @@ class App_Controller_Upload extends Fz_Controller {
                 case UPLOAD_ERR_NO_TMP_DIR:
                 case UPLOAD_ERR_CANT_WRITE:
                     fz_log ('upload error ('. // Logging error if needed
-                        $this->uploadErrors [$_FILES['file']['error']].')', FZ_LOG_ERROR);
+                        $this->explainError ($_FILES['file']['error']).')', FZ_LOG_ERROR);
                     break;
 
                 // These errors come from the client side, let him know what's wrong
@@ -60,7 +45,7 @@ class App_Controller_Upload extends Fz_Controller {
                 case UPLOAD_ERR_PARTIAL:
                 case UPLOAD_ERR_NO_FILE:
                     $jsonData['statusText'] .= ' '.__('Details').' : '
-                        . __($this->uploadErrors [$_FILES['file']['error']]);
+                        . __($this->explainError ($_FILES['file']['error']));
             }                
         }
 
@@ -157,6 +142,26 @@ class App_Controller_Upload extends Fz_Controller {
         $mail->setSubject  ($subject);
         $mail->addTo ($user ['email'], $user['firstname'].' '.$user['lastname']);
         $mail->send ();
+    }
+
+    /**
+     * Return localised description of an upload error code
+     *
+     * @param integer $errorCode
+     * @return string
+     */
+    private function explainError ($errorCode) {
+        switch ($errorCode) {
+            case UPLOAD_ERR_OK         : return __('There is no error, the file uploaded with success.');
+            case UPLOAD_ERR_INI_SIZE   : 
+            case UPLOAD_ERR_FORM_SIZE  : return __('The uploaded file exceeds the max file size.');
+            case UPLOAD_ERR_PARTIAL    : return __('The uploaded file was only partially uploaded.');
+            case UPLOAD_ERR_NO_FILE    : return __('No file was uploaded.');
+            case UPLOAD_ERR_NO_TMP_DIR : return __('Missing a temporary folder.');
+            case UPLOAD_ERR_CANT_WRITE : return __('Failed to write file to disk.');
+            case UPLOAD_ERR_EXTENSION  : return __('File upload stopped by extension.');
+            default : return __('Unknown error');
+        }
     }
 
 }

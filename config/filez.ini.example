@@ -79,23 +79,26 @@ useSsl = false
 baseDn = "ou=people,dc=univ-avignon,dc=fr"
 
 ; Parameters for the Database user factory
-; db_server_host = sql.univ-avignon.fr
-; db_table       = user
-; db_password_field = password
-; db_username_field = username
+; db_use_global_conf    = false
+; db_server_dsn         = "mysql:host=localhost;dbname=filez"
+; db_server_user        = filez
+; db_server_password    = filez
+; db_table              = user
+; db_password_field     = password
+; db_username_field     = username
 ; db_password_algorithm = "SHA1(user.password... TODO
 
 [user_attributes_translation]
 ; In order to make the application schema agnostic with differents user storage
 ; facilities, each user attributes is translated from its original name to the
-; application name. The syntax is as follow : original_name = application_name.
+; application name. The syntax is as follow : application_name = original_name.
 ; This attributes are required by filez :
 ;  * firstname
 ;  * lastname
 ;  * email
 ;  * id
 ; Exemple for an Ldap repository :
-givenname = firstname
-sn = lastname
-mail = email
-uid = id
+firstname = givenname
+lastname  = sn
+email     = mail
+id        = uid

@@ -60,9 +60,13 @@ abstract class Fz_User_Factory_Abstract {
     protected function buildUserProfile (array $profile) {
         $p = array ();
         $translation = fz_config_get ('user_attributes_translation', null, array ());
-        foreach ($profile as $key => $value)
-            if (array_key_exists ($key, $translation))
-                    $p [$translation [$key]] = $value;
+        foreach ($translation as $key => $value) {
+            if (array_key_exists ($key, $profile))
+                $p [$key] = $profile [$value];
+            else {
+                // LOG missing user attribute
+            }
+        }
         return $p;
     }
 
