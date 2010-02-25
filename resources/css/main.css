@@ -358,6 +358,34 @@ h2.filename {
   padding-top: 2em;
 }
 
+/* Login form */
+
+form#login-form {
+  width: 230px;
+  margin: 3em auto;
+  padding: 15px;
+  background: #494846;
+  -moz-border-radius:     7px;
+  -webkit-border-radius:  7px;
+  border-radius:          7px;
+}
+form#login-form p {
+    margin: 0 0 10px 0;
+}
+form#login-form label {
+  display: block;
+  color: #BBB;
+  text-shadow: 1px 1px 3px #222;
+}
+form#login-form input {
+  width: 217px;
+  padding: 5px;
+}
+form#login-form p#submit-login {
+    padding: 10px 0 5px 0;
+    text-align: center;
+}
+
 /* Footer */
 footer {
   text-align: center;

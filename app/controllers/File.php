@@ -108,8 +108,8 @@ class App_Controller_File extends Fz_Controller {
         // Send mails
         $user = $this->getUser ();
         $mail = $this->createMail();
-        $subject = __r('[FileZ] "%sender%" wants to share a file with you',
-            'sender' => $user['firstname'].' '.$user['lastname']);
+        $subject = __r('[FileZ] "%sender%" wants to share a file with you', array (
+            'sender' => $user['firstname'].' '.$user['lastname']));
         $msg = __r('email_share_file (%file_name%, %file_url%, %sender%, %msg%)', array(
             'file_name' => $file->file_name,
             'file_url'  => $file->getDownloadUrl(),

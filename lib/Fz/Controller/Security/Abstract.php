@@ -55,7 +55,9 @@ abstract class Fz_Controller_Security_Abstract {
     /**
      * Check a user password
      *
-     * @return boolean
+     * @param string    $username
+     * @param string    $password
+     * @return string   id of the user or false if the user/pass is incorrect
      */
     abstract public function checkPassword ($username, $password);
 
@@ -71,6 +73,14 @@ abstract class Fz_Controller_Security_Abstract {
     public function getOption ($name, $default = null) {
         return (array_key_exists ($name, $this->_options) ? 
             $this->_options [$name] : $default);
+    }
+
+    /**
+     * Destroy the user session
+     */
+    public function logout () {
+        session_unset();
+        session_destroy();
     }
 }
 

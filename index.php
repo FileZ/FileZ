@@ -92,19 +92,24 @@ fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index'); // TOD
 // Install controller
 fz_dispatch_get  ('/install'                    ,'Install'     ,'index'); // TODO
 
-// Download controller
-fz_dispatch_get  ('/:file_hash'                 ,'File'        ,'preview');
-fz_dispatch_get  ('/:file_hash/download'        ,'File'        ,'download');
+// Authentication controller
+fz_dispatch_get  ('/login'                      ,'Auth'        ,'loginForm');
+fz_dispatch_post ('/login'                      ,'Auth'        ,'login');
+fz_dispatch_get  ('/logout'                     ,'Auth'        ,'logout');
 
 // Filez-1.x url compatibility
 fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne'); // TODO
 
-// File controller
-fz_dispatch_get  ('/:file_hash/email'         ,'File'        ,'emailForm');
-fz_dispatch_post ('/:file_hash/email'         ,'File'        ,'email');
+// Download controller
+fz_dispatch_get  ('/:file_hash'                 ,'File'        ,'preview');
+fz_dispatch_get  ('/:file_hash/download'        ,'File'        ,'download');
 
-fz_dispatch_get  ('/:file_hash/delete'        ,'File'        ,'confirmDelete');
-fz_dispatch_post ('/:file_hash/delete'        ,'File'        ,'delete');
+// File controller
+fz_dispatch_get  ('/:file_hash/email'           ,'File'        ,'emailForm');
+fz_dispatch_post ('/:file_hash/email'           ,'File'        ,'email');
+
+fz_dispatch_get  ('/:file_hash/delete'          ,'File'        ,'confirmDelete');
+fz_dispatch_post ('/:file_hash/delete'          ,'File'        ,'delete');
 
 
 run ();

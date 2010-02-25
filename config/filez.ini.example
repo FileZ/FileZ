@@ -52,9 +52,20 @@ handler_class = Fz_Controller_Security_Cas
 
 
 [auth_options]
-; Parameters passed to the authentication handler. See per handler conf in doc/
+; Parameters for the CAS authentication handler.
 cas_server_host = cas.univ-avignon.fr
 
+; Parameters for the LDAP authentication handler
+;ldap_server_host = ldap.univ-avignon.fr
+;ldap_base_dn     = "ou=people,dc=univ-avignon,dc=fr"
+;ldap_protocol_version = 3
+
+; Parameters for the Database authentication handler
+;db_server_host = ldap.univ-avignon.fr
+;db_table       = user
+;db_password_field = password
+;db_username_field = username
+;db_password_algorithm = "SHA1(user.password... TODO
 
 
 [user_factory]
