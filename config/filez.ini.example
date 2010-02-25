@@ -74,9 +74,11 @@ cas_server_host = cas.univ-avignon.fr
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [user_factory_options]
 ; Parameters passed to the Ldap user factory.
+; Available parameters : http://framework.zend.com/manual/en/zend.ldap.api.html
 host = ldap.univ-avignon.fr
 useSsl = false
 baseDn = "ou=people,dc=univ-avignon,dc=fr"
+bindRequiresDn = true
 
 ; Parameters for the Database user factory
 ; db_use_global_conf    = false
@@ -86,7 +88,13 @@ baseDn = "ou=people,dc=univ-avignon,dc=fr"
 ; db_table              = user
 ; db_password_field     = password
 ; db_username_field     = username
-; db_password_algorithm = "SHA1(user.password... TODO
+; db_password_algorithm = SHA1
+; Possible algorithm are :
+;   - MD5         (unsecure)
+;   - SHA1        (unsecure)
+;   - PHP Function name ex: "methodName"
+;   - PHP Static method ex: "ClassName::Method"
+;   - Plain SQL ex: "password=SHA1(CONCAT(salt, :password))"
 
 [user_attributes_translation]
 ; In order to make the application schema agnostic with differents user storage

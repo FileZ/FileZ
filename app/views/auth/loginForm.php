@@ -13,3 +13,8 @@
     <input type="submit" class="awesome large blue" value="<?php echo __('Log me in') ?>" />
   </p>
 </form>
+<script type="text/javascript">
+$(document).ready (function () {
+  $("input[name='username']").get(0).focus ();
+});
+</script>

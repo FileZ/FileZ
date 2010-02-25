@@ -26,23 +26,14 @@ class Fz_User_Factory_Database extends Fz_User_Factory_Abstract {
      * Find one user by its ID
      *
      * @param string $id    User id
-     * @return array        User attributes
+     * @return array        User attributes or null if not found
      */
     public function _findById ($id) {
-        $db         = $this->getConnection();
-        $table      = $this->getOption ('dn_table');
-        $idColumn   = fz_config_get ('user_attributes_translation', 'id', 'id');
-        $sql        = 'SELECT * WHERE '.$table.' WHERE '.$idColumn.'=:id';
-        $stmt       = $db->prepare ($sql);
-        $stmt->bindValue (':id', $id);
-
-        if ($stmt->execute ()) {
-            while ($obj = $stmt->fetchObject ($class_name, array (true))) {
-                $result[] = $obj;
-            }
-        }
-        // TODOOOOOOOO
-
+        $sql = 'SELECT * FROM '.$this->getOption ('db_table')
+              .' WHERE '
+              .fz_config_get ('user_attributes_translation', 'id', 'id').'=:id';
+        
+        return $this->fetchOne($sql, array (':id' => $id));
     }
 
     /**
@@ -53,13 +44,38 @@ class Fz_User_Factory_Database extends Fz_User_Factory_Abstract {
      * @return array            User attributes if user was found, null if not
      */
     protected function _findByUsernameAndPassword ($username, $password) {
-        // TODO
+        $bindValues = array (':username' => $username,
+                             ':password' => $password);
+        $sql = 'SELECT * FROM '.$this->getOption ('db_table').' WHERE '
+              .fz_config_get ('user_factory_options', 'db_username_field')
+              .'=:username AND '
+              .fz_config_get ('user_factory_options', 'db_password_field')
+              .'=';
+        
+        $algorithm = trim ($this->getOption ('db_password_algorithm'));
+        if (empty ($algorithm)) { // Shame on you !
+            $sql .= ':password';
+        } else if ($algorithm == 'MD5') {
+            $sql .= 'MD5(:password)';
+        } else if ($algorithm == 'SHA1') {
+            $sql .= 'SHA1(:password)';
+        } else if (is_callable ($algorithm)) {
+            if (strstr ($algorithm, '::') !== false)
+                $algorithm = explode ('::', $algorithm);
+            $sql .= $this->getConnection ()->quote (
+                    call_user_func ($algorithm, $password));
+            unset ($bindValues[':password']);
+        } else {
+            return $algorithm; // Plain SQL
+        }
+
+        return $this->fetchOne ($sql, $bindValues);
     }
 
     /**
      * Return a connection ressource to the database
      */
-    private function getConnection () {
+    protected function getConnection () {
         if ($this->getOption('db_use_global_conf'))
             return option ('db_conn');
 
@@ -75,18 +91,26 @@ class Fz_User_Factory_Database extends Fz_User_Factory_Abstract {
     }
 
     /**
-     * Tranlate the password into SQL with configured algorith.
+     * Execute a prepared SQL query and return one row as an array.
      * 
-     * @param $password
-     * @return string       SQL code
+     * @param string $sql
+     * @param array $values
+     * @return array or null if not found
      */
-    private function translatePasswordToSql ($password) {
+    private function fetchOne ($sql, $values = null) {
+        if ($values === null)
+            $values = array ();
 
-        $algorithm = trim ($this->getOption ('db_password_algorithm'));
-        if ($algorithm == 'MD5') {
-
-        } else if ($algorithm == 'SHA1')
-
+        $stmt = $this->getConnection()->prepare ($sql);
+        $user = null;
+        if ($stmt->execute ($values)) {
+            $user = $stmt->fetch (PDO::FETCH_ASSOC);
+            if ($user === false)
+                $user = null;
+        } else {
+            // TODO handle error
+        }
+        return $user;
     }
 }
 ?>
