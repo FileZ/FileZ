@@ -47,7 +47,7 @@ class Fz_Controller {
      */
     protected function getAuthHandler () {
         if (self::$_authHandler === null) {
-            $authClass = fz_config_get ('auth', 'handler_class',
+            $authClass = fz_config_get ('app', 'auth_handler_class',
                                         'Fz_Controller_Security_Cas');
             self::$_authHandler = new $authClass ();
             self::$_authHandler->setOptions (

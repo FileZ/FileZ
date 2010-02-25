@@ -59,9 +59,23 @@ abstract class Fz_Controller_Security_Abstract {
      * @param string    $password
      * @return string   id of the user or false if the user/pass is incorrect
      */
-    abstract public function checkPassword ($username, $password);
+    public function login ($username, $password) {
+        $user = option ('userFactory')->findByUsernameAndPassword ($username, $password);
+        if ($user !== null) {
+            $this->setUserId ($user['id']);
+            return $user;
+        }
+        return null;
+    }
 
-
+    /**
+     * Destroy the user session
+     */
+    public function logout () {
+        session_unset();
+        session_destroy();
+    }
+    
     public function setOptions ($options = array ()) {
         $this->_options = $options;
     }
@@ -75,12 +89,5 @@ abstract class Fz_Controller_Security_Abstract {
             $this->_options [$name] : $default);
     }
 
-    /**
-     * Destroy the user session
-     */
-    public function logout () {
-        session_unset();
-        session_destroy();
-    }
 }
 

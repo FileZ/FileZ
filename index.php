@@ -54,7 +54,7 @@ function configure() {
     option ('locale'   , $currentLocale);
 
     // Initialise and save the user factory
-    $factoryClass = fz_config_get ('user_factory', 'user_factory_class',
+    $factoryClass = fz_config_get ('app', 'user_factory_class',
                                'Fz_User_Factory_Ldap');
     $userFactory = new $factoryClass ();
     $userFactory->setOptions (fz_config_get ('user_factory_options', null, array ()));

@@ -16,6 +16,29 @@ abstract class Fz_User_Factory_Abstract {
     abstract protected function _findById ($id);
 
     /**
+     * Retrieve a user corresponding to $username and $password
+     *
+     * @param string $username
+     * @param string $password
+     * @return array            User attributes if user was found, null if not
+     */
+    abstract protected function _findByUsernameAndPassword ($username, $password);
+
+    /**
+     * Retrieve a user corresponding to $username and $password
+     *
+     * @param string $username
+     * @param string $password
+     * @return array            User attributes if user was found, null if not
+     */
+    public function findByUsernameAndPassword ($username, $password) {
+        if (null === ($p = $this->_findByUsernameAndPassword ($username, $password)))
+            return null;
+
+        return $this->buildUserProfile ($p);
+    }
+
+    /**
      * Find one user by its ID
      *
      * @param string $id    User id

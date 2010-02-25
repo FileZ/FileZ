@@ -1,4 +1,8 @@
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; General configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [app]
 use_url_rewriting = true
 
@@ -22,15 +26,31 @@ max_hash_size = 8
 ; Default langage when no translation exists for the user local
 default_locale = fr
 
+; Name of the class used to authenticate the user. Built-in handler are :
+;  * Fz_Controller_Security_Cas       Log the user against a CAS server
+;  * Fz_Controller_Security_Internal  Log the user with a built-in Controller.
+;                                     This controller will check user/pass with
+;                                     'login' method in the user factory.
+auth_handler_class = Fz_Controller_Security_Internal
+
+; Name of the class used to identify the user. Built-in factory are :
+;  * Fz_User_Factory_Ldap
+;  * Fz_User_Factory_Db
+user_factory_class = Fz_User_Factory_Ldap
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Database configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [db]
 dsn      = "mysql:host=localhost;dbname=filez"
 user     = filez
 password = filez
 
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Mail configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [email]
 from_email=filez@univ-avignon.fr
 from_name=Filez
@@ -41,44 +61,29 @@ host=smtp.univ-avignon.fr
 ; password=pwd
 
 
-
-[auth]
-; Name of the class used to authenticate the user. Built-in handler are :
-;  * Fz_Controller_Security_Cas
-;  * Fz_Controller_Security_Ldap
-;  * Fz_Controller_Security_Db
-handler_class = Fz_Controller_Security_Cas
-
-
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Authentication configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [auth_options]
 ; Parameters for the CAS authentication handler.
 cas_server_host = cas.univ-avignon.fr
 
-; Parameters for the LDAP authentication handler
-;ldap_server_host = ldap.univ-avignon.fr
-;ldap_base_dn     = "ou=people,dc=univ-avignon,dc=fr"
-;ldap_protocol_version = 3
 
-; Parameters for the Database authentication handler
-;db_server_host = ldap.univ-avignon.fr
-;db_table       = user
-;db_password_field = password
-;db_username_field = username
-;db_password_algorithm = "SHA1(user.password... TODO
-
-
-[user_factory]
-; Name of the class used to authenticate the user. Built-in handler are :
-;  * Fz_User_Factory_Ldap
-;  * Fz_User_Factory_Db
-user_factory_class = Fz_User_Factory_Ldap
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Identification configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [user_factory_options]
-; Parameters passed to the user factory. See per handler conf in doc/
+; Parameters passed to the Ldap user factory.
 host = ldap.univ-avignon.fr
 useSsl = false
 baseDn = "ou=people,dc=univ-avignon,dc=fr"
+
+; Parameters for the Database user factory
+; db_server_host = sql.univ-avignon.fr
+; db_table       = user
+; db_password_field = password
+; db_username_field = username
+; db_password_algorithm = "SHA1(user.password... TODO
 
 [user_attributes_translation]
 ; In order to make the application schema agnostic with differents user storage
@@ -89,6 +94,7 @@ baseDn = "ou=people,dc=univ-avignon,dc=fr"
 ;  * lastname
 ;  * email
 ;  * id
+; Exemple for an Ldap repository :
 givenname = firstname
 sn = lastname
 mail = email

@@ -29,12 +29,11 @@ class App_Controller_Auth extends Fz_Controller {
         if ($authHandler->isSecured ())
             redirect_to ('/');
 
-        $uid = $authHandler->checkPassword ($_POST['username'], $_POST['password']);
-        if ($uid === false) {
+        $user = $authHandler->login ($_POST['username'], $_POST['password']);
+        if ($user === null) {
             flash_now ('error', __('Wrong username or password'));
-            return $this->loginFormAction ();
+            return $this->loginFormAction (); // forward to login form
         } else {
-            $authHandler->setUserId ($uid);
             redirect_to ('/');
         }
     }
@@ -46,5 +45,4 @@ class App_Controller_Auth extends Fz_Controller {
         $this->getAuthHandler ()->logout ();
         redirect_to ('/');
     }
-
 }
