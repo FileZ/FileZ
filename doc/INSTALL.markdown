@@ -13,22 +13,84 @@ Requirement
 Installation
 ============
 
-TODO ceci est une ébauche
+* Retrieve Filez sources from the svn or an archive and place them in your
+  web root dir.
 
-* upload ...
-* configure your virtual host. See 'Notes::Apache virtual host example'.
-* point your browser on the server where you uploaded filez.
+* Insert database schema
+
+    mysql -h sql_host -u filez_user -p filez_db_name < config/db.schema.sql
+
+* Edit Filez config (See next parapgraph)
+
+* Make sure the upload dir & log dir are writeable by the web server
+
+    sudo chown www-data:www-data [upload_dir] [log_dir]
+
+* Edit your vhost
 
 
-Notes
-=====
+Configuration
+=============
 
-Apache virtual host example
+The easiest method is to start from a copy of the configuration example
+
+    cp config/filez.ini.example config/filez.ini
+
+Filez.ini.example is documented but you may find additional information in the
+next sections, like installing dependencies, etc.
+
+
+General Configuration
+---------------------
+
+The "[app]" section contains common options :
+
+- "use_url_rewriting" (boolean) : Not tested with "false" yet
+- "upload_dir" (Absolute path)  : Upload directory (writtable by the web server)
+- "log_dir"    (Absolute path)  : Log directory (writtable by the web server)
+- "filez1_compat" (boolean)     : Enable the filez-1.x support for downloading
+                                  previously uploaded files
+- "max_file_lifetime" (integer) : Maximum lifetime of the file on the server
+                                  before being delete
+- "default_file_lifetime (int)  : Default lifetime
+- "min_hash_size" (integer)     : Minimum number of characters in the hash
+- "max_hash_size" (integer)     : Maximum number of characters in the hash
+- "default_locale" (string)     : Default locale used when Filez can find the
+                                  prefered user locale or when there is no
+                                  corresponding i18n for the user locale.
+
+
+Database
+--------
+
+    [db]
+    dsn      = "mysql:host=your_sql_host;dbname=your_filez_database"
+    user     = filez
+    password = password
+
+It hasn't been tested yet but you should be able to connect with another
+database driver than mysql. Check php doc for the dsn syntax corresponding to
+your driver : <http://www.php.net/manual/en/pdo.drivers.php>.
+
+
+Email
+-----
+
+Filez use an smtp server to send notification mails. You have configure it in
+the "[email]" section :
+
+    [email]
+    from_email=filez@univ-avignon.fr
+    from_name=Filez
+    host=smtp.univ-avignon.fr
+    ; auth=login ; possible values = crammd5, login, plain
+    ; port=25
+    ; username=user
+    ; password=pwd
+
+
+Configure Security strategy
 ---------------------------
-
-
-Security strategies
-------------------
 
 Filez let you choose between 3 authentication strategies :
 
@@ -144,6 +206,10 @@ For our Ldap repository, the configuration looks like this :
     lastname  = sn
     email     = mail
     id        = uid
+
+
+Notes
+=====
 
 Installing and configuring APC
 ------------------------------

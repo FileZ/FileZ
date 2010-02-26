@@ -23,7 +23,7 @@ default_file_lifetime = 10
 min_hash_size = 5
 max_hash_size = 8
 
-; Default langage when no translation exists for the user local
+; Default langage when no translation exists for the user locale
 default_locale = fr
 
 ; Name of the class used to authenticate the user. Built-in handler are :

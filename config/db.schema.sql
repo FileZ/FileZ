@@ -15,5 +15,5 @@ CREATE TABLE IF NOT EXISTS `fz_file` (
   `extends_count`   INTEGER         DEFAULT '0',
 
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
