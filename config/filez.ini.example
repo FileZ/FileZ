@@ -20,14 +20,14 @@ max_file_lifetime     = 20
 default_file_lifetime = 10
 
 ; Min/Max size of files hash codes
-min_hash_size = 5
-max_hash_size = 8
+min_hash_size = 4
+max_hash_size = 6
 
 ; Default langage when no translation exists for the user locale
 default_locale = fr
 
 ; Logo image
-logo_image = uapv-logo.png
+your_logo = "resources/images/uapv-logo.gif"
 
 ; Name of the class used to authenticate the user. Built-in handler are :
 ;  * Fz_Controller_Security_Cas       Log the user against a CAS server

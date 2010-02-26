@@ -1,6 +1,6 @@
 SET NAMES 'utf8';
 CREATE TABLE IF NOT EXISTS `fz_file` (
-  `id`              INTEGER         NOT NULL,
+  `id`              BIGINT UNSIGNED NOT NULL,
   `del_notif_sent`  BOOLEAN         DEFAULT 0,
   `file_name`       varchar(100)    NOT NULL,
   `file_size`       INTEGER         DEFAULT 0,
