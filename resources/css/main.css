@@ -66,6 +66,10 @@ header p {
   font-size: 1em;
   color: #8F837A;
 }
+header img#your-logo {
+  float: left;
+  margin-right: 1em;
+}
 
 /* Notifications */
 .notif {

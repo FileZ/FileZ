@@ -18,25 +18,53 @@ Installation
 
 * Insert database schema
 
-    mysql -h sql_host -u filez_user -p filez_db_name < config/db.schema.sql
+      mysql -h sql_host -u filez_user -p filez_db_name < config/db.schema.sql
 
 * Edit Filez config (See next parapgraph)
 
 * Make sure the upload dir & log dir are writeable by the web server
 
-    sudo chown www-data:www-data [upload_dir] [log_dir]
+      sudo chown www-data:www-data [upload_dir] [log_dir]
 
-* Edit your vhost
+* Edit your vhost. Example '/etc/apache2/sites-available/filez' :
+
+        <VirtualHost *:80>
+            ServerAdmin webmaster@localhost
+            ServerName  filez-test.univ-avignon.fr
+            php_admin_value post_max_size       750M
+            php_admin_value upload_max_filesize 750M
+            php_admin_value max_execution_time  1200
+            php_admin_value upload_tmp_dir "/media/data/tmp"
+
+                DocumentRoot /var/www/filez-test.univ-avignon.fr
+                <Directory />
+                        Options FollowSymLinks
+                        AllowOverride All
+                </Directory>
+                <Directory /var/www/filez-test.univ-avignon.fr>
+                        Options Indexes FollowSymLinks MultiViews
+                        AllowOverride All
+                        Order allow,deny
+                        allow from all
+                </Directory>
+
+                ErrorLog  /var/log/apache2/filez-error.log
+                CustomLog /var/log/apache2/filez-access.log combined
+                LogLevel warn
+        </VirtualHost>
+
+  Then activate it :
+      a2ensite filez && /etc/init.d/apache2 reload
 
 
-Configuration
-=============
+Configuration details
+=====================
 
-The easiest method is to start from a copy of the configuration example
+The easiest method is to start from a copy of the configuration example :
 
     cp config/filez.ini.example config/filez.ini
 
-Filez.ini.example is documented but you may find additional information in the
+filez.ini.example is documented but you may find additional information in the
 next sections, like installing dependencies, etc.
 
 
@@ -192,7 +220,7 @@ facilities, each user attributes is translated from its original name to the
 application name. The syntax is as follow : application_name = original_name
 and must be placed under the "[user_attributes_translation]" section.
 
-This attributes are required by filez :
+These attributes are required by filez :
 
 - firstname
 - lastname

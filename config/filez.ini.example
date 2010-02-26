@@ -26,6 +26,9 @@ max_hash_size = 8
 ; Default langage when no translation exists for the user locale
 default_locale = fr
 
+; Logo image
+logo_image = uapv-logo.png
+
 ; Name of the class used to authenticate the user. Built-in handler are :
 ;  * Fz_Controller_Security_Cas       Log the user against a CAS server
 ;  * Fz_Controller_Security_Internal  Log the user with a built-in Controller.
