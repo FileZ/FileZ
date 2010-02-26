@@ -60,15 +60,26 @@ h2 span.filename {
 header {
   padding: 3em 0 2em 0;
 }
-header p {
+header h1 {
+}
+header #filez-logo {
+  display: block;
+  margin: auto 0;
+}
+header #filez-header {
   letter-spacing: -0.05em;
   font-weight: normal;
   font-size: 1em;
   color: #8F837A;
+  display: block;
 }
-header img#your-logo {
+header #your-logo {
+  display: block;
   float: left;
+  margin-top: -1em;
   margin-right: 1em;
+  padding-right: 1em;
+  border-right: 1px solid #D9D4CF;
 }
 
 /* Notifications */

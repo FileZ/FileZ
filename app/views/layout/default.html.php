@@ -29,12 +29,14 @@
             <img src="<?php echo public_url_for (fz_config_get ('app', 'your_logo')) ?>"/>
           </span>
         <?php endif ?>
-        <a href="<?php echo public_url_for ('/') ?>">
-          <img src="<?php echo public_url_for ('resources/images/filez-logo.png') ?>" title="filez" />
-        </a>
+        <span id="filez-header">
+          <a href="<?php echo public_url_for ('/') ?>" id="filez-logo">
+            <img src="<?php echo public_url_for ('resources/images/filez-logo.png') ?>" title="filez" />
+          </a>
+          <?php echo __('Share files for a limited time.') ?>
+        </span>
+        <span style="display: block; clear: both;"></span>
       </h1>
-      <p><?php echo __('Share files for a limited time.') ?></p>
-      <div style="clear: both;"></div>
       <?php if (array_key_exists ('notification', $flash)): ?>
         <p class="notif ok"><?php echo $flash ['notification'] ?></p>
       <?php endif ?>
