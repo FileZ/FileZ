@@ -43,6 +43,7 @@ function configure() {
     // TODO gérer les erreurs de connexion
     //$db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db->exec ('SET NAMES \'utf8\'');
     option ('db_conn', $db);
 
     // I18N

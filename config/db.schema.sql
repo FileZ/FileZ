@@ -1,4 +1,4 @@
-
+SET NAMES 'utf8';
 CREATE TABLE IF NOT EXISTS `fz_file` (
   `id`              INTEGER         NOT NULL,
   `del_notif_sent`  BOOLEAN         DEFAULT 0,
