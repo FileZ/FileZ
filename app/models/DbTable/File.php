@@ -30,7 +30,8 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     public function getFreeId () {
         $min = pow (36, fz_config_get('app', 'min_hash_size') - 1);
         $max = pow (36, fz_config_get('app', 'max_hash_size')) - 1;
-        $id = rand ($min, $max);
+        $randMax = mt_getrandmax();
+        $id = mt_rand ($min, $max); // FIXME
         while ($this->rowExists ($id))
             $id = rand ($min, $max);
         return $id;
