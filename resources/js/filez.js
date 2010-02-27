@@ -65,7 +65,7 @@ $.fn.initFileActions = function () {
     }),
 
     $('.delete', this).click (function (e) {
-        if (confirm ('Êtes vous sûr de vouloir supprimer ce fichier ?')) // TODO i18n
+        if (confirm (settings.messages.confirmDelete))
             $('<form action="'+$(this).attr('href')+'" method="post"></form>').appendTo('body').submit();
         e.preventDefault();
     });
@@ -89,7 +89,7 @@ $.fn.qtipModal = function (options) {
             border:   {width: 9, radius: 9, color: '#666666'},
             name:     'light'
         },
-        content: {title: {button: 'Annuler'}}, // TODO i18n
+        content: {title: {button: settings.messages.cancel}},
         api: {
             beforeShow: function() {
                 $('#modal-background').show();
@@ -127,7 +127,7 @@ var onEmailFormSent = function (data, status, form) {
     } else if (data.status && data.status == 'error') {
         alert (data.statusText);
     } else {
-        alert ('Unknown error.');
+        alert (settings.messages.unknownError);
     }
 }
 
@@ -137,7 +137,7 @@ var onEmailFormSent = function (data, status, form) {
 var onFileUpoadProgress = function (data, textStatus, xhr) {
     console.log (data);
     if (data == false) {
-        onCheckProgressError (xhr, 'Unknown Error', null);
+        onCheckProgressError (xhr, settings.messages.unknownError, null);
     }
     else if (data.done == 1) {
         clearInterval (progressCheckerLoop);
@@ -211,7 +211,7 @@ var onFileUploadEnd = function (data, status) {
     console.log (data);
 
     if (data.status == undefined) {
-        notifyError ('An unknown error hapenned while uploading the file'); // TODO i18n
+        notifyError (settings.messages.unknownErrorHappened);
     } else if (data.status == 'success') {
         appendFile (data.html);
         notify (data.statusText);

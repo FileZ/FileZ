@@ -24,7 +24,10 @@ class App_Controller_Upload extends Fz_Controller {
             $jsonData['statusText'] = __('The file was successfuly uploaded');
             $jsonData['html']       = partial ('main/_file_row.php', array ('file' => $file));
 
-            $this->sendFileUploadedMail ($file);
+            try { $this->sendFileUploadedMail ($file); }
+            catch {
+                // Log "Can't send email Uploaded"
+            }
 
         } else { // Errors happened while moving the uploaded file
             $file->delete ();

@@ -7,8 +7,8 @@
 function fz_config_load () {
     $config_file = option ('root_dir').'/config/filez.ini';
     $config = parse_ini_file ($config_file, true);
-    if (! $config) {
-        // TODO handle missing config file or syntax error
+    if (empty ($config)) {
+        die ('Missing or malformed config file.');
     }
 
     option ('fz_config', $config);
