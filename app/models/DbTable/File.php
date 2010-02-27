@@ -65,7 +65,10 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         $min = fz_config_get('app', 'min_hash_size');
         $max = fz_config_get('app', 'max_hash_size');
         $id = null;
-        while ($this->rowExists ($id = $this->generateRandomHash ($min, $max)));
+        do {
+            $id = $this->generateRandomHash ($min, $max);
+            $id = base_convert($id, 36, 10);
+        } while ($this->rowExists ($id));
         return $id;
     }
 
