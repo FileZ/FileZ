@@ -1,10 +1,8 @@
 
-
-* fix $max > mt_getrandmax() Dans File->getFreeId();
-* fix envoi mail ajax
+* Gérer la suppression automatique des fichiers
+* Lorsque l'utilisateur n'a pas de fichier uploadé, ne pas afficher "Vos fichiers uploadés"
 * Vérifier le fonctionnement d'une 2eme connexion a une bd pour Fz_User_Factory_Database
 * Gérer la création d'invitations
-* Régler le pb des traduction sur plusieurs lignes dans le fichier .po
 * Refactor var names according to the coding conventions
 * Permettre l'ouverture d'un client de messagerie "non web" (avec mailto:)
 * Remplacer les texte "envoyer par email" par "partager" ?
