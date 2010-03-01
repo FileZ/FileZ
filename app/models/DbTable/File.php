@@ -12,6 +12,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         'available_from',
         'available_until',
         'download_count',
+        'deleted',
         'notify_uploader',
         'uploader_uid',
         'extends_count',
@@ -66,8 +67,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         $max = fz_config_get('app', 'max_hash_size');
         $id = null;
         do {
-            $id = $this->generateRandomHash ($min, $max);
-            $id = base_convert($id, 36, 10);
+            $id = base_convert ($this->generateRandomHash ($min, $max), 36, 10);
         } while ($this->rowExists ($id));
         return $id;
     }
@@ -83,14 +83,27 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     }
 
     /**
-     * Return all file owned by $uid whick are available (not deleted)
+     * Return all file owned by $uid which are available (not deleted)
      *
      * @param string $uid
      * @return array of App_Model_File
      */
     public function findByOwnerOrderByUploadDateDesc ($uid) {
-        $sql = "SELECT * FROM fz_file WHERE uploader_uid=:uid ORDER BY created_at DESC";
+        $sql = 'SELECT * FROM fz_file WHERE uploader_uid=:uid ORDER BY created_at DESC';
         return $this->findBySql ($sql, array (':uid' => $uid));
+    }
+
+    /**
+     *
+     */
+    public function deleteFiles () {
+       $where = ' WHERE available_until<CURRENT_DATE()';
+       foreach ($this->findBySql ('SELECT * FROM fz_file'.$where) as $file) {
+           $file->deleteFromDisk ();
+       }
+
+       $count = option ('db_conn')->exec ('DELETE FROM fz_file'.$where);
+       fz_log ($count.' files deleted');
     }
 }
 

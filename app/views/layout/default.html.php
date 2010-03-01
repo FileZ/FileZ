@@ -13,7 +13,7 @@
     <!--[if lte IE 8]>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/html5.js') ?>"></script>
     <![endif]-->
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery-1.4.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery-1.4.2.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.form.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.progressbar.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/jquery-ui-1.7.2.custom.min.js') ?>"></script>

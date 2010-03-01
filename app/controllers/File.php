@@ -73,7 +73,6 @@ class App_Controller_File extends Fz_Controller {
         $user = $this->getUser ();
         $this->checkOwner ($file, $user);
         $file->delete();
-        // Delete the file on disk or tag it as "waiting for deletion"
 
         if ($this->isXhrRequest())
             return json (array ('status' => 'success'));
@@ -141,7 +140,7 @@ class App_Controller_File extends Fz_Controller {
         }
     }
 
-    // TODO documenter les fonctions suivantes et ? les passer dans la classe controleur
+    // TODO documenter les 2 fonctions suivantes et ? les passer dans la classe controleur
 
     private function returnError ($msg, $template) {
         if ($this->isXhrRequest ()) {
@@ -189,7 +188,7 @@ class App_Controller_File extends Fz_Controller {
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
         header('Content-Length: '.$file->file_size);
-        return file_read (fz_config_get ('app', 'upload_dir').'/'.$file->getId ());
+        return file_read ($file->getOnDiskLocation ());
     }
 
     /**

@@ -234,8 +234,8 @@ section#uploaded-files ul#files {
   list-style: none;
 }
 section#uploaded-files ul li.file {
-  padding: 0.7em 1.3em;
   position: relative;
+  padding-top: 0.7em;
 }
 section#uploaded-files ul li.file.even {
   background: #F5F4F2;
@@ -260,6 +260,7 @@ section#uploaded-files ul li.file:last-child {
   border-radius-bottomleft:           5px;
 }
 section#uploaded-files ul li p.filename {
+  padding: 0 1.3em;
 }
 section#uploaded-files ul li p.filename a {
   padding-left: 20px;
@@ -268,7 +269,7 @@ section#uploaded-files ul li p.filename a {
   font-size: 1.3em;
   letter-spacing: -0.05em;
 }
-section#uploaded-files ul li:hover p.filename span.filename {
+section#uploaded-files ul li:hover p.filename  span.filename {
   display: none;
 }
 section#uploaded-files ul li:hover p.filename span.url {
@@ -276,32 +277,40 @@ section#uploaded-files ul li:hover p.filename span.url {
 }
 section#uploaded-files ul li p.filename span.url {
   display: none;
-  color: black;
+  font-weight: normal;
+  color: #67665E;
 }
-section#uploaded-files ul li p.file-info {
-  display: inline;
-  position: absolute; top: 0.9em; right: 1.3em;
+section#uploaded-files ul li p.filename span.hash {
+  font-weight: bold;
+  color: #000;
+  letter-spacing: 0.05em;
 }
 section#uploaded-files ul li p.availability ,
 section#uploaded-files ul li p.file-info {
+  float: right;
+  clear: right;
   color: #7C746C;
   font-size: 0.8em;
+  padding-right: 1.3em;
 }
 section#uploaded-files ul li p.file-info span.filesize {
   font-size: 0.8em;
-  opacity: 0.8;
 }
 section#uploaded-files ul li p.availability b {
   color: #433C34;
 }
-section#uploaded-files ul li p.availability ,
-section#uploaded-files ul li ul.actions {
-  list-style: none;
-  font-size: 0.8em;
+section#uploaded-files ul li p.comment {
+  margin: 0.3em 1.3em 0.5em 1.3em;
 }
 section#uploaded-files ul li ul.actions {
-  padding-top:    6px;
-  padding-bottom: 2px;
+  list-style: none;
+  background: #F8F6E2;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-top: 1px solid rgba(255,255,255,1);
+  -moz-box-shadow:    inset 0 -4px 4px rgba(0,0,0,0.05);
+  -webkit-box-shadow: inset 0 -4px 4px rgba(0,0,0,0.05);
+  padding: 0.2em 1.3em;
+  font-size: 0.8em;
 }
 section#uploaded-files ul li ul.actions li {
   display: inline;
@@ -310,6 +319,7 @@ section#uploaded-files ul li ul.actions li {
 section#uploaded-files ul li ul.actions li + li {
   padding-left: 0.8em;
   border-left: 1px solid #EDEBE6;
+  border-left: 1px solid rgba(0,0,0,0.1);
 }
 section#uploaded-files ul li ul.actions a.send-by-email ,
 section#uploaded-files ul li ul.actions a.delete ,

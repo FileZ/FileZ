@@ -47,6 +47,13 @@ $.fn.initFilez = function (options) {
     // Initialise actions event handlers
     $('.file .actions').initFileActions();
 
+    // Show file's actions only on hover
+    $('#uploaded-files .actions').hide ();
+    $('#uploaded-files li.file').hover (
+        function () {$('.actions', this).slideDown(100);},
+        function () {$('.actions', this).slideUp(100);}
+    );
+
     // Initialise email modal box
     $('.email-modal form').ajaxForm ({success: onEmailFormSent, dataType: 'json'});
     
@@ -60,7 +67,7 @@ $.fn.initFileActions = function () {
     $('.send-by-email', this).click     (function (e) {
         console.log ('hi');
         $('#email-modal').dialog ('open');
-        $('#email-modal form').attr ('href', $(this).attr ('href'));
+        $('#email-modal form').attr ('action', $(this).attr ('href'));
         e.preventDefault();
     }),
 
@@ -238,7 +245,13 @@ var appendFile = function (html) {
         '<li class="file '+cssClass+'" style="display: none;">'+html+'</li>'
     );
     files.children ('li:first').slideDown (500);
-    $('.file:first .actionsemail', files).initFileActions();
+    $('.file:first .actions', files).initFileActions().hide();
+
+    // Show file's actions only on hover
+    $('#uploaded-files li.file').hover (
+        function () {$('.actions', this).slideDown(100);},
+        function () {$('.actions', this).slideUp(100);}
+    );
 };
 
 var reloadUploadForm = function () {

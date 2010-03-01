@@ -52,7 +52,7 @@ function __p($sing, $plur, $nb) {
 
 /**
  * Translate a string and subtitute values defined in $subtitution
- * 
+ *
  * @param string    $msg
  * @param array     $subtitutions   ex: array('var'=>'real value') will replace
  *                                  %var% by 'real value

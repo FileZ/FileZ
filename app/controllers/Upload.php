@@ -13,12 +13,10 @@ class App_Controller_Upload extends Fz_Controller {
         $this->secure ();
         $jsonData = array (); // returned data
         $file     = $this->saveFile ($_POST, $_FILES['file']);
-        $tmpName  = $_FILES['file']['tmp_name'];
-        $filename = fz_config_get ('app', 'upload_dir').'/'.$file->id;
 
         // Let's move the file to its final destination
-        if ($_FILES['file']['error'] === UPLOAD_ERR_OK && is_uploaded_file($tmpName) &&
-            move_uploaded_file ($tmpName, $filename)) {
+        if ($_FILES['file']['error'] === UPLOAD_ERR_OK
+            && $file->moveUploadedFile ($_FILES['file'])) {
 
             $jsonData['status']     = 'success';
             $jsonData['statusText'] = __('The file was successfuly uploaded');

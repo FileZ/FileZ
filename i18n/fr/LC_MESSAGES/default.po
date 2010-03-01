@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: filez-2.0-RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-28 23:48+0100\n"
-"PO-Revision-Date: 2010-02-28 23:56+0100\n"
+"POT-Creation-Date: 2010-03-01 14:52+0100\n"
+"PO-Revision-Date: 2010-03-01 18:19+0100\n"
 "Last-Translator: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "MIME-Version: 1.0\n"
@@ -12,94 +12,52 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __r;__;__r\\(array\n"
+"X-Poedit-KeywordsList: __r;__p;__\n"
 "X-Poedit-Basepath: /media/data/dev/filez-cru/trunk\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: /media/data/dev/filez-cru/trunk\n"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:71
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:123
 msgid "B"
 msgstr "o"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:71
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:123
 msgid "KB"
 msgstr "Ko"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:71
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:123
 msgid "MB"
 msgstr "Mo"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:71
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:123
 msgid "GB"
 msgstr "Go"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:71
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:123
 msgid "TB"
 msgstr "To"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:35
-msgid "File is not available for download"
-msgstr "Le fichier n'est pas disponible au téléchargement"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:81
-msgid "File deleted."
-msgstr "Fichier supprimé"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:111
-msgid "[FileZ] \"%sender%\" wants to share a file with you"
-msgstr "[FileZ] %sender% souhaite partager un fichier avec vous"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:113
-msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
-msgstr ""
-"Bonjour,\n"
-"\n"
-"%sender% souhaite partager le fichier \"%file_name%\" avec vous. Vous pourrez le télécharger à l'adresse : %file_url% .\n"
-"\n"
-"Voici le contenu de son message :\n"
-"%msg"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:128
-msgid "Email address \"%email%\" is incorrect, please correct it."
-msgstr "L'adresse email \"%email%\" est incorrecte, veuillez la corriger."
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:139
-msgid "An error occured during email submission. Please try again."
-msgstr "Une erreur est survenue pendant l'envoi du fichier. Veuillez réessayer."
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:174
-msgid "There is no file for this code"
-msgstr "Aucun fichier n'existe pour ce code"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:205
-msgid "You are not the owner of the file"
-msgstr "Vous n'êtes pas le propriétaire du fichier"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Auth.php:34
-msgid "Wrong username or password"
-msgstr "Nom d'utilisateur ou mot de passe incorrect"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:24
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:22
 msgid "The file was successfuly uploaded"
 msgstr "Le fichier a été correctement envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:38
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:36
 msgid "An error occured while uploading the file."
 msgstr "Une erreur est survenue pendant l'envoi du fichier."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:52
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:50
 msgid "Details"
 msgstr "Détails"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:64
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:62
 msgid "Your file was uploaded successfuly."
 msgstr "Votre fichier correctement a été envoyé."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:135
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:133
 msgid "[FileZ] \"%file_name%\" uploaded successfuly"
 msgstr "[Filez] Votre fichier \"%file_name%\" a correctement été envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:137
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:135
 msgid "email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)"
 msgstr ""
 "Bonjour,\n"
@@ -114,50 +72,109 @@ msgstr ""
 "\n"
 "-----NE REPONDEZ PAS A CE MESSAGE !Il a été généré automatiquement, votre réponse n'aboutirait pas !"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:160
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:158
 msgid "There is no error, the file uploaded with success."
 msgstr "Il n'y a pas d'erreurs, le fichier a correctement été envoyé."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:162
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:160
 msgid "The uploaded file exceeds the max file size."
 msgstr "La taille du fichier dépasse la taille maximale.."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:163
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:161
 msgid "The uploaded file was only partially uploaded."
 msgstr "Le fichier n'a été que partiellement envoyé."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:164
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:162
 msgid "No file was uploaded."
 msgstr "Aucun fichier n'a été envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:165
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:163
 msgid "Missing a temporary folder."
 msgstr "Répertoire temporaire manquant"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:166
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:164
 msgid "Failed to write file to disk."
 msgstr "Impossible d'écrire le fichier sur le disque."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:167
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:165
 msgid "File upload stopped by extension."
 msgstr "Envoi stoppé pour cause d'extension non autorisée."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:168
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:166
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:71
 msgid "Unknown error"
 msgstr "Erreur inconnue"
 
-#: /media/data/dev/filez-cru/trunk/app/views/auth/loginForm.php:5
-msgid "Username"
-msgstr "Nom d'utilisateur"
+#: /media/data/dev/filez-cru/trunk/app/controllers/Auth.php:34
+msgid "Wrong username or password"
+msgstr "Nom d'utilisateur ou mot de passe incorrect"
 
-#: /media/data/dev/filez-cru/trunk/app/views/auth/loginForm.php:9
-msgid "Password"
-msgstr "Mot de passe"
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:35
+msgid "File is not available for download"
+msgstr "Le fichier n'est pas disponible au téléchargement"
 
-#: /media/data/dev/filez-cru/trunk/app/views/auth/loginForm.php:13
-msgid "Log me in"
-msgstr "Me connecter"
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:80
+msgid "File deleted."
+msgstr "Fichier supprimé"
+
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:110
+msgid "[FileZ] \"%sender%\" wants to share a file with you"
+msgstr "[FileZ] %sender% souhaite partager un fichier avec vous"
+
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:112
+msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
+msgstr ""
+"Bonjour,\n"
+"\n"
+"%sender% souhaite partager le fichier \"%file_name%\" avec vous. Vous pourrez le télécharger à l'adresse : %file_url% .\n"
+"\n"
+"Voici le contenu de son message :\n"
+"%msg%"
+
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:127
+msgid "Email address \"%email%\" is incorrect, please correct it."
+msgstr "L'adresse email \"%email%\" est incorrecte, veuillez la corriger."
+
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:138
+msgid "An error occured during email submission. Please try again."
+msgstr "Une erreur est survenue pendant l'envoi du fichier. Veuillez réessayer."
+
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:173
+msgid "There is no file for this code"
+msgstr "Aucun fichier n'existe pour ce code"
+
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:204
+msgid "You are not the owner of the file"
+msgstr "Vous n'êtes pas le propriétaire du fichier"
+
+#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:8
+msgid "Uploaded by"
+msgstr "Envoyé par"
+
+#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:16
+#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:28
+msgid "Comments"
+msgstr "Commentaire"
+
+#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:20
+msgid "Your download will start shortly..."
+msgstr "Votre télécharger devrait démarrer automatiquement..."
+
+#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:22
+msgid "If not, click here"
+msgstr "Si ce n'est pas le cas, cliquez ici"
+
+#: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:4
+msgid "Email addresses (space separated)"
+msgstr "Adresses email (séparées par des espaces)"
+
+#: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:8
+msgid "Message (file url will automatically be added)"
+msgstr "Message (l'adresse de téléchargement du fichier sera automatiquement ajoutée)"
+
+#: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:12
+msgid "Send"
+msgstr "Envoyer"
 
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:2
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:88
@@ -184,10 +201,6 @@ msgstr "Début"
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:25
 msgid "Select a starting date"
 msgstr "Sélectionnez une date de début"
-
-#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:28
-msgid "Comments"
-msgstr "Commentaire"
 
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:29
 msgid "Add a comment (optional)"
@@ -217,37 +230,49 @@ msgstr "Annuler"
 msgid "Send by email"
 msgstr "Envoyer par email"
 
-#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:16
-msgid "Available from %from% to <b>%to%</b>"
-msgstr "Disponible du %from% au <b>%to%</b>"
+#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:13
+msgid "Never downloaded"
+msgstr "Jamais téléchargé"
 
-#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:25
+#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:14
+msgid "Downloaded once"
+msgstr "Téléchargé une fois"
+
+#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:15
+msgid "Download %x% times"
+msgstr "Téléchargé %x% fois"
+
+#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:21
+msgid "Available from %from% to %to%"
+msgstr "Disponible du %from% au %to%"
+
+#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:30
 msgid "Email"
 msgstr "Envoyer par email"
 
-#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:30
+#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:35
 msgid "Delete"
 msgstr "Supprimer"
 
-#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:35
+#: /media/data/dev/filez-cru/trunk/app/views/main/_file_row.php:40
 msgid "Extend one more day"
 msgstr "Rendre disponible un jour de plus"
+
+#: /media/data/dev/filez-cru/trunk/app/views/auth/loginForm.php:5
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: /media/data/dev/filez-cru/trunk/app/views/auth/loginForm.php:9
+msgid "Password"
+msgstr "Mot de passe"
+
+#: /media/data/dev/filez-cru/trunk/app/views/auth/loginForm.php:13
+msgid "Log me in"
+msgstr "Me connecter"
 
 #: /media/data/dev/filez-cru/trunk/app/views/layout/default.html.php:36
 msgid "Share files for a limited time."
 msgstr "Distribuez vos fichiers pour une durée limitée."
-
-#: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:4
-msgid "Email addresses (space separated)"
-msgstr "Adresses email (séparées par des espaces)"
-
-#: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:8
-msgid "Message (file url will automatically be added)"
-msgstr "Message (l'adresse de téléchargement du fichier sera automatiquement ajoutée)"
-
-#: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:12
-msgid "Send"
-msgstr "Envoyer"
 
 #~ msgid "Envoyer un email"
 #~ msgstr "E"
