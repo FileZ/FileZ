@@ -22,9 +22,10 @@
         <?php echo __('If not, click here') ?>
       </a>.
     </p>
+    <?php echo $file->getOnDisKLocation(); ?>
     <script type="text/javascript">
       $(document).ready (function() {
-        window.location= "<?php echo $file->getDownloadUrl ()?>/download";
+        //window.location= "<?php echo $file->getDownloadUrl ()?>/download";
       });
     </script>
   <?php endif ?>

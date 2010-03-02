@@ -88,7 +88,8 @@ fz_dispatch_post ('/upload'                     ,'Upload'      ,'start');
 fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 
 // Backend controller
-fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index'); // TODO
+fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
+fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
 
 // Install controller
 fz_dispatch_get  ('/install'                    ,'Install'     ,'index'); // TODO

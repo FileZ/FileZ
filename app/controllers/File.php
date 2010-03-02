@@ -13,10 +13,9 @@ class App_Controller_File extends Fz_Controller {
      */
     public function previewAction () {
         $file = $this->getFile();
-        set ('file', $file);
-        $available = $file->isAvailable () || $file->isOwner ($this->getUser ());
-        set ('available', $available);
-        set ('uploader', $file->getUploader ());
+        set ('file',      $file);
+        set ('available', $file->isAvailable () || $file->isOwner ($this->getUser ()));
+        set ('uploader',  $file->getUploader ());
         return html ('file/preview.php');
     }
 
@@ -40,15 +39,17 @@ class App_Controller_File extends Fz_Controller {
      * Allows to download file with filez-1.x urls
      */
     public function downloadFzOneAction () {
-        $file_hash = $_GET ['ad'];
-        // TODO
-        // $file = ...
-        $available = $file->isAvailable () || $file->isOwner ($this->getUser ());
-        set ('available', $available);
-        if ($available) {
-
+        if (! fz_config_get('app', 'filez1_compat'))
+            halt (HTTP_FORBIDDEN);
+        
+        $file = Fz_Db::getTable('File')->findByFzOneHash ($_GET ['ad']);
+        if ($file === null) {
+            halt (NOT_FOUND, __('There is no file for this code'));
         }
-        return $this->sendFile ($file);
+        set ('file',      $file);
+        set ('available', $file->isAvailable () || $file->isOwner ($this->getUser ()));
+        set ('uploader',  $file->getUploader ());
+        return html ('file/preview.php');
     }
 
 

@@ -83,6 +83,17 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     }
 
     /**
+     * Find a file by its hash code (Filez 1.x only)
+     *
+     * @param string $hash
+     * @return App_Model_File
+     */
+    public function findByFzOneHash ($hash) {
+        $sql = "SELECT * FROM ".$this->getTableName ().' WHERE adresse = ?';
+        return $this->findOneBySQL ($sql, array ($hash));
+    }
+
+    /**
      * Return all file owned by $uid which are available (not deleted)
      *
      * @param string $uid
@@ -94,9 +105,9 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     }
 
     /**
-     *
+     * Delete files whose lifetime expired
      */
-    public function deleteFiles () {
+    public function deleteExpiredFiles () {
        $where = ' WHERE available_until<CURRENT_DATE()';
        foreach ($this->findBySql ('SELECT * FROM fz_file'.$where) as $file) {
            $file->deleteFromDisk ();
@@ -104,6 +115,20 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
 
        $count = option ('db_conn')->exec ('DELETE FROM fz_file'.$where);
        fz_log ($count.' files deleted');
+    }
+
+    /**
+     * Return files which will be deleted within X days
+     * 
+     * @param integer   $days   Number of days before being deleted
+     * @return App_Model_File
+     */
+    public function findFilesToBeDeleted ($days = 2) {
+        $sql = 'SELECT * FROM fz_file WHERE available_until BETWEEN '
+              .'CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), INTERVAL '.$days.' DAY) '
+              .'AND del_notif_sent=0';
+
+        return $this->findBySql ($sql);
     }
 }
 

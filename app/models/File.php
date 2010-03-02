@@ -225,6 +225,9 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @return string
      */
     public function getOnDiskLocation () {
-        return fz_config_get ('app', 'upload_dir').'/'.$this->getHash();
+        if (! empty ($this->nom_physique) && fz_config_get('app', 'filez1_compat'))
+            return fz_config_get ('app', 'upload_dir').'/'.$this->nom_physique;
+        else
+            return fz_config_get ('app', 'upload_dir').'/'.$this->getHash();
     }
 }
