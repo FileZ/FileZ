@@ -19,6 +19,9 @@ filez1_compat = true
 max_file_lifetime     = 20 
 default_file_lifetime = 10
 
+; Maximum number of days the lifetime of a file can be extended
+max_extend_count = 7
+
 ; Min/Max size of files hash codes
 min_hash_size = 4
 max_hash_size = 6

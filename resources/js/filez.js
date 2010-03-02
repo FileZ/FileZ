@@ -78,8 +78,25 @@ $.fn.initFileActions = function () {
     });
 
     $('.extend', this).click (function (e) {
-        // TODO
         e.preventDefault();
+        var fileListItem = $(this).closest ('li.file');
+        $.getJSON($(this).attr('href'), function (data) {
+            if (data.status == undefined) {
+                notifyError (settings.messages.unknownErrorHappened);
+            } else if (data.status == 'success') {
+                fileListItem.html (data.html)
+                $('.actions', fileListItem).initFileActions();
+
+                // Show file's actions only on hover
+                fileListItem.hover (
+                    function () {$('.actions', this).slideDown(100);},
+                    function () {$('.actions', this).slideUp(100);}
+                );
+                //notify (data.statusText);
+            } else if (data.status == 'error'){
+                notifyError (data.statusText);
+            }
+        });
     });
 
     return $(this);

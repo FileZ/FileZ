@@ -18,7 +18,7 @@ class App_Controller_Admin extends Fz_Controller {
                 // Send mails
                 $mail = $this->createMail();
                 $subject = __r('[FileZ] your file "%file_name%" your file is going to be deleted', array (
-                    'sender' => $user['firstname'].' '.$user['lastname']));
+                    'file_name' => $file->file_name));
                 $msg = __r('email_delete_notif (%file_name%, %file_url%, %filez_url%)', array(
                     'file_name' => $file->file_name,
                     'file_url'  => $file->getDownloadUrl(),
@@ -27,7 +27,7 @@ class App_Controller_Admin extends Fz_Controller {
                 $mail->setBodyText ($msg);
                 $mail->setSubject  ($subject);
                 $mail->addTo ($file->uploader_email);
-                //$mail->send ();
+                //$mail->send (); // FIXME
             }
             catch (Exception $e) {
                 fz_log ('Can\'t send email for file '.$file->uploader_email

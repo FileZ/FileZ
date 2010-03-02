@@ -230,4 +230,13 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         else
             return fz_config_get ('app', 'upload_dir').'/'.$this->getHash();
     }
+
+    /**
+     * Extend file lifetime to one more day
+     */
+    public function extendLifetime () {
+        $this->setAvailableUntil ($this->getAvailableUntil()->addDay(1));
+        $this->extends_count = $this->extends_count + 1;
+    }
+
 }

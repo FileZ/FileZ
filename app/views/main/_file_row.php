@@ -37,10 +37,12 @@
       <?php echo __('Delete') ?>
     </a>
   </li>
-  <li>
-    <a href="<?php echo $file->getDownloadUrl () ?>/extend" class="extend">
-      <?php echo __('Extend one more day') ?>
-    </a>
-  </li>
+  <?php if ($file->extends_count < fz_config_get ('app', 'max_extend_count')): ?>
+    <li>
+      <a href="<?php echo $file->getDownloadUrl () ?>/extend" class="extend">
+        <?php echo __('Extend one more day') ?>
+      </a>
+    </li>
+  <?php endif ?>
 </ul>
 

@@ -88,11 +88,11 @@ fz_dispatch_post ('/upload'                     ,'Upload'      ,'start');
 fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 
 // Backend controller
-fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
+//fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
 fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
 
 // Install controller
-fz_dispatch_get  ('/install'                    ,'Install'     ,'index'); // TODO
+//fz_dispatch_get  ('/install'                    ,'Install'     ,'index'); // TODO
 
 // Authentication controller
 fz_dispatch_get  ('/login'                      ,'Auth'        ,'loginForm');
@@ -113,6 +113,7 @@ fz_dispatch_post ('/:file_hash/email'           ,'File'        ,'email');
 fz_dispatch_get  ('/:file_hash/delete'          ,'File'        ,'confirmDelete');
 fz_dispatch_post ('/:file_hash/delete'          ,'File'        ,'delete');
 
+fz_dispatch_get  ('/:file_hash/extend'          ,'File'        ,'extend');
 
 run ();
 

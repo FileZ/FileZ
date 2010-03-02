@@ -8,3 +8,4 @@
 * Remplacer les texte "envoyer par email" par "partager" ?
 * Dans la liste des fichiers, remplacer le nom du fichier par le commentaire s'il existe
   * Limiter le nombre de caractère des commentaires
+* Ajouter une configuration par défaut afin d'éviter les erreurs lorsqu'on oublie un paramètre dans filez.ini

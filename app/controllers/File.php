@@ -36,6 +36,35 @@ class App_Controller_File extends Fz_Controller {
     }
 
     /**
+     * Extend lifetime of a file
+     */
+    public function extendAction () {
+        $file = $this->getFile ();
+
+        $result = array ();
+        if ($file->extends_count < fz_config_get ('app', 'max_extend_count')) {
+            $file->extendLifetime ();
+            $file->save ();
+            $result ['status']     = 'success';
+            $result ['statusText'] = __('Lifetime extended');
+            $result ['html']       = partial ('main/_file_row.php', array ('file' => $file));
+        } else {
+            $result ['status']     = 'error';
+            $result ['statusText'] = __r('You can\'t extend a file lifetime more than %x% times',
+                                    array ('x' => fz_config_get ('app', 'max_extend_count')));
+        }
+
+        if ($this->isXhrRequest()) {
+            return json ($result);
+        }
+        else {
+            flash (($result ['status'] == 'success' ? 'notification' : 'error'),
+                    $result ['statusText']);
+            redirect_to ('/');
+        }
+    }
+
+    /**
      * Allows to download file with filez-1.x urls
      */
     public function downloadFzOneAction () {
