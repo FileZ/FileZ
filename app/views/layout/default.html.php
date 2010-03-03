@@ -49,13 +49,11 @@
     </header>
 
     <article>
-
       <?php echo $content ?>
-
     </article>
 
     <footer>
-      Université d'Avignon et des Pays de Vaucluse
+      <a href="http://gpl.univ-avignon.f">Un logiciel libre de l'Université d'Avignon et des Pays de Vaucluse</a>
     </footer>
 
     <div id="modal-background"></div>

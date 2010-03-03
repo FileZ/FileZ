@@ -16,13 +16,19 @@ Installation
 * Retrieve Filez sources from the svn or an archive and place them in your
   web root dir.
 
-  * SVN method :
+  * from SVN :
+        svn export http://subversion.cru.fr/filez/trunk filez_web_root
+  * from package
+        tar -xvvf filez-2.0.tar.gz;
+        cp filez-2.0/* filez_web_root
 
-    
+* Create a new database or reuse a previous one :
 
-* Insert database schema
+  * if you want de migrate the database from a previous installation of filez-1.x :
+        mysql -h sql_host -u filez_user -p filez_db_name < config/db.migration-01.sql
 
-      mysql -h sql_host -u filez_user -p filez_db_name < config/db.schema.sql
+  * otherwise create a new one :
+        mysql -h sql_host -u filez_user -p filez_db_name < config/db.schema.sql
 
 * Edit Filez config (See next parapgraph)
 

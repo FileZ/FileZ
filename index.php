@@ -101,7 +101,7 @@ fz_dispatch_post ('/login'                      ,'Auth'        ,'login');
 fz_dispatch_get  ('/logout'                     ,'Auth'        ,'logout');
 
 // Filez-1.x url compatibility
-fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne'); // TODO
+fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne');
 
 // Download controller
 fz_dispatch_get  ('/:file_hash'                 ,'File'        ,'preview');

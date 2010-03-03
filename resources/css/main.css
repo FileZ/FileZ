@@ -414,7 +414,9 @@ form#login-form p#submit-login {
 /* Footer */
 footer {
   text-align: center;
-  padding: 2em 0;
+  padding: 4em 0;
+}
+footer a {
   color: #8F837A;
   font-size: 0.7em;
 }
