@@ -131,7 +131,7 @@ class App_Controller_Upload extends Fz_Controller {
         $file->setFileInfo      ($uploadedFile);
         $file->setUploader      ($this->getUser ());
         $file->created_at       = new Zend_Date ();
-        $file->comment          = $comment;
+        $file->comment          = substr ($comment, 0, 199);
         $file->available_from   = $availableFrom;
         $file->available_until  = $availableUntil;
         $file->save ();

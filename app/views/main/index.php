@@ -26,7 +26,7 @@
   </div>
   <div id="comment">
     <label for="comment"><?php echo __('Comments') ?> :</label>
-    <input type="text" id="input-comment" name="comment" value="" alt="<?php echo __('Add a comment (optional)') ?>" />
+    <input type="text" id="input-comment" name="comment" value="" alt="<?php echo __('Add a comment (optional)') ?>" maxlength="200" />
   </div>
   <div id="upload">
     <input type="submit" id="start-upload" name="upload" class="awesome blue large" value="&raquo; <?php echo __('Upload') ?>" />

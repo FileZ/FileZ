@@ -53,7 +53,7 @@
     </article>
 
     <footer>
-      <a href="http://gpl.univ-avignon.f">Un logiciel libre de l'Université d'Avignon et des Pays de Vaucluse</a>
+      <a href="http://gpl.univ-avignon.fr">Un logiciel libre de l'Université d'Avignon et des Pays de Vaucluse</a>
     </footer>
 
     <div id="modal-background"></div>
