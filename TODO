@@ -1,13 +1,12 @@
 
-* Gérer la suppression automatique des fichiers
 * Lorsque l'utilisateur n'a pas de fichier uploadé, ne pas afficher "Vos fichiers uploadés"
 * Vérifier le fonctionnement d'une 2eme connexion a une bd pour Fz_User_Factory_Database
 * Gérer la création d'invitations
 * Refactor var names according to the coding conventions
 * Permettre l'ouverture d'un client de messagerie "non web" (avec mailto:)
 * Remplacer les texte "envoyer par email" par "partager" ?
-* Dans la liste des fichiers, remplacer le nom du fichier par le commentaire s'il existe
   * Limiter le nombre de caractère des commentaires
+* Vérifier affichage sous IE 7 et 8
 * Ajouter une configuration par défaut afin d'éviter les erreurs lorsqu'on oublie un paramètre dans filez.ini
 * Faire la doc utilisateur
 * Ajouter un lien configurable vers un helpdesk

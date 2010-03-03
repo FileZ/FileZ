@@ -12,7 +12,7 @@ class App_Controller_Upload extends Fz_Controller {
     public function startAction () {
         $this->secure ();
         $response = array (); // returned data
-
+//qsda1
         if (array_key_exists ('file', $_FILES))
             $file = $this->saveFile ($_POST, $_FILES ['file']);
 

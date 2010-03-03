@@ -29,9 +29,6 @@ max_hash_size = 6
 ; Default langage when no translation exists for the user locale
 default_locale = fr
 
-; Logo image
-your_logo = "resources/images/uapv-logo.gif"
-
 ; Name of the class used to authenticate the user. Built-in handler are :
 ;  * Fz_Controller_Security_Cas       Log the user against a CAS server
 ;  * Fz_Controller_Security_Internal  Log the user with a built-in Controller.
@@ -44,6 +41,16 @@ auth_handler_class = Fz_Controller_Security_Internal
 ;  * Fz_User_Factory_Db
 user_factory_class = Fz_User_Factory_Ldap
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Look'n feel
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[looknfeel]
+; Logo image
+your_logo               = "resources/images/uapv-logo.gif"
+
+; Custom CSS
+; custom_css              = "resources/css/custom.css"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Database configuration

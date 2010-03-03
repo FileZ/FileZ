@@ -13,6 +13,8 @@ var settings = {};
 // interval ID
 var progressCheckerLoop = 0;
 
+var uploadForm = null;
+
 
 /*******************************************************************************
  * PUBLIC METHODS
@@ -23,6 +25,8 @@ var progressCheckerLoop = 0;
  * Initialise actions event handlers
  */
 $.fn.initFilez = function (options) {
+
+    uploadForm = $(this);
 
     settings = jQuery.extend(true, {
         refreshRate: 2000,
@@ -59,9 +63,11 @@ $.fn.initFilez = function (options) {
 
     // Handle global ajax errors
     $(this).ajaxError(function(e, xhr, ajaxSettings, exception) {
-        if (ajaxSettings.url.indexOf ('upload') != -1) { // An upload is occuring
+        if (ajaxSettings.url.indexOf ('upload') != -1 &&
+            ajaxSettings.url.indexOf ('progress') == -1 ) { // ajaxForm error
             // Close the modal box
             $('.ui-dialog-content').dialog('close');
+            reloadUploadForm ();
             // Display error
             notifyError (settings.messages.unknownErrorHappened);
         }
@@ -176,6 +182,7 @@ var onCheckProgressError = function (xhr, textStatus, errorThrown) {
         // Upload not found
         console.log ('Upload progress not found.')
     }
+    clearInterval (progressCheckerLoop);
 
     //notifyError (textStatus);
 };
@@ -231,6 +238,7 @@ var onFileUploadEnd = function (data, status) {
 
     // Hide the modal box
     $('.ui-dialog-content').dialog('close');
+
 };
 
 /*------------------------------------------------------------------------------
@@ -259,6 +267,7 @@ var appendFile = function (html) {
 
 var reloadUploadForm = function () {
     //clearInterval (progressCheckerLoop);
+    uploadForm.resetForm ();
     $('#start-upload').show ();
     $(settings.progressBox).progressBar (0);
     $(settings.progressBox).hide ();

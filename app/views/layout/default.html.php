@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/html5-reset.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/jquery.ui/css/cupertino/jquery-ui-1.7.2.custom.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/main.css') ?>" type="text/css" media="all" />
+    <?php if (fz_config_get ('looknfeel', 'custom_css', '') != ''): ?>
+      <link rel="stylesheet" href="<?php echo public_url_for (fz_config_get ('looknfeel', 'custom_css')) ?>" type="text/css" media="all" />
+    <?php endif ?>
 
     <!--[if lte IE 8]>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/html5.js') ?>"></script>
@@ -24,9 +27,9 @@
 
     <header>
       <h1>
-        <?php if (fz_config_get ('app', 'your_logo') != ''): ?>
+        <?php if (fz_config_get ('looknfeel', 'your_logo', '') != ''): ?>
           <span id="your-logo">
-            <img src="<?php echo public_url_for (fz_config_get ('app', 'your_logo')) ?>"/>
+            <img src="<?php echo public_url_for (fz_config_get ('looknfeel', 'your_logo')) ?>"/>
           </span>
         <?php endif ?>
         <span id="filez-header">
