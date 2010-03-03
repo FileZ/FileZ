@@ -35,12 +35,12 @@ Tools and libraries reside in 'lib/'.
 All of the Limonade Framework reside in the 'lib/Limonade.php' file.
 
 Filez use a stripped down version of the Zend Framework containing only
-i18n classes ('lib/Zend').
+i18n, date, mail, class loader, validation and ldap classes ('lib/Zend').
 
 
 
 
-Anatomy of a typical file upload
+Anatomy of a file upload
 ===============================================================================
 
 

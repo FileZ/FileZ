@@ -42,7 +42,7 @@ $.fn.initFilez = function (options) {
     }
     
     // let the server knows it has to return JSON
-    $(this).append ('<input type="hidden" name="is-async" value="1" />');
+    $(this).attr ('action', $(this).attr ('action') + '?is-async=1');
 
     // Initialise actions event handlers
     $('.file .actions').initFileActions();
@@ -56,7 +56,17 @@ $.fn.initFilez = function (options) {
 
     // Initialise email modal box
     $('.email-modal form').ajaxForm ({success: onEmailFormSent, dataType: 'json'});
-    
+
+    // Handle global ajax errors
+    $(this).ajaxError(function(e, xhr, ajaxSettings, exception) {
+        if (ajaxSettings.url.indexOf ('upload') != -1) { // An upload is occuring
+            // Close the modal box
+            $('.ui-dialog-content').dialog('close');
+            // Display error
+            notifyError (settings.messages.unknownErrorHappened);
+        }
+    });
+
     return $(this);
 };
 
@@ -101,30 +111,6 @@ $.fn.initFileActions = function () {
 
     return $(this);
 }
-
-$.fn.qtipModal = function (options) {
-    var defaults = {
-        position:     {target: $(document.body), corner: 'center'},
-        show:         {when: 'click', solo: true},
-        hide:         false,
-        style: {
-            width:    {min: 500, max: 500},
-            padding:  '14px',
-            border:   {width: 9, radius: 9, color: '#666666'},
-            name:     'light'
-        },
-        content: {title: {button: settings.messages.cancel}},
-        api: {
-            beforeShow: function() {
-                $('#modal-background').show();
-            },
-            beforeHide: function() {
-                $('#modal-background').hide();
-            }
-        }
-    };
-    return $(this).qtip ($.extend(true, defaults, options));
-};
 
 $.fn.hideNotifDelayed = function () {
     $(this).delay (10000).animate({
@@ -234,13 +220,13 @@ var onFileUploadEnd = function (data, status) {
     reloadUploadForm ();
     console.log (data);
 
-    if (data.status == undefined) {
-        notifyError (settings.messages.unknownErrorHappened);
-    } else if (data.status == 'success') {
+    if (data.status == 'success') {
         appendFile (data.html);
         notify (data.statusText);
     } else if (data.status == 'error'){
         notifyError (data.statusText);
+    } else {
+        notifyError (settings.messages.unknownErrorHappened);
     }
 
     // Hide the modal box
@@ -285,13 +271,15 @@ var reloadUploadForm = function () {
  * Display an error notification and register the delete handler
  */
 var notifyError = function (msg) {
-    $('<p class="notif error">'+msg+'</p>').appendTo ($('header')).hideNotifDelayed();
+    $('.notif').remove();
+    $('<p class="notif error">'+msg+'</p>').appendTo ($('header'));
 };
 
 /**
  * Display a success notification and register the delete handler
  */
 var notify = function (msg) {
+    $('.notif').remove();
     $('<p class="notif ok">'+msg+'</p>').appendTo ($('header')).hideNotifDelayed();
 };
 

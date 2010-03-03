@@ -16,6 +16,10 @@ Installation
 * Retrieve Filez sources from the svn or an archive and place them in your
   web root dir.
 
+  * SVN method :
+
+    
+
 * Insert database schema
 
       mysql -h sql_host -u filez_user -p filez_db_name < config/db.schema.sql

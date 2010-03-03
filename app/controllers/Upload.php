@@ -11,55 +11,71 @@ class App_Controller_Upload extends Fz_Controller {
      */
     public function startAction () {
         $this->secure ();
-        $jsonData = array (); // returned data
-        $file     = $this->saveFile ($_POST, $_FILES['file']);
+        $response = array (); // returned data
 
+        if (array_key_exists ('file', $_FILES))
+            $file = $this->saveFile ($_POST, $_FILES ['file']);
+
+        // check if request exceed php.ini post_max_size
+        if ($_SERVER ['CONTENT_LENGTH'] > $this->getPostMaxSize()) {
+            $response ['status'] = 'error';
+            $response ['statusText'] =
+                 __('An error occured while uploading the file.').' '
+                .__('Details').' : '. $this->explainError (UPLOAD_ERR_INI_SIZE)
+                .' : ('.ini_get ('upload_max_filesize').')';
+        }
         // Let's move the file to its final destination
-        if ($_FILES['file']['error'] === UPLOAD_ERR_OK
+        else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK
             && $file->moveUploadedFile ($_FILES['file'])) {
 
-            $jsonData['status']     = 'success';
-            $jsonData['statusText'] = __('The file was successfuly uploaded');
-            $jsonData['html']       = partial ('main/_file_row.php', array ('file' => $file));
+            $response ['status']     = 'success';
+            $response ['statusText'] = __('The file was successfuly uploaded');
+            $response ['html']       = partial ('main/_file_row.php', array ('file' => $file));
 
             try { 
                 $this->sendFileUploadedMail ($file);
             }
             catch (Exception $e) {
-                fz_log ('Can\'t send email Uploaded', FZ_LOG_ERROR);
+                fz_log ('Can\'t send email "File Uploaded"', FZ_LOG_ERROR);
             }
 
         } else { // Errors happened while moving the uploaded file
             $file->delete ();
 
-            $jsonData['status']     = 'error';
-            $jsonData['statusText'] = __('An error occured while uploading the file.');
-
-            switch ($_FILES['file']['error']) {
+            $response ['status']     = 'error';
+            $response ['statusText'] = __('An error occured while uploading the file.');
+            switch ($_FILES ['file']['error']) {
                 case UPLOAD_ERR_NO_TMP_DIR:
                 case UPLOAD_ERR_CANT_WRITE:
                     fz_log ('upload error ('. // Logging error if needed
-                        $this->explainError ($_FILES['file']['error']).')', FZ_LOG_ERROR);
+                        $this->explainError ($_FILES ['file']['error']).')', FZ_LOG_ERROR);
                     break;
 
                 // These errors come from the client side, let him know what's wrong
                 case UPLOAD_ERR_INI_SIZE:
                 case UPLOAD_ERR_FORM_SIZE:
+                    $response ['statusText'] .= ' '.__('Details').' : '
+                        .$this->explainError ($_FILES['file']['error'])
+                        .' : ('.ini_get ('upload_max_filesize').')';
+                    break;
                 case UPLOAD_ERR_PARTIAL:
                 case UPLOAD_ERR_NO_FILE:
-                    $jsonData['statusText'] .= ' '.__('Details').' : '
-                        . __($this->explainError ($_FILES['file']['error']));
+                    $response ['statusText'] .= ' '.__('Details').' : '
+                        .$this->explainError ($_FILES ['file']['error']);
             }                
         }
 
-        if (array_key_exists ('is-async', $_POST) && $_POST['is-async']) {
+        if (array_key_exists ('is-async', $_GET) && $_GET ['is-async']) {
             // The response is embedded inside a textarea to prevent some browsers :
             // quirks : http://www.malsup.com/jquery/form/#file-upload
             // JQuery Form Plugin will handle the response transparently.
-            return html("<textarea>\n".json_encode ($jsonData)."\n</textarea>",'');
+            return html("<textarea>\n".json_encode ($response)."\n</textarea>",'');
         }
         else {
-            flash ('notification', __('Your file was uploaded successfuly.'));
+            if ($response ['status'] == 'success')
+                flash ('notification', __('Your file was uploaded successfuly.'));
+            else
+                flash ('notification', $response ['statusText']);
             redirect_to ('/');
         }
     }
@@ -167,5 +183,17 @@ class App_Controller_Upload extends Fz_Controller {
         }
     }
 
+    /**
+     * Return 'post_max_size' from php.ini. The result is converted in bytes
+     * 
+     * @return integer
+     */
+    private function getPostMaxSize () {
+        $size = ini_get ('post_max_size');
+        $size = str_replace (' ', '', $size);
+        $size = str_replace (array ('K'  , 'M'     , 'G'        ),
+                             array ('000', '000000', '000000000'), $size);
+        return intval ($size);
+    }
 }
 

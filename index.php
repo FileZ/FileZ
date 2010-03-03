@@ -72,9 +72,10 @@ function configure() {
  */
 require_once 'lib/limonade.php';
 error_reporting(E_ALL);
-ini_set ('display_errors',TRUE);
 
 require_once 'lib/fz_limonade.php';
+ini_set ('display_errors', false);
+
 
 //                                              //             // 
 // Url Schema                                   // Controller  // Action
