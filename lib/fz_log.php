@@ -10,9 +10,9 @@ function fz_log ($message, $type = null, $vars = null) {
 
     $message = trim ($message);
     if ($vars !== null)
-        $message .= "\n".var_export ($vars, true);
+        $message .= var_export ($vars, true)."\n";
 
-    $message = strftime ("\n[%Y-%m-%d %H:%M:%S] - ", time ()).$message;
+    $message = strftime ("[%Y-%m-%d %H:%M:%S] - ", time ()).$message."\n";
 
     if (file_put_contents ($log_file, $message, FILE_APPEND) === false)
         trigger_error ('Can\' write log in "'.$log_file.'"', E_WARNING);
