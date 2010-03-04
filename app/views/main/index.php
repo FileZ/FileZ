@@ -15,7 +15,7 @@
             $max     = fz_config_get ('app', 'max_file_lifetime',     20);
             for ($i = 1; $i <= $max; ++$i  ): ?>
         <option value=<?php echo "\"$i\"".($i == $default ? ' selected="selected" ' : '') ?>>
-          <?php echo $i //__r(array ('%n% day', '%n% days', $i), $i) ?>
+          <?php echo str_replace ('%n%', $i, __p('%n% day', '%n% days', $i)) ?>
         </option>
       <?php endfor ?>
     </select>
@@ -48,13 +48,13 @@
 </section>
 
 <div id="email-modal" class="fz-modal" style="display: none;">
-  <?php echo partial ('file/_mailForm.php', array ('file' => $file)) ?>
+  <?php echo partial ('file/_mailForm.php') ?>
 </div>
 
 
 <script type="text/javascript">
     $(document).ready (function () {
-      $('#input-start-from').datepicker ();
+      $('#input-start-from').datepicker ({minDate: new Date()});
       $('#upload-form').initFilez ({
         fileList:         'ul#files',
         progressBox:      '#upload-progress',

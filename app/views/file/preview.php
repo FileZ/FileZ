@@ -12,6 +12,13 @@
       <?php echo h($uploader['email']) ?>
     <?php endif ?>
   </p>
+  <p>
+      <?php echo __('Availability') ?> :
+      <?php echo __r('between %available_from% and %available_until%', array (
+          'available_from'  => $file->getAvailableFrom()->toString  (Zend_Date::DATE_LONG),
+          'available_until' => $file->getAvailableUntil()->toString (Zend_Date::DATE_LONG),
+      )) ?>
+  </p>
   <?php if ($file->comment): ?>
     <p><?php echo __('Comments') ?> : <?php echo h($file->comment) ?></p>
   <?php endif ?>
@@ -27,6 +34,8 @@
         window.location= "<?php echo $file->getDownloadUrl ()?>/download";
       });
     </script>
+  <?php else: ?>
+    <p><?php echo __('The file is not available yet.') ?></p>
   <?php endif ?>
 </section>
   

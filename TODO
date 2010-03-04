@@ -14,3 +14,6 @@
   * Ajouter une interface d'administration
 * gérer la protection des fichiers par mot de passe
 * Vérifier si les tables de filez < 1.2 supportent la migration
+* Mettre un message quand le fichier n'est pas encore disponible (page de téléchargement)
+* Terminer le fichier CREDITS et LICENCE
+* Afficher la taille MAX sur le formulaire d'upload

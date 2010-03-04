@@ -3,7 +3,7 @@ if (! console) // In case the browser don't have a console
     var console = {log: function (txt) {}};
 
 // Auto hide current notifications
-$('document').ready (function () {$('.notif').hideNotifDelayed();});
+$('document').ready (function () {$('.notif.ok').hideNotifDelayed();});
 
 (function($) {
 
