@@ -3,22 +3,7 @@ if (! console) // In case the browser don't have a console
     var console = {log: function (txt) {}};
 
 // Auto hide current notifications
-$('document').ready (function () {
-    $('.notif.ok').hideNotifDelayed();
-    /*
-    $('.notif').live ('load', function () {
-        $(this).hover (function () {
-            $('<a href="#" class="notif-close">Close</a>').appendTo ($(this)).click (function () {
-              $(this).closest ('.notif').click (function () {
-                  $(this).remove ();
-              });
-            });
-        },function () {
-            $('.notif-close', $(this)).remove ();
-        });
-    });
-    */
-});
+$('document').ready (function () { $('.notif').configureNotification (); });
 
 (function($) {
 
@@ -139,6 +124,19 @@ $.fn.hideNotifDelayed = function () {
         paddingTop: 0, paddingBottom: 0,
         marginTop: 0, marginBottom: 0
     }, 3000);
+}
+
+$.fn.configureNotification = function () {
+    if ($(this).hasClass ('ok'))
+        $(this).hideNotifDelayed();
+
+    $('<a href="#" class="notif-close">Close</a>')
+        .prependTo ($(this))
+        .click (function () {
+            $(this).closest ('.notif').click (function () {$(this).remove ();});
+        });
+
+    return $(this);
 }
 
 
@@ -296,7 +294,9 @@ var reloadUploadForm = function () {
  */
 var notifyError = function (msg) {
     $('.notif').remove();
-    $('<p class="notif error">'+msg+'</p>').appendTo ($('header'));
+    $('<p class="notif error">'+msg+'</p>')
+        .appendTo ($('header'))
+        .configureNotification ();
 };
 
 /**
@@ -304,7 +304,10 @@ var notifyError = function (msg) {
  */
 var notify = function (msg) {
     $('.notif').remove();
-    $('<p class="notif ok">'+msg+'</p>').appendTo ($('header')).hideNotifDelayed();
+    $('<p class="notif ok">'+msg+'</p>')
+        .appendTo ($('header'))
+        .configureNotification ()
+        .hideNotifDelayed();
 };
 
 

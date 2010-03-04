@@ -84,19 +84,37 @@ header #your-logo {
 
 /* Notifications */
 .notif {
-	-moz-border-radius:		 10px;
-	-webkit-border-radius: 10px;
-	padding: 1em;
-        margin-top: 2em;
-	background: #fffec2; /* notif ok */
-	border: 1px solid #E5E4AD; /* notif ok */
+    -moz-border-radius:		 10px;
+    -webkit-border-radius: 10px;
+    padding: 1em;
+    margin-top: 2em;
+    background: #fffec2; /* notif ok */
+    border: 1px solid #E5E4AD; /* notif ok */
 }
 .notif.error {
-	background: #f2e1dc;
-	border: 1px solid #f3c5c1;
+    background: #f2e1dc;
+    border: 1px solid #f3c5c1;
 }
 .notif.error h1 {
-	color: #AC342B;
+    color: #AC342B;
+}
+.notif .notif-close {
+    float: right;
+    height: 16px;
+    width: 16px;
+    text-indent: -3000em;
+    display: block;
+    background: transparent url(../images/icons/dialog-close.png) no-repeat center center;
+    opacity: 0.4;
+    filter:alpha(opacity=40);
+    -moz-border-radius:    3px;
+    -webkit-border-radius: 3px;
+}
+.notif .notif-close:hover ,
+.notif:hover .notif-close {
+    background-color: #f3c5c1;
+    opacity: 1;
+    filter:alpha(opacity=100);
 }
 
 /* Section new-file */
