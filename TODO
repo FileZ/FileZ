@@ -14,8 +14,7 @@ Current release
 * Implémenter une gestion des quotas
   * Ajouter une interface d'administration
 * Vérifier si les tables de filez < 1.2 supportent la migration
-* Terminer le fichier CREDITS et LICENCE
-* Afficher la taille MAX sur le formulaire d'upload
+* Terminer le fichier et LICENCE
 
 
 Next minor release

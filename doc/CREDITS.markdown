@@ -1,41 +1,30 @@
 
-
-Limonade
-========
-
-http://limonade.sofa-design.net/
-
-
-Icons
-=====
-
-
-http://www.elementary-project.com
-
-  elementary is designed and developed by Daniel Foré <Daniel.p.Fore@gmail.com>
-  GNOME icons, Humanity icons, and elementary icons are all licensed under the GPL.
-  This package is licensed under GNU General Public License version 2.
-
-http://tango.freedesktop.org/Tango_Desktop_Project
-
-
-JQuery
+Authors
 ======
 
-http://www.jquery.com
+* Arnaud Didry          <mailto:arnaud.didry@univ-avignon.fr>
 
+Contributors :
+==============
 
-jQuery Form Plugin
-==================
+*
 
-http://jquery.malsup.com/form/
+Tools used :
+============
 
+Librairies
+----------
 
-qTips
-=====
+* Limonade              <http://limonade.sofa-design.net>
+* Zend Framework        <http://framework.zend.com>
+* pear                  <http://pear.php.net>
+* phpCAS                <http://www.ja-sig.org/wiki/display/CASC/phpCAS>
+* jQuery                <http://www.jquery.com>
+* jQuery UI             <http://www.jqueryui.com>
+* jQuery Form Plugin    <http://jquery.malsup.com/form/>
 
-http://craigsworks.com/projects/qtip/
+Graphics
+--------
 
-
-
-
+* Elementary Icons      <http://www.elementary-project.com>
+* Tango Icons           <http://tango.freedesktop.org/Tango_Desktop_Project>
