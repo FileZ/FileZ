@@ -41,6 +41,8 @@ auth_handler_class = Fz_Controller_Security_Internal
 ;  * Fz_User_Factory_Db
 user_factory_class = Fz_User_Factory_Ldap
 
+; Max disk spaced per user. Support shorthand format : M (Mega), G (Giga)
+user_quota = 2G
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Look'n feel

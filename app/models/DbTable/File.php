@@ -130,6 +130,17 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
 
         return $this->findBySql ($sql);
     }
+
+    /**
+     * Return disk space used by someone
+     *
+     * @param string    $email  Email of the user
+     * @return integer          Size in bytes
+     */
+    public function getTotalDiskSpaceByUser ($email) {
+
+        // TODO
+    }
 }
 
 

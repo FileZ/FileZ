@@ -18,7 +18,8 @@ class App_Controller_Upload extends Fz_Controller {
             $file = $this->saveFile ($_POST, $_FILES ['file']);
 
         // check if request exceed php.ini post_max_size
-        if ($_SERVER ['CONTENT_LENGTH'] > $this->getPostMaxSize()) {
+        if ($_SERVER ['CONTENT_LENGTH'] > $this->shorthandSizeToBytes (
+                                                   ini_get ('post_max_size'))) {
             $response ['status'] = 'error';
             $response ['statusText'] =
                  __('An error occured while uploading the file.').' '
@@ -28,18 +29,29 @@ class App_Controller_Upload extends Fz_Controller {
             fz_log ('upload error (POST request > post_max_size)', FZ_LOG_ERROR);
         }
         // Let's move the file to its final destination
-        else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK
-            && $file->moveUploadedFile ($_FILES['file'])) {
+        else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK) {
 
-            $response ['status']     = 'success';
-            $response ['statusText'] = __('The file was successfuly uploaded');
-            $response ['html']       = partial ('main/_file_row.php', array ('file' => $file));
+            $userDiskSpace = $_FILES['file']['size']
+               + Fz_Db::getTable('File')->getTotalDiskSpaceByUser (); // TODO
+            $maxDiskSpacePerUser = fz_config_get ('app', 'user_quota');
 
-            try { 
-                $this->sendFileUploadedMail ($file);
+            if ($userDiskSpace > $this->shorthandSizeToBytes ($maxDiskSpacePerUser)) {
+                $response ['status'] = 'error';
+                $response ['statusText'] = __('You exceeded your disk space quota ('
+                                                     .$maxDiskSpacePerUser.')');
             }
-            catch (Exception $e) {
-                fz_log ('Can\'t send email "File Uploaded"', FZ_LOG_ERROR);
+            else if ($file->moveUploadedFile ($_FILES['file'])) {
+
+                $response ['status']     = 'success';
+                $response ['statusText'] = __('The file was successfuly uploaded');
+                $response ['html']       = partial ('main/_file_row.php', array ('file' => $file));
+
+                try {
+                    $this->sendFileUploadedMail ($file);
+                }
+                catch (Exception $e) {
+                    fz_log ('Can\'t send email "File Uploaded"', FZ_LOG_ERROR);
+                }
             }
 
         } else { // Errors happened while moving the uploaded file
@@ -184,12 +196,13 @@ class App_Controller_Upload extends Fz_Controller {
     }
 
     /**
-     * Return 'post_max_size' from php.ini. The result is converted in bytes
-     * 
-     * @return integer
+     * Transform a size in the shorthand format ('K', 'M', 'G') to bytes
+     *
+     * @param   string      $size
+     * @return  integer
      */
-    private function getPostMaxSize () {
-        $size = ini_get ('post_max_size');
+    private function shorthandSizeToBytes ($size) {
+        $size = ;
         $size = str_replace (' ', '', $size);
         $size = str_replace (array ('K'  , 'M'     , 'G'        ),
                              array ('000', '000000', '000000000'), $size);
