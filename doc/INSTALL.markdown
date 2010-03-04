@@ -266,3 +266,9 @@ Enable extension and specific option :
     echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
     apache2ctl restart
 
+RHEL / CentOS with PHP version 5.1
+----------------------------------
+
+Follow this howto to enable the "filter_var()" function of PHP :
+
+http://www.cyberciti.biz/faq/rhel-cento-linux-install-php-pecl-filter/
