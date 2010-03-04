@@ -15,6 +15,7 @@ class App_Controller_Main extends Fz_Controller {
                               ->findByOwnerOrderByUploadDateDesc ($user['id']));
         set ('use_progress_bar', (function_exists ('apc_fetch')
                                  && ini_get ('apc.rfc1867')));
+        set ('maxUploadSize', ini_get ('upload_max_filesize'));
         return html ('main/index.php');
     }
 }

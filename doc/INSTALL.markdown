@@ -211,8 +211,9 @@ Edit config/filez.ini with the following line in the '[app]' section :
 #### Ldap Identification
 
 Ldap connection is defined under the '[user_factory_options]' section of
-filez.ini. The only mandatory parameter is 'host'. But you may need some
-additionnal configuration, a list of all possible options can be found here :
+filez.ini. By default, Filez use an anonymous connection, the only mandatory
+parameter is 'host'. But you may need some additionnal configuration, a list of
+all possible options can be found here :
 <http://framework.zend.com/manual/en/zend.ldap.api.html>
 
 Example configuration :

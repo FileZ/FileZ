@@ -51,11 +51,10 @@ class Fz_User_Factory_Ldap extends Fz_User_Factory_Abstract {
             try {
                 $this->_ldapCon->bind();
             } catch (Zend_Ldap_Exception $zle) {
-                // TODO throw application exception
+                fz_log ('Fz_User_Factory_Ldap: Can\'t bind ldap server', FZ_LOG_ERROR);
+                // TODO throw Fz_Exception
                 throw $zle;
             }
-
-            // TODO handle errors
         }
         return $this->_ldapCon;
     }

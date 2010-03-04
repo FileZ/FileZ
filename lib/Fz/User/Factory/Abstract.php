@@ -45,8 +45,10 @@ abstract class Fz_User_Factory_Abstract {
      * @return array        User attributes
      */
     public function findById ($id) {
-        if (null === ($p = $this->_findById ($id)))
+        if (null === ($p = $this->_findById ($id))) {
+            fz_log ('User_Factory: Can\'t find profile "'.$id.'"', FZ_LOG_ERROR);
             return null;
+        }
         
         return $this->buildUserProfile ($p);
     }
@@ -64,7 +66,7 @@ abstract class Fz_User_Factory_Abstract {
             if (array_key_exists ($value, $profile))
                 $p [$key] = $profile [$value];
             else {
-                // LOG missing user attribute
+                fz_log ('User_Factory: Missing attribute "'.$value.'" in user profile :', FZ_LOG_ERROR, $profile);
             }
         }
         return $p;

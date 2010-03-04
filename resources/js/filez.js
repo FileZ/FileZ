@@ -3,7 +3,22 @@ if (! console) // In case the browser don't have a console
     var console = {log: function (txt) {}};
 
 // Auto hide current notifications
-$('document').ready (function () {$('.notif.ok').hideNotifDelayed();});
+$('document').ready (function () {
+    $('.notif.ok').hideNotifDelayed();
+    /*
+    $('.notif').live ('load', function () {
+        $(this).hover (function () {
+            $('<a href="#" class="notif-close">Close</a>').appendTo ($(this)).click (function () {
+              $(this).closest ('.notif').click (function () {
+                  $(this).remove ();
+              });
+            });
+        },function () {
+            $('.notif-close', $(this)).remove ();
+        });
+    });
+    */
+});
 
 (function($) {
 

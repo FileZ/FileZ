@@ -63,15 +63,19 @@ abstract class Fz_Controller_Security_Abstract {
         $user = option ('userFactory')->findByUsernameAndPassword ($username, $password);
         if ($user !== null) {
             $this->setUserId ($user['id']);
+            fz_log ('successful login of "$username"');
             return $user;
+        } else {
+            fz_log ('unsuccessful login of "$username"', $type);
+            return null;    
         }
-        return null;
     }
 
     /**
      * Destroy the user session
      */
     public function logout () {
+        fz_log ($this->getUserId ().' logs out.');
         session_unset();
         session_destroy();
     }

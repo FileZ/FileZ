@@ -3,7 +3,7 @@
 <section class="new-file fz-modal">
   <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
   <div id="file">
-    <label for="file"><?php echo __('File') ?> :</label>
+    <label for="file"><?php echo __r('File (Max size: %size%)', array ('size' => $maxUploadSize)) ?> :</label>
     <div id="input-file">
       <input type="file" id="file-input" name="file" value="" alt="<?php echo __('File') ?>" />
     </div>

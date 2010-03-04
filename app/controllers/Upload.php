@@ -11,8 +11,9 @@ class App_Controller_Upload extends Fz_Controller {
      */
     public function startAction () {
         $this->secure ();
+        fz_log ($_SERVER["REMOTE_ADDR"].' uploading');
         $response = array (); // returned data
-//qsda1
+
         if (array_key_exists ('file', $_FILES))
             $file = $this->saveFile ($_POST, $_FILES ['file']);
 
@@ -23,6 +24,8 @@ class App_Controller_Upload extends Fz_Controller {
                  __('An error occured while uploading the file.').' '
                 .__('Details').' : '. $this->explainError (UPLOAD_ERR_INI_SIZE)
                 .' : ('.ini_get ('upload_max_filesize').')';
+            
+            fz_log ('upload error (POST request > post_max_size)', FZ_LOG_ERROR);
         }
         // Let's move the file to its final destination
         else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK
@@ -72,10 +75,7 @@ class App_Controller_Upload extends Fz_Controller {
             return html("<textarea>\n".json_encode ($response)."\n</textarea>",'');
         }
         else {
-            if ($response ['status'] == 'success')
-                flash ('notification', __('Your file was uploaded successfuly.'));
-            else
-                flash ('notification', $response ['statusText']);
+            flash ('notification', $response ['statusText']);
             redirect_to ('/');
         }
     }
