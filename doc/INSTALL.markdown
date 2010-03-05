@@ -149,6 +149,7 @@ Edit config/filez.ini with the following settings :
 
     [app]
     auth_handler_class = Fz_Controller_Security_Cas
+    user_factory_class = Fz_User_Factory_Ldap
     
     [auth_options]
     cas_server_host = url.of-your-cas-server.com

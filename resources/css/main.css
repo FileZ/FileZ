@@ -470,6 +470,9 @@ footer a {
   color: #8F837A;
   font-size: 0.7em;
 }
+footer #disk-usage {
+  font-size: 0.8em;
+}
 
 /* Modal */
 

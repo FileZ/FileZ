@@ -12,7 +12,8 @@ function fz_log ($message, $type = null, $vars = null) {
     if ($vars !== null)
         $message .= var_export ($vars, true)."\n";
 
-    $message = strftime ("[%Y-%m-%d %H:%M:%S] - ", time ()).$message."\n";
+    $date = new Zend_Date ();
+    $message = '['.$date->toString(Zend_Date::ISO_8601).'] '.$message."\n";
 
     if (file_put_contents ($log_file, $message, FILE_APPEND) === false)
         trigger_error ('Can\' write log in "'.$log_file.'"', E_WARNING);
