@@ -20,6 +20,9 @@ class Fz_Controller {
     protected function secure ($credential = null) {
         $this->getAuthHandler ()->secure ();
         // TODO check credentials
+
+        // setting user template var
+        set ('user', $this->getUser());
     }
 
     /**

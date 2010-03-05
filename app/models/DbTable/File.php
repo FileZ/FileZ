@@ -134,13 +134,59 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     /**
      * Return disk space used by someone
      *
-     * @param string    $email  Email of the user
+     * @param array     $user   User data
      * @return integer          Size in bytes
      */
-    public function getTotalDiskSpaceByUser ($email) {
-
-        // TODO
+    public function getTotalDiskSpaceByUser ($user) {
+        $result = option ('db_conn')
+            ->prepare ('SELECT sum(file_size) FROM `'
+                .$this->getTableName ().'` WHERE uploader_email = ?');
+        $result->execute (array ($user['email']));
+        $t = $result->fetchColumn ();
+        return (int) $result->fetchColumn ();
     }
+
+    /**
+     * Return remaining disk space available for user $user
+     *
+     * @param array     $user   User data
+     * @return integer          Size in bytes
+     */
+    public function getRemainingSpaceForUser ($user, $shorthand = false) {
+        $size = ($this->shorthandSizeToBytes (fz_config_get ('app', 'user_quota'))
+               - $this->getTotalDiskSpaceByUser ($user));
+
+        return ($shorthand ? $this->bytesToShorthand($size) : $size);
+    }
+    
+    /**
+     * Transform a size in the shorthand format ('K', 'M', 'G') to bytes
+     *
+     * @param   string      $size
+     * @return  integer
+     */
+    public function shorthandSizeToBytes ($size) {
+        $size = str_replace (' ', '', $size);
+        $size = str_replace (array ('K'  , 'M'     , 'G'        ),
+                             array ('000', '000000', '000000000'), $size);
+        return intval ($size);
+    }
+    
+    /**
+     * Transform a size in bytes to the shorthand format ('K', 'M', 'G')
+     *
+     * @param   string      $size
+     * @return  integer
+     */
+    public function bytesToShorthand ($size) {
+        // FIXME bigint ?
+        return $size >= 1000000000 ? ($size / 1000000000).'G' :
+               $size >= 1000000    ? ($size / 1000000).'M' :
+               $size >= 1000       ? ($size / 1000).'K' :
+                                      $size.'B';
+    }
+
+
 }
 
 

@@ -3,7 +3,7 @@
 <section class="new-file fz-modal">
   <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
   <div id="file">
-    <label for="file"><?php echo __r('File (Max size: %size%)', array ('size' => $maxUploadSize)) ?> :</label>
+    <label for="file"><?php echo __r('File (Max size: %size%)', array ('size' => $free_space_left)) ?> :</label>
     <div id="input-file">
       <input type="file" id="file-input" name="file" value="" alt="<?php echo __('File') ?>" />
     </div>
@@ -70,7 +70,8 @@
           confirmDelete: <?php echo  json_encode (__('Are you sure to delete this file ?')) ?>,
           unknownError: <?php echo  json_encode (__('Unknown error')) ?>,
           unknownErrorHappened: <?php echo  json_encode (__('An unknown error hapenned while uploading the file')) ?>,
-          cancel: <?php echo  json_encode (__('Cancel')) ?>
+          cancel: <?php echo  json_encode (__('Cancel')) ?>,
+          emailMessage: <?php echo  json_encode (__('You can download the file I uploaded here')) ?>
         }
 
       });

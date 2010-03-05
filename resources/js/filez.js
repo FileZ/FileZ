@@ -82,8 +82,13 @@ $.fn.initFilez = function (options) {
 $.fn.initFileActions = function () {
     $('.send-by-email', this).click     (function (e) {
         console.log ('hi');
-        $('#email-modal').dialog ('open');
-        $('#email-modal form').attr ('action', $(this).attr ('href'));
+        var modal = $('#email-modal');
+        var fileUrl = $(this).attr ('href')
+                .substring (0, $(this).attr ('href').lastIndexOf ('/') - 1);
+        modal.dialog ('open');
+        $('form', modal).attr ('action', $(this).attr ('href'));
+        $('.open-email-client', modal).attr ('href', 'mailto:'
+            +'?body='+settings.messages.emailMessage+' : '+fileUrl);
         e.preventDefault();
     }),
 

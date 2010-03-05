@@ -1,5 +1,7 @@
 <?php
 
+define ('UPLOAD_ERR_QUOTA_EXCEEDED', 99);
+
 /**
  * Controller used to upload files and monitor progression
  */
@@ -14,81 +16,27 @@ class App_Controller_Upload extends Fz_Controller {
         fz_log ($_SERVER["REMOTE_ADDR"].' uploading');
         $response = array (); // returned data
 
-        if (array_key_exists ('file', $_FILES))
-            $file = $this->saveFile ($_POST, $_FILES ['file']);
-
         // check if request exceed php.ini post_max_size
         if ($_SERVER ['CONTENT_LENGTH'] > $this->shorthandSizeToBytes (
                                                    ini_get ('post_max_size'))) {
-            $response ['status'] = 'error';
-            $response ['statusText'] =
-                 __('An error occured while uploading the file.').' '
-                .__('Details').' : '. $this->explainError (UPLOAD_ERR_INI_SIZE)
-                .' : ('.ini_get ('upload_max_filesize').')';
-            
             fz_log ('upload error (POST request > post_max_size)', FZ_LOG_ERROR);
+            return $this->onFileUploadError (UPLOAD_ERR_INI_SIZE);
         }
-        // Let's move the file to its final destination
         else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK) {
+            // Check user quota first
+            if ($this->checkQuota ($_FILES ['file'])) {
+                return $this->onFileUploadError (UPLOAD_ERR_QUOTA_EXCEEDED);
 
-            $userDiskSpace = $_FILES['file']['size']
-               + Fz_Db::getTable('File')->getTotalDiskSpaceByUser (); // TODO
-            $maxDiskSpacePerUser = fz_config_get ('app', 'user_quota');
+            // Still no error ? we can move the file to its final destination
+            } else if (null !== ($file = $this->saveFile ($_POST, $_FILES ['file']))) {
+                $this->sendFileUploadedMail ($file);
+                return $this->onFileUploadSuccess ($file);
 
-            if ($userDiskSpace > $this->shorthandSizeToBytes ($maxDiskSpacePerUser)) {
-                $response ['status'] = 'error';
-                $response ['statusText'] = __('You exceeded your disk space quota ('
-                                                     .$maxDiskSpacePerUser.')');
+            } else { // Errors happened while moving the uploaded file
+                return $this->onFileUploadError ();
             }
-            else if ($file->moveUploadedFile ($_FILES['file'])) {
-
-                $response ['status']     = 'success';
-                $response ['statusText'] = __('The file was successfuly uploaded');
-                $response ['html']       = partial ('main/_file_row.php', array ('file' => $file));
-
-                try {
-                    $this->sendFileUploadedMail ($file);
-                }
-                catch (Exception $e) {
-                    fz_log ('Can\'t send email "File Uploaded"', FZ_LOG_ERROR);
-                }
-            }
-
-        } else { // Errors happened while moving the uploaded file
-            $file->delete ();
-
-            $response ['status']     = 'error';
-            $response ['statusText'] = __('An error occured while uploading the file.');
-            switch ($_FILES ['file']['error']) {
-                case UPLOAD_ERR_NO_TMP_DIR:
-                case UPLOAD_ERR_CANT_WRITE:
-                    fz_log ('upload error ('. // Logging error if needed
-                        $this->explainError ($_FILES ['file']['error']).')', FZ_LOG_ERROR);
-                    break;
-
-                // These errors come from the client side, let him know what's wrong
-                case UPLOAD_ERR_INI_SIZE:
-                case UPLOAD_ERR_FORM_SIZE:
-                    $response ['statusText'] .= ' '.__('Details').' : '
-                        .$this->explainError ($_FILES['file']['error'])
-                        .' : ('.ini_get ('upload_max_filesize').')';
-                    break;
-                case UPLOAD_ERR_PARTIAL:
-                case UPLOAD_ERR_NO_FILE:
-                    $response ['statusText'] .= ' '.__('Details').' : '
-                        .$this->explainError ($_FILES ['file']['error']);
-            }                
-        }
-
-        if (array_key_exists ('is-async', $_GET) && $_GET ['is-async']) {
-            // The response is embedded inside a textarea to prevent some browsers :
-            // quirks : http://www.malsup.com/jquery/form/#file-upload
-            // JQuery Form Plugin will handle the response transparently.
-            return html("<textarea>\n".json_encode ($response)."\n</textarea>",'');
-        }
-        else {
-            flash ('notification', $response ['statusText']);
-            redirect_to ('/');
+        } else { // Errors happened during file upload
+            return $this->onFileUploadError ($_FILES ['file']['error']);
         }
     }
 
@@ -148,7 +96,13 @@ class App_Controller_Upload extends Fz_Controller {
         $file->available_until  = $availableUntil;
         $file->save ();
 
-        return $file;
+        if ($file->moveUploadedFile ($uploadedFile)) {
+            return $file;
+        }
+        else {
+            $file->delete ();
+            return null;
+        }
     }
 
     /**
@@ -172,26 +126,12 @@ class App_Controller_Upload extends Fz_Controller {
         $mail->setBodyText ($msg);
         $mail->setSubject  ($subject);
         $mail->addTo ($user ['email'], $user['firstname'].' '.$user['lastname']);
-        $mail->send ();
-    }
 
-    /**
-     * Return localised description of an upload error code
-     *
-     * @param integer $errorCode
-     * @return string
-     */
-    private function explainError ($errorCode) {
-        switch ($errorCode) {
-            case UPLOAD_ERR_OK         : return __('There is no error, the file uploaded with success.');
-            case UPLOAD_ERR_INI_SIZE   : 
-            case UPLOAD_ERR_FORM_SIZE  : return __('The uploaded file exceeds the max file size.');
-            case UPLOAD_ERR_PARTIAL    : return __('The uploaded file was only partially uploaded.');
-            case UPLOAD_ERR_NO_FILE    : return __('No file was uploaded.');
-            case UPLOAD_ERR_NO_TMP_DIR : return __('Missing a temporary folder.');
-            case UPLOAD_ERR_CANT_WRITE : return __('Failed to write file to disk.');
-            case UPLOAD_ERR_EXTENSION  : return __('File upload stopped by extension.');
-            default : return __('Unknown error');
+        try {
+            $mail->send ();
+        }
+        catch (Exception $e) {
+            fz_log ('Can\'t send email "File Uploaded" : '.$e, FZ_LOG_ERROR);
         }
     }
 
@@ -202,11 +142,96 @@ class App_Controller_Upload extends Fz_Controller {
      * @return  integer
      */
     private function shorthandSizeToBytes ($size) {
-        $size = ;
         $size = str_replace (' ', '', $size);
         $size = str_replace (array ('K'  , 'M'     , 'G'        ),
                              array ('000', '000000', '000000000'), $size);
         return intval ($size);
+    }
+
+    /**
+     * Check if the user will exceed its quota if if he upload the file $file
+     *
+     * @param array $file   File element from $_FILES
+     * @return boolean      true if he will exceed, false else
+     */
+    private function checkQuota ($file) {
+        $fileSize = $_FILES['file']['size'];
+        $freeSpace = Fz_Db::getTable('File')->getRemainingSpaceForUser ($this->getUser());
+        return ($fileSize > $freeSpace);
+    }
+
+    /**
+     * Return data to the browser with the correct response type (json or html).
+     * If the request comes from an iframe (with the is-async GET parameter,
+     * the response is embedded inside a textarea to prevent some browsers :
+     * quirks (http://www.malsup.com/jquery/form/#file-upload) JQuery Form
+     * Plugin will handle the response transparently.
+     * 
+     * @param array $data
+     */
+    private function returnData ($data) {
+        if (array_key_exists ('is-async', $_GET) && $_GET ['is-async']) {
+            return html("<textarea>\n".json_encode ($data)."\n</textarea>",'');
+        }
+        else {
+            flash ('notification', $data ['statusText']);
+            redirect_to ('/');
+        }
+    }
+
+    /**
+     * Function called on file upload success, a default message is returned
+     * to the user.
+     *
+     * @param App_Model_File $file
+     */
+    private function onFileUploadSuccess (App_Model_File $file) {
+        $response ['status']     = 'success';
+        $response ['statusText'] = __('The file was successfuly uploaded');
+        $response ['html']       = partial ('main/_file_row.php', array ('file' => $file));
+        return $this->returnData ($response);
+    }
+
+    /**
+     * Function called on file upload error. A message corresponding to the error
+     * code passed as parameter is return to the user. Error codes come from
+     * $_FILES['userfile']['error'] plus a custom error code called
+     * 'UPLOAD_ERR_QUOTA_EXCEEDED'
+     *
+     * @param integer $errorCode
+     */
+    private function onFileUploadError ($errorCode = null) {
+        $response ['status']     = 'error';
+        $response ['statusText'] = __('An error occured while uploading the file.').' ';
+
+        switch ($errorCode) {
+            case UPLOAD_ERR_NO_TMP_DIR:
+                fz_log ('upload error (Missing a temporary folder)', FZ_LOG_ERROR);
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                fz_log ('upload error (Failed to write file to disk)', FZ_LOG_ERROR);
+                break;
+
+            // These errors come from the client side, let him know what's wrong
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $response ['statusText'] .=
+                    __('The uploaded file exceeds the max file size.')
+                    .' : ('.ini_get ('upload_max_filesize').')';
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                $response ['statusText'] .=
+                     __('The uploaded file was only partially uploaded.');
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                $response ['statusText'] .=
+                     __('No file was uploaded.');
+                break;
+            case UPLOAD_ERR_QUOTA_EXCEEDED:
+                $response ['statusText'] .= __r('You exceeded your disk space quota (%space%).',
+                    array ('space' => fz_config_get ('app', 'user_quota')));
+        }
+        return $this->returnData ($response);
     }
 }
 

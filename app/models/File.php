@@ -214,9 +214,16 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @return boolean  whether the file was successfully moved or not.
      */
     public function moveUploadedFile ($uploadedFile) {
-        return is_uploaded_file($uploadedFile ['tmp_name'])
+        if (is_uploaded_file($uploadedFile ['tmp_name'])
             && move_uploaded_file ($uploadedFile ['tmp_name'],
-                                   $this->getOnDiskLocation ());
+                                   $this->getOnDiskLocation ())) {
+            return true;
+        } else {
+            fz_log('Can\'t move the uploaded file to its final destination "'
+                    .$this->getOnDiskLocation (), FZ_LOG_ERROR);
+            return false;
+        }
+
     }
 
     /**

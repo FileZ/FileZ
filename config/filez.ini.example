@@ -7,10 +7,10 @@
 use_url_rewriting = true
 
 ; Must be writtable by the web server
-upload_dir = /tmp
+upload_dir = /var/fz_uploads
 
 ; Must be writtable by the web server
-log_dir = log
+log_dir = /var/log
 
 ; Allow downloading file sent with filez 1.x
 filez1_compat = true

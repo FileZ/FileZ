@@ -46,6 +46,12 @@
       <?php if (array_key_exists ('error', $flash)): ?>
         <p class="notif error"><?php echo $flash ['error'] ?></p>
       <?php endif ?>
+
+      <?php if (isset ($user)): ?>
+        <p id="auth-box">
+          <?php echo $user ['email'] ?> |<a href="<?php echo url_for ('/logout') ?>" alt="<?php echo __('Log out') ?>">&nbsp;</a>
+        </p>
+      <?php endif ?>
     </header>
 
     <article>

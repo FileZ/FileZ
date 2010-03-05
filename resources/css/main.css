@@ -59,6 +59,7 @@ h2 span.filename {
 /* Header */
 header {
   padding: 3em 0 2em 0;
+  position: relative;
 }
 header h1 {
 }
@@ -80,6 +81,30 @@ header #your-logo {
   margin-right: 1em;
   padding-right: 1em;
   border-right: 1px solid #D9D4CF;
+}
+header #auth-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  -moz-border-radius-bottomleft:      6px;
+  -webkit-border-bottom-left-radius:  6px;
+  -moz-border-radius-bottomright:     6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -moz-box-shadow:    inset 0 15px 15px #F2EDE7;
+  -webkit-box-shadow: inset 0 15px 15px #F2EDE7;
+  padding: 0.3em 0.7em;
+  background: #E6E1DB;
+  color: #73706E;
+  border-bottom: 1px solid #DAD6D0;
+  border-left: 1px solid #EBE6E0;
+  border-right: 1px solid #EBE6E0;
+  font-size: 0.8em;
+}
+header #auth-box a {
+  background: transparent url(../images/icons/system-log-out.png) no-repeat right center;
+  padding: 8px;
+  text-indent: -2000px;
+  overflow: hidden;
 }
 
 /* Notifications */
@@ -263,18 +288,18 @@ section#uploaded-files ul li.file.even {
 }
 section#uploaded-files ul li.file:first-child {
   -moz-border-radius-topright:     5px;
-  -webkit-border-radius-topright:  5px;
+  -webkit-border-top-left-radius:  5px;
   border-radius-topright:          5px;
   -moz-border-radius-topleft:      5px;
-  -webkit-border-radius-topleft:   5px;
+  -webkit-border-top-right-radius: 5px;
   border-radius-topleft:           5px;
 }
 section#uploaded-files ul li.file:last-child {
   -moz-border-radius-bottomright:     5px;
-  -webkit-border-radius-bottomright:  5px;
+  -webkit-border-bottom-left-radius:  5px;
   border-radius-bottomright:          5px;
   -moz-border-radius-bottomleft:      5px;
-  -webkit-border-radius-bottomleft:   5px;
+  -webkit-border-bottom-left-radius:  5px;
   border-radius-bottomleft:           5px;
 }
 section#uploaded-files ul li p.filename {
@@ -383,6 +408,13 @@ section#uploaded-files ul li.file:hover {
   border-width: 1px 0 0 0;
   border-style: solid;
   border-color: #EDF2F7;
+}
+form a.open-email-client {
+  background: transparent url(../images/icons/internet-mail-22x22.png) no-repeat right center;
+  padding: 4px 28px 4px 0;
+  line-height: 22px;
+  text-align: right;
+  display: block;
 }
 
 /* Section #preview-file */
