@@ -38,10 +38,8 @@ function configure() {
 
     // error handling
     if (fz_config_get('app', 'debug', false)) {
-        error_reporting(E_ALL | E_STRICT);
         ini_set ('display_errors', true);
     } else {
-        error_reporting((E_ALL | E_STRICT) ^ E_NOTICE);
         ini_set ('display_errors', false);
     }
 

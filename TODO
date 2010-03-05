@@ -2,7 +2,6 @@
 Current release
 ===============
 
-* bugfix : liens logout & CAS
 * Lorsque l'utilisateur n'a pas de fichier uploadé, ne pas afficher "Vos fichiers uploadés"
 * Vérifier le fonctionnement d'une 2eme connexion a une bd pour Fz_User_Factory_Database
 * Refactor var names according to the coding conventions
