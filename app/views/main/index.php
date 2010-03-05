@@ -15,7 +15,7 @@
             $max     = fz_config_get ('app', 'max_file_lifetime',     20);
             for ($i = 1; $i <= $max; ++$i  ): ?>
         <option value=<?php echo "\"$i\"".($i == $default ? ' selected="selected" ' : '') ?>>
-          <?php echo str_replace ('%n%', $i, __p('%n% day', '%n% days', $i)) ?>
+          <?php echo str_replace ('%n%', $i, ($i > 1 ? __('%n% days') : __('%n% day'))) // FIXME ugly fix for handling plural ?>
         </option>
       <?php endfor ?>
     </select>

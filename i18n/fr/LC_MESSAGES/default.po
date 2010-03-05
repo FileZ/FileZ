@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: filez-2.0-RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-04 15:26+0100\n"
-"PO-Revision-Date: 2010-03-04 15:35+0100\n"
+"POT-Creation-Date: 2010-03-05 09:46+0100\n"
+"PO-Revision-Date: 2010-03-05 09:48+0100\n"
 "Last-Translator: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "MIME-Version: 1.0\n"
@@ -37,11 +37,11 @@ msgstr "Go"
 msgid "TB"
 msgstr "To"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Admin.php:20
+#: /media/data/dev/filez-cru/trunk/app/controllers/Admin.php:34
 msgid "[FileZ] your file \"%file_name%\" your file is going to be deleted"
 msgstr "[FileZ] Votre fichier \"%file_name%\" va prochainement être supprimé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Admin.php:22
+#: /media/data/dev/filez-cru/trunk/app/controllers/Admin.php:36
 msgid "email_delete_notif (%file_name%, %file_url%, %filez_url%)"
 msgstr ""
 "Bonjour,\n"
@@ -54,30 +54,11 @@ msgstr ""
 "\n"
 "-----NE REPONDEZ PAS A CE MESSAGE !Il a été généré automatiquement, votre réponse n'aboutirait pas !"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:23
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:46
-msgid "An error occured while uploading the file."
-msgstr "Une erreur s'est produite pendant l'envoi du fichier."
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:24
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:57
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:63
-msgid "Details"
-msgstr "Détails"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:32
-msgid "The file was successfuly uploaded"
-msgstr "Le fichier a été correctement envoyé"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:76
-msgid "Your file was uploaded successfuly."
-msgstr "Votre fichier correctement a été envoyé."
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:149
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:115
 msgid "[FileZ] \"%file_name%\" uploaded successfuly"
 msgstr "[Filez] Votre fichier \"%file_name%\" a correctement été envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:151
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:117
 msgid "email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)"
 msgstr ""
 "Bonjour,\n"
@@ -92,38 +73,29 @@ msgstr ""
 "\n"
 "-----NE REPONDEZ PAS A CE MESSAGE !Il a été généré automatiquement, votre réponse n'aboutirait pas !"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:174
-msgid "There is no error, the file uploaded with success."
-msgstr "Il n'y a pas d'erreurs, le fichier a correctement été envoyé."
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:190
+msgid "The file was successfuly uploaded"
+msgstr "Le fichier a été correctement envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:176
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:205
+msgid "An error occured while uploading the file."
+msgstr "Une erreur s'est produite pendant l'envoi du fichier."
+
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:219
 msgid "The uploaded file exceeds the max file size."
 msgstr "La taille du fichier dépasse la taille maximale.."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:177
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:224
 msgid "The uploaded file was only partially uploaded."
 msgstr "Le fichier n'a été que partiellement envoyé."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:178
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:228
 msgid "No file was uploaded."
 msgstr "Aucun fichier n'a été envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:179
-msgid "Missing a temporary folder."
-msgstr "Répertoire temporaire manquant"
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:180
-msgid "Failed to write file to disk."
-msgstr "Impossible d'écrire le fichier sur le disque."
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:181
-msgid "File upload stopped by extension."
-msgstr "Envoi stoppé pour cause d'extension non autorisée."
-
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:182
-#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:71
-msgid "Unknown error"
-msgstr "Erreur inconnue"
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:231
+msgid "You exceeded your disk space quota (%space%)."
+msgstr "Vous avez dépassé votre quota disque (%space%)."
 
 #: /media/data/dev/filez-cru/trunk/app/controllers/Auth.php:34
 msgid "Wrong username or password"
@@ -214,11 +186,15 @@ msgid "Message (file url will automatically be added)"
 msgstr "Message (l'adresse de téléchargement du fichier sera automatiquement ajoutée)"
 
 #: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:12
+msgid "Open in my email client"
+msgstr "Ouvrir dans ma messagerie"
+
+#: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:22
 msgid "Send"
 msgstr "Envoyer"
 
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:2
-#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:88
+#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:89
 msgid "Upload a new file"
 msgstr "Envoyer un nouveau fichier"
 
@@ -237,6 +213,10 @@ msgstr "Durée"
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:13
 msgid "Select a lifetime"
 msgstr "Sélectionnez une durée de vie du fichier"
+
+#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:18
+msgid "%n% days"
+msgstr "%n% jours"
 
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:18
 msgid "%n% day"
@@ -266,6 +246,10 @@ msgstr "Fichiers envoyés"
 msgid "Are you sure to delete this file ?"
 msgstr "Êtes vous sûr de vouloir supprimer ce fichier ?"
 
+#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:71
+msgid "Unknown error"
+msgstr "Erreur inconnue"
+
 #: /media/data/dev/filez-cru/trunk/app/views/main/index.php:72
 msgid "An unknown error hapenned while uploading the file"
 msgstr "Une erreur inconnue est survenue pendant l'envoi du fichier."
@@ -274,7 +258,11 @@ msgstr "Une erreur inconnue est survenue pendant l'envoi du fichier."
 msgid "Cancel"
 msgstr "Annuler"
 
-#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:89
+#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:74
+msgid "You can download the file I uploaded here"
+msgstr "Vous pouvez télécharger le fichier que j'ai envoyé ici"
+
+#: /media/data/dev/filez-cru/trunk/app/views/main/index.php:90
 msgid "Send by email"
 msgstr "Envoyer par email"
 
@@ -322,6 +310,22 @@ msgstr "Me connecter"
 msgid "Share files for a limited time."
 msgstr "Distribuez vos fichiers pour une durée limitée."
 
+#: /media/data/dev/filez-cru/trunk/app/views/layout/default.html.php:52
+msgid "Log out"
+msgstr "Me déconnecter"
+
+#~ msgid "Details"
+#~ msgstr "Détails"
+#~ msgid "Your file was uploaded successfuly."
+#~ msgstr "Votre fichier correctement a été envoyé."
+#~ msgid "There is no error, the file uploaded with success."
+#~ msgstr "Il n'y a pas d'erreurs, le fichier a correctement été envoyé."
+#~ msgid "Missing a temporary folder."
+#~ msgstr "Répertoire temporaire manquant"
+#~ msgid "Failed to write file to disk."
+#~ msgstr "Impossible d'écrire le fichier sur le disque."
+#~ msgid "File upload stopped by extension."
+#~ msgstr "Envoi stoppé pour cause d'extension non autorisée."
 #~ msgid "Envoyer un email"
 #~ msgstr "E"
 
