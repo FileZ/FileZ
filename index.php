@@ -34,14 +34,22 @@ function configure() {
 
     $fz_conf = fz_config_load (); // loading filez.ini
     if ($fz_conf ['app']['use_url_rewriting'])
-      option ('base_uri'          , option ('base_path'));
+      option ('base_uri', option ('base_path'));
+
+    // error handling
+    if (fz_config_get('app', 'debug', false)) {
+        error_reporting(E_ALL | E_STRIC);
+        ini_set ('display_errors', true);
+    } else {
+        error_reporting((E_ALL | E_STRICT) ^ E_NOTICE);
+        ini_set ('display_errors', false);
+    }
 
     // Database configuration
     $db = new PDO ($fz_conf['db']['dsn'], $fz_conf['db']['user'],
                                           $fz_conf['db']['password']);
 
     // TODO gérer les erreurs de connexion
-    //$db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $db->exec ('SET NAMES \'utf8\'');
     option ('db_conn', $db);
@@ -71,11 +79,7 @@ function configure() {
  * Loading Limonade PHP
  */
 require_once 'lib/limonade.php';
-error_reporting(E_ALL);
-
 require_once 'lib/fz_limonade.php';
-ini_set ('display_errors', false);
-
 
 //                                              //             // 
 // Url Schema                                   // Controller  // Action

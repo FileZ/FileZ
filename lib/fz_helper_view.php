@@ -64,3 +64,17 @@ function __r($msg, array $subtitutions) {
         $msg = str_replace ("%$key%", $value, $msg);
     return $msg;
 }
+
+
+/**
+ * Transform a size in bytes to the shorthand format ('K', 'M', 'G')
+ *
+ * @param   string      $size
+ * @return  integer
+ */
+function bytesToShorthand ($size) {
+    return ($size >= 1000000000 ? (round ($size / 1000000000, 2).'G') : (
+            $size >= 1000000    ? (round ($size / 1000000, 2).'M') : (
+            $size >= 1000       ? (round ($size / 1000, 2).'K') :
+                                           $size.'B')));
+}

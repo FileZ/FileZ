@@ -13,6 +13,8 @@ Current release
 * Ajouter un lien configurable vers une doc utilisateur extérieure
 * Vérifier si les tables de filez < 1.2 supportent la migration
 * Terminer le fichier et LICENCE
+* Ajouter une checkbox "M'envoyer l'url du fichier par email et m'avertir avant sa suppression"
+* Afficher l'état en cours du quota de l'utilisateur
 
 
 Next minor release

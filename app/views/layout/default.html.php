@@ -49,7 +49,8 @@
 
       <?php if (isset ($user)): ?>
         <p id="auth-box">
-          <?php echo $user ['email'] ?> |<a href="<?php echo url_for ('/logout') ?>" alt="<?php echo __('Log out') ?>">&nbsp;</a>
+          <?php echo $user ['email'] ?> |
+          <a href="<?php echo url_for ('/logout') ?>" title="<?php echo __('Log out') ?>">&nbsp;</a>
         </p>
       <?php endif ?>
     </header>
@@ -59,6 +60,11 @@
     </article>
 
     <footer>
+      <p><?php echo __r('using %space% of %quota%', array (
+          // TODO this code should not be here
+          'space' => '<b>'.bytesToShorthand (Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)).'</b>',
+          'quota' => fz_config_get('app', 'user_quota'))); ?>
+      </p>
       <a href="http://gpl.univ-avignon.fr">Un logiciel libre de l'Université d'Avignon et des Pays de Vaucluse</a>
     </footer>
 
