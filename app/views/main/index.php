@@ -28,6 +28,24 @@
     <label for="comment"><?php echo __('Comments') ?> :</label>
     <input type="text" id="input-comment" name="comment" value="" alt="<?php echo __('Add a comment (optional)') ?>" maxlength="200" />
   </div>
+      <!--
+  <div id="options">
+    <ul>
+      <li>
+        <input type="checkbox" name="email-notification"/>
+        <label for="email-notifications" title="<?php echo __('Send me email notifications when the file is uploaded and before it will be deleted') ?>">
+          <?php echo __('Send me email notifications') ?>
+        </label>
+      </li>
+      <li>
+        <input type="checkbox" name="use-password"/>
+        <label for="use-password" title="<?php echo __('Send me email notifications when the file is uploaded and before it will be deleted') ?>">
+          <?php echo __('Use a password to download') ?>
+        </label>
+      </li>
+    </ul>
+  </div>
+      -->
   <div id="upload">
     <input type="submit" id="start-upload" name="upload" class="awesome blue large" value="&raquo; <?php echo __('Upload') ?>" />
     <div id="upload-loading"  style="display: none;"></div>

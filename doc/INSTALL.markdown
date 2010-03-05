@@ -154,7 +154,11 @@ Edit config/filez.ini with the following settings :
     [auth_options]
     cas_server_host = url.of-your-cas-server.com
 
-You can also add these options : 'cas_server_port' and 'cas_server_path'
+You can also add these options :
+
+* 'cas_server_port' 443 by default
+* 'cas_server_path' Path where your web server is responding (ex 'cas' if your
+   cas server is located at url.of-your-cas-server.com/cas/)
 
 Follow the section named "Ldap Identification" to configure the Ldap server.
 

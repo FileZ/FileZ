@@ -94,6 +94,8 @@ class App_Controller_Upload extends Fz_Controller {
         $file->comment          = substr ($comment, 0, 199);
         $file->available_from   = $availableFrom;
         $file->available_until  = $availableUntil;
+        if (isset ($post ['password']) && ! empty ($post ['password']))
+            $file->password = $post ['password'];
         $file->save ();
 
         if ($file->moveUploadedFile ($uploadedFile)) {

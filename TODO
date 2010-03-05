@@ -13,6 +13,7 @@ Current release
 * Terminer le fichier et LICENCE
 * Ajouter une checkbox "M'envoyer l'url du fichier par email et m'avertir avant sa suppression"
 * Vérifier les pb de différence de taille lors de l'upload du à uuencode ?
+* gérer l'attribut 'notif_uploader'
 
 
 Next minor release

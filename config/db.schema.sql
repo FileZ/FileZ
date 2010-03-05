@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `fz_file` (
   `uploader_uid`    varchar(30)     DEFAULT NULL,
   `uploader_email`  varchar(60)     DEFAULT NULL,
   `extends_count`   INTEGER         DEFAULT '0',
+  `password`        varchar(40)     DEFAULT NULL,
 
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

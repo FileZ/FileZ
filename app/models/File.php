@@ -246,4 +246,25 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         $this->extends_count = $this->extends_count + 1;
     }
 
+    /**
+     * Set the password for the file. This function use the creation date to salt
+     * the password hash meaning that 'created_at' must have been already set
+     * before setting the password.
+     * 
+     * @param string    $secret
+     * @return void
+     */
+    public function setPassword ($secret) {
+        $this->password = sha1 ($this->created_at.$secret);
+    }
+
+    /**
+     * Check if the password provided as parameter is valid
+     *
+     * @param string    $secret
+     * @return boolean              true if password is correct, false else
+     */
+    public function checkPassword ($secret) {
+        return ($this->password == sha1 ($this->created_at.$secret));
+    }
 }
