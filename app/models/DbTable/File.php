@@ -12,12 +12,12 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         'available_from',
         'available_until',
         'download_count',
-        'deleted',
         'notify_uploader',
         'uploader_uid',
         'extends_count',
         'comment',
         'created_at',
+        'password',
     );
 
     /**

@@ -13,6 +13,7 @@
  * @property string  $uploader_uid
  * @property int     $extends_count
  * @property int     $created_at        TIMESTAMP
+ * @property string  $password
  */
 class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
@@ -219,7 +220,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
                                    $this->getOnDiskLocation ())) {
             return true;
         } else {
-            fz_log('Can\'t move the uploaded file to its final destination "'
+            fz_log('Can\'t move the uploaded file '.$this->file_name.' to its final destination "'
                     .$this->getOnDiskLocation (), FZ_LOG_ERROR);
             return false;
         }
@@ -247,15 +248,15 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
     }
 
     /**
-     * Set the password for the file. This function use the creation date to salt
-     * the password hash meaning that 'created_at' must have been already set
+     * Set the password for the file. This function use the filename to salt
+     * the password hash meaning that 'file_name' must have been already set
      * before setting the password.
      * 
      * @param string    $secret
      * @return void
      */
     public function setPassword ($secret) {
-        $this->password = sha1 ($this->created_at.$secret);
+        $this->password = sha1 ($this->file_name.$secret);
     }
 
     /**
@@ -265,6 +266,8 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @return boolean              true if password is correct, false else
      */
     public function checkPassword ($secret) {
-        return ($this->password == sha1 ($this->created_at.$secret));
+        $t =  sha1 ($this->file_name.$secret);
+        $v = $this->password;
+        return ($this->password == sha1 ($this->file_name.$secret));
     }
 }

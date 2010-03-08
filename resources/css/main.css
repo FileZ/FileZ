@@ -188,7 +188,8 @@ section.new-file div#start-from input {
   background: transparent url(../images/icons/office-calendar.png) no-repeat 6px center;
   padding-left: 28px;
 }
-section.new-file div#comment {
+section.new-file div#comment ,
+section.new-file ul#options {
   padding: 0 1.3em;
 }
 section.new-file label {
@@ -218,6 +219,20 @@ section.new-file div#upload-loading {
   width: 220px; height: 19px;
   background: transparent url('../images/ajax-loader.gif') no-repeat center center;
   margin: 0 auto;
+}
+section.new-file ul#options {
+		margin-top: 0.8em;
+}
+section.new-file ul#options li + li {
+  padding-left: 0.4em;
+	margin-left: 0.4em;
+  border-left: 1px solid #DDD;
+}
+section.new-file div#password *,
+section.new-file ul#options li ,
+section.new-file ul#options input ,
+section.new-file ul#options li label {
+  display: inline;
 }
 
 h2.new-file a.awesome {
@@ -362,7 +377,6 @@ section#uploaded-files ul li ul.actions li {
 section#uploaded-files ul li ul.actions li + li {
   padding-left: 0.8em;
   border-left: 1px solid #EDEBE6;
-  border-left: 1px solid rgba(0,0,0,0.1);
 }
 section#uploaded-files ul li ul.actions a.send-by-email ,
 section#uploaded-files ul li ul.actions a.delete ,
@@ -460,6 +474,19 @@ form#login-form p#submit-login {
     padding: 10px 0 5px 0;
     text-align: center;
 }
+input.username ,
+input.password {
+		background-repeat: no-repeat;
+		background-position: 3px center;
+		padding-left: 21px;
+}
+input.password {
+		background-image: url(../images/icons/keys.png);
+}
+input.username {
+		background-image: url(../images/icons/user.png);
+}
+
 
 /* Footer */
 footer {

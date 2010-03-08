@@ -13,20 +13,26 @@ class App_Controller_File extends Fz_Controller {
      */
     public function previewAction () {
         $file = $this->getFile();
-        set ('file',      $file);
-        set ('available', $file->isAvailable () || $file->isOwner ($this->getUser ()));
-        set ('uploader',  $file->getUploader ());
+        $isOwner = $file->isOwner ($this->getUser ());
+        set ('file',            $file);
+        set ('isOwner',         $isOwner);
+        set ('available',       $file->isAvailable () || $isOwner);
+        set ('checkPassword',   !(empty ($file->password) || $isOwner));
+        set ('uploader',        $file->getUploader ());
         return html ('file/preview.php');
     }
 
     /**
-     * Send a file
+     * Download a file
      */
     public function downloadAction () {
         $file = $this->getFile ();
-        $available = $file->isAvailable () || $file->isOwner ($this->getUser ());
-        set ('available', $available);
-        if ($available) {
+        if ($file->isOwner($this->getUser ()) || $file->isAvailable ()) {
+            
+            if (! $file->isOwner($this->getUser ()) &&
+                ! $file->checkPassword ($_POST['password']))
+                halt (HTTP_FORBIDDEN, __('Incorrect password'));
+
             $file->download_count = $file->download_count + 1;
             $file->save ();
             return $this->sendFile ($file);

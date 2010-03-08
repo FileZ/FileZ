@@ -36,6 +36,7 @@ function truncate_string ($str, $maxSize) {
  * @return string
  */
 function __($msg) {
+    if (! option ('translate')) return $msg;
     return option ('translate')->translate ($msg);
 }
 
@@ -47,6 +48,7 @@ function __($msg) {
  * @return string
  */
 function __p($sing, $plur, $nb) {
+    if (! option ('translate')) return $msg;
     return option ('translate')->plural ($sing, $plur, $nb);
 }
 

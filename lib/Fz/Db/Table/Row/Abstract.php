@@ -65,10 +65,7 @@ abstract class Fz_Db_Table_Row_Abstract {
      */
     public function __set ($var, $value) {
         $method = 'set'.self::camelify ($var);
-        if (method_exists ($this, $method))
-            $this->$method ($value);
-        else
-            $this->$var = $value;
+        $this->$var = $value;
 
         $this->_updatedColumns [] = $var;
         return $value;
@@ -182,10 +179,7 @@ abstract class Fz_Db_Table_Row_Abstract {
             $stmt->bindValue (':' . $column, $this->$column);
         }
 
-        if ($stmt->execute () === false) {
-            // TODO Lever une exeception
-            print_r($stmt->errorInfo ());
-        }
+        $stmt->execute ();
 
         return $db->lastInsertId ();
     }

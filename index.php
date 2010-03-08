@@ -28,32 +28,48 @@ $autoloader->addResourceTypes (array ('controller' => array (
 function configure() {
     option ('session'   , 'filez'); // specific session name
     option ('views_dir' , option ('root_dir').'/app/views/');
-    option ('upload_dir', option ('root_dir').'/uploaded_files/');
+    
+    // Layout settings
+    error_layout ('layout/error.html.php');
+    layout       ('layout/default.html.php');
 
     require_once_dir (option ('lib_dir'));
 
-    $fz_conf = fz_config_load (); // loading filez.ini
-    if ($fz_conf ['app']['use_url_rewriting'])
+    // error handling
+    error (E_LIM_PHP, 'fz_php_error_handler');
+    set_exception_handler ('fz_exception_handler');
+}
+
+function before () {
+    fz_config_load ();
+
+    if (fz_config_get ('app', 'use_url_rewriting'))
       option ('base_uri', option ('base_path'));
 
     // error handling
     if (fz_config_get('app', 'debug', false)) {
         ini_set ('display_errors', true);
+        // check log dir
+        if (! is_writable (fz_config_get ('app', 'log_dir')))
+            echo 'Can\' write log in "'.fz_config_get ('app', 'log_dir').'" dir';
     } else {
         ini_set ('display_errors', false);
     }
 
-    // Database configuration
-    $db = new PDO ($fz_conf['db']['dsn'], $fz_conf['db']['user'],
-                                          $fz_conf['db']['password']);
 
-    // TODO gérer les erreurs de connexion
-    $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $db->exec ('SET NAMES \'utf8\'');
-    option ('db_conn', $db);
+    // Database configuration
+    try {
+        $db = new PDO (fz_config_get ('db', 'dsn'), fz_config_get ('db', 'user'),
+                                              fz_config_get ('db', 'password'));
+        $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db->exec ('SET NAMES \'utf8\'');
+        option ('db_conn', $db);
+    } catch (Exception $e) {
+        halt (SERVER_ERROR, 'Can\'t connect to the database');
+    }
 
     // I18N
-    Zend_Locale::setDefault ($fz_conf['app']['default_locale']);
+    Zend_Locale::setDefault (fz_config_get ('app', 'default_locale'));
     $currentLocale = new Zend_Locale ('auto');
     $translate     = new Zend_Translate ('gettext', option ('root_dir').'/i18n', $currentLocale,
         array('scan' => Zend_Translate::LOCALE_DIRECTORY));
@@ -65,10 +81,6 @@ function configure() {
     $userFactory = new $factoryClass ();
     $userFactory->setOptions (fz_config_get ('user_factory_options', null, array ()));
     option ('userFactory', $userFactory);
-
-    // Layout settings
-    error_layout ('layout/error.html.php');
-    layout       ('layout/default.html.php');
 }
 
 
@@ -107,6 +119,7 @@ fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne')
 // Download controller
 fz_dispatch_get  ('/:file_hash'                 ,'File'        ,'preview');
 fz_dispatch_get  ('/:file_hash/download'        ,'File'        ,'download');
+fz_dispatch_post ('/:file_hash/download'        ,'File'        ,'download'); // with password
 
 // File controller
 fz_dispatch_get  ('/:file_hash/email'           ,'File'        ,'emailForm');

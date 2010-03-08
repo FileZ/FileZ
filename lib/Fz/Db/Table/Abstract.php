@@ -89,6 +89,7 @@ abstract class Fz_Db_Table_Abstract {
         $sql  = 'SELECT id FROM `'.$this->getTableName ().'` WHERE id = ?';
         $stmt = $db->prepare ($sql);
         $stmt->execute (array ($id));
+
         return $stmt->fetchColumn () === false ? false : true;
     }
 

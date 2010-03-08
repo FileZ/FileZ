@@ -23,16 +23,16 @@ class App_Controller_Upload extends Fz_Controller {
             return $this->onFileUploadError (UPLOAD_ERR_INI_SIZE);
         }
         else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK) {
-            // Check user quota first
-            if ($this->checkQuota ($_FILES ['file'])) {
+            if ($this->checkQuota ($_FILES ['file'])) // Check user quota first
                 return $this->onFileUploadError (UPLOAD_ERR_QUOTA_EXCEEDED);
 
             // Still no error ? we can move the file to its final destination
-            } else if (null !== ($file = $this->saveFile ($_POST, $_FILES ['file']))) {
+            $file = $this->saveFile ($_POST, $_FILES ['file']);
+            if ($file !== null) {
                 $this->sendFileUploadedMail ($file);
                 return $this->onFileUploadSuccess ($file);
 
-            } else { // Errors happened while moving the uploaded file
+            } else { // Errors happened while saving or moving the uploaded file
                 return $this->onFileUploadError ();
             }
         } else { // Errors happened during file upload
@@ -86,23 +86,34 @@ class App_Controller_Upload extends Fz_Controller {
         $availableUntil = clone ($availableFrom);
         $availableUntil->add ($lifetime, Zend_Date::DAY);
 
+        $user = $this->getUser ();
+
         // Storing values
         $file = new App_Model_File ();
         $file->setFileInfo      ($uploadedFile);
-        $file->setUploader      ($this->getUser ());
-        $file->created_at       = new Zend_Date ();
+        $file->setUploader      ($user);
+        $file->setCreatedAt     (new Zend_Date ());
         $file->comment          = substr ($comment, 0, 199);
-        $file->available_from   = $availableFrom;
-        $file->available_until  = $availableUntil;
-        if (isset ($post ['password']) && ! empty ($post ['password']))
-            $file->password = $post ['password'];
-        $file->save ();
+        $file->setAvailableFrom ($availableFrom);
+        $file->setAvailableUntil($availableUntil);
+        $file->notify_uploader  = isset ($post['email-notifications']);
+        if (! empty ($post ['password']))
+            $file->setPassword  ($post ['password']);
 
-        if ($file->moveUploadedFile ($uploadedFile)) {
-            return $file;
-        }
-        else {
-            $file->delete ();
+        try {
+            $file->save ();
+
+            if ($file->moveUploadedFile ($uploadedFile)) {
+                fz_log ('Saved "'.$file->file_name.'"['.$file->id.'] uploaded by '.$user['email']);
+                return $file;
+            }
+            else {
+                $file->delete ();
+                return null;
+            }
+        } catch (Exception $e) {
+            fz_log ('Can\'t save file "'.$uploadedFile['name'].'" uploaded by '.$user['email'], FZ_LOG_ERROR);
+            fz_log ($e, FZ_LOG_ERROR);
             return null;
         }
     }
@@ -112,7 +123,10 @@ class App_Controller_Upload extends Fz_Controller {
      *
      * @param App_Model_File $file
      */
-    private function sendFileUploadedMail ($file) {
+    private function sendFileUploadedMail (App_Model_File $file) {
+        if (! $file->notify_uploader)
+            return;
+
         $user = $this->getUser ();
         $subject = __r('[FileZ] "%file_name%" uploaded successfuly',
             array('file_name' => $file->file_name));
@@ -205,6 +219,9 @@ class App_Controller_Upload extends Fz_Controller {
     private function onFileUploadError ($errorCode = null) {
         $response ['status']     = 'error';
         $response ['statusText'] = __('An error occured while uploading the file.').' ';
+
+        if ($errorCode === null)
+            return $this->returnData ($response);
 
         switch ($errorCode) {
             case UPLOAD_ERR_NO_TMP_DIR:

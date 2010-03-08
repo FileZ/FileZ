@@ -13,8 +13,8 @@ function fz_log ($message, $type = null, $vars = null) {
         $message .= var_export ($vars, true)."\n";
 
     $date = new Zend_Date ();
+    $message = str_replace("\n", "\n   ", $message);
     $message = '['.$date->toString(Zend_Date::ISO_8601).'] '.$message."\n";
 
-    if (file_put_contents ($log_file, $message, FILE_APPEND) === false)
-        trigger_error ('Can\' write log in "'.$log_file.'"', E_WARNING);
+    file_put_contents ($log_file, $message, FILE_APPEND);
 }

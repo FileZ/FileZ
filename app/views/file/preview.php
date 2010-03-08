@@ -22,20 +22,30 @@
   <?php if ($file->comment): ?>
     <p><?php echo __('Comments') ?> : <?php echo h($file->comment) ?></p>
   <?php endif ?>
+  <p>
   <?php if ($available): ?>
-    <p>
-      <?php echo __('Your download will start shortly...') ?>
-      <a href="<?php echo $file->getDownloadUrl ()?>/download">
-        <?php echo __('If not, click here') ?>
-      </a>.
-    </p>
-    <script type="text/javascript">
-      $(document).ready (function() {
-        window.location= "<?php echo $file->getDownloadUrl ()?>/download";
-      });
-    </script>
+      <?php if (! $checkPassword): ?>
+        <?php echo __('Your download will start shortly...') ?>
+        <a href="<?php echo $file->getDownloadUrl ()?>/download">
+          <?php echo __('If not, click here') ?>
+        </a>.
+      <script type="text/javascript">
+        $(document).ready (function() {
+          window.location= "<?php echo $file->getDownloadUrl ()?>/download";
+        });
+      </script>
+    <?php else: ?>
+      <form action="<?php echo $file->getDownloadUrl ()?>/download" method="POST">
+        <label for="password">
+          <?php echo __('You need a password to download this file') ?>
+        </label>
+        <input type="password" name="password" id="password" class="password"/>
+        <input type="submit" value="<?php echo __('Download') ?>" />
+      </form>
+    <?php endif ?>
   <?php else: ?>
-    <p><?php echo __('The file is not available yet.') ?></p>
+    <?php echo __('The file is not available yet.') ?>
   <?php endif ?>
+  </p>
 </section>
   
