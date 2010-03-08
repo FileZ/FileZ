@@ -4,8 +4,7 @@
  * Load config/filez.ini in "option ('fz_config')".
  * @return array    associative array with sections on config keys
  */
-function fz_config_load () {
-    $config_file = option ('root_dir').'/config/filez.ini';
+function fz_config_load ($config_file) {
     $config = parse_ini_file ($config_file, true);
     if (empty ($config)) {
         die ('Missing or malformed config file.');

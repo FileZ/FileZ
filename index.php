@@ -44,7 +44,7 @@ function configure() {
  * configuring Filez
  */
 function before () {
-    fz_config_load ();
+    fz_config_load (option ('root_dir').'/config/filez.ini');
 
     if (fz_config_get ('app', 'use_url_rewriting'))
       option ('base_uri', option ('base_path'));
@@ -100,6 +100,49 @@ function before () {
  */
 require_once 'lib/limonade.php';
 require_once 'lib/fz_limonade.php';
+
+// Check if we are in CLI mode
+/*
+if (array_key_exists ('argc', $_SERVER) && $_SERVER['argc']) {
+
+    # 0. Set default configuration
+    $root_dir  = dirname(app_file());
+    $base_path = dirname(file_path($env['SERVER']['SCRIPT_NAME']));
+    $base_file = basename($env['SERVER']['SCRIPT_NAME']);
+    $base_uri  = file_path($base_path, (($base_file == 'index.php') ? '?' : $base_file.'?'));
+    $lim_dir   = dirname(__FILE__);
+    option('root_dir',           $root_dir);
+    option('base_path',          $base_path);
+    option('base_uri',           $base_uri); // set it manually if you use url_rewriting
+    option('limonade_dir',       file_path($lim_dir));
+    option('limonade_views_dir', file_path($lim_dir, 'limonade', 'views'));
+    option('limonade_public_dir',file_path($lim_dir, 'limonade', 'public'));
+    option('public_dir',         file_path($root_dir, 'public'));
+    option('views_dir',          file_path($root_dir, 'views'));
+    option('controllers_dir',    file_path($root_dir, 'controllers'));
+    option('lib_dir',            file_path($root_dir, 'lib'));
+    option('error_views_dir',    option('limonade_views_dir'));
+    option('env',                ENV_PRODUCTION);
+    option('debug',              true);
+    option('session',            LIM_SESSION_NAME); // true, false or the name of your session
+    option('encoding',           'utf-8');
+    option('x-sendfile',         0); // 0: disabled,
+                                   // X-SENDFILE: for Apache and Lighttpd v. >= 1.5,
+                                   // X-LIGHTTPD-SEND-FILE: for Apache and Lighttpd v. < 1.5
+
+    configure ();
+    before ();
+    echo "Hello";
+
+    $task = 'TODO';
+    $filename = 'tasks/'.$task.'.php';
+    if (file_exists($filename))
+        require_once $filename;
+
+    exit;
+}
+ */
+
 
 //                                              //             // 
 // Url Schema                                   // Controller  // Action
