@@ -128,7 +128,10 @@ $.fn.hideNotifDelayed = function () {
         opacity: 'toggle', height: 'toggle',
         paddingTop: 0, paddingBottom: 0,
         marginTop: 0, marginBottom: 0
-    }, 3000);
+    }, {
+        duration: 3000,
+        complete:  function () {$(this).remove ()}
+    });
 }
 
 $.fn.configureNotification = function () {
@@ -311,8 +314,7 @@ var notify = function (msg) {
     $('.notif').remove();
     $('<p class="notif ok">'+msg+'</p>')
         .appendTo ($('header'))
-        .configureNotification ()
-        .hideNotifDelayed();
+        .configureNotification ();
 };
 
 

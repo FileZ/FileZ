@@ -39,7 +39,7 @@ function fz_php_error_handler ($errno, $errstr, $errfile, $errline) {
     );
 
     fz_log ("Error ($errortype[$errno]) $errstr in $errfile:$errline", FZ_LOG_ERROR);
-    return error_default_handler ($errno, $errstr, $errfile, $errline);
+    return error_handler_dispatcher ($errno, $errstr, $errfile, $errline);
 }
 
 function fz_exception_handler (Exception $e) {

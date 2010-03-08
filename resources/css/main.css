@@ -501,14 +501,16 @@ footer #disk-usage {
   font-size: 0.8em;
 }
 
+div.lim-debug ,
 footer div.debug {
-    margin: 1em 0;
+    margin: 0 0 1em 0;
     background: #242423;
     color: red;
     text-align: left;
     padding: 0.5em;
     font-size: 0.9em;
 }
+div.lim-debug dl ,
 footer div.debug pre {
     white-space: pre-wrap;
     border-top: 1px solid #651918;
@@ -516,6 +518,7 @@ footer div.debug pre {
     margin-top: 0.2em;
     color: #BCBCBC;
 }
+div.lim-debug hr {display: none;}
 
 /* Modal */
 

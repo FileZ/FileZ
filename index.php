@@ -36,8 +36,8 @@ function configure() {
     require_once_dir (option ('lib_dir'));
 
     // error handling
-    set_error_handler ('fz_php_error_handler');
-    set_exception_handler ('fz_exception_handler');
+    set_error_handler     ('fz_php_error_handler', E_ALL ^ E_NOTICE); // Log every error
+    set_exception_handler ('fz_exception_handler'); // also handle uncatched excpeptions
 }
 
 /**
@@ -53,13 +53,20 @@ function before () {
     if (fz_config_get('app', 'debug', false)) {
         ini_set ('display_errors', true);
         option ('debug', true);
-        error_reporting (E_ALL ^ E_NOTICE ^ E_STRICT);
-        // check log dir
-        if (! is_writable (fz_config_get ('app', 'log_dir')))
-            debug_msg ('WARNING: Can\' write log in "'.fz_config_get ('app', 'log_dir').'" dir');
+        option ('env', ENV_DEVELOPMENT);
     } else {
         ini_set ('display_errors', false);
     }
+
+    // check log dir
+    if (! is_writable (fz_config_get ('app', 'log_dir')))
+        trigger_error ('Upload dir is not writeable "'
+                  .fz_config_get ('app', 'log_dir').'"', E_USER_WARNING);
+
+    // check upload dir
+    if (! is_writable (fz_config_get ('app', 'upload_dir')))
+        trigger_error ('Upload dir is not writeable "'
+                  .fz_config_get ('app', 'upload_dir').'"', E_USER_ERROR);
 
     // Database configuration
     try {

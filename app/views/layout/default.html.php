@@ -60,9 +60,9 @@
     </article>
 
     <footer>
-      <?php if (array_key_exists ('debug', $flash)): ?>
-        <div class="debug"><h3>Debug logs :</h3>
-        <?php foreach ($flash ['debug'] as $msg): ?>
+      <?php if (is_array (option ('debug_msg'))): ?>
+        <div class="debug"><h3>Logged messages :</h3>
+        <?php foreach (option ('debug_msg') as $msg): ?>
           <pre><?php echo $msg ?></pre>
         <?php endforeach ?>
         </div>

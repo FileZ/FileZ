@@ -88,7 +88,6 @@
           cancel: <?php echo  json_encode (__('Cancel')) ?>,
           emailMessage: <?php echo  json_encode (__('You can download the file I uploaded here')) ?>
         }
-
       });
 
       // Modal box generic configuration

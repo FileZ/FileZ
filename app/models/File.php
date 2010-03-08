@@ -78,7 +78,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      *
      * @param mixed $date       String or Zend_Date
      */
-    protected function setAvailableUntil ($date) {
+    public function setAvailableUntil ($date) {
         $this->available_until = $date instanceof Zend_Date ?
             $date->get (Zend_Date::ISO_8601) : $date;
     }
@@ -89,7 +89,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      *
      * @param mixed $date       String or Zend_Date
      */
-    protected function setAvailableFrom ($date) {
+    public function setAvailableFrom ($date) {
         $this->available_from = $date instanceof Zend_Date ?
             $date->get (Zend_Date::ISO_8601) : $date;
     }
@@ -100,7 +100,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      *
      * @param mixed $date       String or Zend_Date
      */
-    protected function setCreatedAt ($date) {
+    public function setCreatedAt ($date) {
         $this->created_at = $date instanceof Zend_Date ?
             $date->get (Zend_Date::ISO_8601) : $date;
     }
