@@ -28,6 +28,9 @@ class App_Controller_Admin extends Fz_Controller {
      * @param App_Model_File $file
      */
     private function notifyDeletionByEmail (App_Model_File $file) {
+        if (! $file->notify_uploader)
+            return;
+
         try {
             // Send mails
             $mail = $this->createMail();

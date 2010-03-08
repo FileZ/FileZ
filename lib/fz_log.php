@@ -16,5 +16,20 @@ function fz_log ($message, $type = null, $vars = null) {
     $message = str_replace("\n", "\n   ", $message);
     $message = '['.$date->toString(Zend_Date::ISO_8601).'] '.$message."\n";
 
-    file_put_contents ($log_file, $message, FILE_APPEND);
+    if (file_put_contents ($log_file, $message, FILE_APPEND) === false) {
+        debug_msg ('Can\'t open log file ('.$log_file.')');
+    }
+
+    if (fz_config_get('app', 'debug'))
+        debug_msg ($message);
+}
+
+function debug_msg ($message) {
+    $messages = flash_now ('debug');
+    if (! is_array ($messages))
+        $messages = array ();
+
+    $messages [] = $message;
+
+    flash_now ('debug', $messages);
 }

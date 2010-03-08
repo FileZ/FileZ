@@ -60,6 +60,14 @@
     </article>
 
     <footer>
+      <?php if (array_key_exists ('debug', $flash)): ?>
+        <div class="debug"><h3>Debug logs :</h3>
+        <?php foreach ($flash ['debug'] as $msg): ?>
+          <pre><?php echo $msg ?></pre>
+        <?php endforeach ?>
+        </div>
+      <?php endif ?>
+
       <?php if (isset ($user)): ?>
         <p id="disk-usage"><?php echo __r('Using %space% of %quota%', array (
             // TODO this code should not be here

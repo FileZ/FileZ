@@ -501,6 +501,22 @@ footer #disk-usage {
   font-size: 0.8em;
 }
 
+footer div.debug {
+    margin: 1em 0;
+    background: #242423;
+    color: red;
+    text-align: left;
+    padding: 0.5em;
+    font-size: 0.9em;
+}
+footer div.debug pre {
+    white-space: pre-wrap;
+    border-top: 1px solid #651918;
+    padding-top: 0.2em;
+    margin-top: 0.2em;
+    color: #BCBCBC;
+}
+
 /* Modal */
 
 #modal-background {

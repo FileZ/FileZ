@@ -6,7 +6,7 @@
  */
 class Fz_Db {
 
-    protected static $_tables;
+    protected static $_tables = array ();
 
     /**
      * Generic function to retrieve multiple rows and create objects

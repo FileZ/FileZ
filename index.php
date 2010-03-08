@@ -36,10 +36,13 @@ function configure() {
     require_once_dir (option ('lib_dir'));
 
     // error handling
-    error (E_LIM_PHP, 'fz_php_error_handler');
+    set_error_handler ('fz_php_error_handler');
     set_exception_handler ('fz_exception_handler');
 }
 
+/**
+ * configuring Filez
+ */
 function before () {
     fz_config_load ();
 
@@ -49,13 +52,14 @@ function before () {
     // error handling
     if (fz_config_get('app', 'debug', false)) {
         ini_set ('display_errors', true);
+        option ('debug', true);
+        error_reporting (E_ALL ^ E_NOTICE ^ E_STRICT);
         // check log dir
         if (! is_writable (fz_config_get ('app', 'log_dir')))
-            echo 'Can\' write log in "'.fz_config_get ('app', 'log_dir').'" dir';
+            debug_msg ('WARNING: Can\' write log in "'.fz_config_get ('app', 'log_dir').'" dir');
     } else {
         ini_set ('display_errors', false);
     }
-
 
     // Database configuration
     try {

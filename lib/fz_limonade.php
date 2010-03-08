@@ -22,7 +22,23 @@ function fz_dispatcher ($controller, $action) {
 }
 
 function fz_php_error_handler ($errno, $errstr, $errfile, $errline) {
-    fz_log ("Error ($errno) $errstr in $errfile:$errline", FZ_LOG_ERROR);
+    $errortype = array (
+        E_ERROR              => 'Error',
+        E_WARNING            => 'Warning',
+        E_PARSE              => 'Parsing Error',
+        E_NOTICE             => 'Notice',
+        E_CORE_ERROR         => 'Core Error',
+        E_CORE_WARNING       => 'Core Warning',
+        E_COMPILE_ERROR      => 'Compile Error',
+        E_COMPILE_WARNING    => 'Compile Warning',
+        E_USER_ERROR         => 'User Error',
+        E_USER_WARNING       => 'User Warning',
+        E_USER_NOTICE        => 'User Notice',
+        E_STRICT             => 'Runtime Notice',
+        E_RECOVERABLE_ERROR  => 'Catchable Fatal Error'
+    );
+
+    fz_log ("Error ($errortype[$errno]) $errstr in $errfile:$errline", FZ_LOG_ERROR);
     return error_default_handler ($errno, $errstr, $errfile, $errline);
 }
 
