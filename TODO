@@ -18,5 +18,3 @@ Next minor release
 ==================
 
 * Gérer la création d'invitations
-* Ajouter une configuration par défaut afin d'éviter les erreurs lorsqu'on oublie un paramètre dans filez.ini
-* gérer la protection des fichiers par mot de passe

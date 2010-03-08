@@ -44,5 +44,5 @@ function fz_php_error_handler ($errno, $errstr, $errfile, $errline) {
 
 function fz_exception_handler (Exception $e) {
     fz_log ($e, FZ_LOG_ERROR);
-    return error_handler_dispatcher (SERVER_ERROR, 'Unknown error', $e->getFile(), $e->getLine());
+    return error_handler_dispatcher (SERVER_ERROR, $e->getMessage(), $e->getFile(), $e->getLine());
 }

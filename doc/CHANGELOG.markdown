@@ -7,4 +7,6 @@ Filez-2.0.0-BETA2 (WIP)
 * Upload form :
   * Added email notifications checkbox
   * Added password checkbox and input
+* Added default configuration. User is still able to override it in filez.ini
+  but all parameters are not required now.
 

@@ -4,14 +4,29 @@
  * Load config/filez.ini in "option ('fz_config')".
  * @return array    associative array with sections on config keys
  */
-function fz_config_load ($config_file) {
+function fz_config_load ($config_file, $default_config_file) {
+
     $config = parse_ini_file ($config_file, true);
     if (empty ($config)) {
-        die ('Missing or malformed config file.');
+        trigger_error ('Missing or malformed config file.', E_USER_WARNING);
     }
 
-    option ('fz_config', $config);
+    $default = parse_ini_file ($default_config_file, true);
+    if (empty ($default)) {
+        trigger_error ('Missing file "filez.default.ini".', E_USER_ERROR);
+    }
+
+    option ('fz_config', merge_config ($config, $default));
     return $config;
+}
+
+function merge_config ($user, $default) {
+    $result = array ();
+    foreach ($default as $section => $values) {
+        $result [$section] = (array_key_exists ($section, $user) ?
+            array_merge ($default[$section], $user[$section]) : $default[$section]);
+    }
+    return $result + array_diff_key ($user, $default);
 }
 
 /**
