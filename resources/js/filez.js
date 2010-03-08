@@ -294,6 +294,7 @@ var reloadUploadForm = function () {
     $(settings.progressBox).hide ();
     $(settings.loadingBox).hide ();
     $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
+    $('#input-password').hide();
 };
 
 
