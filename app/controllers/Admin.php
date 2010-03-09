@@ -14,7 +14,8 @@ class App_Controller_Admin extends Fz_Controller {
         Fz_Db::getTable('File')->deleteExpiredFiles ();
 
         // Send mail for files which will be deleted in less than 2 days
-        foreach (Fz_Db::getTable('File')->findFilesToBeDeleted () as $file) {
+        $days = fz_config_get('cron', 'days_before_expiration_mail');
+        foreach (Fz_Db::getTable('File')->findFilesToBeDeleted ($days) as $file) {
             $file->del_notif_sent = true;
             $file->save ();
             $this->notifyDeletionByEmail ($file);

@@ -108,13 +108,19 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      * Delete files whose lifetime expired
      */
     public function deleteExpiredFiles () {
-       $where = ' WHERE available_until<CURRENT_DATE()';
-       foreach ($this->findBySql ('SELECT * FROM fz_file'.$where) as $file) {
-           $file->deleteFromDisk ();
-       }
-
-       $count = option ('db_conn')->exec ('DELETE FROM fz_file'.$where);
-       fz_log ($count.' files deleted');
+        $where = ' WHERE available_until<CURRENT_DATE()';
+        foreach ($this->findBySql ('SELECT * FROM fz_file'.$where) as $file) {
+            $fileInfo = '"'.$file->file_name.'" ('.$file->getOnDiskLocation ().')';
+            try {
+                $file->deleteFromDisk ();
+                fz_log ('Deleted file '.$fileInfo, FZ_LOG_CRON);
+            }
+            catch (Exception $e) {
+                fz_log ('Cron: Failed deleting file from disk '.$fileInfo, FZ_LOG_CRON);
+                fz_log ('Cron: Failed deleting file from disk '.$fileInfo, FZ_LOG_ERROR);
+            }
+        }
+        $count = option ('db_conn')->exec ('DELETE FROM fz_file'.$where);
     }
 
     /**

@@ -13,7 +13,7 @@ class App_Controller_Upload extends Fz_Controller {
      */
     public function startAction () {
         $this->secure ();
-        fz_log ($_SERVER["REMOTE_ADDR"].' uploading');
+        fz_log ('uploading');
         $response = array (); // returned data
 
         // check if request exceed php.ini post_max_size
