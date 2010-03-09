@@ -38,8 +38,11 @@ function configure() {
     // error handling
     set_error_handler     ('fz_php_error_handler', E_ALL ^ E_NOTICE); // Log every error
     set_exception_handler ('fz_exception_handler'); // also handle uncatched excpeptions
-    fz_config_load (option ('root_dir').'/config/filez.ini',
-                    option ('root_dir').'/config/filez.default.ini');
+    if (fz_config_load (option ('root_dir').'/config/filez.ini',
+                        option ('root_dir').'/config/filez.default.ini') === false) {
+
+        option ('installing', true);
+    }
 }
 
 /**
@@ -59,40 +62,43 @@ function before () {
         ini_set ('display_errors', false);
     }
 
-    // check log dir
-    if (! is_writable (fz_config_get ('app', 'log_dir')))
-        trigger_error ('Upload dir is not writeable "'
-                  .fz_config_get ('app', 'log_dir').'"', E_USER_WARNING);
-
-    // check upload dir
-    if (! is_writable (fz_config_get ('app', 'upload_dir')))
-        trigger_error ('Upload dir is not writeable "'
-                  .fz_config_get ('app', 'upload_dir').'"', E_USER_ERROR);
-
-    // Database configuration
-    try {
-        $db = new PDO (fz_config_get ('db', 'dsn'), fz_config_get ('db', 'user'),
-                                              fz_config_get ('db', 'password'));
-        $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $db->exec ('SET NAMES \'utf8\'');
-        option ('db_conn', $db);
-    } catch (Exception $e) {
-        halt (SERVER_ERROR, 'Can\'t connect to the database');
-    }
-
     // I18N
-    Zend_Locale::setDefault (fz_config_get ('app', 'default_locale'));
+    Zend_Locale::setDefault (fz_config_get ('app', 'default_locale', 'fr'));
     $currentLocale = new Zend_Locale ('auto');
     $translate     = new Zend_Translate ('gettext', option ('root_dir').'/i18n', $currentLocale,
         array('scan' => Zend_Translate::LOCALE_DIRECTORY));
     option ('translate', $translate);
     option ('locale'   , $currentLocale);
 
-    // Initialise and save the user factory
-    $factoryClass = fz_config_get ('app', 'user_factory_class');
-    $userFactory = new $factoryClass ();
-    $userFactory->setOptions (fz_config_get ('user_factory_options', null, array ()));
-    option ('userFactory', $userFactory);
+    // check log dir
+    if (! is_writable (fz_config_get ('app', 'log_dir')))
+        trigger_error ('Upload dir is not writeable "'
+                  .fz_config_get ('app', 'log_dir').'"', E_USER_WARNING);
+
+    // Execute DB configuration only if Filez is configured
+    if (! option ('installing')) {
+        // check upload dir
+        if (! is_writable (fz_config_get ('app', 'upload_dir')))
+            trigger_error ('Upload dir is not writeable "'
+                      .fz_config_get ('app', 'upload_dir').'"', E_USER_ERROR);
+
+        // Database configuration
+        try {
+            $db = new PDO (fz_config_get ('db', 'dsn'), fz_config_get ('db', 'user'),
+                                                  fz_config_get ('db', 'password'));
+            $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $db->exec ('SET NAMES \'utf8\'');
+            option ('db_conn', $db);
+        } catch (Exception $e) {
+            halt (SERVER_ERROR, 'Can\'t connect to the database');
+        }
+
+        // Initialise and save the user factory
+        $factoryClass = fz_config_get ('app', 'user_factory_class');
+        $userFactory = new $factoryClass ();
+        $userFactory->setOptions (fz_config_get ('user_factory_options', null, array ()));
+        option ('userFactory', $userFactory);
+    }
 }
 
 
@@ -102,10 +108,18 @@ function before () {
 require_once 'lib/limonade.php';
 require_once 'lib/fz_limonade.php';
 
+// Check config presence
+if (option ('installing')) {
+    fz_dispatch_get  ('/', 'Install', 'index');
+    fz_dispatch_post ('/', 'Install', 'index');
+    run ();
+    exit;
+}
+
 //                                              //             // 
 // Url Schema                                   // Controller  // Action
 //                                              //             // 
-// ---------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Main controller
 fz_dispatch ('/'                                ,'Main'        ,'index');
 
@@ -116,9 +130,6 @@ fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 // Backend controller
 //fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
 fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
-
-// Install controller
-//fz_dispatch_get  ('/install'                    ,'Install'     ,'index'); // TODO
 
 // Authentication controller
 fz_dispatch_get  ('/login'                      ,'Auth'        ,'loginForm');

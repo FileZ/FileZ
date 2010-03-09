@@ -1,5 +1,5 @@
 
-CREATE TABLE  `filez`.`fz_user` (
+CREATE TABLE  `fz_user` (
 `id` SERIAL NOT NULL ,
 `username` VARCHAR( 30 ) NOT NULL ,
 `password` VARCHAR( 40 ) NOT NULL ,

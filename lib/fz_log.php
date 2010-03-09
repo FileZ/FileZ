@@ -8,7 +8,6 @@ define ('FZ_LOG_CRON_ERROR', 'cron-error');
 function fz_log ($message, $type = null, $vars = null) {
     if ($type !== null)
         $type = '-'.$type;
-    $log_file = fz_config_get ('app', 'log_dir').'/filez'.$type.'.log';
 
     $message = trim ($message);
     if ($vars !== null)
@@ -20,8 +19,11 @@ function fz_log ($message, $type = null, $vars = null) {
             .$_SERVER["REMOTE_ADDR"].'] '
             .$message."\n";
 
-    if (file_put_contents ($log_file, $message, FILE_APPEND) === false) {
-        trigger_error('Can\'t open log file ('.$log_file.')', E_USER_WARNING);
+    if (fz_config_get ('app', 'log_dir') !== null) {
+        $log_file = fz_config_get ('app', 'log_dir').'/filez'.$type.'.log';
+        if (file_put_contents ($log_file, $message, FILE_APPEND) === false) {
+            trigger_error('Can\'t open log file ('.$log_file.')', E_USER_WARNING);
+        }
     }
 
     if (option ('debug'))
@@ -29,6 +31,10 @@ function fz_log ($message, $type = null, $vars = null) {
 }
 
 function debug_msg ($message) {
+    /*/ FIXME
+    if (fz_config_get('app', 'debug'))
+        return;
+    /**/
     $messages = option ('debug_msg');
     if (! is_array ($messages))
         $messages = array ();

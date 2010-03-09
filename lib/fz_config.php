@@ -2,12 +2,14 @@
 
 /**
  * Load config/filez.ini in "option ('fz_config')".
- * @return array    associative array with sections on config keys
+ * @return boolean  Whether if filez.ini was found or not
  */
 function fz_config_load ($config_file, $default_config_file) {
+    $result = true;
 
     $config = parse_ini_file ($config_file, true);
     if (empty ($config)) {
+        $result = false;
         trigger_error ('Missing or malformed config file.', E_USER_WARNING);
     }
 
@@ -17,9 +19,18 @@ function fz_config_load ($config_file, $default_config_file) {
     }
 
     option ('fz_config', merge_config ($config, $default));
-    return $config;
+    
+    return $result;
 }
 
+/**
+ * Merge 2 configuration array. $user configuration will overide $default
+ * configuration.
+ *
+ * @param array $user
+ * @param array $default
+ * @return array
+ */
 function merge_config ($user, $default) {
     $result = array ();
     foreach ($default as $section => $values) {
@@ -32,16 +43,22 @@ function merge_config ($user, $default) {
 /**
  * Return a config var
  */
-function fz_config_get ($section, $var = null, $default = null) {
+function fz_config_get ($section = null, $var = null, $default = null) {
     $conf = option ('fz_config');
+    if (! is_array ($conf))
+        return $default;
+
+    if ($section === null) {
+        return $conf;
+    }
     if (array_key_exists ($section, $conf)) {
+        if ($var === null)
+            return $conf [$section];
         if (array_key_exists ($var, $conf[$section]))
             return $conf [$section][$var];
-        else if ($var === null)
-            return $conf [$section];
     }
 
-    return null;
+    return $default;
 }
 
 /**
