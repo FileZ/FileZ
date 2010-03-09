@@ -467,24 +467,28 @@ form#login-form label {
   text-shadow: 1px 1px 3px #222;
 }
 form#login-form input {
-  width: 217px;
+  width: 202px;
   padding: 5px;
+  font-size: 1.2em;
 }
 form#login-form p#submit-login {
     padding: 10px 0 5px 0;
     text-align: center;
+  font-size: 0.8em;
 }
+input.password ,
 input.username ,
-input.password {
-		background-repeat: no-repeat;
-		background-position: 3px center;
-		padding-left: 21px;
+form#login-form input.username ,
+form#login-form input.password {
+    padding-left: 21px;
+    background-repeat: no-repeat;
+    background-position: 3px center;
 }
 input.password {
-		background-image: url(../images/icons/keys.png);
+    background-image: url(../images/icons/keys.png);
 }
 input.username {
-		background-image: url(../images/icons/user.png);
+    background-image: url(../images/icons/user.png);
 }
 
 
