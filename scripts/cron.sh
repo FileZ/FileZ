@@ -10,7 +10,7 @@ FILE=filez-cron-`date +"%Y%m%d"`.log
 LOGFILE=wget.log
 
 # Url of the CRON task
-URL=http://filez.univ-avignon.fr/admin/checkFiles
+URL=http://localhost/fz/admin/checkFiles
 
 cd $DIR
 wget $URL -O $FILE -o $LOGFILE

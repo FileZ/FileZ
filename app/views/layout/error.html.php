@@ -19,7 +19,7 @@
   </head>
   <body>
 
-    <?php echo partial ('layout/_header.php', $vars); ?>
+    <?php echo partial ('layout/_header.php', (isset ($user) ? array('user' => $user) : array())); ?>
 
     <article>
       <div class="notif error">
@@ -27,7 +27,7 @@
       </div>
     </article>
 
-    <?php echo partial ('layout/_footer.php', $vars); ?>
+    <?php echo partial ('layout/_footer.php', (isset ($user) ? array('user' => $user) : array())); ?>
 
   </body>
 </html>

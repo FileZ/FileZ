@@ -1,8 +1,9 @@
 <?php
 
-define ('FZ_LOG_DEBUG', 'debug');
-define ('FZ_LOG_ERROR', 'error');
-define ('FZ_LOG_ERROR', 'cron');
+define ('FZ_LOG_DEBUG',      'debug');
+define ('FZ_LOG_ERROR',      'error');
+define ('FZ_LOG_CRON',       'cron');
+define ('FZ_LOG_CRON_ERROR', 'cron-error');
 
 function fz_log ($message, $type = null, $vars = null) {
     if ($type !== null)

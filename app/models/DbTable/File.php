@@ -58,7 +58,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     }
 
     /**
-     * Return a free slot in the fz_file table
+     * Return a free slot id in the fz_file table
      * 
      * @return integer
      */
@@ -89,7 +89,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      * @return App_Model_File
      */
     public function findByFzOneHash ($hash) {
-        $sql = "SELECT * FROM ".$this->getTableName ().' WHERE adresse = ?';
+        $sql = 'SELECT * FROM '.$this->getTableName ().' WHERE adresse = ?';
         return $this->findOneBySQL ($sql, array ($hash));
     }
 
@@ -100,7 +100,8 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      * @return array of App_Model_File
      */
     public function findByOwnerOrderByUploadDateDesc ($uid) {
-        $sql = 'SELECT * FROM fz_file WHERE uploader_uid=:uid ORDER BY created_at DESC';
+        $sql = 'SELECT * FROM '.$this->getTableName ()
+              .' WHERE uploader_uid=:uid ORDER BY created_at DESC';
         return $this->findBySql ($sql, array (':uid' => $uid));
     }
 
@@ -108,31 +109,32 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      * Delete files whose lifetime expired
      */
     public function deleteExpiredFiles () {
-        $where = ' WHERE available_until<CURRENT_DATE()';
-        foreach ($this->findBySql ('SELECT * FROM fz_file'.$where) as $file) {
-            $fileInfo = '"'.$file->file_name.'" ('.$file->getOnDiskLocation ().')';
-            try {
-                $file->deleteFromDisk ();
-                fz_log ('Deleted file '.$fileInfo, FZ_LOG_CRON);
-            }
-            catch (Exception $e) {
-                fz_log ('Cron: Failed deleting file from disk '.$fileInfo, FZ_LOG_CRON);
-                fz_log ('Cron: Failed deleting file from disk '.$fileInfo, FZ_LOG_ERROR);
+        $select = 'SELECT * FROM '.$this->getTableName ();
+        $where  = ' WHERE available_until<CURRENT_DATE()';
+        foreach ($this->findBySql ($select.$where) as $file) {
+            if ($file->deleteFromDisk () === true) {
+                fz_log ('Deleted file "'.$file->getOnDiskLocation ().'"',
+                        FZ_LOG_CRON);
+            } else {
+                fz_log ('Failed deleting file "'.$file->getOnDiskLocation ().'"',
+                        FZ_LOG_CRON_ERROR);
             }
         }
-        $count = option ('db_conn')->exec ('DELETE FROM fz_file'.$where);
+        option ('db_conn')->exec ('DELETE FROM '.$this->getTableName ().$where);
     }
 
     /**
-     * Return files which will be deleted within X days
+     * Return files which will be deleted within X days and where uploader wants
+     * to be notified but hasn't been yet
      * 
      * @param integer   $days   Number of days before being deleted
      * @return App_Model_File
      */
     public function findFilesToBeDeleted ($days = 2) {
-        $sql = 'SELECT * FROM fz_file WHERE available_until BETWEEN '
-              .'CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), INTERVAL '.$days.' DAY) '
-              .'AND del_notif_sent=0';
+        $sql = 'SELECT * FROM '.$this->getTableName ()
+              .' WHERE available_until BETWEEN CURRENT_DATE() '
+              .'AND DATE_ADD(CURRENT_DATE(), INTERVAL '.$days.' DAY) '
+              .'AND del_notif_sent=0 AND notify_uploader=1';
 
         return $this->findBySql ($sql);
     }

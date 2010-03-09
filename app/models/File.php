@@ -220,8 +220,9 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
                                    $this->getOnDiskLocation ())) {
             return true;
         } else {
-            fz_log('Can\'t move the uploaded file '.$this->file_name.' to its final destination "'
-                    .$this->getOnDiskLocation (), FZ_LOG_ERROR);
+            fz_log('Can\'t move the uploaded file '.$uploadedFile ['tmp_name']
+                    .' to its final destination "'.$this->getOnDiskLocation (),
+                    FZ_LOG_ERROR);
             return false;
         }
 

@@ -25,13 +25,13 @@
   </head>
   <body>
 
-    <?php echo partial ('layout/_header.php', $vars); ?>
+    <?php echo partial ('layout/_header.php', (isset ($user) ? array('user' => $user) : array())); ?>
 
     <article>
       <?php echo $content ?>
     </article>
 
-    <?php echo partial ('layout/_footer.php', $vars); ?>
+    <?php echo partial ('layout/_footer.php', (isset ($user) ? array('user' => $user) : array())); ?>
 
     <div id="modal-background"></div>
   </body>
