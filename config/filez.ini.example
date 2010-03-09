@@ -36,9 +36,9 @@ default_locale = fr
 ;                                     'login' method in the user factory.
 auth_handler_class = Fz_Controller_Security_Internal
 
-; Name of the class used to identify the user. Built-in factory are :
+; Name of the class used to identify the user. Built-in factories are :
 ;  * Fz_User_Factory_Ldap
-;  * Fz_User_Factory_Db
+;  * Fz_User_Factory_Database
 user_factory_class = Fz_User_Factory_Ldap
 
 ; Max disk spaced per user. Support shorthand format : M (Mega), G (Giga)

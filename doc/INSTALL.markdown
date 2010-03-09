@@ -170,6 +170,7 @@ connection and describe the table containing your users.
 Edit config/filez.ini with the following line in the '[app]' section :
 
     auth_handler_class = Fz_Controller_Security_Internal
+    user_factory_class = Fz_User_Factory_Database
 
 If your user table is located on the same database as the filez table, use the
 following setting :
