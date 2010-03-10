@@ -1,24 +1,26 @@
 
+
+
 <?php
 
 function config_form_row ($section, $var, $label, $type, $default_values, $choices = null) {?>
   <p>
     <?php if ($type != 'checkbox'): ?>
-      <label for="field-<?php echo $section.'_'.$var ?>"><?php echo $label ?></label>
+      <label for="field-<?php echo $section.'-'.$var ?>"><?php echo $label ?></label>
     <?php endif ?>
     <?php if ($type == 'text'): ?>
-      <input type="text" id="field-<?php echo $section.'_'.$var ?>" name="<?php echo "config[$section][$var]" ?>" value="<?php echo $default_values[$section][$var] ?>"/>
+      <input type="text" id="field-<?php echo $section.'-'.$var ?>" name="<?php echo "config[$section][$var]" ?>" value="<?php echo $default_values[$section][$var] ?>"/>
     <?php elseif ($type == 'select'): ?>
-      <select id="field-<?php echo $section.'_'.$var ?>" name="<?php echo "config[$section][$var]" ?>">
+      <select id="field-<?php echo $section.'-'.$var ?>" name="<?php echo "config[$section][$var]" ?>">
         <?php foreach ((array) $choices as $value => $text): ?>
           <option value="<?php echo $value ?>" <?php echo ($value == $default_values[$section][$var] ? 'selected="selected"' : '') ?>" ><?php echo $text ?></option>
         <?php endforeach ?>
       </select>
     <?php elseif ($type == 'checkbox'): ?>
-      <input type="checkbox" id="field-<?php echo $section.'_'.$var ?>"
+      <input type="checkbox" id="field-<?php echo $section.'-'.$var ?>"
              name="<?php echo "config[$section][$var]" ?>"
              <?php echo ($default_values[$section][$var] ? 'checked="checked"' : '') ?> />
-      <label for="field-<?php echo $section.'_'.$var ?>" style="display: inline;"><?php echo $label ?></label>
+      <label for="field-<?php echo $section.'-'.$var ?>" style="display: inline;"><?php echo $label ?></label>
     <?php endif ?>
   </p>
 <?}
@@ -29,8 +31,9 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
 
   <div class="help">
     <p>This form will help you to configure filez by generating the file "<i>config/filez.ini</i>".</p>
-
+    <!--[if lte IE 8]>
     <p>This form has not been tested in a potential phase of the moon bug trigger browser (IE for example). <b>PLEASE USE A DECENT BROWSER TO AVOID BUGs</b>.</p>
+    <![endif]-->
   </div>
 
   <fieldset>
@@ -42,18 +45,47 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
 
   <fieldset>
     <legend>Uploaded files properties</legend>
-    <?php echo config_form_row ('app', 'max_file_lifetime'      , 'Max lifetime'  , 'text', $config) ?>
-    <?php echo config_form_row ('app', 'default_file_lifetime'  , 'Default lifetime', 'text', $config) ?>
-    <?php echo config_form_row ('app', 'max_extend_count'       , 'Number of times a user can extends its file lifetime', 'text', $config) ?>
-    <?php echo config_form_row ('app', 'min_hash_size'          , 'Minimum size of the file download code', 'text', $config) ?>
-    <?php echo config_form_row ('app', 'max_hash_size'          , 'maximum size of the file download code', 'text', $config) ?>
+    <table>
+      <tr>
+        <td><?php echo config_form_row ('app', 'default_file_lifetime'  , 'Default lifetime (days)', 'text', $config) ?></td>
+        <td><?php echo config_form_row ('app', 'max_file_lifetime'      , 'Max lifetime (days)'  , 'text', $config) ?></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><?php echo config_form_row ('app', 'max_extend_count'       , 'Number of times a user can extends its file lifetime', 'text', $config) ?></td>
+        <td width="50%"></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><?php echo config_form_row ('app', 'min_hash_size'          , 'Minimum size of the file download code', 'text', $config) ?></td>
+        <td><?php echo config_form_row ('app', 'max_hash_size'          , 'maximum size of the file download code', 'text', $config) ?></td>
+      </tr>
+    </table>
   </fieldset>
     
   <fieldset>
     <legend>Filez Database</legend>
-    <?php echo config_form_row ('app', 'dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php">DSN</a> to connect to your database' , 'text', $config) ?>
-    <?php echo config_form_row ('app', 'user', 'Database username' , 'text', $config) ?>
-    <?php echo config_form_row ('app', 'password', 'Database password' , 'text', $config) ?>
+    <?php echo config_form_row ('db', 'dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php">DSN</a> to connect to your database' , 'text', $config) ?>
+    <table>
+      <tr>
+        <td><?php echo config_form_row ('db', 'user', 'Database username' , 'text', $config) ?></td>
+        <td><?php echo config_form_row ('db', 'password', 'Database password' , 'text', $config) ?></td>
+      </tr>
+    </table>
+    <p class="help">
+      You can find DSN syntax help here :
+      <a href="http://www.php.net/manual/en/ref.pdo-mysql.connection.php">MySQL 3.x/4.x/5.x</a>,
+      <a href="http://www.php.net/manual/en/ref.pdo-pgsql.connection.php">PostgreSQL</a>,
+      <a href="http://www.php.net/manual/en/ref.pdo-sqlite.connection.php">SQLite 3 and SQLite 2</a>,
+      <a href="http://www.php.net/manual/en/ref.pdo-oci.connection.php">Oracle</a>,
+      <a href="http://www.php.net/manual/en/ref.pdo-odbc.connection.php">ODBC v3 (IBM DB2, unixODBC and win32 ODBC)</a>,
+      <a href="http://www.php.net/manual/en/ref.pdo-informix.connection.php">IBM Informix Dynamic Server</a>,
+      <a href="http://www.php.net/manual/en/ref.pdo-ibm.connection.php">IBM DB2</a>,
+      <a href="http://www.php.net/manual/en/ref.pdo-firebird.connection.php">Firebird/Interbase 6</a>,
+      <a href="http://www.php.net/manual/en/ref.pdo-4d.connection.php">4D</a>.
+    </p>
   </fieldset>
 
   <fieldset>
@@ -64,6 +96,8 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     )) ?>
     <div class="options" id="Fz_Controller_Security_Cas">
       <?php echo config_form_row ('auth_options', 'cas_server_host', 'CAS Server host' , 'text', $config) ?>
+      <?php echo config_form_row ('auth_options', 'cas_server_path', 'Path where your CAS server will respond' , 'text', $config) ?>
+      <?php echo config_form_row ('auth_options', 'cas_server_port', 'CAS Server port number' , 'text', $config) ?>
     </div>
   </fieldset>
 
@@ -79,19 +113,21 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
       <?php echo config_form_row ('user_factory_options', 'host',   'LDAP Server host' , 'text', $config) ?>
       <?php echo config_form_row ('user_factory_options', 'useSsl', 'Use ssl to bind to the Ldap host' , 'checkbox', $config) ?>
       <?php echo config_form_row ('user_factory_options', 'bindRequiresDn', 'Bind requires DN' , 'checkbox', $config) ?>
-      <p class="help">
-        For other parameters, you will have to add them manually to filez.ini once you have validated this form.
-        Please refer to <a href="http://framework.zend.com/manual/en/zend.ldap.api.html" target="_blank">the Zend Framework documentation</a> for a list of possible options
-      </p>
+      <div class="help">
+        <p>For other parameters, you will have to add them manually to filez.ini in the "[user_factory_options]" section once you have validated this form.</p>
+        <p>Please refer to <a href="http://framework.zend.com/manual/en/zend.ldap.api.html" target="_blank">the Zend Framework documentation</a> for a list of possible options</p>
+      </div>
     </div>
     <div class="options" id="Fz_User_Factory_Database">
       <h2>Database options :</h2>
+      <h3>Database connection :</h3>
       <?php echo config_form_row ('user_factory_options', 'db_use_global_conf', 'Use the same configuration as Filez' , 'checkbox', $config) ?>
       <div class="options" id="db_use_global_conf_checked">
         <?php echo config_form_row ('user_factory_options', 'db_server_dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php">DSN</a> to connect to your database' , 'text', $config) ?>
         <?php echo config_form_row ('user_factory_options', 'db_server_user', 'Database username' , 'text', $config) ?>
         <?php echo config_form_row ('user_factory_options', 'db_server_password', 'Database password' , 'text', $config) ?>
       </div>
+      <h3>Database Schema :</h3>
       <?php echo config_form_row ('user_factory_options', 'db_table', 'Table where username are stored', 'text', $config) ?>
       <?php echo config_form_row ('user_factory_options', 'db_username_field', 'Database column name containing the username', 'text', $config) ?>
       <?php echo config_form_row ('user_factory_options', 'db_password_field', 'Database column name containing the user password', 'text', $config) ?>
@@ -108,32 +144,55 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
         </ul>
       </div>
     </div>
-    <h2>User attributes :</h2>
+    <h2>User attributes mapping :</h2>
     <p class="help">
-      In order to make the application schema agnostic with differents user storage
-      facilities, each user attributes is translated from its original name to the
+      In order to make the application schema independant with differents user storage
+      facilities, each user attributes is mapped from its original name to the
       application name.
     </p>
-    <?php echo config_form_row ('user_attributes_translation', 'firstname', 'firstname' , 'text', $config) ?>
-    <?php echo config_form_row ('user_attributes_translation', 'lastname',  'lastname' , 'text', $config) ?>
-    <?php echo config_form_row ('user_attributes_translation', 'email',     'email' , 'text', $config) ?>
-    <?php echo config_form_row ('user_attributes_translation', 'id',        'id' , 'text', $config) ?>
+    <?php echo config_form_row ('user_attributes_translation', 'firstname', 'Firstname field name' , 'text', $config) ?>
+    <?php echo config_form_row ('user_attributes_translation', 'lastname',  'Lastname field name' , 'text', $config) ?>
+    <?php echo config_form_row ('user_attributes_translation', 'email',     'Email field name' , 'text', $config) ?>
+    <?php echo config_form_row ('user_attributes_translation', 'id',        'ID field name' , 'text', $config) ?>
   </fieldset>
 
   <fieldset>
     <legend>Email (SMTP)</legend>
-    <?php echo config_form_row ('email', 'host', 'SMTP Host' , 'text', $config) ?>
-    <?php echo config_form_row ('email', 'from_email', 'Sender email' , 'text', $config) ?>
-    <?php echo config_form_row ('email', 'from_name',  'Sender name'  , 'text', $config) ?>
-    <?php echo config_form_row ('email', 'port',       'Port (optional)', 'text', $config) ?>
-    <?php echo config_form_row ('email', 'auth',       'Authentication method (optional)', 'select', $config, array(
+    <table>
+      <tr>
+        <td><?php echo config_form_row ('email', 'host', 'SMTP Host' , 'text', $config) ?></td>
+        <td width="20%"><?php echo config_form_row ('email', 'port', 'Port (optional)', 'text', $config) ?></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><?php echo config_form_row ('email', 'from_email', 'Sender email' , 'text', $config) ?></td>
+        <td><?php echo config_form_row ('email', 'from_name',  'Sender name'  , 'text', $config) ?></td>
+      </tr>
+    </table>
+    <?php echo config_form_row ('email', 'auth', 'Authentication method (optional)', 'select', $config, array(
         '' => 'Anonymous',
         'login' => 'Login',
         'plain' => 'Plain',
         'crammd5' => 'CRAM-MD5',
     )) ?>
-    <?php echo config_form_row ('email', 'username', 'Username (if authentication)', 'text', $config) ?>
-    <?php echo config_form_row ('email', 'password', 'Port (if authentication)', 'text', $config) ?>
+    <script type="text/javascript">
+      $(document).ready (function () {
+        $('#field-email-auth').change (function () {
+          if ($(this).val () == '')
+            $('#smtp-auth-options').hide();
+          else
+            $('#smtp-auth-options').show();
+        }).trigger ('change');
+      })
+    </script>
+
+    <table id="smtp-auth-options">
+      <tr>
+        <td><?php echo config_form_row ('email', 'username', 'Username (if authentication)', 'text', $config) ?></td>
+        <td><?php echo config_form_row ('email', 'password', 'Password (if authentication)', 'text', $config) ?></td>
+      </tr>
+    </table>
   </fieldset>
 
   <fieldset>
@@ -148,6 +207,9 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
 
 </form>
 
+<script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.validate/js/jquery.validate.pack.js') ?>"></script>
+<script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.validate/js/additional-methods.js') ?>"></script>
+<script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.validate/js/localisation/messages_'.option ('locale')->getLanguage ().'.js') ?>"></script>
 <script type="text/javascript">
 
   $.fn.autoShowOptions = function () {
@@ -157,16 +219,146 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
 
       // Show conditional options for the selected item
       if (this.nodeName == 'SELECT')
-        $('.options#'+$(this).val()).show ();
+        $('.options[id=\''+$(this).val()+'\']').show ();
       else if (this.nodeName == 'INPUT' && $(this).attr('checked')) // checkbox
         $('.options[id=\''+$(this).attr('name')+'_checked\']').show (); // FIXME TODO
     });
   };
 
-  $('select, checkbox').autoShowOptions ();
-
   $(document).ready (function () {
-    $('select, checkbox').change (function () { $(this).autoShowOptions (); })
+    $('select, checkbox').change (function () { $(this).autoShowOptions (); }).trigger ('change');
+
+    jQuery.validator.addMethod("memsize", function(value, element) {
+      return this.optional(element) || /^\d+[KMG]?$/.test(value);
+    }, "A positive number followed by 'K', 'M', or 'G' please ");
+
+    var rules = {
+        //'config[app][use_url_rewriting]': {},
+        'config[app][upload_dir]': {
+            nowhitespace: true,
+            required: true
+        },
+        'config[app][log_dir]': {
+            nowhitespace: true,
+            required: true
+        },
+        'config[app][filez1_compat]': {},
+        'config[app][max_file_lifetime]': {
+            number: true,
+            min: 1
+        },
+        'config[app][default_file_lifetime]': {
+            number: true,
+            min: 1
+        },
+        'config[app][max_extend_count]': {
+            number: true,
+            min: 0
+        },
+        'config[app][min_hash_size]': {
+            number: true,
+            min: 0
+        },
+        'config[app][max_hash_size]': {
+            number: true,
+            min: 0
+        },
+        'config[app][default_locale]': 'nowhitespace',
+        'config[app][auth_handler_class]': 'nowhitespace',
+        'config[app][user_factory_class]': 'nowhitespace',
+        'config[app][user_quota]': {
+            required: true,
+            memsize: true
+        },
+        'config[looknfeel][your_logo]': 'nowhitespace',
+        'config[looknfeel][custom_css]': 'nowhitespace',
+
+        'config[db][dsn]': {
+            required: true,
+            nowhitespace: true
+        },
+        'config[db][user]': 'required',
+        'config[db][password]': 'required',
+
+        'config[email][from_email]': {
+            required: true,
+            email: true
+        },
+        'config[email][from_name]': 'required',
+        'config[email][host]': {
+            required: true,
+            nowhitespace: true
+        },
+        'config[email][port]': 'number',
+        'config[email][username]': {},
+        'config[email][password]': {},
+
+        'config[auth_options][cas_server_host]': {
+            required: 'option[value=\'Fz_Controller_Security_Cas\']:selected',
+            nowhitespace: true
+        },
+        'config[auth_options][cas_server_port]': 'number',
+        'config[auth_options][cas_server_path]': 'nowhitespace',
+
+        'config[user_factory_options][host]': {
+            required: 'option[value=\'Fz_User_Factory_Ldap\']:selected',
+            nowhitespace: true
+        },
+        //'config[user_factory_options][useSsl]': {},
+        'config[user_factory_options][baseDn]': {
+            nowhitespace: true
+        },
+        //'config[user_factory_options][bindRequiresDn]': {},
+
+        'config[user_factory_options][db_use_global_conf]': {},
+        'config[user_factory_options][db_server_dsn]': {
+            nowhitespace: true
+        },
+        'config[user_factory_options][db_server_user]': {
+            required: '#field-user_factory_options-db_use_global_conf:checked',
+            nowhitespace: true
+        },
+        'config[user_factory_options][db_server_password]': {
+            required: '#field-user_factory_options-db_use_global_conf:checked',
+            nowhitespace: true
+        },
+        'config[user_factory_options][db_table]': {
+            required: 'option[value=\'Fz_User_Factory_Database\']:selected',
+            nowhitespace: true
+        },
+        'config[user_factory_options][db_password_field]': {
+            required: 'option[value=\'Fz_User_Factory_Database\']:selected',
+            nowhitespace: true
+        },
+        'config[user_factory_options][db_username_field]': {
+            required: 'option[value=\'Fz_User_Factory_Database\']:selected',
+            nowhitespace: true
+        },
+
+        'config[user_attributes_translation][firstname]': {
+            required: true,
+            nowhitespace: true
+        },
+        'config[user_attributes_translation][lastname]': {
+            required: true,
+            nowhitespace: true
+        },
+        'config[user_attributes_translation][email]': {
+            required: true,
+            nowhitespace: true
+        },
+        'config[user_attributes_translation][id]': {
+            required: true,
+            nowhitespace: true
+        }
+    };
+    $.each (rules, function (key, value) {
+        console.log ($('[name=\''+key+'\']').attr('id'));
+        console.log ($('label[for=\''+$('[name=\''+key+'\']').attr('id')+'\']'));
+      if (value == 'required' || value.required)
+        $('label[for=\''+$('[name=\''+key+'\']').attr('id')+'\']').append (' <span class="required">(required)</span>');
+    });
+    $('form.install').validate ({'rules': rules});
 
     // TODO on submit delete hidden box to remove non required fields from the form data
   });

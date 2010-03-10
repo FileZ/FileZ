@@ -627,14 +627,22 @@ form.install fieldset {
     border: 1px solid rgba(0,0,0,0.15);
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    -moz-box-shadow:    0 3px 5px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 3px 5px rgba(0,0,0,0.1);
 }
 form.install fieldset legend {
     padding: 0 0.3em;
+    font-weight: bold;
 }
-form.install input,
-form.install label {
+form.install label ,
+form.install input {
     display: block;
-    width: 60%;
+    width: 80%;
+}
+form.install label ,
+form.install fieldset table {
+    width: 100%;
+    box-sizing: border-box;
 }
 form.install input[type='checkbox'] {
     display: inline;
@@ -642,6 +650,10 @@ form.install input[type='checkbox'] {
 }
 form.install label {
     margin-top: 1em;
+}
+form.install label.error {
+    color: red;
+    margin-top: 0;
 }
 form.install p.submit {
     text-align: center;
@@ -658,6 +670,8 @@ form.install .help {
     border: 1px solid rgba(0,0,0,0.1);
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    -moz-box-shadow:    0 1px 3px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 form.install .help ,
 form.install .help li ,
@@ -670,4 +684,18 @@ form.install div.help ul {
 form.install h2 {
     padding-top: 1em;
     font-size: 95%;
+    font-weight: bold;
+}
+form.install h3 {
+    padding-top: 1em;
+    font-size: 70%;
+    opacity: 0.8;
+    font-weight: bold;
+}
+
+form.install label .required {
+    color: red;
+    font-size: 80%;
+    opacity: 0.7;
+    padding-left: 1em;
 }

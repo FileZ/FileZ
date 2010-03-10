@@ -8,7 +8,7 @@ function fz_config_load ($config_dir) {
     $result = true;
 
     $config = parse_ini_file ($config_dir.'filez.ini', true);
-    if ($config === false) {
+    if (empty ($config)) {
         $config = array();
         $result = false;
         trigger_error ('Missing or malformed config file.', E_USER_WARNING);
@@ -66,7 +66,7 @@ function fz_config_get ($section = null, $var = null, $default = null) {
  * Write config to the config/filez.ini file.
  * (Used in installer).
  */
-function fz_config_write () {
+function fz_config_write ($config) {
     // TODO
 }
 
