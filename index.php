@@ -38,11 +38,6 @@ function configure() {
     // error handling
     set_error_handler     ('fz_php_error_handler', E_ALL ^ E_NOTICE); // Log every error
     set_exception_handler ('fz_exception_handler'); // also handle uncatched excpeptions
-    if (fz_config_load (option ('root_dir').'/config/filez.ini',
-                        option ('root_dir').'/config/filez.default.ini') === false) {
-
-        option ('installing', true);
-    }
 }
 
 /**
@@ -107,6 +102,11 @@ function before () {
  */
 require_once 'lib/limonade.php';
 require_once 'lib/fz_limonade.php';
+require_once 'lib/fz_config.php';
+
+if (fz_config_load (dirname(__FILE__).'/config/') === false) {
+    option ('installing', true);
+}
 
 // Check config presence
 if (option ('installing')) {

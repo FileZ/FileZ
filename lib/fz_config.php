@@ -4,16 +4,17 @@
  * Load config/filez.ini in "option ('fz_config')".
  * @return boolean  Whether if filez.ini was found or not
  */
-function fz_config_load ($config_file, $default_config_file) {
+function fz_config_load ($config_dir) {
     $result = true;
 
-    $config = parse_ini_file ($config_file, true);
-    if (empty ($config)) {
+    $config = parse_ini_file ($config_dir.'filez.ini', true);
+    if ($config === false) {
+        $config = array();
         $result = false;
         trigger_error ('Missing or malformed config file.', E_USER_WARNING);
     }
 
-    $default = parse_ini_file ($default_config_file, true);
+    $default = parse_ini_file ($config_dir.'filez.default.ini', true);
     if (empty ($default)) {
         trigger_error ('Missing file "filez.default.ini".', E_USER_ERROR);
     }
