@@ -25,10 +25,10 @@ Installation
 * Create a new database or reuse a previous one :
 
   * if you want de migrate the database from a previous installation of filez-1.x :
-        mysql -h sql_host -u filez_user -p filez_db_name < config/db.migration-01.sql
+        mysql -h sql_host -u filez_user -p filez_db_name < config/db/migration-filez-1.x.sql
 
   * otherwise create a new one :
-        mysql -h sql_host -u filez_user -p filez_db_name < config/db.schema.sql
+        mysql -h sql_host -u filez_user -p filez_db_name < config/db/schema.sql
 
 * Edit Filez config (See next parapgraph)
 

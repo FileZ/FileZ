@@ -26,7 +26,7 @@ function fz_log ($message, $type = null, $vars = null) {
         }
     }
 
-    if (option ('debug'))
+    if (option ('debug') === true)
         debug_msg ($message);
 }
 

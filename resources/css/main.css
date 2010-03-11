@@ -647,6 +647,7 @@ div.lim-debug hr {display: none;}
 #install input[type='checkbox'] {
     display: inline;
     width: 1em;
+    height: 2em;
 }
 #install label {
     margin-top: 1em;
@@ -699,16 +700,39 @@ div.lim-debug hr {display: none;}
     opacity: 0.7;
     padding-left: 1em;
 }
+#install-notifs ,
 #install-errors {
     -moz-border-radius:    10px;
     -webkit-border-radius: 10px;
+    background: #D2E0CC;
+    border: 1px solid #BDCAB8;
+    padding: 0.5em 1em;
+    margin: 1em 0;
+}
+#install-errors {
     background: #f2e1dc;
     border: 1px solid #f3c5c1;
-    list-style: none;
 }
-#install-errors li {
-    padding: 0.5em;
+#install-notifs p ,
+#install-notifs ul ,
+#install-errors p ,
+#install-errors ul {
+    padding: 0.6em 0;
 }
-#install-errors li + li {
-    border-top: 1px solid #f3c5c1;
+#install-notifs ul ,
+#install-errors ul {
+    padding-left: 2em;
+}
+#install-errors input {
+    background: none;
+    border: none;
+    display: inline;
+    padding:0;margin:0;
+    width: auto;
+    color: red;
+    text-shadow: none;
+}
+#install-notifs ul li ,
+#install-errors ul li {
+    padding: 0.4em 0;
 }

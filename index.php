@@ -55,6 +55,7 @@ function before () {
         option ('env', ENV_DEVELOPMENT);
     } else {
         ini_set ('display_errors', false);
+        option ('debug', false);
     }
 
     // I18N

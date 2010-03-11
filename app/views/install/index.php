@@ -1,4 +1,5 @@
 
+<pre><?php print_r($_POST) ?></pre>
 <div id="install">
 
 <div class="help">
@@ -26,27 +27,44 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <?php elseif ($type == 'checkbox'): ?>
       <input type="checkbox" id="field-<?php echo $section.'-'.$var ?>"
              name="<?php echo "config[$section][$var]" ?>"
+             value="true"
              <?php echo ($default_values[$section][$var] ? 'checked="checked"' : '') ?> />
       <label for="field-<?php echo $section.'-'.$var ?>" style="display: inline;"><?php echo $label ?></label>
     <?php endif ?>
   </p>
 <?}?>
 
-<?php if (isset ($errors)): ?>
-
-  <p>We found several errors while checking your configuration :</p>
-
-  <ul id="install-errors">
-  <?php foreach ($errors as $e): ?>
-      <li><b><?php echo $e['title'] ?></b><?php echo (array_key_exists ('msg', $e) ? ' : '.$e['msg'] : '') ?></li>
-  <?php endforeach ?>
-  </ul>
-  
-  <p class="help">You can override these errors and save the file anyway. To correct them afterward, just edit the file 'config/filez.ini'.</p>
-
-<?php endif ?>
 
 <form action="" method="POST" class="install">
+
+
+    <?php if (! empty ($errors)): ?>
+      <div id="install-errors">
+        <p>We found several errors while checking your configuration :</p>
+
+        <ul>
+        <?php foreach ($errors as $e): ?>
+          <li><b><?php echo $e['title'] ?></b><?php echo (array_key_exists ('msg', $e) ? ' :<br />'.$e['msg'] : '') ?></li>
+        <?php endforeach ?>
+        </ul>
+
+        <div class="help">
+          <p>
+              You can ignore these errors and save the file anyway. To correct them afterward, just edit the file 'config/filez.ini'.
+              <input type="button" value="Yes, I want to ignore errors and configure filez.ini manually." class="awesome ignore_errors" />
+              <script type="text/javascript">
+                $(document).ready (function () {
+                  $('input.ignore_errors').click (function () {
+                    $('form.install').append ('<input type="hidden" name="ignore_errors" value="true" />');
+                    $('form.install').submit ();
+                  });
+                });
+              </script>
+          </p>
+        </div>
+      </div>
+    <?php endif ?>
+
 
   <fieldset>
     <legend>General</legend>
@@ -80,6 +98,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     
   <fieldset>
     <legend>Filez Database</legend>
+    <?php echo config_form_row ('app', 'filez1_compat', 'Migrate Filez 1.x data. WARNING : Old website will not work anymore, you should backup your data before' , 'checkbox', $config) ?>
     <?php echo config_form_row ('db', 'dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php">DSN</a> to connect to your database' , 'text', $config) ?>
     <table>
       <tr>
@@ -376,7 +395,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     $('form.install').validate ({
         'rules': rules,
         submitHandler: function(form) {
-            $('form.install :hidden').remove();
+            $('form.install :hidden').not("input[type='hidden']").remove();
             form.submit();
         }
     });

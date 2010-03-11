@@ -66,7 +66,44 @@ function fz_config_get ($section = null, $var = null, $default = null) {
  * Write config to the config/filez.ini file.
  * (Used in installer).
  */
-function fz_config_write ($config) {
-    // TODO
+function fz_config_save ($config, $file) {
+    return file_put_contents ($file, fz_serialize_ini_array($config, true));
+}
+
+function fz_serialize_ini_array ($assoc_arr, $has_sections=FALSE) {
+    $content = "";
+
+    if ($has_sections) {
+        foreach ($assoc_arr as $key=>$elem) {
+            $content .= "\n[".$key."]\n";
+            foreach ($elem as $key2=>$elem2)
+            {
+                if(is_array($elem2))
+                {
+                    for($i=0;$i<count($elem2);$i++)
+                    {
+                        $content .= $key2."[] = \"".$elem2[$i]."\"\n";
+                    }
+                }
+                //else if($elem2=="") $content .= $key2." = \n";
+                else $content .= $key2." = \"".$elem2."\"\n";
+            }
+        }
+    }
+    else {
+        foreach ($assoc_arr as $key=>$elem) {
+            if(is_array($elem))
+            {
+                for($i=0;$i<count($elem);$i++)
+                {
+                    $content .= $key2."[] = \"".$elem[$i]."\"\n";
+                }
+            }
+            //else if($elem=="") $content .= $key2." = \n";
+            else $content .= $key2." = \"".$elem."\"\n";
+        }
+    }
+
+    return $content;
 }
 

@@ -167,7 +167,7 @@ msgstr "Commentaire"
 
 #: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:27
 msgid "Your download will start shortly..."
-msgstr "Votre télécharger devrait démarrer automatiquement..."
+msgstr "Votre téléchargement devrait démarrer automatiquement..."
 
 #: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:29
 msgid "If not, click here"
@@ -175,7 +175,7 @@ msgstr "Si ce n'est pas le cas, cliquez ici"
 
 #: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:38
 msgid "The file is not available yet."
-msgstr "Le fichier n'est pas encore  disponible au téléchargement"
+msgstr "Le fichier n'est pas encore disponible au téléchargement"
 
 #: /media/data/dev/filez-cru/trunk/app/views/file/_mailForm.php:4
 msgid "Email addresses (space separated)"
