@@ -65,13 +65,14 @@ function before () {
     option ('translate', $translate);
     option ('locale'   , $currentLocale);
 
-    // check log dir
-    if (! is_writable (fz_config_get ('app', 'log_dir')))
-        trigger_error ('Upload dir is not writeable "'
-                  .fz_config_get ('app', 'log_dir').'"', E_USER_WARNING);
-
     // Execute DB configuration only if Filez is configured
     if (! option ('installing')) {
+        
+        // check log dir
+        if (! is_writable (fz_config_get ('app', 'log_dir')))
+            trigger_error ('Log dir is not writeable "'
+                      .fz_config_get ('app', 'log_dir').'"', E_USER_WARNING);
+
         // check upload dir
         if (! is_writable (fz_config_get ('app', 'upload_dir')))
             trigger_error ('Upload dir is not writeable "'

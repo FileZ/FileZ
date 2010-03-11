@@ -620,7 +620,7 @@ div.lim-debug hr {display: none;}
 
 /* Install */
 
-form.install fieldset {
+#install fieldset {
     margin: 1em 0;
     padding: 0 1em 1em 1em;
     background: rgba(255,255,255,0.5);
@@ -630,40 +630,40 @@ form.install fieldset {
     -moz-box-shadow:    0 3px 5px rgba(0,0,0,0.1);
     -webkit-box-shadow: 0 3px 5px rgba(0,0,0,0.1);
 }
-form.install fieldset legend {
+#install fieldset legend {
     padding: 0 0.3em;
     font-weight: bold;
 }
-form.install label ,
-form.install input {
+#install label ,
+#install input {
     display: block;
     width: 80%;
 }
-form.install label ,
-form.install fieldset table {
+#install label ,
+#install fieldset table {
     width: 100%;
     box-sizing: border-box;
 }
-form.install input[type='checkbox'] {
+#install input[type='checkbox'] {
     display: inline;
     width: 1em;
 }
-form.install label {
+#install label {
     margin-top: 1em;
 }
-form.install label.error {
+#install label.error {
     color: red;
     margin-top: 0;
 }
-form.install p.submit {
+#install p.submit {
     text-align: center;
 }
-form.install p.submit input {
+#install p.submit input {
     display: inline;
     width: 50%;
     padding: 1em;
 }
-form.install .help {
+#install .help {
     margin: 1em 0.5em;
     padding: 0.5em;
     background: #F3EFCE;
@@ -673,29 +673,42 @@ form.install .help {
     -moz-box-shadow:    0 1px 3px rgba(0,0,0,0.1);
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
-form.install .help ,
-form.install .help li ,
-form.install .help p {
+#install .help ,
+#install .help li ,
+#install .help p {
     font-size: 13px;
 }
-form.install div.help ul {
+#install div.help ul {
     padding-left: 2em;
 }
-form.install h2 {
+#install h2 {
     padding-top: 1em;
     font-size: 95%;
     font-weight: bold;
 }
-form.install h3 {
+#install h3 {
     padding-top: 1em;
     font-size: 70%;
     opacity: 0.8;
     font-weight: bold;
 }
 
-form.install label .required {
+#install label .required {
     color: red;
     font-size: 80%;
     opacity: 0.7;
     padding-left: 1em;
+}
+#install-errors {
+    -moz-border-radius:    10px;
+    -webkit-border-radius: 10px;
+    background: #f2e1dc;
+    border: 1px solid #f3c5c1;
+    list-style: none;
+}
+#install-errors li {
+    padding: 0.5em;
+}
+#install-errors li + li {
+    border-top: 1px solid #f3c5c1;
 }

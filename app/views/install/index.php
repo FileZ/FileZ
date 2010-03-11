@@ -1,5 +1,12 @@
 
+<div id="install">
 
+<div class="help">
+    <p>This form will help you to configure filez by generating the file "<i>config/filez.ini</i>".</p>
+    <!--[if lte IE 8]>
+    <p>This form has not been tested in a potential phase of the moon bug trigger browser (IE for example). <b>PLEASE USE A DECENT BROWSER TO AVOID BUGs</b>.</p>
+    <![endif]-->
+</div>
 
 <?php
 
@@ -23,24 +30,30 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
       <label for="field-<?php echo $section.'-'.$var ?>" style="display: inline;"><?php echo $label ?></label>
     <?php endif ?>
   </p>
-<?}
+<?}?>
 
-?>
+<?php if (isset ($errors)): ?>
+
+  <p>We found several errors while checking your configuration :</p>
+
+  <ul id="install-errors">
+  <?php foreach ($errors as $e): ?>
+      <li><b><?php echo $e['title'] ?></b><?php echo (array_key_exists ('msg', $e) ? ' : '.$e['msg'] : '') ?></li>
+  <?php endforeach ?>
+  </ul>
+  
+  <p class="help">You can override these errors and save the file anyway. To correct them afterward, just edit the file 'config/filez.ini'.</p>
+
+<?php endif ?>
 
 <form action="" method="POST" class="install">
 
-  <div class="help">
-    <p>This form will help you to configure filez by generating the file "<i>config/filez.ini</i>".</p>
-    <!--[if lte IE 8]>
-    <p>This form has not been tested in a potential phase of the moon bug trigger browser (IE for example). <b>PLEASE USE A DECENT BROWSER TO AVOID BUGs</b>.</p>
-    <![endif]-->
-  </div>
-
   <fieldset>
     <legend>General</legend>
-    <?php echo config_form_row ('app', 'upload_dir'             , 'Upload directory (absolute dir)' , 'text', $config) ?>
-    <?php echo config_form_row ('app', 'log_dir'                , 'Log directory (absolute dir)'    , 'text', $config) ?>
-    <?php echo config_form_row ('app', 'user_quota'             , 'Default user quota'      , 'text', $config) ?>
+    <?php echo config_form_row ('app', 'upload_dir' , 'Upload directory (absolute dir)' , 'text', $config) ?>
+    <?php echo config_form_row ('app', 'log_dir'    , 'Log directory (absolute dir)'    , 'text', $config) ?>
+    <?php echo config_form_row ('app', 'user_quota' , 'Default user quota'      , 'text', $config) ?>
+    <?php echo config_form_row ('app', 'admin_email', 'Filez administor email (used in case of errors)' , 'text', $config) ?>
   </fieldset>
 
   <fieldset>
@@ -234,6 +247,10 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
 
     var rules = {
         //'config[app][use_url_rewriting]': {},
+        'config[app][admin_email]': {
+            email: true,
+            required: true
+        },
         'config[app][upload_dir]': {
             nowhitespace: true,
             required: true
@@ -353,14 +370,20 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
         }
     };
     $.each (rules, function (key, value) {
-        console.log ($('[name=\''+key+'\']').attr('id'));
-        console.log ($('label[for=\''+$('[name=\''+key+'\']').attr('id')+'\']'));
       if (value == 'required' || value.required)
         $('label[for=\''+$('[name=\''+key+'\']').attr('id')+'\']').append (' <span class="required">(required)</span>');
     });
-    $('form.install').validate ({'rules': rules});
+    $('form.install').validate ({
+        'rules': rules,
+        submitHandler: function(form) {
+            $('form.install :hidden').remove();
+            form.submit();
+        }
+    });
 
     // TODO on submit delete hidden box to remove non required fields from the form data
   });
 
 </script>
+
+</div>
