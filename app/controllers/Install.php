@@ -9,14 +9,15 @@ class App_Controller_Install extends Fz_Controller {
     /**
      *
      */
-    public function indexAction () {
-        return $this->configFormAction();
+    public function prepareAction () {
+        // TODO check system conf : mod_rewrite, apc, upload_max_filesize
+        return html ('install/prerequisites.php');
     }
 
     /**
      *
      */
-    public function configFormAction () {
+    public function configureAction () {
 
         $config = fz_config_get();
 
@@ -68,17 +69,18 @@ class App_Controller_Install extends Fz_Controller {
                     $notifs [] = 'Created file "'.$configFile.'"';
                 }
 
-                // Check if database exists and create it
-                if (! $this->databaseExists()) {
-                    $initDbScript = option ('root_dir').'/config/db/schema.sql';
-                } else {
-                    // TODO Migrate Database
-                    // get Db version, run migration script
-                }
                 if (! empty ($initDbScript)) {
                     try {
                         if (option ('db_conn') === null)
                             throw new Exception ('Database connection not found.');
+                        
+                        // Check if database exists and create it
+                        if (! $this->databaseExists()) {
+                            $initDbScript = option ('root_dir').'/config/db/schema.sql';
+                        } else {
+                            // TODO Migrate Database
+                            // get Db version, run migration script
+                        }
 
                         $sql = file_get_contents ($initDbScript, FILE_TEXT);
                         if ($sql === false)

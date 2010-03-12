@@ -112,8 +112,9 @@ if (fz_config_load (dirname(__FILE__).'/config/') === false) {
 
 // Check config presence, if not, force the user to the install controller
 if (option ('installing')) {
-    fz_dispatch_get  ('/', 'Install', 'index');
-    fz_dispatch_post ('/', 'Install', 'index');
+    fz_dispatch_get  ('/configure', 'Install', 'configure');
+    fz_dispatch_post ('/configure', 'Install', 'configure');
+    fz_dispatch_get  ('/*',         'Install', 'prepare');
     run ();
     exit;
 }

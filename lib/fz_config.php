@@ -85,8 +85,8 @@ function fz_serialize_ini_array ($assoc_arr, $has_sections=FALSE) {
                         $content .= $key2."[] = \"".$elem2[$i]."\"\n";
                     }
                 }
-                //else if($elem2=="") $content .= $key2." = \n";
-                else $content .= $key2." = \"".$elem2."\"\n";
+                else if($elem2 != "")
+                    $content .= $key2." = \"".$elem2."\"\n";
             }
         }
     }
@@ -99,8 +99,8 @@ function fz_serialize_ini_array ($assoc_arr, $has_sections=FALSE) {
                     $content .= $key2."[] = \"".$elem[$i]."\"\n";
                 }
             }
-            //else if($elem=="") $content .= $key2." = \n";
-            else $content .= $key2." = \"".$elem."\"\n";
+            else if($elem != "")
+                $content .= $key2." = \"".$elem."\"\n";
         }
     }
 

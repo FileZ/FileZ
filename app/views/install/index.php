@@ -1,13 +1,6 @@
 
-<pre><?php print_r($_POST) ?></pre>
 <div id="install">
 
-<div class="help">
-    <p>This form will help you to configure filez by generating the file "<i>config/filez.ini</i>".</p>
-    <!--[if lte IE 8]>
-    <p>This form has not been tested in a potential phase of the moon bug trigger browser (IE for example). <b>PLEASE USE A DECENT BROWSER TO AVOID BUGs</b>.</p>
-    <![endif]-->
-</div>
 
 <?php
 
@@ -51,7 +44,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
         <div class="help">
           <p>
               You can ignore these errors and save the file anyway. To correct them afterward, just edit the file 'config/filez.ini'.
-              <input type="button" value="Yes, I want to ignore errors and configure filez.ini manually." class="awesome ignore_errors" />
+              <input type="button" value="Yes, I want to ignore errors and configure filez.ini manually." name="ignore_errors" class="awesome ignore_errors" />
               <script type="text/javascript">
                 $(document).ready (function () {
                   $('input.ignore_errors').click (function () {
@@ -71,7 +64,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <?php echo config_form_row ('app', 'upload_dir' , 'Upload directory (absolute dir)' , 'text', $config) ?>
     <?php echo config_form_row ('app', 'log_dir'    , 'Log directory (absolute dir)'    , 'text', $config) ?>
     <?php echo config_form_row ('app', 'user_quota' , 'Default user quota'      , 'text', $config) ?>
-    <?php echo config_form_row ('app', 'admin_email', 'Filez administor email (used in case of errors)' , 'text', $config) ?>
+    <?php echo config_form_row ('app', 'admin_email', 'Filez administor email (used to test the smtp server and in case of fatal errors)' , 'text', $config) ?>
   </fieldset>
 
   <fieldset>
@@ -98,7 +91,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     
   <fieldset>
     <legend>Filez Database</legend>
-    <?php echo config_form_row ('app', 'filez1_compat', 'Migrate Filez 1.x data. WARNING : Old website will not work anymore, you should backup your data before' , 'checkbox', $config) ?>
+    <?php echo config_form_row ('app', 'filez1_compat', 'Migrate Filez 1.x data. WARNING : Old website will not work anymore, you should backup your database before' , 'checkbox', $config) ?>
     <?php echo config_form_row ('db', 'dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php">DSN</a> to connect to your database' , 'text', $config) ?>
     <table>
       <tr>
@@ -152,14 +145,24 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     </div>
     <div class="options" id="Fz_User_Factory_Database">
       <h2>Database options :</h2>
-      <h3>Database connection :</h3>
+      <h3>User database connection :</h3>
       <?php echo config_form_row ('user_factory_options', 'db_use_global_conf', 'Use the same configuration as Filez' , 'checkbox', $config) ?>
+      <script type="text/javascript">
+        $(document).ready (function () {
+          $('#field-user_factory_options-db_use_global_conf').change (function () {
+            if ($(this).attr('checked'))
+              $('.options#db_use_global_conf_checked').hide();
+            else
+              $('.options#db_use_global_conf_checked').show();
+          }).trigger ('change');
+        });
+      </script>
       <div class="options" id="db_use_global_conf_checked">
         <?php echo config_form_row ('user_factory_options', 'db_server_dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php">DSN</a> to connect to your database' , 'text', $config) ?>
         <?php echo config_form_row ('user_factory_options', 'db_server_user', 'Database username' , 'text', $config) ?>
         <?php echo config_form_row ('user_factory_options', 'db_server_password', 'Database password' , 'text', $config) ?>
       </div>
-      <h3>Database Schema :</h3>
+      <h3>User table schema :</h3>
       <?php echo config_form_row ('user_factory_options', 'db_table', 'Table where username are stored', 'text', $config) ?>
       <?php echo config_form_row ('user_factory_options', 'db_username_field', 'Database column name containing the username', 'text', $config) ?>
       <?php echo config_form_row ('user_factory_options', 'db_password_field', 'Database column name containing the user password', 'text', $config) ?>
@@ -210,16 +213,17 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     )) ?>
     <script type="text/javascript">
       $(document).ready (function () {
-        $('#field-email-auth').change (function () {
+        $('#field-email-auth').change (function (e) {
           if ($(this).val () == '')
             $('#smtp-auth-options').hide();
           else
             $('#smtp-auth-options').show();
+          e.preventDefault();
         }).trigger ('change');
       })
     </script>
 
-    <table id="smtp-auth-options">
+    <table id="smtp-auth-options" class="options">
       <tr>
         <td><?php echo config_form_row ('email', 'username', 'Username (if authentication)', 'text', $config) ?></td>
         <td><?php echo config_form_row ('email', 'password', 'Password (if authentication)', 'text', $config) ?></td>
@@ -234,7 +238,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
   </fieldset>
 
   <p class="submit">
-    <input type="submit" value="Install !" class="awesome large"/>
+    <input type="submit" value="Check configuration and install !" class="awesome large blue"/>
   </p>
 
 </form>
@@ -251,7 +255,9 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
 
       // Show conditional options for the selected item
       if (this.nodeName == 'SELECT')
-        $('.options[id=\''+$(this).val()+'\']').show ();
+        $('.options[id=\''+$(this).val()+'\']')
+          .show ();
+          .find ('input, select').trigger ('change'); // Reload sub options
       else if (this.nodeName == 'INPUT' && $(this).attr('checked')) // checkbox
         $('.options[id=\''+$(this).attr('name')+'_checked\']').show (); // FIXME TODO
     });
@@ -348,14 +354,15 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
 
         'config[user_factory_options][db_use_global_conf]': {},
         'config[user_factory_options][db_server_dsn]': {
+            required: '#field-user_factory_options-db_use_global_conf:unchecked:visible',
             nowhitespace: true
         },
         'config[user_factory_options][db_server_user]': {
-            required: '#field-user_factory_options-db_use_global_conf:checked',
+            required: '#field-user_factory_options-db_use_global_conf:unchecked:visible',
             nowhitespace: true
         },
         'config[user_factory_options][db_server_password]': {
-            required: '#field-user_factory_options-db_use_global_conf:checked',
+            required: '#field-user_factory_options-db_use_global_conf:unchecked:visible',
             nowhitespace: true
         },
         'config[user_factory_options][db_table]': {
@@ -389,18 +396,20 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
         }
     };
     $.each (rules, function (key, value) {
-      if (value == 'required' || value.required)
-        $('label[for=\''+$('[name=\''+key+'\']').attr('id')+'\']').append (' <span class="required">(required)</span>');
+        if (value == 'required' || value.required)
+            $('label[for=\''+$('[name=\''+key+'\']').attr('id')+'\']').append (' <span class="required">(required)</span>');
     });
     $('form.install').validate ({
         'rules': rules,
+        // on submit delete hidden box to remove non required fields from the form data
         submitHandler: function(form) {
-            $('form.install :hidden').not("input[type='hidden']").remove();
+            $('form.install .options:hidden').remove();
             form.submit();
-        }
+        },
+        debug: true
     });
 
-    // TODO on submit delete hidden box to remove non required fields from the form data
+   
   });
 
 </script>

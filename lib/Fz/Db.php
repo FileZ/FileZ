@@ -19,7 +19,7 @@ class Fz_Db {
      * @return  array   Array of $class_name objects
      */
     public static function findObjectsBySQL ($sql, $class_name = PDO::FETCH_OBJ, $params = array (), $limit = 0) {
-        $db = option ('db_conn');
+        $db = self::getConnection ();
 
         if ($limit > 1)
             $sql .= ' LIMIT '.$limit;
@@ -60,7 +60,7 @@ class Fz_Db {
      * @return  array   Array of $class_name objects
      */
     public static function findAssocBySQL ($sql, $params = array (), $limit = 0) {
-        $db = option ('db_conn');
+        $db = self::getConnection ();
 
         if ($limit > 1)
             $sql .= ' LIMIT '.$limit;
@@ -110,6 +110,13 @@ class Fz_Db {
      * @return  string 
      */
     public static function nameEqColonName ($x) { return $x . ' = :' . $x; }
+
+    public static function getConnection () {
+        if (($conn = option ('db_conn')) !== null)
+            return $conn;
+        else
+            throw new Exception ('Unexisting database connection');
+    }
 }
 
 
