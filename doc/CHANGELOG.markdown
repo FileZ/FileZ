@@ -9,4 +9,5 @@ Filez-2.0.0-BETA2 (WIP)
   * Added password checkbox and input
 * Added default configuration. User is still able to override it in filez.ini
   but all parameters are not required now.
+* Added Auto Installer when filez.ini is not found
 

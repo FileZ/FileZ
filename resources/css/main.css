@@ -48,7 +48,7 @@ section {
   margin: 0;
 }
 h2 {
-  letter-spacing: -0.05em;
+  /* letter-spacing: -0.05em; */
   font-weight: normal;
   font-size: 1.1em;
 }
@@ -666,7 +666,7 @@ div.lim-debug hr {display: none;}
 }
 #install .help {
     margin: 1em 0.5em;
-    padding: 0.5em;
+    padding: 1em;
     background: #F3EFCE;
     border: 1px solid rgba(0,0,0,0.1);
     -moz-border-radius: 5px;
@@ -694,11 +694,16 @@ div.lim-debug hr {display: none;}
     font-weight: bold;
 }
 
-#install label .required {
+#install .required {
     color: red;
     font-size: 80%;
     opacity: 0.7;
     padding-left: 1em;
+}
+#install .check-item .required {
+    font-weight: bold;
+    font-size: 110%;
+    text-transform: uppercase;
 }
 #install-notifs ,
 #install-errors {
@@ -736,3 +741,23 @@ div.lim-debug hr {display: none;}
 #install-errors ul li {
     padding: 0.4em 0;
 }
+#install .check-item {
+    padding: 1em 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+#install .check-item p {
+    padding: 0.3em 0;
+}
+#install .help pre {
+    background: rgba(0,0,0,0.7);
+    color: #BBB;
+    padding: 0.5em;
+    margin: 0.3em 0;
+}
+#install .help .warning {
+    background: rgba(0,0,0,0.02);
+    color: red;
+    padding: 1em;
+    font-weight: bold;
+}
+

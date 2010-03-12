@@ -9,8 +9,8 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <?php if ($type != 'checkbox'): ?>
       <label for="field-<?php echo $section.'-'.$var ?>"><?php echo $label ?></label>
     <?php endif ?>
-    <?php if ($type == 'text'): ?>
-      <input type="text" id="field-<?php echo $section.'-'.$var ?>" name="<?php echo "config[$section][$var]" ?>" value="<?php echo $default_values[$section][$var] ?>"/>
+    <?php if ($type == 'text' || $type == 'password'): ?>
+      <input type="<?php echo $type ?>" id="field-<?php echo $section.'-'.$var ?>" name="<?php echo "config[$section][$var]" ?>" value="<?php echo $default_values[$section][$var] ?>"/>
     <?php elseif ($type == 'select'): ?>
       <select id="field-<?php echo $section.'-'.$var ?>" name="<?php echo "config[$section][$var]" ?>">
         <?php foreach ((array) $choices as $value => $text): ?>
@@ -96,7 +96,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <table>
       <tr>
         <td><?php echo config_form_row ('db', 'user', 'Database username' , 'text', $config) ?></td>
-        <td><?php echo config_form_row ('db', 'password', 'Database password' , 'text', $config) ?></td>
+        <td><?php echo config_form_row ('db', 'password', 'Database password' , 'password', $config) ?></td>
       </tr>
     </table>
     <p class="help">
@@ -160,7 +160,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
       <div class="options" id="db_use_global_conf_checked">
         <?php echo config_form_row ('user_factory_options', 'db_server_dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php">DSN</a> to connect to your database' , 'text', $config) ?>
         <?php echo config_form_row ('user_factory_options', 'db_server_user', 'Database username' , 'text', $config) ?>
-        <?php echo config_form_row ('user_factory_options', 'db_server_password', 'Database password' , 'text', $config) ?>
+        <?php echo config_form_row ('user_factory_options', 'db_server_password', 'Database password' , 'password', $config) ?>
       </div>
       <h3>User table schema :</h3>
       <?php echo config_form_row ('user_factory_options', 'db_table', 'Table where username are stored', 'text', $config) ?>
@@ -226,7 +226,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <table id="smtp-auth-options" class="options">
       <tr>
         <td><?php echo config_form_row ('email', 'username', 'Username (if authentication)', 'text', $config) ?></td>
-        <td><?php echo config_form_row ('email', 'password', 'Password (if authentication)', 'text', $config) ?></td>
+        <td><?php echo config_form_row ('email', 'password', 'Password (if authentication)', 'password', $config) ?></td>
       </tr>
     </table>
   </fieldset>
@@ -256,7 +256,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
       // Show conditional options for the selected item
       if (this.nodeName == 'SELECT')
         $('.options[id=\''+$(this).val()+'\']')
-          .show ();
+          .show ()
           .find ('input, select').trigger ('change'); // Reload sub options
       else if (this.nodeName == 'INPUT' && $(this).attr('checked')) // checkbox
         $('.options[id=\''+$(this).attr('name')+'_checked\']').show (); // FIXME TODO

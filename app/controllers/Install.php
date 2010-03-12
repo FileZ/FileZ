@@ -11,6 +11,54 @@ class App_Controller_Install extends Fz_Controller {
      */
     public function prepareAction () {
         // TODO check system conf : mod_rewrite, apc, upload_max_filesize
+
+        $checks = array ();
+
+        // mod_rewrite
+        if ($this->checkModRewrite() !== true)
+            $checks ['mod_rewrite'] = "<p><span class=\"required\">Mod rewrite is required by Filez</span> ".
+                "but wasn't found on your system.</p>".
+                "<p>To enable it, run the following command as root :</p>".
+                "<pre>a2enmod rewrite && apache2ctl restart</pre>";
+
+        // PHP module APC with apc.rfc1867
+        if (! $this->checkApcInstalled() || ! $this->checkApcConfigured())
+            $checks ['apc'] =
+                '<p>APC PHP extension is not installed or misconfigured. '.
+                "APC is only required if you want to display a progress bar during upload.</p>".
+                "<p>To install it run the following commands as root :</p>".
+                "<pre>apt-get install build-essential php5-dev php-pear apache2-prefork-dev\n".
+                "pecl install apc\n".
+                "echo \"extension = apc.so\" >> /etc/php5/apache2/conf.d/apc.ini\n".
+                "echo \"apc.rfc1867 = On\"   >> /etc/php5/apache2/conf.d/apc.ini\n".
+                "apache2ctl restart</pre>";
+
+        // php.ini settings
+        $checks ['upload_max_filesize'] =
+            '<p>php.ini value of "upload_max_filesize" is set to "'.ini_get ('upload_max_filesize')."\" </p>".
+            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
+            "<pre>php_admin_value upload_max_filesize 750M</pre>";
+
+        // php.ini settings
+        $checks ['post_max_size'] =
+            '<p>php.ini value of "post_max_size" is set to "'.ini_get ('post_max_size')."\" </p>".
+            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
+            "<pre>php_admin_value post_max_size 750M</pre>";
+
+        // php.ini settings
+        $checks ['max_execution_time'] =
+            '<p>php.ini value of "max_execution_time" is set to "'.ini_get ('max_execution_time')."\" </p>".
+            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
+            "<pre>php_admin_value max_execution_time 1200</pre>";
+
+        // php.ini settings
+        $checks ['upload_tmp_dir'] =
+            '<p>php.ini value of "max_execution_time" is set to "'.ini_get ('upload_tmp_dir')."\" </p>".
+            "<p>You should check if there is enough place on the device</p>".
+            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
+            '<pre>php_admin_value upload_tmp_dir "/media/data/tmp"</pre>';
+
+        set ('checks', $checks);
         return html ('install/prerequisites.php');
     }
 
@@ -113,7 +161,7 @@ class App_Controller_Install extends Fz_Controller {
     }
 
     /**
-     *
+     * Check if we can send an email to the administrator
      */
     public function checkEmailConf (&$errors, &$config) {
         try {
@@ -134,6 +182,7 @@ class App_Controller_Install extends Fz_Controller {
     }
 
     /**
+     * Check if we can connect to the database user factory
      *
      */
     public function checkUserFactoryDatabaseConf (&$errors, &$config) {
@@ -178,6 +227,7 @@ class App_Controller_Install extends Fz_Controller {
     }
 
     /**
+     * Check if we can connect to the ldap user factory
      *
      */
     public function checkUserFactoryLdapConf (&$errors, &$config) {
@@ -193,6 +243,7 @@ class App_Controller_Install extends Fz_Controller {
     }
 
     /**
+     * Check if we can connect to the configured database
      *
      */
     public function checkDatabaseConf (&$errors, &$config) {
@@ -213,6 +264,7 @@ class App_Controller_Install extends Fz_Controller {
     }
 
     /**
+     * Checks if the upload dir and the log dir are writeable
      *
      */
     public function checkRights (&$errors, &$config) {
@@ -228,7 +280,9 @@ class App_Controller_Install extends Fz_Controller {
     }
 
     /**
+     * Tells if filez table 'fz_file' exists on the configured connection
      *
+     * @return boolean
      */
     public function databaseExists () {
         $sql = 'SELECT * '
@@ -237,5 +291,41 @@ class App_Controller_Install extends Fz_Controller {
 
         $res = Fz_Db::findAssocBySQL($sql);
         return (count ($res) > 0);
+    }
+
+    /**
+     * Tells if a rewrite module is enable on the server
+     *
+     * @return boolean or null if we can't find a hint
+     */
+    public function checkModRewrite ()
+    {
+        if (function_exists ('apache_get_modules'))
+            return in_array ('mod_rewrite', apache_get_modules ());
+        else if (getenv ('HTTP_MOD_REWRITE') == 'On')
+            return true;
+        else
+            return null;
+    }
+
+    /**
+     * Tells if APC is installed
+     *
+     * @return boolean
+     */
+    public function checkApcInstalled ()
+    {
+        return (bool) ini_get ('apc.enabled');
+    }
+
+
+    /**
+     * Tells if APC is installed
+     *
+     * @return boolean
+     */
+    public function checkApcConfigured ()
+    {
+        return (bool) ini_get ('apc.rfc1867');
     }
 }

@@ -159,9 +159,12 @@ class App_Controller_Upload extends Fz_Controller {
      */
     private function shorthandSizeToBytes ($size) {
         $size = str_replace (' ', '', $size);
-        $size = str_replace (array ('K'  , 'M'     , 'G'        ),
-                             array ('000', '000000', '000000000'), $size);
-        return intval ($size);
+        switch(strtolower($size[strlen($size)-1])) {
+            case 'g': $size *= 1024;
+            case 'm': $size *= 1024;
+            case 'k': $size *= 1024;
+        }
+        return floatval ($size);
     }
 
     /**

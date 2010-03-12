@@ -161,7 +161,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      */
     public function getRemainingSpaceForUser ($user) {
         return ($this->shorthandSizeToBytes (fz_config_get ('app', 'user_quota'))
-               - $this->getTotalDiskSpaceByUser ($user));
+              - $this->getTotalDiskSpaceByUser ($user));
     }
     
     /**
@@ -172,8 +172,11 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      */
     public function shorthandSizeToBytes ($size) {
         $size = str_replace (' ', '', $size);
-        $size = str_replace (array ('K'  , 'M'     , 'G'        ),
-                             array ('000', '000000', '000000000'), $size);
+        switch (strtolower ($size [strlen($size) - 1])) {
+            case 'g': $size *= 1024;
+            case 'm': $size *= 1024;
+            case 'k': $size *= 1024;
+        }
         return floatval ($size);
     }
 }
