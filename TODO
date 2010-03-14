@@ -21,3 +21,8 @@ Next minor release
 ==================
 
 * Gérer la création d'invitations
+* Ajouter d'autre méthodes d'authentification (OAuth, OpenId, Shibboleth, etc...)
+* Permettre l'upload de plusieurs fichiers et les compresser dans 1 seul ZIP à la place de l'utilisateur
+
+
+
