@@ -18,4 +18,3 @@ CHANGE `comment`            `comment`           VARCHAR(200) CHARACTER SET utf8 
 ALTER TABLE `Fichiers` ADD COLUMN `created_at`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 RENAME TABLE `Fichiers` TO fz_file;
-ALTER TABLE `fz_file` ADD COLUMN `password` varchar(40) DEFAULT NULL;

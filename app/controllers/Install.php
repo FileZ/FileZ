@@ -117,33 +117,26 @@ class App_Controller_Install extends Fz_Controller {
                     $notifs [] = 'Created file "'.$configFile.'"';
                 }
 
-                if (! empty ($initDbScript)) {
-                    try {
-                        if (option ('db_conn') === null)
-                            throw new Exception ('Database connection not found.');
-                        
-                        // Check if database exists and create it
-                        if (! $this->databaseExists()) {
-                            $initDbScript = option ('root_dir').'/config/db/schema.sql';
-                        } else {
-                            // TODO Migrate Database
-                            // get Db version, run migration script
-                        }
+                try {
+                    if (option ('db_conn') === null)
+                        throw new Exception ('Database connection not found.');
 
-                        $sql = file_get_contents ($initDbScript, FILE_TEXT);
+                    $sql = $this->getDatabaseInitScript ();
+
+                    if (! empty ($sql)) {
                         if ($sql === false)
                             throw new Exception ('Database script not found "'.$initDbScript.'"');
 
                         option ('db_conn')->exec ($sql);
 
                         $notifs [] = 'Database configured ';
-                    } catch (Exception $e) {
-                        $errors [] = array (
-                            'title' => 'Can\'t initialize the database ('.$e->getMessage ().')',
-                            'msg'   => 'Check your database configuration in config/filez.ini and re-run the SQL script "'.
-                                        $initDbScript.'".'
-                        );
                     }
+                } catch (Exception $e) {
+                    $errors [] = array (
+                        'title' => 'Can\'t initialize the database ('.$e->getMessage ().')',
+                        'msg'   => 'Check your database configuration in config/filez.ini and re-run the SQL script "'.
+                                    $initDbScript.'".'
+                    );
                 }
 
                 set ('errors', $errors);
@@ -280,17 +273,37 @@ class App_Controller_Install extends Fz_Controller {
     }
 
     /**
-     * Tells if filez table 'fz_file' exists on the configured connection
+     * Tells if filez table 'fz_file' (or 'Fichiers' if Fz1) exists on the
+     * configured connection
      *
      * @return boolean
      */
     public function databaseExists () {
-        $sql = 'SELECT * '
+        $sql = 'SELECT table_name '
               .'FROM information_schema.tables '
-              .'WHERE table_name=\'fz_file\' ';
+              .'WHERE table_name=\'fz_file\''
+              .'  or  table_name=\'fz_info\''
+              .'  or  table_name=\'Fichiers\'';
 
         $res = Fz_Db::findAssocBySQL($sql);
-        return (count ($res) > 0);
+        if (count ($res) == 0)
+            return false;
+        else {
+            $version = false;
+            foreach ($res as $table) {
+                if ($table['table_name'] == 'Fichiers') {
+                    return '1.2'; // TODO add more check
+                } else if ($table['table_name'] == 'fz_file') {
+                    $version = '2.0.0';
+                } else if ($table['table_name'] == 'fz_info') {
+                    $res = Fz_Db::findAssocBySQL(
+                        'SELECT `value` FROM `fz_info` WHERE `key`=\'db_version\'');
+                    if (! empty ($res))
+                        return $res [0]['value'];
+                }
+            }
+            return $version;
+        }
     }
 
     /**
@@ -327,5 +340,24 @@ class App_Controller_Install extends Fz_Controller {
     public function checkApcConfigured ()
     {
         return (bool) ini_get ('apc.rfc1867');
+    }
+
+
+    public function getDatabaseInitScript () {
+        $sql = '';
+        // Check if database exists
+        if (($version = $this->databaseExists()) !== false) {
+            $pattern = '/filez-(([0-9]*)\.([0-9]*)\.([0-9]*)-([0-9]*))\.sql$/';
+            foreach (glob (option ('root_dir').'/config/db/migrations/filez-*.sql') as $file) {
+                $matches = array ();
+                if (preg_match ($pattern, $file, $matches) === 1) {
+                    if (strcmp ($matches [1], $version) > 0)
+                        $sql .= file_get_contents ($file);
+                }
+            }
+        } else {
+            $sql = option ('root_dir').'/config/db/schema.sql';
+        }
+         return $sql;
     }
 }

@@ -121,7 +121,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     )) ?>
     <div class="options" id="Fz_Controller_Security_Cas">
       <?php echo config_form_row ('auth_options', 'cas_server_host', 'CAS Server host' , 'text', $config) ?>
-      <?php echo config_form_row ('auth_options', 'cas_server_path', 'Path where your CAS server will respond' , 'text', $config) ?>
+      <?php echo config_form_row ('auth_options', 'cas_server_path', 'Path where your CAS server will respond ("cas" for example)' , 'text', $config) ?>
       <?php echo config_form_row ('auth_options', 'cas_server_port', 'CAS Server port number' , 'text', $config) ?>
     </div>
   </fieldset>
