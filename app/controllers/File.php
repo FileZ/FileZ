@@ -155,8 +155,10 @@ class App_Controller_File extends Fz_Controller {
         $mail->setSubject  ($subject);
 
         $emailValidator = new Zend_Validate_EmailAddress();
-        foreach (explode (',', $_POST['to']) as $email) {
+        foreach (explode (' ', $_POST['to']) as $email) {
             $email = trim ($email);
+            if (empty ($email))
+                continue;
             if ($emailValidator->isValid ($email))
                 $mail->addBcc ($email);
             else {
