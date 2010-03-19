@@ -5,7 +5,6 @@ Current release
 * Lorsque l'utilisateur n'a pas de fichier uploadé, ne pas afficher "Vos fichiers uploadés"
 * Vérifier le fonctionnement d'une 2eme connexion a une bd pour Fz_User_Factory_Database
 * Refactor var names according to the coding conventions
-* Vérifier affichage sous IE 7 et 8
 * Faire la doc utilisateur
 * Ajouter un lien configurable vers un helpdesk
 * Ajouter un lien configurable vers une doc utilisateur extérieure
@@ -15,8 +14,8 @@ Current release
 
 
 Bugs: 
+* Vérifier affichage sous IE 7 et 8
 * installateur : la bdd n'est pas créée en fin d'installation...
-* partage du fichier par email : pb lorsqu'il y a plusieurs emails 
 
 Next minor release
 ==================
