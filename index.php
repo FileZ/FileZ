@@ -1,5 +1,7 @@
 <?php 
 
+define ('FZ_VERSION', '2.0.0-2');
+
 /**
  * Loading Zend for i18n classes and autoloader
  */

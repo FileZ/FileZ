@@ -118,19 +118,8 @@ class App_Controller_Install extends Fz_Controller {
                 }
 
                 try {
-                    if (option ('db_conn') === null)
-                        throw new Exception ('Database connection not found.');
-
-                    $sql = $this->getDatabaseInitScript ();
-
-                    if (! empty ($sql)) {
-                        if ($sql === false)
-                            throw new Exception ('Database script not found "'.$initDbScript.'"');
-
-                        option ('db_conn')->exec ($sql);
-
+                    if ($this->initDatabase())
                         $notifs [] = 'Database configured ';
-                    }
                 } catch (Exception $e) {
                     $errors [] = array (
                         'title' => 'Can\'t initialize the database ('.$e->getMessage ().')',
@@ -359,5 +348,22 @@ class App_Controller_Install extends Fz_Controller {
             $sql = option ('root_dir').'/config/db/schema.sql';
         }
          return $sql;
+    }
+
+    public function initDatabase () {
+        if (option ('db_conn') === null)
+            throw new Exception ('Database connection not found.');
+
+        $sql = $this->getDatabaseInitScript ();
+
+        if (! empty ($sql)) {
+            if ($sql === false)
+                throw new Exception ('Database script not found "'.$initDbScript.'"');
+
+            option ('db_conn')->exec ($sql);
+
+            return true;
+        }
+        return false;
     }
 }

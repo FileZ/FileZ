@@ -14,8 +14,9 @@ Current release
 * Vérifier les pb de différence de taille lors de l'upload du à uuencode ?
 
 
-Installateur :
-* bug : la bdd n'est pas créée en fin d'installation...
+Bugs: 
+* installateur : la bdd n'est pas créée en fin d'installation...
+* partage du fichier par email : pb lorsqu'il y a plusieurs emails 
 
 Next minor release
 ==================
