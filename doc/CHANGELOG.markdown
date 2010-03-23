@@ -1,6 +1,8 @@
 
+Filez-2.0.0
+*
 
-Filez-2.0.0-BETA2 (WIP)
+Filez-2.0.0-BETA2
 * Added 'password' field to fz_file table. You need to run 'db.migration-filez-2.0.0-1.sql'
 * Added '[app]::debug' var in filez.ini (Shows errors & logged messages)
 * Added '[app]::user_quota' var in filez.ini
@@ -11,4 +13,5 @@ Filez-2.0.0-BETA2 (WIP)
   but all parameters are not required now.
 * Added Auto Installer/Updater when filez.ini is not found
 * Fixed email bug
+
 

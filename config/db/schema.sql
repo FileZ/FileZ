@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `fz_file` (
   `password`        varchar(40)     DEFAULT NULL,
 
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE  `fz_info` (
@@ -25,5 +25,5 @@ CREATE TABLE  `fz_info` (
   PRIMARY KEY (  `key` )
 );
 
-INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '2.0.0-2');
+INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '2.0.0-2') DEFAULT CHARSET=utf8;
 

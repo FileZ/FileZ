@@ -360,7 +360,7 @@ class App_Controller_Install extends Fz_Controller {
                 }
             }
         } else {
-            $sql = option ('root_dir').'/config/db/schema.sql';
+            $sql = file_get_contents (option ('root_dir').'/config/db/schema.sql');
         }
          return $sql;
     }

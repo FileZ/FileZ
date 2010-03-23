@@ -46,3 +46,19 @@ function fz_exception_handler (Exception $e) {
     fz_log ($e, FZ_LOG_ERROR);
     return error_handler_dispatcher (SERVER_ERROR, $e->getMessage(), $e->getFile(), $e->getLine());
 }
+
+/**
+ * Default not found error output
+ *
+ * @param string $errno
+ * @param string $errstr
+ * @param string $errfile
+ * @param string $errline
+ * @return string
+ */
+function not_found($errno, $errstr, $errfile=null, $errline=null)
+{
+  option('views_dir', option('error_views_dir'));
+  $msg = h(rawurldecode($errstr));
+  return html('<h1>'.__('Page not found')." :</h1><p><code>{$msg}</code></p>", error_layout());
+}

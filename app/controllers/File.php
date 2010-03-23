@@ -27,19 +27,20 @@ class App_Controller_File extends Fz_Controller {
      */
     public function downloadAction () {
         $file = $this->getFile ();
-        if ($file->isOwner($this->getUser ()) || $file->isAvailable ()) {
-            
-            if (! $file->isOwner($this->getUser ()) &&
-                ! $file->checkPassword ($_POST['password']))
-                halt (HTTP_FORBIDDEN, __('Incorrect password'));
-
-            $file->download_count = $file->download_count + 1;
-            $file->save ();
-            return $this->sendFile ($file);
-        } else {
-            halt (HTTP_FORBIDDEN, __('File is not available for download'));
+        if (! $file->isOwner($this->getUser ())) {
+            if (! $file->isAvailable ()) {
+                halt (HTTP_FORBIDDEN, __('File is not available for download'));
+            } else if (! empty ($file->password)
+                    && ! $file->checkPassword ($_POST['password'])) {
+                flash ('error', __('Incorrect password'));
+                redirect ('/'.$file->getHash());
+            }
         }
-    }
+
+        $file->download_count = $file->download_count + 1;
+        $file->save ();
+        return $this->sendFile ($file);
+        }
 
     /**
      * Extend lifetime of a file
