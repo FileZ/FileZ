@@ -25,7 +25,7 @@
   </a>
 </p>
 <p class="comment"><?php echo $file->comment ?> &nbsp;</p>
-<div style="clear: both;"></div>
+<div class="clearboth"></div>
 <ul class="actions">
   <li>
     <a href="<?php echo $file->getDownloadUrl () ?>/email" class="send-by-email">

@@ -28,6 +28,11 @@ a {
 a:hover {
   color: #78B2FF;
 }
+.clearboth {
+	clear: both;
+	height: 0px;
+	display: block;
+}
 
 /* Section new-file & uploaded-files */
 section {
@@ -369,6 +374,7 @@ section#uploaded-files ul li ul.actions {
   -webkit-box-shadow: inset 0 -4px 4px rgba(0,0,0,0.05);
   padding: 0.2em 1.3em;
   font-size: 0.8em;
+	zoom: 1;
 }
 section#uploaded-files ul li ul.actions li {
   display: inline;
