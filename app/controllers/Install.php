@@ -88,6 +88,13 @@ class App_Controller_Install extends Fz_Controller {
             // Checking database connection
             $this->checkDatabaseConf ($errors, $config);
 
+            // Is CAS authentication, check requirements
+            if ($config['app']['auth_handler_class'] == 'Fz_Controller_Security_Cas'
+                && ! function_exists ('curl_init'))
+                $errors [] = array (
+                    'title' => 'PHP extension "cURL" is required for CAS authentication but is not installed',
+                    'msg'   => 'Use php5-curl on debian to install it');
+
             // Checking User factory connection
             if ($config['app']['user_factory_class'] == 'Fz_User_Factory_Ldap')
                 $this->checkUserFactoryLdapConf ($errors, $config);
@@ -213,7 +220,15 @@ class App_Controller_Install extends Fz_Controller {
      *
      */
     public function checkUserFactoryLdapConf (&$errors, &$config) {
+        if (! function_exists ('ldap_connect')) {
+            $errors [] = array (
+                'title' => 'PHP LDAP extension is not installed.',
+                'msg'   => 'Use php5-ldap package on debian'
+            );
+            return;
+        }
         try {
+
             $ldap = new Zend_Ldap ($config['user_factory_options']);
             $ldap->bind();
         } catch (Exception $e) {

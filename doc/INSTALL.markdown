@@ -9,6 +9,9 @@ Requirement
 * APC is required if you want to enable the progress bar during file upload. 
   See 'Installing and configuring APC' section.
 
+* php5-curl for CAS authentication
+
+* php5-ldap if you use a LDAP server
 
 Installation
 ============
