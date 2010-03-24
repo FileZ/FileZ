@@ -2,12 +2,20 @@
   Options +FollowSymlinks
   Options +Indexes
   RewriteEngine on
+
   # RewriteBase /my_app/ # if your app is in a subfolder
   # RewriteBase /web/
   
-  # test string is a valid files
+  # protect other directories
+  RedirectMatch 404 /\\.svn
+  RedirectMatch 404 /scripts
+  RedirectMatch 404 /lib
+  RedirectMatch 404 /app
+  RedirectMatch 404 /config
+  RedirectMatch 404 /i18n
+
+  # test string is a valid files or directory
   RewriteCond %{SCRIPT_FILENAME} !-f
-  # test string is a valid directory
   RewriteCond %{SCRIPT_FILENAME} !-d
   
   #RewriteRule ^(.*)$ index.php?/$1    [NC,L]

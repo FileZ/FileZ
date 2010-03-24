@@ -514,6 +514,7 @@ footer {
 footer a {
   color: #8F837A;
   font-size: 0.7em;
+  text-decoration: underline;
 }
 footer #disk-usage {
   font-size: 0.8em;
@@ -537,6 +538,27 @@ footer div.debug pre {
     color: #BCBCBC;
 }
 div.lim-debug hr {display: none;}
+
+/* Support */
+#support {
+  padding: 0.7em 0;
+}
+#support a {
+  padding: 0 .8em;
+}
+#support a + a {
+  border-left: 1px solid #D4D0C9;
+}
+#support a.bug ,
+#support a.help {
+  padding-left: 2.7em;
+  background-position: 0.8em center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+}
+#support a.bug  {background-image: url(../images/icons/bug.png); }
+#support a.help {background-image: url(../images/icons/help.png);}
 
 /* Modal */
 
@@ -774,4 +796,3 @@ div.lim-debug hr {display: none;}
     padding: 1em;
     font-weight: bold;
 }
-

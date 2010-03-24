@@ -6,15 +6,9 @@ Current release
 * Vérifier le fonctionnement d'une 2eme connexion a une bd pour Fz_User_Factory_Database
 * Refactor var names according to the coding conventions
 * Faire la doc utilisateur
-* Ajouter un lien configurable vers un helpdesk
-* Ajouter un lien configurable vers une doc utilisateur extérieure
 * Vérifier si les tables de filez < 1.2 supportent la migration
 * Terminer le fichier et LICENCE
 * Vérifier les pb de différence de taille lors de l'upload du à uuencode ?
-* Afficher une erreur lorsqu'un mdp pour télécharger un fichier est incorrect
-
-Bugs: 
-* Vérifier affichage sous IE 7 et 8
 
 Next minor release
 ==================

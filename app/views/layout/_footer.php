@@ -14,5 +14,17 @@
             'quota' => fz_config_get('app', 'user_quota'))); ?>.
         </p>
       <?php endif ?>
-      <a href="http://gpl.univ-avignon.fr">Un logiciel libre de l'Université d'Avignon et des Pays de Vaucluse</a>
+
+      <div id="support">
+        <?php if (fz_config_get('looknfeel', 'help_url')): ?>
+          <a href="<?php echo fz_config_get('looknfeel', 'help_url') ?>" class="help"><?php echo __('Find help') ?></a>
+        <?php endif; ?>
+        <?php if (fz_config_get('looknfeel', 'bug_report_href')): ?>
+          <a href="<?php echo fz_config_get('looknfeel', 'bug_report_href') ?>" class="bug"><?php echo __('Report a bug') ?></a>
+        <?php endif; ?>
+      </div>
+
+      <?php if (fz_config_get('looknfeel', 'show_credit')): ?>
+        <a href="http://gpl.univ-avignon.fr">Un logiciel libre de l'Université d'Avignon et des Pays de Vaucluse</a>
+      <?php endif ?>
     </footer>

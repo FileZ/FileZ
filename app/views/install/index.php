@@ -235,6 +235,9 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <legend>UI Customisation</legend>
     <?php echo config_form_row ('looknfeel', 'your_logo', 'URI (relative to the filez web root) of your organisational logo image (optional)' , 'text', $config) ?>
     <?php echo config_form_row ('looknfeel', 'custom_css', 'URI (relative to the filez web root) of your custom CSS file (optional)' , 'text', $config) ?>
+    <?php echo config_form_row ('looknfeel', 'bug_report_href', 'HREF (http:// or mailto:) where the user will be redirected if he want to report a bug' , 'text', $config) ?>
+    <?php echo config_form_row ('looknfeel', 'help_url', 'URL containing filez documentation' , 'text', $config) ?>
+    <?php echo config_form_row ('looknfeel', 'show_credit', 'URL containing filez documentation' , 'text', $config) ?>
   </fieldset>
 
   <p class="submit">
