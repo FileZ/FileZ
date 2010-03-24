@@ -628,7 +628,7 @@ class Zend_Ldap
             $this->bind();
         }
 
-        $accounts = $this->search($accountFilter, $baseDn, self::SEARCH_SCOPE_SUB, $attrs);
+$accounts = $this->search($accountFilter, $baseDn, self::SEARCH_SCOPE_SUB, $attrs);
         $count = $accounts->count();
         if ($count === 1) {
             $acct = $accounts->getFirst();

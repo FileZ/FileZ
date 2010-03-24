@@ -37,7 +37,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
 
         <ul>
         <?php foreach ($errors as $e): ?>
-          <li><b><?php echo $e['title'] ?></b><?php echo (array_key_exists ('msg', $e) ? ' :<br />'.$e['msg'] : '') ?></li>
+          <li><b><?php echo $e['title'] ?></b><?php echo (array_key_exists ('msg', $e) ? '<br />'.$e['msg'] : '') ?></li>
         <?php endforeach ?>
         </ul>
 
@@ -137,7 +137,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
       <?php echo config_form_row ('user_factory_options', 'baseDn', 'Base DN' , 'text', $config) ?>
       <?php echo config_form_row ('user_factory_options', 'host',   'LDAP Server host' , 'text', $config) ?>
       <?php echo config_form_row ('user_factory_options', 'useSsl', 'Use ssl to bind to the Ldap host' , 'checkbox', $config) ?>
-      <?php echo config_form_row ('user_factory_options', 'bindRequiresDn', 'Bind requires DN' , 'checkbox', $config) ?>
+      <?php echo config_form_row ('user_factory_options', 'bindRequiresDn', 'Bind requires DN (check this if your are not using Active Directory)' , 'checkbox', $config) ?>
       <div class="help">
         <p>For other parameters, you will have to add them manually to filez.ini in the "[user_factory_options]" section once you have validated this form.</p>
         <p>Please refer to <a href="http://framework.zend.com/manual/en/zend.ldap.api.html" target="_blank">the Zend Framework documentation</a> for a list of possible options</p>

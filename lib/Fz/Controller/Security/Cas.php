@@ -12,7 +12,7 @@ class Fz_Controller_Security_Cas extends Fz_Controller_Security_Abstract {
     protected function _doSecure () {
         // phpCAS is not php5-compliant, we disable error reporting
         $errorReporting = ini_get ('error_reporting');
-        error_reporting ($errorReporting & ~E_STRICT & ~E_NOTICE);
+        error_reporting (0);
 
         $this->initCasClient ();
 

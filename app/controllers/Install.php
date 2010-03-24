@@ -83,7 +83,7 @@ class App_Controller_Install extends Fz_Controller {
             $config = merge_config($_POST['config'], $config);
 
             // checking rights
-            $this->checkRights (&$errors, &$config);
+            $this->checkRights ($errors, $config);
 
             // Checking database connection
             $this->checkDatabaseConf ($errors, $config);

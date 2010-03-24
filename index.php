@@ -12,7 +12,7 @@ set_include_path (get_include_path ()
 
 require_once 'Zend/Loader/Autoloader.php';
 // Autoloading for Fz_* classes in lib/ dir
-Zend_Loader_Autoloader::getInstance ()->registerNamespace ('Fz_'); ;
+Zend_Loader_Autoloader::getInstance ()->registerNamespace ('Fz_');
 // Autoloading for App_Model_* & App_Controller_* classes in app/ dir
 //(automagicaly added to Zend autoloaders)
 $autoloader = new Zend_Application_Module_Autoloader (array (

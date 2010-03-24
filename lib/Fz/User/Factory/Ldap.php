@@ -14,7 +14,7 @@ class Fz_User_Factory_Ldap extends Fz_User_Factory_Abstract {
      * @return array        User attributes
      */
     public function _findById ($id) {
-        $entry = $this->getLdap()->getEntry ('uid='.$id.','.$this->getOption('baseDn'));
+        $entry = $this->getLdap()->getAccount ($id);
         foreach ($entry as $k => $v)
             if (is_array ($v) && count ($v) === 1)
                 $entry [$k] = $v[0];
@@ -31,7 +31,7 @@ class Fz_User_Factory_Ldap extends Fz_User_Factory_Abstract {
      */
     protected function _findByUsernameAndPassword ($username, $password) {
         // Let's try to connect to the ldap server with the specified user/password
-        $ldapTest = new Zend_Ldap ($this->_options);
+        $ldapTest = new Fz_Ldap ($this->_options);
         try {
             $ldapTest->bind ($username, $password);
             return $this->_findById ($username);
@@ -43,11 +43,11 @@ class Fz_User_Factory_Ldap extends Fz_User_Factory_Abstract {
 
     /**
      *
-     * @return Zend_Ldap
+     * @return Fz_Ldap
      */
     protected function getLdap () {
         if ($this->_ldapCon === null) {
-            $this->_ldapCon = new Zend_Ldap ($this->_options);
+            $this->_ldapCon = new Fz_Ldap ($this->_options);
             try {
                 $this->_ldapCon->bind();
             } catch (Zend_Ldap_Exception $zle) {

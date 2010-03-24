@@ -13,9 +13,9 @@ function fz_log ($message, $type = null, $vars = null) {
     if ($vars !== null)
         $message .= var_export ($vars, true)."\n";
 
-    $date = new Zend_Date ();
+    //echo '"'.__NAMESPACE__.'"' ; die;
     $message = str_replace("\n", "\n   ", $message);
-    $message = '['.$date->toString(Zend_Date::ISO_8601).'] ['
+    $message = '['.strftime ('%F %T').'] ['
             .$_SERVER["REMOTE_ADDR"].'] '
             .$message."\n";
 
