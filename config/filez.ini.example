@@ -61,6 +61,15 @@ your_logo               = "resources/images/uapv-logo.gif"
 ; Custom CSS
 ; custom_css              = "resources/css/custom.css"
 
+; show filez credits at the bottom of the pages
+show_credit = true
+
+; Url where the user will find Filez documentation
+help_url = help ; Relative or absolute
+
+; Where does the user reports bug ?
+bug_report_href = mailto:some-one@somewhere.com ; or http://your-bug-tracker.com
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Database configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
