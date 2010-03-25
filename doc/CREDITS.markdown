@@ -22,6 +22,7 @@ Librairies
 * jQuery                <http://www.jquery.com>
 * jQuery UI             <http://www.jqueryui.com>
 * jQuery Form Plugin    <http://jquery.malsup.com/form/>
+* PHP Markdown          <http://michelf.com/projects/php-markdown/>
 
 Graphics
 --------

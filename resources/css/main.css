@@ -796,3 +796,17 @@ div.lim-debug hr {display: none;}
     padding: 1em;
     font-weight: bold;
 }
+
+/* documentation */
+article.doc section {
+  padding: 1em;
+}
+article.doc section h1 {
+  padding: 1em 0 0.5em 0;
+}
+article.doc section h1 {
+  padding: 0.7em 0 0.3em 0;
+}
+article.doc section p {
+  padding: 0.3em 0;
+}

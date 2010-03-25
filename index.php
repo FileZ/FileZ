@@ -163,6 +163,10 @@ fz_dispatch_get  ('/logout'                     ,'Auth'        ,'logout');
 // Filez-1.x url compatibility
 fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne');
 
+// User documentation
+fz_dispatch_get  ('/help'                       ,'Help'        ,'index');
+fz_dispatch_get  ('/help/:page'                 ,'Help'        ,'showPage');
+
 // Download controller
 fz_dispatch_get  ('/:file_hash'                 ,'File'        ,'preview');
 fz_dispatch_get  ('/:file_hash/download'        ,'File'        ,'download');

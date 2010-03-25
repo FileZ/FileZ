@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,13 +20,12 @@
 
     <?php echo partial ('layout/_header.php', (isset ($user) ? array('user' => $user) : array())); ?>
 
-    <article>
-      <div class="notif error">
-        <?php echo $content ?>
-      </div>
+    <article class="doc">
+      <h1>Documentation</h1>
+      <section>
+      <?php echo $content ?>
+      </section>
     </article>
-
-    <?php echo partial ('layout/_footer.php', (isset ($user) ? array('user' => $user) : array())); ?>
 
   </body>
 </html>

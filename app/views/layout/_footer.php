@@ -17,7 +17,7 @@
 
       <div id="support">
         <?php if (fz_config_get('looknfeel', 'help_url')): ?>
-          <a href="<?php echo fz_config_get('looknfeel', 'help_url') ?>" class="help"><?php echo __('Find help') ?></a>
+          <a href="<?php echo url_for (fz_config_get('looknfeel', 'help_url')) ?>" class="help"><?php echo __('Find help') ?></a>
         <?php endif; ?>
         <?php if (fz_config_get('looknfeel', 'bug_report_href')): ?>
           <a href="<?php echo fz_config_get('looknfeel', 'bug_report_href') ?>" class="bug"><?php echo __('Report a bug') ?></a>
