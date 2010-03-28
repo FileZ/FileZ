@@ -30,13 +30,13 @@ class Fz_Db {
      * Generic function to retrieve multiple rows and create objects
      *
      * @param   string $sql 
-     * @param   string $class_name  Class used for object instanciation (?) 
+     * @param   string $className  Class used for object instanciation (?) 
      * @param   string $params      Params used to prepare the query
      * @param   string $limit       Limit the number of result (default: O = no limit)
      *
-     * @return  array   Array of $class_name objects
+     * @return  array   Array of $className objects
      */
-    public static function findObjectsBySQL ($sql, $class_name = PDO::FETCH_OBJ, $params = array (), $limit = 0) {
+    public static function findObjectsBySQL ($sql, $className = PDO::FETCH_OBJ, $params = array (), $limit = 0) {
         $db = self::getConnection ();
 
         if ($limit > 1)
@@ -45,8 +45,11 @@ class Fz_Db {
         $result = array ();
         $stmt = $db->prepare ($sql);
         $stmt->execute ($params);
-        while ($obj = $stmt->fetchObject ($class_name, array (true)))
+        while ($obj = $stmt->fetchObject ($className, array (true))) {
+            if (method_exists($obj, ('resetModifiedColumns')))
+                $obj->resetModifiedColumns ();
             $result[] = $obj;
+        }
 
         return ($limit == 1 ?
             (count ($result) > 0 ? $result [0] : null) :
@@ -58,24 +61,24 @@ class Fz_Db {
      * Generic function to retrieve one row
      *
      * @param   string $sql
-     * @param   string $class_name  Class used for object instanciation (?)
+     * @param   string $className  Class used for object instanciation (?)
      * @param   string $params      Params used to prepare the query
      *
-     * @return  object  Object of clas $class_name
+     * @return  object  Object of clas $className
      */
-    public static function findObjectBySQL ($sql, $class_name = PDO::FETCH_OBJ, $params = array ()) {
-        return self::findObjectsBySQL ($sql, $class_name, $params, 1);
+    public static function findObjectBySQL ($sql, $className = PDO::FETCH_OBJ, $params = array ()) {
+        return self::findObjectsBySQL ($sql, $className, $params, 1);
     }
 
     /**
      * Generic function to retrieve multiple rows as an array
      *
      * @param   string $sql
-     * @param   string $class_name  Class used for object instanciation (?)
+     * @param   string $className  Class used for object instanciation (?)
      * @param   string $params      Params used to prepare the query
      * @param   string $limit       Limit the number of result (default: O = no limit)
      *
-     * @return  array   Array of $class_name objects
+     * @return  array   Array of $className objects
      */
     public static function findAssocBySQL ($sql, $params = array (), $limit = 0) {
         $db = self::getConnection ();

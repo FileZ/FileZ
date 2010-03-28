@@ -25,6 +25,7 @@
 abstract class Fz_Db_Table_Row_Abstract {
 
     protected $_updatedColumns  = array ();
+    protected $_data            = array ();
     protected $_exists          = false;
     protected $_tableClass      ;
 
@@ -44,8 +45,8 @@ abstract class Fz_Db_Table_Row_Abstract {
      * @return mixed            Column value
      */
     public function __get ($var) {
-        if (property_exists ($this, $var))
-            return $this->$var;
+        if (array_key_exists ($var, $this->_data))
+            return $this->_data [$var];
         else if (in_array ($var, $this->getTable()->getTableColumns ()))
             return null;
         else
@@ -59,19 +60,19 @@ abstract class Fz_Db_Table_Row_Abstract {
         if (method_exists ($this, $method))
             return call_user_func_array (array ($this, $method), $args);
 
-        if (substr ($method, 0, 3) != 'get')
-            throw new Exception ('Unknown method "'.$method.'"');
-
         $var = substr ($method, 3);
-
         $var[0] = strtolower ($var[0]);
         $func = create_function ('$c', 'return "_" . strtolower ($c[1]);');
         $var = preg_replace_callback ('/([A-Z])/', $func, $var);
 
-        return $this->$var;
+        if (substr ($method, 0, 3) == 'get') {
+            return $this->$var;
+        } else   if (substr ($method, 0, 3) == 'set') {
+            return $this->$var = $args[0]; // TODO check args size & trigger error
+        } else {
+            throw new Exception ('Unknown method "'.$method.'"');
+        }
     }
-
-
 
     /**
      * Table row setter from column name. ex: $row->column_name = 'foo';
@@ -82,8 +83,7 @@ abstract class Fz_Db_Table_Row_Abstract {
      */
     public function __set ($var, $value) {
         $method = 'set'.self::camelify ($var);
-        $this->$var = $value;
-
+        $this->_data [$var] = $value;
         $this->_updatedColumns [] = $var;
         return $value;
     }
@@ -143,7 +143,7 @@ abstract class Fz_Db_Table_Row_Abstract {
         else
             $this->insert ();
 
-        $this->_updatedColumns = array ();
+        $this->resetModifiedColumns();
         $this->_exists = true;
 
         return $this;
@@ -157,16 +157,21 @@ abstract class Fz_Db_Table_Row_Abstract {
     protected function update () {
         $db = option ('db_conn');
         $table = $this->getTableName ();
-        $obj_columns = $this->getUpdatedColumns ();
+        $columnsName = $this->getUpdatedColumns ();
+
+        if (count ($columnsName) == 0)
+            return $this;
 
         $sql =
             "UPDATE `$table` SET " .
-            implode (', ', array_map (array ('Fz_Db','nameEqColonName'), $obj_columns)) .
+            implode (', ', array_map (array ('Fz_Db','nameEqColonName'), $columnsName)) .
             ' WHERE id = :id';
+
+        fz_log ($sql, FZ_LOG_DEBUG);
 
         $stmt = $db->prepare ($sql);
         $stmt->bindValue (':id', $this->id);
-        foreach ($obj_columns as $column) {
+        foreach ($columnsName as $column) {
             $stmt->bindValue (':' . $column, $this->$column);
         }
 
@@ -190,6 +195,8 @@ abstract class Fz_Db_Table_Row_Abstract {
             implode (', ', $obj_columns) .
             ') VALUES (' .
             implode (', ', array_map (array ('Fz_Db','addColon'), $obj_columns)) . ')';
+
+        fz_log ($sql, FZ_LOG_DEBUG);
 
         $stmt = $db->prepare ($sql);
         foreach ($obj_columns as $column) {
@@ -257,5 +264,12 @@ abstract class Fz_Db_Table_Row_Abstract {
      */
     protected function setExist ($exists) {
         $this->_exists = $exists;
+    }
+
+    /**
+     * 
+     */
+    public function resetModifiedColumns () {
+        $this->_updatedColumns = array ();
     }
 }
