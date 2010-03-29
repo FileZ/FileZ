@@ -193,8 +193,11 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @return boolean
      */
     public function isOwner ($user) {
-        return ($this->uploader_email == $user ['email'] // check for invited users
-             || $this->uploader_uid   == $user ['id']); // or registered users
+        return is_array ($user) && (
+            (array_key_exists ('email', $user) // check for invited users
+                && $this->uploader_email == $user ['email'])
+         || (array_key_exists ('id', $user) // or registered users
+                && $this->uploader_uid   == $user ['id']));
     }
 
     /**

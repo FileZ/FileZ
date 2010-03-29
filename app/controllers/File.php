@@ -43,7 +43,7 @@ class App_Controller_File extends Fz_Controller {
      */
     public function downloadAction () {
         $file = $this->getFile ();
-        if (! $file->isOwner($this->getUser ())) {
+        if (! $file->isOwner ($this->getUser ())) {
             if (! $file->isAvailable ()) {
                 halt (HTTP_FORBIDDEN, __('File is not available for download'));
             } else if (! empty ($file->password)
@@ -56,7 +56,7 @@ class App_Controller_File extends Fz_Controller {
         $file->download_count = $file->download_count + 1;
         $file->save ();
         return $this->sendFile ($file);
-        }
+    }
 
     /**
      * Extend lifetime of a file

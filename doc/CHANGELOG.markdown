@@ -4,6 +4,7 @@ Filez-2.0.0 (WIP)
 * Ldap user factory now allow to retrieve accounts from baseDn subtrees
 * Fixed PHP-5.3 incompatibilities
 * Added "show_credit", "help_url" and "bug_report_href" in the looknfeel section of filez.ini
+* Added user documentation
 
 Filez-2.0.0-BETA2
 * Added 'password' field to fz_file table. You need to run 'db.migration-filez-2.0.0-1.sql'

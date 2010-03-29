@@ -89,6 +89,16 @@ abstract class Fz_Db_Table_Row_Abstract {
     }
 
     /**
+     *
+     * @param  string $var    Column name
+     * @return boolean
+     */
+    public function __isset ($var) {
+        return in_array ($var, $this->getTable()->getTableColumns ());
+    }
+
+
+    /**
      * Transform a string from underscore_format to CamelFormat
      *
      * @param   string $var
