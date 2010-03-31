@@ -8,11 +8,11 @@
   
   # protect other directories
   RedirectMatch 404 /\\.svn
-  RedirectMatch 404 /scripts
-  RedirectMatch 404 /lib
-  RedirectMatch 404 /app
-  RedirectMatch 404 /config
-  RedirectMatch 404 /i18n
+  RedirectMatch 404 ^/scripts
+  RedirectMatch 404 ^/lib
+  RedirectMatch 404 ^/app
+  RedirectMatch 404 ^/config
+  RedirectMatch 404 ^/i18n
 
   # test string is a valid files or directory
   RewriteCond %{SCRIPT_FILENAME} !-f
