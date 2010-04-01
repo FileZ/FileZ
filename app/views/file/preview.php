@@ -30,8 +30,9 @@
           <?php echo __('If not, click here') ?>
         </a>.
       <script type="text/javascript">
+        function startDownload () {window.location= "<?php echo $file->getDownloadUrl ()?>/download";}
         $(document).ready (function() {
-          window.location= "<?php echo $file->getDownloadUrl ()?>/download";
+          setTimeout ('startDownload()', 1000); // Give chrome some time to finish downloading images on the page
         });
       </script>
     <?php else: ?>
