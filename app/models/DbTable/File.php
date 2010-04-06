@@ -28,6 +28,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         'file_name',
         'uploader_email',
         'file_size',
+        'nom_physique',
         'available_from',
         'available_until',
         'download_count',
