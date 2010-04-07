@@ -170,6 +170,11 @@ class App_Controller_File extends Fz_Controller {
         ));
         $mail->setBodyText ($msg);
         $mail->setSubject  ($subject);
+        $mail->setReplyTo  ($user['email'],
+                            $user['firstname'].' '.$user['lastname']);
+        $mail->clearFrom();
+        $mail->setFrom     ($user['email'],
+                            $user['firstname'].' '.$user['lastname']);
 
         $emailValidator = new Zend_Validate_EmailAddress();
         foreach (explode (' ', $_POST['to']) as $email) {
@@ -190,6 +195,7 @@ class App_Controller_File extends Fz_Controller {
             return $this->returnSuccessOrRedirect ('/');
         }
         catch (Exception $e) {
+            fz_log ('Error while sending email', FZ_LOG_ERROR, $e);
             $msg = __('An error occured during email submission. Please try again.');
             return $this->returnError ($msg, 'file/email.php');
         }

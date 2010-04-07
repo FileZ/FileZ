@@ -35,7 +35,6 @@ class Fz_Controller_Security_Cas extends Fz_Controller_Security_Abstract {
 
         $this->initCasClient ();
 
-        //phpCAS::handleLogoutRequests ();
         phpCAS::setNoCasServerValidation ();
         phpCAS::forceAuthentication (); // if necessary the user will be
                                         // redirected to the cas server

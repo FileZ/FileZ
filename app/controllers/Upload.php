@@ -33,6 +33,7 @@ class App_Controller_Upload extends Fz_Controller {
     public function startAction () {
         $this->secure ();
         fz_log ('uploading');
+        fz_log ('uploading', FZ_LOG_DEBUG, $_FILES);
         $response = array (); // returned data
 
         // check if request exceed php.ini post_max_size

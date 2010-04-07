@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: filez-2.0-RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-29 12:22+0100\n"
-"PO-Revision-Date: 2010-03-29 12:22+0100\n"
+"POT-Creation-Date: 2010-04-07 15:42+0100\n"
+"PO-Revision-Date: 2010-04-07 15:42+0100\n"
 "Last-Translator: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "MIME-Version: 1.0\n"
@@ -54,11 +54,11 @@ msgstr ""
 "\n"
 "-----NE REPONDEZ PAS A CE MESSAGE !Il a été généré automatiquement, votre réponse n'aboutirait pas !"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:150
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:151
 msgid "[FileZ] \"%file_name%\" uploaded successfuly"
 msgstr "[Filez] Votre fichier \"%file_name%\" a correctement été envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:152
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:153
 msgid "email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)"
 msgstr ""
 "Bonjour,\n"
@@ -73,27 +73,27 @@ msgstr ""
 "\n"
 "-----NE REPONDEZ PAS A CE MESSAGE !Il a été généré automatiquement, votre réponse n'aboutirait pas !"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:228
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:229
 msgid "The file was successfuly uploaded"
 msgstr "Le fichier a été correctement envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:243
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:244
 msgid "An error occured while uploading the file."
 msgstr "Une erreur s'est produite pendant l'envoi du fichier."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:260
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:261
 msgid "The uploaded file exceeds the max file size."
 msgstr "La taille du fichier dépasse la taille maximale.."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:265
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:266
 msgid "The uploaded file was only partially uploaded."
 msgstr "Le fichier n'a été que partiellement envoyé."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:269
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:270
 msgid "No file was uploaded."
 msgstr "Aucun fichier n'a été envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:272
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:273
 msgid "You exceeded your disk space quota (%space%)."
 msgstr "Vous avez dépassé votre quota disque (%space%)."
 
@@ -122,7 +122,7 @@ msgid "You can't extend a file lifetime more than %x% times"
 msgstr "Vous ne pouvez pas augmenter la durée de vie d'un fichier plus de %x% fois"
 
 #: /media/data/dev/filez-cru/trunk/app/controllers/File.php:99
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:228
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:234
 msgid "There is no file for this code"
 msgstr "Aucun fichier n'existe pour ce code"
 
@@ -144,15 +144,15 @@ msgstr ""
 "Voici le contenu de son message :\n"
 "%msg%"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:182
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:187
 msgid "Email address \"%email%\" is incorrect, please correct it."
 msgstr "L'adresse email \"%email%\" est incorrecte, veuillez la corriger."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:193
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:199
 msgid "An error occured during email submission. Please try again."
 msgstr "Une erreur est survenue pendant l'envoi du fichier. Veuillez réessayer."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:259
+#: /media/data/dev/filez-cru/trunk/app/controllers/File.php:265
 msgid "You are not the owner of the file"
 msgstr "Vous n'êtes pas le propriétaire du fichier"
 
@@ -181,15 +181,15 @@ msgstr "Votre téléchargement devrait démarrer automatiquement..."
 msgid "If not, click here"
 msgstr "Si ce n'est pas le cas, cliquez ici"
 
-#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:40
+#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:41
 msgid "You need a password to download this file"
 msgstr "Vous devez entrer un mot de passe pour pouvoir télécharger ce fichier"
 
-#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:43
+#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:44
 msgid "Download"
 msgstr "Télécharger"
 
-#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:47
+#: /media/data/dev/filez-cru/trunk/app/views/file/preview.php:48
 msgid "The file is not available yet."
 msgstr "Le fichier n'est pas encore disponible au téléchargement"
 

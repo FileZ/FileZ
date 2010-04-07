@@ -25,6 +25,9 @@ define ('FZ_LOG_CRON',       'cron');
 define ('FZ_LOG_CRON_ERROR', 'cron-error');
 
 function fz_log ($message, $type = null, $vars = null) {
+    if ($type == FZ_LOG_DEBUG && option ('debug') !== true)
+        return;
+
     if ($type !== null)
         $type = '-'.$type;
 
@@ -32,7 +35,6 @@ function fz_log ($message, $type = null, $vars = null) {
     if ($vars !== null)
         $message .= var_export ($vars, true)."\n";
 
-    //echo '"'.__NAMESPACE__.'"' ; die;
     $message = str_replace("\n", "\n   ", $message);
     $message = '['.strftime ('%F %T').'] ['
             .$_SERVER["REMOTE_ADDR"].'] '
@@ -50,10 +52,6 @@ function fz_log ($message, $type = null, $vars = null) {
 }
 
 function debug_msg ($message) {
-    /*/ FIXME
-    if (fz_config_get('app', 'debug'))
-        return;
-    /**/
     $messages = option ('debug_msg');
     if (! is_array ($messages))
         $messages = array ();
