@@ -130,8 +130,11 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @return string
      */
     public function getDownloadUrl () {
-        // TODO passer en https si nécessaire
-        return 'http://'.$_SERVER["SERVER_NAME"].url_for ('/').$this->getHash ();
+        $url = 'http';
+        if (fz_config_get ('app', 'https') == 'always') {
+            $url .= 's';
+        }
+        return $url.'://'.$_SERVER["SERVER_NAME"].url_for ('/').$this->getHash ();
     }
 
     /**

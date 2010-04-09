@@ -94,7 +94,10 @@ abstract class Fz_Controller_Security_Abstract {
      * Destroy the user session
      */
     public function logout () {
-        fz_log ('user id:'.$this->getUserId ().' logs out.');
+        $uid = $this->getUserId ();
+        if ($uid !== null)
+            fz_log ('user id:'.$uid.' logs out.');
+        
         session_unset();
         session_destroy();
     }

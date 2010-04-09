@@ -155,8 +155,10 @@ class App_Controller_Upload extends Fz_Controller {
                   'available_from'  => $file->getAvailableFrom()->toString  (Zend_Date::DATE_LONG),
                   'available_until' => $file->getAvailableUntil()->toString (Zend_Date::DATE_LONG),
                   'file_url'  => $file->getDownloadUrl(),
-                  'filez_url' => 'http://'.$_SERVER["SERVER_NAME"].url_for ('/')));
-                                // TODO use https if needed        
+                  'filez_url' => ((fz_config_get ('app', 'https') == 'always' ?
+                        'https':'http').'://'.$_SERVER["SERVER_NAME"].url_for ('/'))
+            )
+        );
 
         $mail = $this->createMail();
         $mail->setBodyText ($msg);

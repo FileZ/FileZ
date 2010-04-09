@@ -31,6 +31,12 @@ class App_Controller_Auth extends Fz_Controller {
         if ($this->getAuthHandler ()->isSecured ())
             redirect_to ('/');
 
+        if (fz_config_get ('app', 'https') != 'off' && ! $_SERVER['HTTPS']) {
+            stop_and_exit(false);
+            header('Location: '.'https://'.$_SERVER["SERVER_NAME"].url_for ('/login'), true);
+            exit;
+        }
+
         set ('username', (array_key_exists ('username', $_REQUEST) ?
             $_REQUEST['username'] : ''));
 
@@ -43,14 +49,14 @@ class App_Controller_Auth extends Fz_Controller {
     public function loginAction () {
         $authHandler = $this->getAuthHandler ();
         if ($authHandler->isSecured ())
-            redirect_to ('/');
+            $this->redirectHome ();
 
         $user = $authHandler->login ($_POST['username'], $_POST['password']);
         if ($user === null) {
             flash_now ('error', __('Wrong username or password'));
             return $this->loginFormAction (); // forward to login form
         } else {
-            redirect_to ('/');
+            $this->redirectHome ();
         }
     }
 
@@ -59,6 +65,17 @@ class App_Controller_Auth extends Fz_Controller {
      */
     public function logoutAction () {
         $this->getAuthHandler ()->logout ();
-        redirect_to ('/');
+        $this->redirectHome ();
+    }
+
+    private function redirectHome () {
+        $location = 'http';
+        if (fz_config_get ('app', 'https') == 'always') {
+            $location .= 's';
+        }
+        $location .= '://'.$_SERVER["SERVER_NAME"].url_for ('/');
+        stop_and_exit(false);
+        header('Location: '.$location, true);
+        exit;
     }
 }

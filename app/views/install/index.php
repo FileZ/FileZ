@@ -65,6 +65,11 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <?php echo config_form_row ('app', 'log_dir'    , 'Log directory (absolute dir)'    , 'text', $config) ?>
     <?php echo config_form_row ('app', 'user_quota' , 'Default user quota'      , 'text', $config) ?>
     <?php echo config_form_row ('app', 'admin_email', 'Filez administor email (used to test the smtp server and in case of fatal errors)' , 'text', $config) ?>
+    <?php echo config_form_row ('app', 'https', 'Use https' , 'select', $config, array (
+        'off'        => 'Never',
+        'login_only' => 'On login only',
+        'always'     => 'Always (not fully implemented yet)',
+    )) ?>
   </fieldset>
 
   <fieldset>

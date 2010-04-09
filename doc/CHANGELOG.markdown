@@ -7,6 +7,7 @@ Filez-2.0.0 (WIP)
 * Added user documentation
 * Email are now sent under the name of the connected user
 * Removed debug output when application isn't in debug mode
+* https support on login form
 
 Filez-2.0.0-BETA2
 * Added 'password' field to fz_file table. You need to run 'db.migration-filez-2.0.0-1.sql'

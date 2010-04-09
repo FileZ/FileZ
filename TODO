@@ -20,5 +20,6 @@ in x? minor releases
 * Ajouter d'autre méthodes d'authentification (OAuth, OpenId, Shibboleth, etc...)
 * Permettre l'upload de plusieurs fichiers et les compresser dans 1 seul ZIP à la place de l'utilisateur
 * Détecter les attaques brute force visant à télécharger l'intégralité des fichiers en testant tous les codes d'url possibles
+* Détection de virus avec clamav au autre
 
 
