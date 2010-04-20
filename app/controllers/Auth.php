@@ -28,17 +28,16 @@ class App_Controller_Auth extends Fz_Controller {
      * Display a login form
      */
     public function loginFormAction () {
+        $https = fz_config_get ('app', 'https');
+
         if ($this->getAuthHandler ()->isSecured ())
-            redirect_to ('/');
+            fz_redirect_to ('/', ($https == 'always'));
 
-        if (fz_config_get ('app', 'https') != 'off' && ! $_SERVER['HTTPS']) {
-            stop_and_exit(false);
-            header('Location: '.'https://'.$_SERVER["SERVER_NAME"].url_for ('/login'), true);
-            exit;
-        }
+        if ($https != 'off')
+            fz_force_https ();
 
-        set ('username', (array_key_exists ('username', $_REQUEST) ?
-            $_REQUEST['username'] : ''));
+        set ('username', (array_key_exists ('username', $_POST) ?
+            $_POST['username'] : ''));
 
         return html ('auth/loginForm.php');
     }
@@ -69,13 +68,6 @@ class App_Controller_Auth extends Fz_Controller {
     }
 
     private function redirectHome () {
-        $location = 'http';
-        if (fz_config_get ('app', 'https') == 'always') {
-            $location .= 's';
-        }
-        $location .= '://'.$_SERVER["SERVER_NAME"].url_for ('/');
-        stop_and_exit(false);
-        header('Location: '.$location, true);
-        exit;
+        return fz_redirect_to ('/', (fz_config_get ('app', 'https') == 'always'));
     }
 }

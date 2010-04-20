@@ -121,7 +121,9 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      */
     public function findByOwnerOrderByUploadDateDesc ($uid) {
         $sql = 'SELECT * FROM '.$this->getTableName ()
-              .' WHERE uploader_uid=:uid ORDER BY created_at DESC';
+              .' WHERE uploader_uid=:uid '
+              .' AND  available_until >= CURRENT_DATE() '
+              .' ORDER BY created_at DESC';
         return $this->findBySql ($sql, array (':uid' => $uid));
     }
 

@@ -81,3 +81,56 @@ function not_found($errno, $errstr, $errfile=null, $errline=null)
   $msg = h(rawurldecode($errstr));
   return html('<h1>'.__('Page not found')." :</h1><p><code>{$msg}</code></p>", error_layout());
 }
+
+
+/**
+ * Tells if the request protocol is HTTPS
+ */
+function fz_is_request_secured () {
+    return (
+        (isset($_SERVER['HTTPS'])                  && (strtolower($_SERVER['HTTPS'])          == 'on' || $_SERVER['HTTPS']          == 1)) ||
+        (isset($_SERVER['HTTP_SSL_HTTPS'])         && (strtolower($_SERVER['HTTP_SSL_HTTPS']) == 'on' || $_SERVER['HTTP_SSL_HTTPS'] == 1)) ||
+        (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&  strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'https')
+    );
+}
+
+/**
+ * Simple wrapper for Limonade url_for () function
+ *
+ * @param string  $url
+ * @param boolean $secured  Whether to use https or not
+ * @return string
+ */
+function fz_url_for ($url, $secured = false) {
+    if (fz_is_request_secured () && $secured === false)
+        $url =  'http://'.$_SERVER["SERVER_NAME"].url_for ($url);
+    else if (! fz_is_request_secured () && $secured === true)
+        $url =  'https://'.$_SERVER["SERVER_NAME"].url_for ($url);
+
+    return $url;
+}
+
+/**
+ * Simple wrapper for Limonade redirect_to () function
+ *
+ * @param string  $url
+ * @param boolean $secured  Whether to use https or not
+ * @return string
+ */
+function fz_redirect_to ($url, $secured = false) {
+    return redirect_to (fz_url_for ($url, $secured));
+}
+
+/**
+ * If the request wasn't made with https. The user will be redirected to the
+ * https one.
+ *
+ * @return void
+ */
+function fz_force_https () {
+    if (fz_is_request_secured ())
+        return;
+
+    redirect_to ('https://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
+}
+

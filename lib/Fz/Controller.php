@@ -87,7 +87,8 @@ class Fz_Controller {
     }
 
     /**
-     * 
+     * Tells if the request was made from an xml http request object
+     *
      * @return boolean
      */
     protected function isXhrRequest () {
