@@ -72,7 +72,7 @@ class Fz_Controller_Security_Cas extends Fz_Controller_Security_Abstract {
             phpCAS::setDebug();
             phpCAS::client (CAS_VERSION_2_0,
                 $this->getOption ('cas_server_host', 'localhost'),
-                $this->getOption ('cas_server_port', 443),
+          (int) $this->getOption ('cas_server_port', 443),
                 $this->getOption ('cas_server_path', ''),
                 false); // Don't call session_start again
             $this->_casInitialized = true;
