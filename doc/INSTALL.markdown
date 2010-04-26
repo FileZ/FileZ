@@ -25,60 +25,30 @@ Installation
         tar -xvvf filez-2.0.tar.gz;
         cp filez-2.0/* filez_web_root
 
-* Create a new database or reuse a previous one :
+* Point your browser to filez document root and follow install instructions
 
-  * if you want de migrate the database from a previous installation of filez-1.x :
-        mysql -h sql_host -u filez_user -p filez_db_name < config/db/migration-filez-1.x.sql
+* That's all !
 
-  * otherwise create a new one :
-        mysql -h sql_host -u filez_user -p filez_db_name < config/db/schema.sql
+Upgrade from Filez-1.x
+======================
 
-* Edit Filez config (See next parapgraph)
+Filez-2 allows you to use your the same database as your previous installation.
+Actually your database schema will be updated so you should backup your database,
+filez source files, and keep the uploaded files.
 
-* Make sure the upload dir & log dir are writeable by the web server
+All you have to do is remove all files from your old filez install (keep uploaded
+files) and copy filez-2 files instead.
 
-      sudo chown www-data:www-data [upload_dir] [log_dir]
-
-* Edit your vhost. Example '/etc/apache2/sites-available/filez' :
-
-        <VirtualHost *:80>
-            ServerAdmin webmaster@localhost
-            ServerName  filez-test.univ-avignon.fr
-            php_admin_value post_max_size       750M
-            php_admin_value upload_max_filesize 750M
-            php_admin_value max_execution_time  1200
-            php_admin_value upload_tmp_dir "/media/data/tmp"
-
-                DocumentRoot /var/www/filez-test.univ-avignon.fr
-                <Directory />
-                        Options FollowSymLinks
-                        AllowOverride All
-                </Directory>
-                <Directory /var/www/filez-test.univ-avignon.fr>
-                        Options Indexes FollowSymLinks MultiViews
-                        AllowOverride All
-                        Order allow,deny
-                        allow from all
-                </Directory>
-
-                ErrorLog  /var/log/apache2/filez-error.log
-                CustomLog /var/log/apache2/filez-access.log combined
-                LogLevel warn
-        </VirtualHost>
-
-  Then activate it :
-      a2ensite filez && /etc/init.d/apache2 reload
+Then, just follow "Installation" paragraph and fill the configuration form with
+your filez-1 database settings.
 
 
-Configuration details
-=====================
+Advanced configuration
+======================
 
-The easiest method is to start from a copy of the configuration example :
-
-    cp config/filez.ini.example config/filez.ini
-
-filez.ini.example is documented but you may find additional information in the
-next sections, like installing dependencies, etc.
+if you need to edit your configuration afterward, all the configuration is stored
+in config/filez.ini. The following paragraphs will help you to edit this file
+manually.
 
 
 General Configuration
@@ -282,3 +252,31 @@ RHEL / CentOS with PHP version 5.1
 Follow this howto to enable the "filter_var()" function of PHP :
 
 http://www.cyberciti.biz/faq/rhel-cento-linux-install-php-pecl-filter/
+
+Apache virtual host example
+---------------------------
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName  filez-test.univ-avignon.fr
+    php_admin_value post_max_size       750M
+    php_admin_value upload_max_filesize 750M
+    php_admin_value max_execution_time  1200
+    php_admin_value upload_tmp_dir "/media/data/tmp"
+
+        DocumentRoot /var/www/filez-test.univ-avignon.fr
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride All
+        </Directory>
+        <Directory /var/www/filez-test.univ-avignon.fr>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+        </Directory>
+
+        ErrorLog  /var/log/apache2/filez-error.log
+        CustomLog /var/log/apache2/filez-access.log combined
+        LogLevel warn
+</VirtualHost>
