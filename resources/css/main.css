@@ -801,12 +801,25 @@ div.lim-debug hr {display: none;}
 article.doc section {
   padding: 1em;
 }
-article.doc section h1 {
-  padding: 1em 0 0.5em 0;
-}
-article.doc section h1 {
-  padding: 0.7em 0 0.3em 0;
-}
+article.doc section li ,
+article.doc section h1 ,
+article.doc section h2 ,
 article.doc section p {
-  padding: 0.3em 0;
+  padding: 0.5em 0;
+  font-size: 0.9em;
+}
+article.doc section li {
+  margin-left: 2em;
+}
+article.doc section h1 ,
+article.doc section h2 {
+  font-weight: bold;
+}
+article.doc section h1 {
+  padding-top: 1.2em;
+  font-size: 110%;
+}
+article.doc section h2 {
+  padding-top: 1em;
+  font-size: 82%;
 }

@@ -99,3 +99,9 @@ function bytesToShorthand ($size) {
             $size >= 1000       ? (round ($size / 1000, 2).'K') :
                                            $size.'B')));
 }
+
+function doc_img_tag ($name) {
+
+    return '<img src="'.url_for('/').'doc/user/'.option ('locale')->getLanguage ().'/images/'.$name.'" />';
+
+}

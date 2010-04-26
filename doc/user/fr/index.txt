@@ -4,6 +4,36 @@
 FileZ est une application web permettant de déposer et gérer des fichiers destinés
 à être partagés grâce à une URL unique.
 
-# Index
+# Fonctionnalités
 
-En cours de rédaction
+## Déposer des fichiers
+
+<?php echo doc_img_tag ('main_screen.gif', 'Interface principale') ?>
+
+L’interface principale (voir copie d’écran ci-dessus) est le point d’accés de l’application pour la personne souhaitant mettre un fichier en partage. Le formulaire de dépôt d'un fichier (Copie d'écran ci dessous) est accessible
+par le bouton "Envoyer un nouveau fichier" (1).
+
+<?php echo doc_img_tag ('upload_form.gif', 'Formulaire de dépôt de fichier') ?>
+
+Ce formulaire permet de :
+
+* Choisir le fichier à déposer (2)
+* Choisir la date de début de mise à disposition (la date par défaut est le jour courant. Ce paramètre peut être changé dans les paramètres de configuration, voir le readme)
+* Choisir la date de fin de mise à disposition (par défaut trois jours après la date de début. Ce paramètre peut être changé dans les paramètres de configuration, voir le readme)
+* Choisir les options de notification : le propriétaire du fichier peut choisir d’être notifié par mail lorsqu’une personne télécharge le fichier qu’il vient de mettre à disposition.
+
+## Partager un fichier
+
+Une fois le fichier correctement déposé, l’application génère une URL unique. Le propriétaire du fichier choist les personnes avec qui il veut partager le fichier, et leur communique cette URL, où ils pourront récupérer le fichier.
+
+Le propriétaire du fichier transmet cette URL sous sa responsabilité : il est suffisant de connaître l’URL pour pouvoir télécharger le fichier associé.
+
+## Gérer les fichiers déjà déposés
+
+A partir du moment où au moins un fichier a été déposé, un tableau de bord est généré par l’application, listant les fichiers déposés et leurs propriétés (dates de mise à disposition et nom).
+
+En outre, les actions suivantes peuvent être effectuées via ce tableau de bord :
+
+* Renouvellement de la mise à disposition d’un fichier (un jour par clic, dans une limite fixée par l’administrateur)
+* Affichage d’informations sur le fichier (taille, nombre de téléchargements effectués, et l’URL qui permet de le partager )
+* Activation/désactivation des notifications de téléchargement
