@@ -44,10 +44,8 @@ class App_Controller_Install extends Fz_Controller {
             $checks ['apc'] =
                 '<p>APC PHP extension is not installed or misconfigured. '.
                 "APC is only required if you want to display a progress bar during upload.</p>".
-                "<p>To install it run the following commands as root :</p>".
-                "<pre>apt-get install build-essential php5-dev php-pear apache2-prefork-dev\n".
-                "pecl install apc\n".
-                "echo \"extension = apc.so\" >> /etc/php5/apache2/conf.d/apc.ini\n".
+                "<p>To install it (the debian way) run the following commands as root :</p>".
+                "<pre>apt-get install php-apc\n".
                 "echo \"apc.rfc1867 = On\"   >> /etc/php5/apache2/conf.d/apc.ini\n".
                 "apache2ctl restart</pre>";
 
@@ -71,7 +69,7 @@ class App_Controller_Install extends Fz_Controller {
 
         // php.ini settings
         $checks ['upload_tmp_dir'] =
-            '<p>php.ini value of "max_execution_time" is set to "'.ini_get ('upload_tmp_dir')."\" </p>".
+            '<p>php.ini value of "upload_tmp_dir" is set to "'.ini_get ('upload_tmp_dir')."\" </p>".
             "<p>You should check if there is enough place on the device</p>".
             "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
             '<pre>php_admin_value upload_tmp_dir "/media/data/tmp"</pre>';
