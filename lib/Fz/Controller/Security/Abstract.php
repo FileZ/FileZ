@@ -95,11 +95,11 @@ abstract class Fz_Controller_Security_Abstract {
      */
     public function logout () {
         $uid = $this->getUserId ();
-        if ($uid !== null)
+        if ($uid !== null) {
             fz_log ('user id:'.$uid.' logs out.');
-        
-        session_unset();
-        session_destroy();
+            session_unset();
+            session_destroy();
+        }
     }
     
     public function setOptions ($options = array ()) {
