@@ -192,8 +192,10 @@ class App_Controller_Install extends Fz_Controller {
      */
     public function checkUserFactoryDatabaseConf (&$errors, &$config) {
         $oldDb = option ('db_conn'); // save filez db connection
-        try {
-            if (array_key_exists ('db_use_global_conf', $config['user_factory_options'])) {
+
+        if (! array_key_exists ('db_use_global_conf', $config['user_factory_options']) ||
+            $config['user_factory_options']['db_use_global_conf'] == false) {
+            try {
                 $db = new PDO ($config['user_factory_options']['db_server_dsn'],
                                $config['user_factory_options']['db_server_user'],
                                $config['user_factory_options']['db_server_password']);
@@ -201,12 +203,12 @@ class App_Controller_Install extends Fz_Controller {
                 $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $db->exec ('SET NAMES \'utf8\'');
                 option ('db_conn', $db);
+            } catch (Exception $e) {
+                $errors [] = array (
+                    'title' => 'Can\'t connect to the user database',
+                    'msg'   => $e->getMessage ()
+                );
             }
-        } catch (Exception $e) {
-            $errors [] = array (
-                'title' => 'Can\'t connect to the user database',
-                'msg'   => $e->getMessage ()
-            );
         }
 
         try {
@@ -228,7 +230,7 @@ class App_Controller_Install extends Fz_Controller {
             );
         }
 
-        option ('db_conn', $oldDb); // save filez db connection
+        option ('db_conn', $oldDb); // restore filez db connection
     }
 
     /**
