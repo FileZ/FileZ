@@ -36,8 +36,8 @@ function fz_log ($message, $type = null, $vars = null) {
         $message .= var_export ($vars, true)."\n";
 
     $message = str_replace("\n", "\n   ", $message);
-    $message = '['.strftime ('%F %T').'] ['
-            .$_SERVER["REMOTE_ADDR"].'] '
+    $message = '['.strftime ('%F %T').'] '
+            .str_pad ('['.$_SERVER["REMOTE_ADDR"].']', 18)
             .$message."\n";
 
     if (fz_config_get ('app', 'log_dir') !== null) {

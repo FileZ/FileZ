@@ -97,7 +97,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
   <fieldset>
     <legend>Filez Database</legend>
     <?php echo config_form_row ('app', 'filez1_compat', 'Migrate Filez 1.x data. WARNING : Old website will not work anymore, you should backup your database before' , 'checkbox', $config) ?>
-    <?php echo config_form_row ('db', 'dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php">DSN</a> to connect to your database' , 'text', $config) ?>
+    <?php echo config_form_row ('db', 'dsn', '<a href="http://www.php.net/manual/en/pdo.drivers.php" target="_blank">DSN</a> to connect to your database' , 'text', $config) ?>
     <table>
       <tr>
         <td><?php echo config_form_row ('db', 'user', 'Database username' , 'text', $config) ?></td>
