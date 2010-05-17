@@ -58,7 +58,6 @@ class Fz_Controller_Security_Cas extends Fz_Controller_Security_Abstract {
      * Destroy the user session
      */
     public function logout () {
-        parent::logout();
         $errorReporting = ini_get ('error_reporting');
         error_reporting ($errorReporting & ~E_STRICT & ~E_NOTICE);
         $this->initCasClient ();
