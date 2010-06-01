@@ -13,7 +13,9 @@ LOG_DIR=/var/log/filez
 # Url of the CRON web task
 URL=http://filez-url/admin/checkFiles
 
-url_output="`wget -q -O - $URL`"
+LANG=fr
+
+url_output="`wget --header=\"Accept-Language: $LANG\"  -q -O - $URL`"
 
 if test -n "$url_output"; then
     cd $LOG_DIR
