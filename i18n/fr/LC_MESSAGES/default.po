@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: filez-2.0-RC1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-07 15:42+0100\n"
-"PO-Revision-Date: 2010-04-07 15:42+0100\n"
+"POT-Creation-Date: 2010-06-01 17:51+0100\n"
+"PO-Revision-Date: 2010-06-01 18:21+0100\n"
 "Last-Translator: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "MIME-Version: 1.0\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: /media/data/dev/filez-cru/trunk\n"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:143
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:146
 msgid "B"
 msgstr "o"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:143
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:146
 msgid "KB"
 msgstr "Ko"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:143
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:146
 msgid "MB"
 msgstr "Mo"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:143
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:146
 msgid "GB"
 msgstr "Go"
 
-#: /media/data/dev/filez-cru/trunk/app/models/File.php:143
+#: /media/data/dev/filez-cru/trunk/app/models/File.php:146
 msgid "TB"
 msgstr "To"
 
@@ -42,7 +42,7 @@ msgid "[FileZ] your file \"%file_name%\" your file is going to be deleted"
 msgstr "[FileZ] Votre fichier \"%file_name%\" va prochainement être supprimé"
 
 #: /media/data/dev/filez-cru/trunk/app/controllers/Admin.php:60
-msgid "email_delete_notif (%file_name%, %file_url%, %filez_url%)"
+msgid "email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)"
 msgstr ""
 "Bonjour,\n"
 "\n"
@@ -52,7 +52,7 @@ msgstr ""
 "\n"
 "\n"
 "\n"
-"-----NE REPONDEZ PAS A CE MESSAGE !Il a été généré automatiquement, votre réponse n'aboutirait pas !"
+"-----NE REPONDEZ PAS A CE MESSAGE ! Il a été généré automatiquement, votre réponse n'aboutirait pas !"
 
 #: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:151
 msgid "[FileZ] \"%file_name%\" uploaded successfuly"
@@ -73,27 +73,27 @@ msgstr ""
 "\n"
 "-----NE REPONDEZ PAS A CE MESSAGE !Il a été généré automatiquement, votre réponse n'aboutirait pas !"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:229
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:230
 msgid "The file was successfuly uploaded"
 msgstr "Le fichier a été correctement envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:244
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:245
 msgid "An error occured while uploading the file."
 msgstr "Une erreur s'est produite pendant l'envoi du fichier."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:261
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:262
 msgid "The uploaded file exceeds the max file size."
 msgstr "La taille du fichier dépasse la taille maximale.."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:266
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:267
 msgid "The uploaded file was only partially uploaded."
 msgstr "Le fichier n'a été que partiellement envoyé."
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:270
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:271
 msgid "No file was uploaded."
 msgstr "Aucun fichier n'a été envoyé"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:273
+#: /media/data/dev/filez-cru/trunk/app/controllers/Upload.php:274
 msgid "You exceeded your disk space quota (%space%)."
 msgstr "Vous avez dépassé votre quota disque (%space%)."
 
@@ -101,7 +101,7 @@ msgstr "Vous avez dépassé votre quota disque (%space%)."
 msgid "This documentation does not exist"
 msgstr "Cette documentation n'existe pas"
 
-#: /media/data/dev/filez-cru/trunk/app/controllers/Auth.php:50
+#: /media/data/dev/filez-cru/trunk/app/controllers/Auth.php:55
 msgid "Wrong username or password"
 msgstr "Nom d'utilisateur ou mot de passe incorrect"
 

@@ -1,4 +1,4 @@
-PKG=filez-2.0.0-BETA2
+PKG=filez-2.0.0
 PKGPATH=/tmp/$(PKG)
 
 all:

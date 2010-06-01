@@ -57,10 +57,11 @@ class App_Controller_Admin extends Fz_Controller {
             $mail = $this->createMail();
             $subject = __r('[FileZ] your file "%file_name%" your file is going to be deleted', array (
                 'file_name' => $file->file_name));
-            $msg = __r('email_delete_notif (%file_name%, %file_url%, %filez_url%)', array(
-                'file_name' => $file->file_name,
-                'file_url'  => $file->getDownloadUrl(),
-                'filez_url' => url_for('/'),
+            $msg = __r('email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)', array(
+                'file_name'       => $file->file_name,
+                'file_url'        => $file->getDownloadUrl(),
+                'filez_url'       => url_for('/'),
+                'available_until' => $file->getAvailableUntil()->toString (Zend_Date::DATE_FULL),
             ));
             $mail->setBodyText ($msg);
             $mail->setSubject  ($subject);
