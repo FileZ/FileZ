@@ -102,6 +102,8 @@ function bytesToShorthand ($size) {
 
 function doc_img_tag ($name) {
 
-    return '<img src="'.url_for('/').'doc/user/'.option ('locale')->getLanguage ().'/images/'.$name.'" />';
+    return '<div class="img-block">'
+        .'<img src="'.url_for('/').'doc/user/'.option ('locale')->getLanguage ().'/images/'.$name.'" />'
+        .'</div>';
 
 }

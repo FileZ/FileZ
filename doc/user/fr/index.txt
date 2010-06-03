@@ -4,36 +4,44 @@
 FileZ est une application web permettant de déposer et gérer des fichiers destinés
 à être partagés grâce à une URL unique.
 
-# Fonctionnalités
+# Guide d'utilisation
 
-## Déposer des fichiers
+## Déposer un fichier
 
-<?php echo doc_img_tag ('main_screen.gif', 'Interface principale') ?>
+<?php echo doc_img_tag ('screen1.png', 'Interface principale') ?>
 
-L’interface principale (voir copie d’écran ci-dessus) est le point d’accés de l’application pour la personne souhaitant mettre un fichier en partage. Le formulaire de dépôt d'un fichier (Copie d'écran ci dessous) est accessible
-par le bouton "Envoyer un nouveau fichier" (1).
+L’interface principale (voir copie d’écran ci-dessus) est le point d’accés de l’application pour la personne souhaitant mettre un fichier en partage. Pour déposer un fichier <b>cliquez sur "Envoyer un nouveau fichier"</b>, le formulaire de dépôt va alors s'afficher :
 
-<?php echo doc_img_tag ('upload_form.gif', 'Formulaire de dépôt de fichier') ?>
+<?php echo doc_img_tag ('screen3.png', 'Formulaire de dépôt de fichier') ?>
 
-Ce formulaire permet de :
+La seule donnée obligatoire de ce formulaire est le choix du fichier, pour cela <b>cliquez sur "Parcourir"</b>
 
-* Choisir le fichier à déposer (2)
-* Choisir la date de début de mise à disposition (la date par défaut est le jour courant. Ce paramètre peut être changé dans les paramètres de configuration, voir le readme)
-* Choisir la date de fin de mise à disposition (par défaut trois jours après la date de début. Ce paramètre peut être changé dans les paramètres de configuration, voir le readme)
-* Choisir les options de notification : le propriétaire du fichier peut choisir d’être notifié par mail lorsqu’une personne télécharge le fichier qu’il vient de mettre à disposition.
+Les autres champs sont facultatifs mais vous permettent de personnaliser les informations suivantes :
+
+* Nombre de jours pendant lesquels le fichier sera téléchargeable.
+* Date de début de mise à disposition.
+* Commentaire affiché sur la page de téléchargement du fichier.
+* Option de notification : Vous serez prévenu par email lors du dépôt/téléchargement/suppression du fichier.
+* Mot de passe : Vous permet de demander un mot de passe aux personnes souhaitant télécharger votre fichier.
+
+Une fois le formulaire rempli <b>cliquez sur "Envoyer"</b> et patientez jusqu'à obtenir le message suivant :
+
+<?php echo doc_img_tag ('screen5.png', 'Votre fichier a été envoyé') ?>
+
+Votre fichier s'est alors automatiquement ajouté en haut de la liste de vos fichiers partagés.
 
 ## Partager un fichier
 
-Une fois le fichier correctement déposé, l’application génère une URL unique. Le propriétaire du fichier choist les personnes avec qui il veut partager le fichier, et leur communique cette URL, où ils pourront récupérer le fichier.
+Une fois le fichier correctement déposé, l’application génère une URL unique que vous pourrez utiliser pour le transmettre à vos contacts. Pour obtenir l'URL survolez le nom du fichier avec votre souris; l'URL de téléchargement devrait alors apparaître comme sur l'image suivante :
 
-Le propriétaire du fichier transmet cette URL sous sa responsabilité : il est suffisant de connaître l’URL pour pouvoir télécharger le fichier associé.
+<?php echo doc_img_tag ('screen2.png', 'Affichage du fichier') ?>
+
+Pour vous faciliter le partage de cette URL cliquez sur "Envoyer par email".
 
 ## Gérer les fichiers déjà déposés
 
-A partir du moment où au moins un fichier a été déposé, un tableau de bord est généré par l’application, listant les fichiers déposés et leurs propriétés (dates de mise à disposition et nom).
+Les fichiers déposés resteront visible sur cette page pendant la durée de vie que vous aurez défini lors du dépôt. 
 
-En outre, les actions suivantes peuvent être effectuées via ce tableau de bord :
+Cette durée peut être écourtée en cliquant sur "Supprimer le fichier" (voir image ci-dessus).
 
-* Renouvellement de la mise à disposition d’un fichier (un jour par clic, dans une limite fixée par l’administrateur)
-* Affichage d’informations sur le fichier (taille, nombre de téléchargements effectués, et l’URL qui permet de le partager )
-* Activation/désactivation des notifications de téléchargement
+Vous pouvez également alonger la durée de mise à disposition d’un fichier en cliquant sur "Rendre disponible un jour de plus" (un jour par clic, dans une limite fixée par l’administrateur).

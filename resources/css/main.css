@@ -823,3 +823,11 @@ article.doc section h2 {
   padding-top: 1em;
   font-size: 82%;
 }
+article.doc .img-block img {
+  -moz-box-shadow:    0 3px 10px #404040;
+  -webkit-box-shadow: 0 3px 10px #404040;
+}
+article.doc .img-block {
+  text-align: center;
+	margin: 1em 0;
+}
