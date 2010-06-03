@@ -128,7 +128,7 @@ class App_Controller_Install extends Fz_Controller {
 
                 // Try to save the file or display it
                 $configFile = option ('root_dir').'/config/filez.ini';
-                if (! fz_config_save ($config, $file)) {
+                if (! fz_config_save ($config, $configFile)) {
                     $errors [] = array (
                         'title' => 'Can\'t save filez.ini.',
                         'msg'   => 'Put the following code in the file "'
