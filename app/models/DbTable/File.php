@@ -170,7 +170,9 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     public function getTotalDiskSpaceByUser ($user) {
         $result = option ('db_conn')
             ->prepare ('SELECT sum(file_size) FROM `'
-                .$this->getTableName ().'` WHERE uploader_email = ?');
+                .$this->getTableName ()
+                .'` WHERE uploader_email = ?'
+                .' AND  available_until >= CURRENT_DATE() ');
         $result->execute (array ($user['email']));
         return (float) $result->fetchColumn ();
     }
