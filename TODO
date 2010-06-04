@@ -4,7 +4,6 @@ Current release
 
 * Lorsque l'utilisateur n'a pas de fichier uploadé, ne pas afficher "Vos fichiers uploadés"
 * Vérifier le fonctionnement d'une 2eme connexion a une bd pour Fz_User_Factory_Database
-* Faire la doc utilisateur
 * Vérifier si les tables de filez < 1.2 supportent la migration
 
 Next minor release
