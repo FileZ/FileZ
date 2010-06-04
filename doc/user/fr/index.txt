@@ -40,8 +40,8 @@ Pour vous faciliter le partage de cette URL cliquez sur "Envoyer par email".
 
 ## Gérer les fichiers déjà déposés
 
-Les fichiers déposés resteront visible sur cette page pendant la durée de vie que vous aurez défini lors du dépôt. 
+Les fichiers déposés resteront visibles sur cette page pendant la durée de vie que vous aurez définie lors du dépôt. 
 
 Cette durée peut être écourtée en cliquant sur "Supprimer le fichier" (voir image ci-dessus).
 
-Vous pouvez également alonger la durée de mise à disposition d’un fichier en cliquant sur "Rendre disponible un jour de plus" (un jour par clic, dans une limite fixée par l’administrateur).
+Vous pouvez également allonger la durée de mise à disposition d’un fichier en cliquant sur "Rendre disponible un jour de plus" (un jour par clic, dans une limite fixée par l’administrateur).
