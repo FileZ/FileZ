@@ -1,3 +1,5 @@
+SET NAMES 'utf8';
+
 ALTER TABLE `Fichiers` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci ;
 ALTER TABLE `Fichiers` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 ALTER TABLE `Fichiers` 
