@@ -48,11 +48,11 @@ $autoloader->addResourceTypes (array ('controller' => array (
  */
 function configure() {
     option ('session'   , 'filez'); // specific session name
-    option ('views_dir' , option ('root_dir').'/app/views/');
+    option ('views_dir' , option ('root_dir').DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR);
     
     // Layout settings
-    error_layout ('layout/error.html.php');
-    layout       ('layout/default.html.php');
+    error_layout ('layout'.DIRECTORY_SEPARATOR.'error.html.php');
+    layout       ('layout'.DIRECTORY_SEPARATOR.'default.html.php');
 
     require_once_dir (option ('lib_dir'));
 
@@ -82,7 +82,7 @@ function before () {
     // I18N
     Zend_Locale::setDefault (fz_config_get ('app', 'default_locale', 'fr'));
     $currentLocale = new Zend_Locale ('auto');
-    $translate     = new Zend_Translate ('gettext', option ('root_dir').'/i18n', $currentLocale,
+    $translate     = new Zend_Translate ('gettext', option ('root_dir').DIRECTORY_SEPARATOR.'i18n', $currentLocale,
         array('scan' => Zend_Translate::LOCALE_DIRECTORY));
     option ('translate', $translate);
     option ('locale'   , $currentLocale);
@@ -127,7 +127,7 @@ require_once 'lib/limonade.php';
 require_once 'lib/fz_limonade.php';
 require_once 'lib/fz_config.php';
 
-if (fz_config_load (dirname(__FILE__).'/config/') === false) {
+if (fz_config_load (dirname(__FILE__).DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR) === false) {
     option ('installing', true);
 }
 

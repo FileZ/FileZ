@@ -127,7 +127,7 @@ class App_Controller_Install extends Fz_Controller {
                 //$errors = array (); // Reset errors.
 
                 // Try to save the file or display it
-                $configFile = option ('root_dir').'/config/filez.ini';
+                $configFile = option ('root_dir').DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'filez.ini';
                 if (! fz_config_save ($config, $configFile)) {
                     $errors [] = array (
                         'title' => 'Can\'t save filez.ini.',
