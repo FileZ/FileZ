@@ -81,8 +81,12 @@ abstract class Fz_User_Factory_Abstract {
         $p = array ();
         $translation = fz_config_get ('user_attributes_translation', null, array ());
         foreach ($translation as $key => $value) {
-            if (array_key_exists ($value, $profile))
-                $p [$key] = $profile [$value];
+            if (array_key_exists ($value, $profile)) {
+                if (is_array ($profile [$value]))
+                    $p [$key] = (count ($profile[$value]) > 0 ? $profile [$value][0] : null);
+                else
+                    $p [$key] = $profile [$value];
+            }
             else {
                 fz_log ('User_Factory: Missing attribute "'.$value.'" in user profile :', FZ_LOG_ERROR, $profile);
             }
