@@ -4,13 +4,19 @@
 #
 # This script needs to be executed by www user in order to append data to
 # existing log files.
+#
+# IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# Your CRON should execute a copy of this file in order to keep your 
+# configuration unchanged after filez updates.
+#
 # -----------------------------------------------------------------------------
 
 # Directory where log file will be stored. Could be the same as in filez.ini
 # In this case, messages will be appended at the end of the file
 LOG_DIR=/var/log/filez
 
-# Url of the CRON web task
+# Url of filez web root
 URL=http://filez-url.com
 
 LANG=fr
