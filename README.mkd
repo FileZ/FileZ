@@ -1,0 +1,55 @@
+
+FileZ is an application developped by the Avignon University. It provides a way to upload and manage files you want to share through a web interface and unique URLs (http), inspired by the perl/mod_perl application filex.
+
+Features
+========
+
+* PHP/Mysql – Limonade PHP Framework
+* Several authentication scheme : CAS+LDAP, LDAP only, BDD, or your own PHP classes
+* short URL (ex: filez.univ-avignon.fr/x42ni1)
+* Upload progress bar (with non obstructive javascript)
+* Install wizard
+* I18N
+* Password protected files
+* Email notifications
+* CRON task
+* Quota
+
+More informations at http://gpl.univ-avignon.fr/filez
+
+Requirement
+===========
+
+* Apache configured with “mod_rewrite” and the “AllowOverride” of your virtual host set to “FileInfo Options” or “All” (__important !__)
+    a2enmod rewrite && apache2ctl restart
+
+* __APC__ is required if you would like to display a progress bar during file upload
+    sudo aptitude install php-apc
+    echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
+    apache2ctl restart
+
+* You will need __php5-curl__ to be able to authenticate against a CAS server
+
+* You will need __php5-ldap__ to be able to identicate with a LDAP server
+
+
+Installation
+============
+
+* Download FileZ sources :
+
+  * from Git
+      git clone git://github.com/UAPV/FileZ.git filez_web_root
+
+  * from SVN 
+      svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root
+
+  * from a package
+      tar -xvvf filez-2.0.tar.gz
+      cp filez-2.0/* filez_web_root
+
+* Open your web browser on your FileZ web root and follow instructions
+
+* Enjoy !
+
+
