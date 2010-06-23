@@ -226,9 +226,12 @@ class App_Controller_Upload extends Fz_Controller {
      * @param App_Model_File $file
      */
     private function onFileUploadSuccess (App_Model_File $file) {
+        $user                    = $this->getUser();
         $response ['status']     = 'success';
         $response ['statusText'] = __('The file was successfuly uploaded');
         $response ['html']       = partial ('main/_file_row.php', array ('file' => $file));
+        $response ['disk_usage'] = bytesToShorthand (max (0,
+                     Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)));
         return $this->returnData ($response);
     }
 

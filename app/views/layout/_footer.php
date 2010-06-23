@@ -10,7 +10,7 @@
       <?php if (isset ($user)): ?>
         <p id="disk-usage"><?php echo __r('Using %space% of %quota%', array (
             // TODO this code should not be here
-            'space' => '<b>'.bytesToShorthand (Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)).'</b>',
+            'space' => '<b id="disk-usage-value">'.bytesToShorthand (Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)).'</b>',
             'quota' => fz_config_get('app', 'user_quota'))); ?>.
         </p>
       <?php endif ?>
