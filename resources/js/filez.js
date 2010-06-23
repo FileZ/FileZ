@@ -269,6 +269,7 @@ var onFileUploadEnd = function (data, status) {
 
     if (data.status == 'success') {
         appendFile (data.html);
+        $('#disk-usage-value').html (data.disk_usage);
         notify (data.statusText);
     } else if (data.status == 'error'){
         notifyError (data.statusText);

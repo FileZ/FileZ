@@ -2,6 +2,7 @@
 <h2 class="new-file"><?php echo __('Upload a new file') ?></h2>
 <section class="new-file fz-modal">
   <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
+  <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_upload_size ?>" />
   <div id="file">
     <label for="file-input"><?php echo __r('File (Max size: %size%)', array ('size' => bytesToShorthand ($max_upload_size))) ?> :</label>
     <div id="input-file">
@@ -74,6 +75,7 @@
         fileList:         'ul#files',
         progressBox:      '#upload-progress',
         loadingBox:       '#upload-loading',
+        maxFileSize:      <?php echo $max_upload_size ?>,
         progressBar: {
           enable:        <?php echo ($use_progress_bar ? 'true':'false') ?>,
           barImage:     '<?php echo public_url_for ('resources/images/progressbg_green.gif') ?>',

@@ -35,7 +35,7 @@ class App_Controller_Main extends Fz_Controller {
 
         set ('upload_id'   , md5 (uniqid (mt_rand (), true)));
         set ('start_from'  , Zend_Date::now ()->get (Zend_Date::DATE_SHORT));
-        set ('refresh_rate', 700);
+        set ('refresh_rate', 1500);
         set ('files'       , Fz_Db::getTable ('File')
                               ->findByOwnerOrderByUploadDateDesc ($user['id']));
         set ('use_progress_bar', (function_exists ('apc_fetch') && ini_get ('apc.rfc1867')));
