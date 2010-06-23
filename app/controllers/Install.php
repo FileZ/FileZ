@@ -52,26 +52,26 @@ class App_Controller_Install extends Fz_Controller {
         // php.ini settings
         $checks ['upload_max_filesize'] =
             '<p>php.ini value of "upload_max_filesize" is set to "'.ini_get ('upload_max_filesize')."\" </p>".
-            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
+            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration or '.htaccess' file :</p>".
             "<pre>php_admin_value upload_max_filesize 750M</pre>";
 
         // php.ini settings
         $checks ['post_max_size'] =
             '<p>php.ini value of "post_max_size" is set to "'.ini_get ('post_max_size')."\" </p>".
-            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
+            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration or '.htaccess' file :</p>".
             "<pre>php_admin_value post_max_size 750M</pre>";
 
         // php.ini settings
         $checks ['max_execution_time'] =
             '<p>php.ini value of "max_execution_time" is set to "'.ini_get ('max_execution_time')."\" </p>".
-            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
+            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration or '.htaccess' file :</p>".
             "<pre>php_admin_value max_execution_time 1200</pre>";
 
         // php.ini settings
         $checks ['upload_tmp_dir'] =
             '<p>php.ini value of "upload_tmp_dir" is set to "'.ini_get ('upload_tmp_dir')."\" </p>".
             "<p>You should check if there is enough place on the device</p>".
-            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration :</p>".
+            "<p>To change it, edit your php.ini or add the following line in your apache virtual host configuration or '.htaccess' file :</p>".
             '<pre>php_admin_value upload_tmp_dir "/media/data/tmp"</pre>';
 
         set ('checks', $checks);
