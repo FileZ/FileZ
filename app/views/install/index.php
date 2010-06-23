@@ -25,7 +25,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
       <label for="field-<?php echo $section.'-'.$var ?>" style="display: inline;"><?php echo $label ?></label>
     <?php endif ?>
   </p>
-<?}?>
+<?php } ?>
 
 
 <form action="" method="POST" class="install">
