@@ -94,9 +94,9 @@ function __r($msg, array $subtitutions) {
  * @return  integer
  */
 function bytesToShorthand ($size) {
-    return ($size >= 1000000000 ? (round ($size / 1000000000, 2).'G') : (
-            $size >= 1000000    ? (round ($size / 1000000, 2).'M') : (
-            $size >= 1000       ? (round ($size / 1000, 2).'K') :
+    return ($size >= 1073741824 ? (round ($size / 1073741824, 2).'G') : (
+            $size >= 1048576    ? (round ($size / 1048576, 2).'M') : (
+            $size >= 1024       ? (round ($size / 1024, 2).'K') :
                                            $size.'B')));
 }
 
