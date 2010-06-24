@@ -20,7 +20,7 @@
  */
 
 /**
- * Description of UploadMonitor
+ * Description of Fz_UploadMonitor
  *
  * @author Arnaud Didry <arnaud.didry@univ-avignon.fr>
  */
