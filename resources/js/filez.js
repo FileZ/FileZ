@@ -22,7 +22,7 @@ if (! console) // In case the browser don't have a console
     var console = {log: function (txt) {}};
 
 // Auto hide current notifications
-$('document').ready (function () { $('.notif').configureNotification (); });
+$('document').ready (function () {$('.notif').configureNotification ();});
 
 (function($) {
 
@@ -61,7 +61,7 @@ $.fn.initFilez = function (options) {
     });
 
     if (settings.progressBar.enable) {
-        $(this).prepend ('<input type="hidden" name="APC_UPLOAD_PROGRESS" id="upload-id"  value="'+uniqid ()+'" />');
+        $(this).prepend ('<input type="hidden" name="'+settings.progressBar.upload_id_name+'" id="upload-id"  value="'+uniqid ()+'" />');
     }
     
     // let the server knows it has to return JSON
@@ -192,8 +192,12 @@ var onEmailFormSent = function (data, status, form) {
  */
 var onFileUpoadProgress = function (data, textStatus, xhr) {
     console.log (data);
-    if (data == false) {
+
+    if (data == false || data == null) {
         onCheckProgressError (xhr, settings.messages.unknownError, null);
+    }
+    else if (data.total > settings.maxFileSize) {
+        xhr.abort (); // FIXME
     }
     else if (data.done == 1) {
         clearInterval (progressCheckerLoop);
@@ -215,7 +219,7 @@ var onCheckProgressError = function (xhr, textStatus, errorThrown) {
     if (xhr.status == 501)
     {
         // APC is missing
-        console.log ('PHP extension (APC) not installed.')
+        console.log ('Upload monitor not installed.')
     }
     else if (xhr.status == 404)
     {
@@ -313,7 +317,7 @@ var reloadUploadForm = function () {
     $(settings.progressBox).progressBar (0);
     $(settings.progressBox).hide ();
     $(settings.loadingBox).hide ();
-    $('#upload-id').val (uniqid ()); // APC_UPLOAD_PROGRESS id reset
+    $('#upload-id').val (uniqid ()); // upload id reset
     $('#input-password').hide();
 };
 

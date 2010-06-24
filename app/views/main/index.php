@@ -78,6 +78,7 @@
         maxFileSize:      <?php echo $max_upload_size ?>,
         progressBar: {
           enable:        <?php echo ($use_progress_bar ? 'true':'false') ?>,
+          upload_id_name: '<?php echo $upload_id_name ?>',
           barImage:     '<?php echo public_url_for ('resources/images/progressbg_green.gif') ?>',
           boxImage:     '<?php echo public_url_for ('resources/images/progressbar.gif') ?>',
           refreshRate:   <?php echo $refresh_rate ?>,

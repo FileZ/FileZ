@@ -67,19 +67,25 @@ class App_Controller_Upload extends Fz_Controller {
     public function getProgressAction () {
         $this->secure ();
 
-        if (! function_exists ('apc_fetch'))
-             halt (HTTP_NOT_IMPLEMENTED, 'APC not installed');
-
-        $upload_id = params ('upload_id');
-        if (! $upload_id)
+        $uploadId = params ('upload_id');
+        if (! $uploadId)
             halt (HTTP_BAD_REQUEST, 'A file id must be specified');
 
-        $progress = apc_fetch ('upload_'.$upload_id);
+        $progressMonitor = fz_config_get ('app', 'progress_monitor');
+        $progressMonitor = new $progressMonitor ();
+
+        if (! $progressMonitor->isInstalled ())
+            halt (HTTP_NOT_IMPLEMENTED, 'Your system is not configured for'.get_class ($progressMonitor));
+            
+        $progress = $progressMonitor->getProgress ($uploadId);
+
         if (! is_array ($progress))
             halt (NOT_FOUND);
 
         return json ($progress);
     }
+
+
 
     /**
      * Create a new File object from posted values and store it into the database.

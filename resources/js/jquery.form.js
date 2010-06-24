@@ -194,7 +194,9 @@ $.fn.ajaxSubmit = function(options) {
 			setRequestHeader: function() {},
 			abort: function() {
 				this.aborted = 1;
-				$io.attr('src', opts.iframeSrc); // abort op in progress
+				if (/msie/.test (navigator.userAgent.toLowerCase()))
+					io.src = 'about:blank'; // abort op in progress
+				io.parentNode.removeChild(io);
 			}
 		};
 

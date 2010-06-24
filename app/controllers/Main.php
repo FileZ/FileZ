@@ -33,14 +33,18 @@ class App_Controller_Main extends Fz_Controller {
              Fz_Db::getTable('File')->shorthandSizeToBytes (ini_get ('post_max_size')),
                 $freeSpaceLeft);
 
-        set ('upload_id'   , md5 (uniqid (mt_rand (), true)));
-        set ('start_from'  , Zend_Date::now ()->get (Zend_Date::DATE_SHORT));
-        set ('refresh_rate', 1500);
-        set ('files'       , Fz_Db::getTable ('File')
-                              ->findByOwnerOrderByUploadDateDesc ($user['id']));
-        set ('use_progress_bar', (function_exists ('apc_fetch') && ini_get ('apc.rfc1867')));
-        set ('free_space_left', $freeSpaceLeft);
-        set ('max_upload_size', $maxUploadSize);
+        $progressMonitor = fz_config_get ('app', 'progress_monitor');
+        $progressMonitor = new $progressMonitor ();
+        
+        set ('upload_id'        , md5 (uniqid (mt_rand (), true)));
+        set ('start_from'       , Zend_Date::now ()->get (Zend_Date::DATE_SHORT));
+        set ('refresh_rate'     , 1200);
+        set ('files'            , Fz_Db::getTable ('File')
+                                    ->findByOwnerOrderByUploadDateDesc ($user['id']));
+        set ('use_progress_bar' , $progressMonitor->isInstalled ());
+        set ('upload_id_name'   , $progressMonitor->getUploadIdName ());
+        set ('free_space_left'  , $freeSpaceLeft);
+        set ('max_upload_size'  , $maxUploadSize);
         return html ('main/index.php');
     }
 }
