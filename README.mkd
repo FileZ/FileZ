@@ -1,9 +1,9 @@
 
 FileZ is an application developped by the Avignon University. It provides a way to upload and manage files you want to share through a web interface and unique URLs (http), inspired by the perl/mod_perl application filex.
 
-[![File list](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1.png))
-[![Upload Form](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2.png))
-[![Install Form](http://gpl.univ-avignon.fr/wp-content/uploads/2010/03/fz-beta2-2-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2010/03/fz-beta2-2.png))
+[![File list](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1.png)
+[![Upload Form](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2.png)
+[![Install Form](http://gpl.univ-avignon.fr/wp-content/uploads/2010/03/fz-beta2-2-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2010/03/fz-beta2-2.png)
 
 Features
 ========
@@ -12,7 +12,7 @@ Features
 * Several authentication scheme : CAS+LDAP, LDAP only, BDD, or your own PHP classes
 * short URL (ex: filez.univ-avignon.fr/x42ni1)
 * Upload progress bar (with non obstructive javascript)
-    * Install form
+* Install form
 * I18N
 * Password protected files
 * Email notifications
