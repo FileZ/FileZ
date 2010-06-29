@@ -1041,7 +1041,9 @@ function request_uri($env = null)
     {
       $request_uri = rtrim(rawurldecode($env['SERVER']['REQUEST_URI']), '?/').'/';
       $base_path = str_replace('index.php', '', $env['SERVER']['SCRIPT_NAME']);
-      $uri = ($base_path != '/' ? str_replace($base_path, '', $request_uri) : $request_uri);
+      if($base_path != '/') // if we are in a subdirectory
+        $request_uri =  preg_replace('/^'.str_replace('/','\/',$base_path).'/', '\1', $request_uri);
+      $uri = $request_uri;
     }
     elseif($env['SERVER']['argc'] > 1 && trim($env['SERVER']['argv'][1], '/') != '')
     {
