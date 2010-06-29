@@ -1025,7 +1025,7 @@ function request_uri($env = null)
       $uri = $path_info;
     }
     // No PATH_INFO?... What about QUERY_STRING?
-    elseif (trim($query_string, '/') != '')
+    elseif (false && trim($query_string, '/') != '')
     {
       $uri = $query_string;
       $get = $env['GET'];
@@ -1042,7 +1042,8 @@ function request_uri($env = null)
       $request_uri = rtrim(rawurldecode($env['SERVER']['REQUEST_URI']), '?/').'/';
       $base_path = $env['SERVER']['SCRIPT_NAME'];
 
-      if($request_uri."index.php" == $base_path) $request_uri .= "index.php";
+      //if($request_uri."index.php" == $base_path) $request_uri .= "index.php";
+      $base_path = str_replace('index.php', '', $base_path);
       $uri = str_replace($base_path, '', $request_uri);
     }
     elseif($env['SERVER']['argc'] > 1 && trim($env['SERVER']['argv'][1], '/') != '')
@@ -1311,6 +1312,9 @@ function route_find($method, $path)
 {
   $routes = route();
   $method = strtoupper($method);
+  if (($pos = strpos ($path, '?')) !== false)
+    $path = substr ($path, 0, $pos);
+
   foreach($routes as $route)
   {
     if($method == $route["method"] && preg_match($route["pattern"], $path, $matches))
