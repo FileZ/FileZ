@@ -12,10 +12,13 @@ Next minor release
 * Gérer la création d'invitations
 * Permettre la configuration d'un ldap failover
 * Gérer les quotas différemment en fonction du groupe de l'utilisateur (Gérer les groupes grace aux attributs ldap)
+* Interface d'administration
+  * Gestion des groupes d'utilisateurs basé sur leurs attributs
+  * Gestion du quota par groupes d'utilisateurs ou utilisateur
+  * Stats par groupe d'utilisateurs
 
 in x? minor releases
 ===================
-* Stats par groupe d'utilisateur
 * Ajouter d'autre méthodes d'authentification (OAuth, OpenId, Shibboleth, etc...)
 * Permettre l'upload de plusieurs fichiers et les compresser dans 1 seul ZIP à la place de l'utilisateur
 * Détecter les attaques brute force visant à télécharger l'intégralité des fichiers en testant tous les codes d'url possibles
