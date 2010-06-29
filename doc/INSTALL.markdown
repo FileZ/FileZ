@@ -234,7 +234,7 @@ Installing and configuring APC
 
 Install required tools for building APC. On debian :
 
-    apt-get install php5-dev
+    apt-get install build-essential php5-dev php-pear apache2-prefork-dev
   
 Build and install APC extension :
 
@@ -252,7 +252,7 @@ Installing and configuring PECL::UploadProgress
 
 Install required tools for building UploadProgress. On debian :
 
-    apt-get install build-essential php5-dev php-pear apache2-prefork-dev
+    apt-get install php5-dev
 
 Build and install APC extension :
 
