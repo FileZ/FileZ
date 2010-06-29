@@ -31,13 +31,15 @@ Requirement
 
     *  __APC__
 
-        <pre>aptitude install php-apc
+        <pre>
+        aptitude install php-apc
         echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
         apache2ctl restart</pre>
 
     *  __PECL::UploadProgress__
 
-        <pre>aptitude install php5-dev
+        <pre>
+        aptitude install php5-dev
         pecl install uploadprogress
         echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
         apache2ctl restart</pre>
@@ -54,15 +56,18 @@ Installation
 
   * from Git
 
-      <pre>git clone git://github.com/UAPV/FileZ.git filez_web_root</pre>
+      <pre>
+      git clone git://github.com/UAPV/FileZ.git filez_web_root</pre>
 
   * from SVN
 
-      <pre>svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root</pre>
+      <pre>
+      svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root</pre>
 
   * from a package
 
-      <pre>tar -xvvf filez-2.0.tar.gz
+      <pre>
+      tar -xvvf filez-2.0.tar.gz
       cp filez-2.0/* filez_web_root</pre>
 
 * Open your web browser on your FileZ web root and follow instructions
