@@ -1040,11 +1040,8 @@ function request_uri($env = null)
     elseif(array_key_exists('REQUEST_URI', $env['SERVER']) && !empty($env['SERVER']['REQUEST_URI']))
     {
       $request_uri = rtrim(rawurldecode($env['SERVER']['REQUEST_URI']), '?/').'/';
-      $base_path = $env['SERVER']['SCRIPT_NAME'];
-
-      //if($request_uri."index.php" == $base_path) $request_uri .= "index.php";
-      $base_path = str_replace('index.php', '', $base_path);
-      $uri = str_replace($base_path, '', $request_uri);
+      $base_path = str_replace('index.php', '', $env['SERVER']['SCRIPT_NAME']);
+      $uri = ($base_path != '/' ? str_replace($base_path, '', $request_uri) : $request_uri);
     }
     elseif($env['SERVER']['argc'] > 1 && trim($env['SERVER']['argv'][1], '/') != '')
     {

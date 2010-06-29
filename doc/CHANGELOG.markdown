@@ -11,6 +11,13 @@ Filez-2.0.0 (WIP)
 * Fixed install instructions
 * Added french user documentation
 * Fixed user quota computation
+* Fixed multivalued profile attributes 
+* Fixed strange open short tag sitting in the code, resulting in 'syntax error, unexpected $end' 
+* Fixed issue#1 : Wrong file size conversion from shorthand to bytes
+* Fixed issue#2 : Added php_admin_value in .htaccess
+* Fixed issue#3 : Update disk usage value after upload 
+* Fixed issue#9 : Upload progress monitor can now be configured 
+* Updated limonade-php
 
 Filez-2.0.0-BETA2
 * Added 'password' field to fz_file table. You need to run 'db.migration-filez-2.0.0-1.sql'
