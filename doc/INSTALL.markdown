@@ -234,7 +234,7 @@ Installing and configuring APC
 
 Install required tools for building APC. On debian :
 
-    apt-get install build-essential php5-dev php-pear apache2-prefork-dev
+    apt-get install php5-dev
   
 Build and install APC extension :
 
@@ -244,6 +244,23 @@ Enable extension and specific option :
 
     echo "extension = apc.so" >> /etc/php5/apache2/conf.d/apc.ini
     echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
+    apache2ctl restart
+
+
+Installing and configuring PECL::UploadProgress
+-----------------------------------------------
+
+Install required tools for building UploadProgress. On debian :
+
+    apt-get install build-essential php5-dev php-pear apache2-prefork-dev
+
+Build and install APC extension :
+
+    pecl install uploadprogress
+
+Enable extension and specific option :
+
+    echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
     apache2ctl restart
 
 RHEL / CentOS with PHP version 5.1
