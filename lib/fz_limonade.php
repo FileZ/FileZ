@@ -20,24 +20,24 @@
  */
 
 function fz_dispatch        ($path_or_array, $controller, $action) 
-    {return dispatch        ($path_or_array, 'fz_dispatcher', array ($controller, $action));}
+    {return dispatch        ($path_or_array, 'fz_dispatcher', array ('params' => array ('controller' => $controller, 'action' => $action)));}
 
 function fz_dispatch_get    ($path_or_array, $controller, $action) 
-    {return dispatch_get    ($path_or_array, 'fz_dispatcher', array ($controller, $action));}
+    {return dispatch_get    ($path_or_array, 'fz_dispatcher', array ('params' => array ('controller' => $controller, 'action' => $action)));}
 
 function fz_dispatch_post   ($path_or_array, $controller, $action) 
-    {return dispatch_post   ($path_or_array, 'fz_dispatcher', array ($controller, $action));}
+    {return dispatch_post   ($path_or_array, 'fz_dispatcher', array ('params' => array ('controller' => $controller, 'action' => $action)));}
 
 function fz_dispatch_put    ($path_or_array, $controller, $action) 
-    {return dispatch_put    ($path_or_array, 'fz_dispatcher', array ($controller, $action));}
+    {return dispatch_put    ($path_or_array, 'fz_dispatcher', array ('params' => array ('controller' => $controller, 'action' => $action)));}
 
 function fz_dispatch_delete ($path_or_array, $controller, $action) 
-    {return dispatch_delete ($path_or_array, 'fz_dispatcher', array ($controller, $action));}
+    {return dispatch_delete ($path_or_array, 'fz_dispatcher', array ('params' => array ('controller' => $controller, 'action' => $action)));}
 
-function fz_dispatcher ($controller, $action) {
-    $controller = 'App_Controller_'.$controller;
+function fz_dispatcher () {
+    $controller = 'App_Controller_'.params ('controller');;
     $controllerInstance = new $controller ();
-    return call_user_func (array ($controllerInstance, $action.'Action'));
+    return call_user_func (array ($controllerInstance, params ('action').'Action'));
 }
 
 function fz_php_error_handler ($errno, $errstr, $errfile, $errline) {

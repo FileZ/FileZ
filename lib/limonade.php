@@ -171,6 +171,7 @@ dispatch(array("/_lim_public/**", array('_lim_public_file')), 'render_limonade_f
 ## ABSTRACTS ___________________________________________________________________
 
 # function configure(){}
+# function autoload_controller(){}
 # function before(){}
 # function after(){}
 # function not_found(){}
@@ -327,16 +328,28 @@ function run($env = null)
   option('debug',              true);
   option('session',            LIM_SESSION_NAME); // true, false or the name of your session
   option('encoding',           'utf-8');
+  option('gzip',               false);
+  option('autorender',         false);
   option('x-sendfile',         0); // 0: disabled, 
                                    // X-SENDFILE: for Apache and Lighttpd v. >= 1.5,
                                    // X-LIGHTTPD-SEND-FILE: for Apache and Lighttpd v. < 1.5
 
-  # 1. Set error handling
+  # 1. Set handlers
+  # 1.1 Set error handling
   ini_set('display_errors', 1);
   set_error_handler('error_handler_dispatcher', E_ALL ^ E_NOTICE);
+  
+  # 1.2 Register shutdown function
+  register_shutdown_function('stop_and_exit');
 
   # 2. Set user configuration
   call_if_exists('configure');
+  
+  # 2.1 Set gzip compression if defined
+  if(is_bool(option('gzip')) && option('gzip'))
+  {
+    ini_set('zlib.output_compression', '1');
+  }
 
   # 3. Loading libs
   require_once_dir(option('lib_dir'));
@@ -364,6 +377,8 @@ function run($env = null)
     }
   }
 
+  call_if_exists('initialize');
+
   # 6. Check request
   if($rm = request_method())
   {
@@ -378,19 +393,24 @@ function run($env = null)
       params($route['params']);
 
       # 6.2 Load controllers dir
-      require_once_dir(option('controllers_dir'));
+      if(!function_exists('autoload_controller'))
+      {
+        function autoload_controller($callback)
+        {
+          require_once_dir(option('controllers_dir'));
+        }
+      }
+      autoload_controller($route['function']);
 
       if(is_callable($route['function']))
       {
         # 6.3 Call before function
-        call_if_exists('before');
+        call_if_exists('before', $route);
 
         # 6.4 Call matching controller function and output result
-        if($output = call_user_func_array($route['function'], array_values($route['options'])))
-        {
-          echo after(error_notices_render() . $output);
-        }
-        stop_and_exit();
+        $output = call_user_func_array($route['function'], array_values($route['params']));
+        if(is_null($output) && option('autorender')) $output = call_if_exists('autorender', $route);
+        echo after(error_notices_render() . $output, $route);
       }
       else halt(SERVER_ERROR, "Routing error: undefined function '{$route['function']}'", $route);      
     }
@@ -503,7 +523,8 @@ function app_file()
   static $file;
   if(empty($file))
   {
-    $stacktrace = array_pop(debug_backtrace());
+    $debug_backtrace = debug_backtrace();
+    $stacktrace = array_pop($debug_backtrace);
     $file = $stacktrace['file'];
   }
   return file_path($file);
@@ -603,14 +624,20 @@ function error_handler_dispatcher($errno, $errstr, $errfile, $errline)
   if(error_wont_halt_app($errno))
   {
     error_notice($errno, $errstr, $errfile, $errline);
-    return;
+  	return;
   }
   else
   {
     # Other errors will stop application
-    $handlers = error();
+    static $handlers = array();
+    if(empty($handlers))
+    {
+      error(E_LIM_PHP, 'error_default_handler');
+      $handlers = error();
+    }
+    
     $is_http_err = http_response_status_is_valid($errno);
-    foreach($handlers as $handler)
+    while($handler = array_shift($handlers))
     {
       $e = is_array($handler['errno']) ? $handler['errno'] : array($handler['errno']);
       while($ee = array_shift($e))
@@ -622,8 +649,6 @@ function error_handler_dispatcher($errno, $errstr, $errfile, $errline)
         }
       }
     }
-    echo error_default_handler($errno, $errstr, $errfile, $errline);
-    stop_and_exit();
   }
 }
 
@@ -707,7 +732,7 @@ function error_server_error_output($errno, $errstr, $errfile, $errline)
       $is_http_error = http_response_status_is_valid($errno);
       $args = compact('errno', 'errstr', 'errfile', 'errline', 'is_http_error');
       option('views_dir', option('limonade_views_dir'));
-      $html = render('error.html.php', null, $args);
+      $html = render('error.html.php', null, $args);	
       option('views_dir', option('error_views_dir'));
       return html($html, error_layout(), $args);
     }
@@ -952,21 +977,6 @@ function request_methods()
  */
 function request_uri($env = null)
 {
-  $str_size = min(strlen($_SERVER['REQUEST_URI']), strlen($_SERVER['SCRIPT_NAME']));
-  $start = 0;
-  for(; $start < $str_size; ++$start)
-  {
-    if($_SERVER['REQUEST_URI'][$start] !== $_SERVER['SCRIPT_NAME'][$start])
-    {
-       break;
-    }
-  }
-  $uri = substr($_SERVER['REQUEST_URI'], $start);
-  if (strlen($uri == 0) || $uri[0] !== '/')
-      $uri = '/'.$uri;
-
-  return $uri;
-  
   static $uri = null;
   if(is_null($env))
   {
@@ -990,24 +1000,42 @@ function request_uri($env = null)
   else
   {
     $app_file = app_file();
-    $redirect_url = isset($env['SERVER']['REDIRECT_URL']) ? $env['SERVER']['REDIRECT_URL'] : @getenv('REDIRECT_URL');
     $path_info = isset($env['SERVER']['PATH_INFO']) ? $env['SERVER']['PATH_INFO'] : @getenv('PATH_INFO');
     $query_string =  isset($env['SERVER']['QUERY_STRING']) ? $env['SERVER']['QUERY_STRING'] : @getenv('QUERY_STRING');
 
-    if (trim($redirect_url, '/') != '' && $redirect_url != "/".$app_file)
-    {
-      $uri = $redirect_url;
-    }
     // Is there a PATH_INFO variable?
     // Note: some servers seem to have trouble with getenv() so we'll test it two ways
-    elseif (trim($path_info, '/') != '' && $path_info != "/".$app_file)
+    if (trim($path_info, '/') != '' && $path_info != "/".$app_file)
     {
+      if(strpos($path_info, '&') !== 0)
+      {
+        # exclude GET params
+        $params = explode('&', $path_info);
+        $path_info = array_shift($params);
+        # populate $_GET
+        foreach($params as $param)
+        {
+          if(strpos($param, '=') > 0)
+          {
+            list($k, $v) = explode('=', $param);
+            $env['GET'][$k] = $v;
+          }
+        }
+      }
       $uri = $path_info;
     }
     // No PATH_INFO?... What about QUERY_STRING?
     elseif (trim($query_string, '/') != '')
     {
       $uri = $query_string;
+      $get = $env['GET'];
+      if(count($get) > 0)
+      {
+        # exclude GET params
+        $keys  = array_keys($get);
+        $first = array_shift($keys);
+        if(strpos($query_string, $first) === 0) $uri = $first;
+      }
     }
     elseif(array_key_exists('REQUEST_URI', $env['SERVER']) && !empty($env['SERVER']['REQUEST_URI']))
     {
@@ -1275,15 +1303,14 @@ function route_build($method, $path_or_array, $func, $options = array())
  * @access private
  * @param string $method 
  * @param string $path
- * @return array,false
+ * @return array,false route array has same keys as route returned by 
+ *  {@link route_build()} ("method", "pattern", "names", "function", "options")
+ *  + the processed "params" key
  */
 function route_find($method, $path)
 {
   $routes = route();
   $method = strtoupper($method);
-  if (($pos = strpos ($path, '?')) !== false)
-    $path = substr ($path, 0, $pos);
-
   foreach($routes as $route)
   {
     if($method == $route["method"] && preg_match($route["pattern"], $path, $matches))
@@ -1325,7 +1352,7 @@ function route_find($method, $path)
 /**
  * Returns a string to output
  * 
- * It might use a a template file or function, a formatted string (like {@link sprintf()}).
+ * It might use a template file, a function, or a formatted string (like {@link sprintf()}).
  * It could be embraced by a layout or not.
  * Local vars can be passed in addition to variables made available with the {@link set()}
  * function.
@@ -1341,6 +1368,10 @@ function render($content_or_func, $layout = '', $locals = array())
   $content_or_func = array_shift($args);
   $layout = count($args) > 0 ? array_shift($args) : layout();
   $view_path = file_path(option('views_dir'),$content_or_func);
+  
+  if(function_exists('before_render'))
+    list($content_or_func, $layout, $locals, $view_path) = before_render($content_or_func, $layout, $locals, $view_path);    
+  
   $vars = array_merge(set(), $locals);
 
   $flash = flash_now();
@@ -1483,7 +1514,7 @@ function txt($content_or_func, $layout = '', $locals = array())
  */
 function json($data, $json_option = 0)
 {
-  if(!headers_sent()) header('Content-Type: application/x-javascript; charset='.strtolower(option('encoding')));
+  if(!headers_sent()) header('Content-Type: application/json; charset='.strtolower(option('encoding')));
   return version_compare(PHP_VERSION, '5.3.0', '>=') ? json_encode($data, $json_option) : json_encode($data);
 }
 
@@ -1535,24 +1566,29 @@ function render_file($filename, $return = false)
 
 /**
  * Returns an url composed of params joined with /
+ * A param can be a string or an array.
+ * If param is an array, its members will be added at the end of the return url
+ * as GET parameters "&key=value".
  *
- * @param string $params,... 
+ * @param string or array $param1, $param2 ... 
  * @return string
  */ 
 function url_for($params = null)
 {
   $paths  = array();
   $params = func_get_args();
-  $first  = true;
+  $GET_params = array();
   foreach($params as $param)
   {
-    if($first)
+    if(is_array($param))
     {
-      if(filter_var($param , FILTER_VALIDATE_URL))
-      {
-        $paths[] = $param;
-        continue;
-      }
+      $GET_params = array_merge($GET_params, $param);
+      continue;
+    }
+    if(filter_var_url($param))
+    {
+      $paths[] = $param;
+      continue;
     }
     $p = explode('/',$param);
     foreach($p as $v)
@@ -1563,7 +1599,14 @@ function url_for($params = null)
 
   $path = rtrim(implode('/', $paths), '/');
   
-  if(!filter_var($path , FILTER_VALIDATE_URL)) 
+  if(!empty($GET_params))
+  {
+    foreach($GET_params as $k => $v)
+      $path .= '&amp;' . rawurlencode($k) . '=' . rawurlencode($v);
+  }
+  
+  
+  if(!filter_var_url($path)) 
   {
     # it's a relative URL or an URL without a schema
     $base_uri = option('base_uri');
@@ -1614,7 +1657,8 @@ function flash($name = null, $value = null)
   {
     $messages[$name] = count($args) > 1 ? $args : $args[0];
   }
-  if(array_key_exists($name, $messages)) return $messages[$name];
+  if(!array_key_exists($name, $messages)) return null;
+  else return $messages[$name];
   return $messages;
 }
 
@@ -1649,7 +1693,8 @@ function flash_now($name = null, $value = null)
   {
     $messages[$name] = count($args) > 1 ? $args : $args[0];
   }
-  if(array_key_exists($name, $messages)) return $messages[$name];
+  if(!array_key_exists($name, $messages)) return null;
+  else return $messages[$name];
   return $messages;
 }
 
@@ -1689,11 +1734,11 @@ function content_for($name = null, $content = null)
   if(is_null($name) && !is_null($_name))
   {
     set($_name, ob_get_clean());
-    $_name = null;
+    $_name = null;	
   }
   elseif(!is_null($name) && !isset($content))
   {
-    $_name = $name;
+    $_name = $name;	
     ob_start();
   }
   elseif(isset($name, $content))
@@ -1710,6 +1755,25 @@ function content_for($name = null, $content = null)
 function end_content_for()
 {
   content_for();
+}
+
+/**
+ * Shows current memory and execution time of the application.
+ * 
+ * @access public
+ * @return array
+ */
+function benchmark()
+{
+  $current_mem_usage = memory_get_usage();
+  $execution_time = microtime() - LIM_START_MICROTIME;
+  
+  return array(
+    'current_memory' => $current_mem_usage,
+    'start_memory' => LIM_START_MEMORY,
+    'average_memory' => (LIM_START_MEMORY + $current_mem_usage) / 2,
+    'execution_time' => $execution_time
+  );
 }
 
 
@@ -1874,8 +1938,17 @@ function status($code = 500)
 
 /**
  * Http redirection
- *
- * @param string $params,... 
+ * 
+ * Same use as {@link url_for()}
+ * By default HTTP status code is 302, but a different code can be specified
+ * with a status key in array parameter.
+ * 
+ * <code>
+ * redirecto('new','url'); # 302 HTTP_MOVED_TEMPORARILY by default
+ * redirecto('new','url', array('status' => HTTP_MOVED_PERMANENTLY));
+ * </code>
+ * 
+ * @param string or array $param1, $param2... 
  * @return void
  */
 function redirect_to($params)
@@ -1889,10 +1962,25 @@ function redirect_to($params)
   # TODO make absolute uri
   if(!headers_sent())
   {
+    $status = HTTP_MOVED_TEMPORARILY; # default for a redirection in PHP
     $params = func_get_args();
-    $uri = call_user_func_array('url_for', $params);
+    $n_params = array();
+    # extract status param if exists
+    foreach($params as $param)
+    {
+      if(is_array($param))
+      {
+        if(array_key_exists('status', $param))
+        {
+          $status = $param['status'];
+          unset($param['status']);
+        }
+      }
+      $n_params[] = $param;
+    }
+    $uri = call_user_func_array('url_for', $n_params);
     stop_and_exit(false);
-    header('Location: '.$uri);
+    header('Location: '.$uri, true, $status);
     exit;
   }
 }
@@ -2175,8 +2263,7 @@ function mime_type($ext = null)
     'xyz'     => 'chemical/x-xyz',
     'zip'     => 'application/zip'
   );
-  if(is_null($ext)) return $types;
-  return array_key_exists($ext, $types) ? $types[strtolower($ext)] : 'application/octet-stream';
+  return is_null($ext) ? $types : $types[strtolower($ext)];
 }
 
 /**
@@ -2191,12 +2278,16 @@ function file_mime_content_type($filename)
   if($mime = mime_type($ext)) return $mime;
   elseif (function_exists('finfo_open'))
   {
-    $finfo = finfo_open(FILEINFO_MIME);
-    $mime = finfo_file($finfo, $filename);
-    finfo_close($finfo);
-    return $mime;
+    if($finfo = finfo_open(FILEINFO_MIME))
+    {
+      if($mime = finfo_file($finfo, $filename))
+      {
+        finfo_close($finfo);
+        return $mime;        
+      }
+    }
   }
-  else return 'application/octet-stream';
+  return 'application/octet-stream';
 }
 
 
@@ -2294,8 +2385,8 @@ function file_is_binary($filename)
 /**
  * Return or output file content
  *
- * @return   string, int
- *
+ * @return 	string, int
+ *				
  **/
 
 function file_read($filename, $return = false)
@@ -2362,6 +2453,24 @@ if(!function_exists('array_replace'))
   }
 }
 
+if(PHP_VERSION == '5.2.13' || PHP_VERSION == '5.3.2')
+{
+  # There is a bug with filter_var($site_url , FILTER_VALIDATE_URL); 
+  # http://www.mail-archive.com/php-bugs@lists.php.net/msg134778.html
+  function filter_var_url($str)
+  {
+    $regexp = '@^http(s)?://[-[:alnum:]]+\.[-[:alnum:]]+\.[a-zA-Z]{2,4}(:[0-9]+)?(.*)?$@';
+    $options = array( "options" => array("regexp" => $regexp ));
+    return filter_var($str, FILTER_VALIDATE_REGEXP, $options);
+  }
+}
+else
+{
+  function filter_var_url($str)
+  {
+    return filter_var($str, FILTER_VALIDATE_URL);
+  }
+}
 
 
 
