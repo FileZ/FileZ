@@ -16,18 +16,21 @@ Requirement
 Installation
 ============
 
-* Retrieve Filez sources from the svn or an archive and place them in your
-  web root dir.
+* Download FileZ sources :
 
-  * from SVN :
-        svn export http://subversion.cru.fr/filez/trunk filez_web_root
-  * from package
-        tar -xvvf filez-2.0.tar.gz;
-        cp filez-2.0/* filez_web_root
+  * from Git
+      git clone git://github.com/UAPV/FileZ.git filez_web_root
 
-* Point your browser to filez document root and follow install instructions
+  * from SVN
+      svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root
 
-* That's all !
+  * from a package
+      tar -xvvf filez-2.0.tar.gz
+      cp filez-2.0/* filez_web_root
+
+* Open your web browser on your FileZ web root and follow instructions
+
+* Enjoy !
 
 Upgrade from Filez-1.x
 ======================
@@ -232,9 +235,15 @@ Notes
 Installing and configuring APC
 ------------------------------
 
-Install required tools for building APC. On debian :
+### On debian :
 
-    apt-get install build-essential php5-dev php-pear apache2-prefork-dev
+    apt-get install php-apc
+    echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
+    apache2ctl restart
+
+### For other distributions :
+
+Install the following packages 'build-essential', 'php5-dev', 'php-pear', 'apache2-prefork-dev'
   
 Build and install APC extension :
 

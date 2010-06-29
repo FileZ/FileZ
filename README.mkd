@@ -19,7 +19,7 @@ Features
 * CRON task
 * Quota
 
-More informations at http://gpl.univ-avignon.fr/filez
+More informations at [http://gpl.univ-avignon.fr/filez](http://gpl.univ-avignon.fr/filez)
 
 Requirement
 ===========
@@ -27,10 +27,20 @@ Requirement
 * Apache configured with “mod_rewrite” and the “AllowOverride” of your virtual host set to “FileInfo Options” or “All” (__important !__)
     a2enmod rewrite && apache2ctl restart
 
-* __APC__ is required if you would like to display a progress bar during file upload
-    sudo aptitude install php-apc
-    echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
-    apache2ctl restart
+* To display a progress bar during the upload process you will need one of the following package installed on your system :
+
+    *  __APC__
+
+        aptitude install php-apc
+        echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
+        apache2ctl restart
+
+    *  __PECL::UploadProgress__
+
+        aptitude install php5-dev
+        pecl install uploadprogress
+        echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
+        apache2ctl restart
 
 * You will need __php5-curl__ to be able to authenticate against a CAS server
 
@@ -43,12 +53,15 @@ Installation
 * Download FileZ sources :
 
   * from Git
+
       git clone git://github.com/UAPV/FileZ.git filez_web_root
 
-  * from SVN 
+  * from SVN
+
       svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root
 
   * from a package
+
       tar -xvvf filez-2.0.tar.gz
       cp filez-2.0/* filez_web_root
 

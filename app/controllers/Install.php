@@ -39,16 +39,6 @@ class App_Controller_Install extends Fz_Controller {
                 "<p>To enable it, run the following command as root :</p>".
                 "<pre>a2enmod rewrite && apache2ctl restart</pre>";
 
-        // PHP module APC with apc.rfc1867
-        if (! $this->checkApcInstalled() || ! $this->checkApcConfigured())
-            $checks ['apc'] =
-                '<p>APC PHP extension is not installed or misconfigured. '.
-                "APC is only required if you want to display a progress bar during upload.</p>".
-                "<p>To install it (the debian way) run the following commands as root :</p>".
-                "<pre>apt-get install php-apc\n".
-                "echo \"apc.rfc1867 = On\"   >> /etc/php5/apache2/conf.d/apc.ini\n".
-                "apache2ctl restart</pre>";
-
         // php.ini settings
         $checks ['upload_max_filesize'] =
             '<p>php.ini value of "upload_max_filesize" is set to "'.ini_get ('upload_max_filesize')."\" </p>".
@@ -104,6 +94,17 @@ class App_Controller_Install extends Fz_Controller {
             // Checking database connection
             $this->checkDatabaseConf ($errors, $config);
 
+            // If Upload monitoring lib is selected check if it's installed
+            if ($config['app']['progress_monitor'] != '') {
+                $progressMonitor = $config['app']['progress_monitor'];
+                $progressMonitor = new $progressMonitor ();
+                if (! $progressMonitor->isInstalled ())
+                    $errors [] = array (
+                        'title' => 'Your system is not configured for '.get_class ($progressMonitor),
+                        'msg'   => 'Read <a href="http://github.com/UAPV/FileZ/blob/master/doc/INSTALL.markdown" target="_blank">the INSTALL file</a> for help'
+                    );
+            }
+
             // Is CAS authentication, check requirements
             if ($config['app']['auth_handler_class'] == 'Fz_Controller_Security_Cas'
                 && ! function_exists ('curl_init'))
@@ -115,7 +116,7 @@ class App_Controller_Install extends Fz_Controller {
             if ($config['app']['user_factory_class'] == 'Fz_User_Factory_Ldap')
                 $this->checkUserFactoryLdapConf ($errors, $config);
             elseif ($config['app']['user_factory_class'] == 'Fz_User_Factory_Database')
-                  $this->checkUserFactoryDatabaseConf ($errors, $config);
+                $this->checkUserFactoryDatabaseConf ($errors, $config);
 
             // Checking email
             $this->checkEmailConf ($errors, $config);
@@ -342,28 +343,6 @@ class App_Controller_Install extends Fz_Controller {
         else
             return null;
     }
-
-    /**
-     * Tells if APC is installed
-     *
-     * @return boolean
-     */
-    public function checkApcInstalled ()
-    {
-        return (bool) ini_get ('apc.enabled');
-    }
-
-
-    /**
-     * Tells if APC is installed
-     *
-     * @return boolean
-     */
-    public function checkApcConfigured ()
-    {
-        return (bool) ini_get ('apc.rfc1867');
-    }
-
 
     public function getDatabaseInitScript () {
         $sql = '';
