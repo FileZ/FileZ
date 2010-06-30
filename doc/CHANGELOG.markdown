@@ -1,6 +1,7 @@
 
 
 Filez-2.0.0 (WIP)
+
 * Fixed some IE7 rendering bug
 * Ldap user factory now allow to retrieve accounts from baseDn subtrees
 * Fixed PHP-5.3 incompatibilities
