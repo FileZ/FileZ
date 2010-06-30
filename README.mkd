@@ -29,19 +29,18 @@ Requirement
 
 * To display a progress bar during the upload process you will need one of the following package installed on your system :
 
-    *  __APC__
+    * __APC__
 
-            aptitude install php-apc
-            echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
-            apache2ctl restart
+          aptitude install php-apc
+          echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
+          apache2ctl restart
 
-    *  __PECL::UploadProgress__
+    * __PECL::UploadProgress__
 
-
-            aptitude install php5-dev
-            pecl install uploadprogress
-            echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
-            apache2ctl restart
+          aptitude install php5-dev
+          pecl install uploadprogress
+          echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
+          apache2ctl restart
 
 * You will need __php5-curl__ to be able to authenticate against a CAS server
 
@@ -55,16 +54,16 @@ Installation
 
   * from Git
 
-          git clone git://github.com/UAPV/FileZ.git filez_web_root
+        git clone git://github.com/UAPV/FileZ.git filez_web_root
 
   * from SVN
 
-          svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root
+        svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root
 
   * from a package
 
-          tar -xvvf filez-2.0.tar.gz
-          cp filez-2.0/* filez_web_root
+        tar -xvvf filez-2.0.tar.gz
+        cp filez-2.0/* filez_web_root
 
 * Open your web browser on your FileZ web root and follow instructions
 
