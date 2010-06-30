@@ -31,18 +31,17 @@ Requirement
 
     *  __APC__
 
-        <pre>
-        aptitude install php-apc
-        echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
-        apache2ctl restart</pre>
+            aptitude install php-apc
+            echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
+            apache2ctl restart
 
     *  __PECL::UploadProgress__
 
-        <pre>
-        aptitude install php5-dev
-        pecl install uploadprogress
-        echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
-        apache2ctl restart</pre>
+
+            aptitude install php5-dev
+            pecl install uploadprogress
+            echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
+            apache2ctl restart
 
 * You will need __php5-curl__ to be able to authenticate against a CAS server
 
@@ -56,19 +55,16 @@ Installation
 
   * from Git
 
-      <pre>
-      git clone git://github.com/UAPV/FileZ.git filez_web_root</pre>
+          git clone git://github.com/UAPV/FileZ.git filez_web_root
 
   * from SVN
 
-      <pre>
-      svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root</pre>
+          svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root
 
   * from a package
 
-      <pre>
-      tar -xvvf filez-2.0.tar.gz
-      cp filez-2.0/* filez_web_root</pre>
+          tar -xvvf filez-2.0.tar.gz
+          cp filez-2.0/* filez_web_root
 
 * Open your web browser on your FileZ web root and follow instructions
 
