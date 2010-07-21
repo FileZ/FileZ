@@ -2,369 +2,369 @@ msgid ""
 msgstr ""
 "Project-Id-Version: filez-2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-21 15:30+0100\n"
+"POT-Creation-Date: 2010-07-21 15:49+0100\n"
 "PO-Revision-Date: 2010-07-21 15:57+0100\n"
-"Last-Translator: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
+"Last-Translator: eXo <info@neuromancer.es>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: SPAIN\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __r;__;__p\n"
-"X-Poedit-Basepath: /home/didrya/filez/\n"
+"X-Poedit-Basepath: /home/didrya/filez\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: /home/didrya/filez\n"
 
 #: /home/didrya/filez/app/models/File.php:146
 msgid "B"
-msgstr "o"
+msgstr "B"
 
 #: /home/didrya/filez/app/models/File.php:146
 msgid "KB"
-msgstr "Ko"
+msgstr "KB"
 
 #: /home/didrya/filez/app/models/File.php:146
 msgid "MB"
-msgstr "Mo"
+msgstr "MB"
 
 #: /home/didrya/filez/app/models/File.php:146
 msgid "GB"
-msgstr "Go"
+msgstr "GB"
 
 #: /home/didrya/filez/app/models/File.php:146
 msgid "TB"
-msgstr "To"
+msgstr "TB"
 
 #: /home/didrya/filez/app/controllers/Admin.php:58
 msgid "[FileZ] your file \"%file_name%\" your file is going to be deleted"
-msgstr "[FileZ] Votre fichier \"%file_name%\" va prochainement être supprimé"
+msgstr "[FileZ] Se borrará el archivo \"%file_name%\""
 
 #: /home/didrya/filez/app/controllers/Admin.php:60
 msgid "email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)"
 msgstr ""
-"Bonjour,\n"
+"Hola!,\n"
 "\n"
-"La durée de vie du fichier '%file_name%' que vous avez déposé arrive à expiration, il sera automatiquement supprimé le %available_until%.\n"
+"El tiempo de vida del fichero '%file_name% que registró va a caducar, será automáticamente eliminado el %available_until%.\n"
 "\n"
-"Rappel de l'adresse du fichier : %file_url%\n"
+"Le recordamos la dirección del archivo:  %file_url%\n"
 "\n"
 "\n"
 "\n"
-"-----NE REPONDEZ PAS A CE MESSAGE ! Il a été généré automatiquement, votre réponse n'aboutirait pas !"
+"-----NO RESPONDA A ESTE MENSAJE. Es un mensaje automatizado y su respuesta no llegará a ninguna parte-----"
 
 #: /home/didrya/filez/app/controllers/Upload.php:157
 msgid "[FileZ] \"%file_name%\" uploaded successfuly"
-msgstr "[Filez] Votre fichier \"%file_name%\" a correctement été envoyé"
+msgstr "[Filez] El fichero \"%file_name%\" se ha subido correctamente."
 
 #: /home/didrya/filez/app/controllers/Upload.php:159
 msgid "email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)"
 msgstr ""
-"Bonjour,\n"
+"Hola,\n"
 "\n"
-"Votre fichier \"%file_name%\" a bien été déposé sur la plateforme Filez.\n"
+"Su fichero \"%file_name%\" Se ha registrado correctamente en Ymedia_conecta.\n"
 "\n"
-"Veuillez communiquer l'adresse suivante aux personnes avec qui vous désirez partager ce fichier, afin qu'elles puissent le télécharger : %file_url%\n"
+"Por favor, comuniquen la siguiente dirección a las personas con las que desea compartir este fichero, con el fin de que puedan descargarlo:  %file_url%\n"
 "\n"
-"Votre fichier restera disponible à cette adresse du %available_from% au %available_until%.\n"
+"Su fichero quedará disponible en esta dirección desde el %available_from% hasta el %available_until%.\n"
 "\n"
 "\n"
 "\n"
-"-----NE REPONDEZ PAS A CE MESSAGE !Il a été généré automatiquement, votre réponse n'aboutirait pas !"
+"-----NO RESPONDA A ESTE MENSAJE. Es un mensaje automatizado y su respuesta no llegará a ninguna parte-----"
 
 #: /home/didrya/filez/app/controllers/Upload.php:237
 msgid "The file was successfuly uploaded"
-msgstr "Le fichier a été correctement envoyé"
+msgstr "El archivo se ha subido correctamente"
 
 #: /home/didrya/filez/app/controllers/Upload.php:254
 msgid "An error occured while uploading the file."
-msgstr "Une erreur s'est produite pendant l'envoi du fichier."
+msgstr "Se ha producido un error al subir el archivo"
 
 #: /home/didrya/filez/app/controllers/Upload.php:271
 msgid "The uploaded file exceeds the max file size."
-msgstr "La taille du fichier dépasse la taille maximale.."
+msgstr "El archivo que intentas subir excede el límite de tamaño"
 
 #: /home/didrya/filez/app/controllers/Upload.php:276
 msgid "The uploaded file was only partially uploaded."
-msgstr "Le fichier n'a été que partiellement envoyé."
+msgstr "El arhivo se ha subido pero solo parcialmente."
 
 #: /home/didrya/filez/app/controllers/Upload.php:280
 msgid "No file was uploaded."
-msgstr "Aucun fichier n'a été envoyé"
+msgstr "No se subió ningún archivo"
 
 #: /home/didrya/filez/app/controllers/Upload.php:283
 msgid "You exceeded your disk space quota (%space%)."
-msgstr "Vous avez dépassé votre quota disque (%space%)."
+msgstr "Has sobrepasado la cuota de espacio en disco (%space%)."
 
 #: /home/didrya/filez/app/controllers/Help.php:54
 msgid "This documentation does not exist"
-msgstr "Cette documentation n'existe pas"
+msgstr "No existe documentación a este respecto."
 
 #: /home/didrya/filez/app/controllers/Auth.php:55
 msgid "Wrong username or password"
-msgstr "Nom d'utilisateur ou mot de passe incorrect"
+msgstr "Usuario o contraseña incorrectos"
 
 #: /home/didrya/filez/app/controllers/File.php:48
 msgid "File is not available for download"
-msgstr "Le fichier n'est pas disponible au téléchargement"
+msgstr "El archivo no está disponible para su descarga"
 
 #: /home/didrya/filez/app/controllers/File.php:51
 msgid "Incorrect password"
-msgstr "Mot de passe incorrect"
+msgstr "Contraseña incorrecta"
 
 #: /home/didrya/filez/app/controllers/File.php:72
 msgid "Lifetime extended"
-msgstr "Durée de vie prolongée"
+msgstr "Fecha de caducidad ampliada"
 
 #: /home/didrya/filez/app/controllers/File.php:76
 msgid "You can't extend a file lifetime more than %x% times"
-msgstr "Vous ne pouvez pas augmenter la durée de vie d'un fichier plus de %x% fois"
+msgstr "No puedes ampliar la fecha de caducidad de un archivo más de  %x% veces"
 
 #: /home/didrya/filez/app/controllers/File.php:99
 #: /home/didrya/filez/app/controllers/File.php:234
 msgid "There is no file for this code"
-msgstr "Aucun fichier n'existe pour ce code"
+msgstr "No hay descarga con éste código"
 
 #: /home/didrya/filez/app/controllers/File.php:133
 msgid "File deleted."
-msgstr "Fichier supprimé"
+msgstr "Archivo borrado"
 
 #: /home/didrya/filez/app/controllers/File.php:163
 msgid "[FileZ] \"%sender%\" wants to share a file with you"
-msgstr "[FileZ] %sender% souhaite partager un fichier avec vous"
+msgstr "[FileZ] %sender% Quiere compartir un archivo contigo"
 
 #: /home/didrya/filez/app/controllers/File.php:165
 msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
 msgstr ""
-"Bonjour,\n"
+"Hola,\n"
 "\n"
-"%sender% souhaite partager le fichier \"%file_name%\" avec vous. Vous pourrez le télécharger à l'adresse : %file_url% .\n"
+"%sender% desea compartir el archivo \"%file_name%\" contigo. Puedes descargarlo en la siguiente dirección: %file_url% .\n"
 "\n"
-"Voici le contenu de son message :\n"
+"El contenido de su mensaje :\n"
 "%msg%"
 
 #: /home/didrya/filez/app/controllers/File.php:187
 msgid "Email address \"%email%\" is incorrect, please correct it."
-msgstr "L'adresse email \"%email%\" est incorrecte, veuillez la corriger."
+msgstr "La dirección de correo \"%email%\" no es válida, por favor corrígela."
 
 #: /home/didrya/filez/app/controllers/File.php:199
 msgid "An error occured during email submission. Please try again."
-msgstr "Une erreur est survenue pendant l'envoi du fichier. Veuillez réessayer."
+msgstr "Se produijo un error al enviar el correo. Vuelva a intentarlo, por favor."
 
 #: /home/didrya/filez/app/controllers/File.php:265
 msgid "You are not the owner of the file"
-msgstr "Vous n'êtes pas le propriétaire du fichier"
+msgstr "No eres el dueño de éste archivo"
 
 #: /home/didrya/filez/app/views/file/preview.php:8
 msgid "Uploaded by"
-msgstr "Envoyé par"
+msgstr "Subido por"
 
 #: /home/didrya/filez/app/views/file/preview.php:16
 msgid "Availability"
-msgstr "disponibilité"
+msgstr "Disponibilidad"
 
 #: /home/didrya/filez/app/views/file/preview.php:17
 msgid "between %available_from% and %available_until%"
-msgstr "du  %available_from% au %available_until%"
+msgstr "Desde  %available_from% Hasta %available_until%"
 
 #: /home/didrya/filez/app/views/file/preview.php:23
 #: /home/didrya/filez/app/views/main/index.php:29
 msgid "Comments"
-msgstr "Commentaire"
+msgstr "Comentarios"
 
 #: /home/didrya/filez/app/views/file/preview.php:28
 msgid "Your download will start shortly..."
-msgstr "Votre téléchargement devrait démarrer automatiquement..."
+msgstr "Su descarga comencará en breves instantes"
 
 #: /home/didrya/filez/app/views/file/preview.php:30
 msgid "If not, click here"
-msgstr "Si ce n'est pas le cas, cliquez ici"
+msgstr "Si no, haga click aqui"
 
 #: /home/didrya/filez/app/views/file/preview.php:41
 msgid "You need a password to download this file"
-msgstr "Vous devez entrer un mot de passe pour pouvoir télécharger ce fichier"
+msgstr "Es necesaria una contraseña para descargar éste archivo"
 
 #: /home/didrya/filez/app/views/file/preview.php:44
 msgid "Download"
-msgstr "Télécharger"
+msgstr "Descargar"
 
 #: /home/didrya/filez/app/views/file/preview.php:48
 msgid "The file is not available yet."
-msgstr "Le fichier n'est pas encore disponible au téléchargement"
+msgstr "Este archivo no esta disponible aun"
 
 #: /home/didrya/filez/app/views/file/_mailForm.php:4
 msgid "Email addresses (space separated)"
-msgstr "Adresses email (séparées par des espaces)"
+msgstr "Direcciones de correo (Separadas por espacios)"
 
 #: /home/didrya/filez/app/views/file/_mailForm.php:8
 msgid "Message (file url will automatically be added)"
-msgstr "Message (l'adresse de téléchargement du fichier sera automatiquement ajoutée)"
+msgstr "Mensaje (Se añadirá la URL de descarga automáticamente)"
 
 #: /home/didrya/filez/app/views/file/_mailForm.php:12
 msgid "Open in my email client"
-msgstr "Ouvrir dans ma messagerie"
+msgstr "Abrir en mi cliente de correo"
 
 #: /home/didrya/filez/app/views/file/_mailForm.php:22
 msgid "Send"
-msgstr "Envoyer"
+msgstr "Enviar"
 
 #: /home/didrya/filez/app/views/main/index.php:2
 #: /home/didrya/filez/app/views/main/index.php:106
 msgid "Upload a new file"
-msgstr "Envoyer un nouveau fichier"
+msgstr "Subir un nuevo archivo"
 
 #: /home/didrya/filez/app/views/main/index.php:7
 msgid "File (Max size: %size%)"
-msgstr "Fichier (Taille maximale: %size%)"
+msgstr "Archivo (Tamaño máximo: %size%)"
 
 #: /home/didrya/filez/app/views/main/index.php:9
 msgid "File"
-msgstr "Fichier"
+msgstr "Archivo"
 
 #: /home/didrya/filez/app/views/main/index.php:13
 msgid "Lifetime"
-msgstr "Durée"
+msgstr "Duración"
 
 #: /home/didrya/filez/app/views/main/index.php:14
 msgid "Select a lifetime"
-msgstr "Sélectionnez une durée de vie du fichier"
+msgstr "Seleccione una fecha de caducidad"
 
 #: /home/didrya/filez/app/views/main/index.php:19
 msgid "%n% days"
-msgstr "%n% jours"
+msgstr "%n% días"
 
 #: /home/didrya/filez/app/views/main/index.php:19
 msgid "%n% day"
-msgstr "%n% jour"
+msgstr "%n% día"
 
 #: /home/didrya/filez/app/views/main/index.php:25
 msgid "Starts from"
-msgstr "Début"
+msgstr "Comienza"
 
 #: /home/didrya/filez/app/views/main/index.php:26
 msgid "Select a starting date"
-msgstr "Sélectionnez une date de début"
+msgstr "Seleccione una fecha de comienzo"
 
 #: /home/didrya/filez/app/views/main/index.php:30
 msgid "Add a comment (optional)"
-msgstr "Ajouter un commentaire (facultatif)"
+msgstr "Añadir un comentario (Opcional)"
 
 #: /home/didrya/filez/app/views/main/index.php:35
 msgid "Send me email notifications when the file is uploaded and before it will be deleted"
-msgstr "M'envoyer des emails de notification lorsque le fichier va être supprimé"
+msgstr "Enviarme notificaciones por correo cuando se suba el archivo y antes de que se borre"
 
 #: /home/didrya/filez/app/views/main/index.php:36
 msgid "Send me email notifications"
-msgstr "M'envoyer des emails de notification"
+msgstr "Enviarme notificaciones por correo"
 
 #: /home/didrya/filez/app/views/main/index.php:41
 msgid "Ask a password to people who will download your file"
-msgstr "Utiliser un mot de passe pour protéger le télécharger du fichier"
+msgstr "Pedir una contraseña a la gente que quiera descargar tu archivo"
 
 #: /home/didrya/filez/app/views/main/index.php:42
 msgid "Use a password to download"
-msgstr "Utiliser un mot de passe"
+msgstr "Utilizar un password para la descarga"
 
 #: /home/didrya/filez/app/views/main/index.php:48
 msgid "Upload"
-msgstr "Envoyer"
+msgstr "Subir"
 
 #: /home/didrya/filez/app/views/main/index.php:55
 msgid "Uploaded files"
-msgstr "Fichiers envoyés"
+msgstr "Archivos Subidos"
 
 #: /home/didrya/filez/app/views/main/index.php:88
 msgid "Are you sure to delete this file ?"
-msgstr "Êtes vous sûr de vouloir supprimer ce fichier ?"
+msgstr "¿Seguro que desea borrar este archivo?"
 
 #: /home/didrya/filez/app/views/main/index.php:89
 msgid "Unknown error"
-msgstr "Erreur inconnue"
+msgstr "Error Desconocido"
 
 #: /home/didrya/filez/app/views/main/index.php:90
 msgid "An unknown error hapenned while uploading the file"
-msgstr "Une erreur inconnue est survenue pendant l'envoi du fichier."
+msgstr "Ocurrió un error desconocido mientras se subía el archivo"
 
 #: /home/didrya/filez/app/views/main/index.php:91
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Cancelar"
 
 #: /home/didrya/filez/app/views/main/index.php:92
 msgid "You can download the file I uploaded here"
-msgstr "Vous pouvez télécharger le fichier que j'ai envoyé ici"
+msgstr "Puedes descargar el archivo que subí aqui"
 
 #: /home/didrya/filez/app/views/main/index.php:107
 msgid "Send by email"
-msgstr "Envoyer par email"
+msgstr "Enviado por correo"
 
 #: /home/didrya/filez/app/views/main/_file_row.php:6
 msgid "Never downloaded"
-msgstr "Jamais téléchargé"
+msgstr "Nunca se descargó"
 
 #: /home/didrya/filez/app/views/main/_file_row.php:7
 msgid "Downloaded once"
-msgstr "Téléchargé une fois"
+msgstr "Descargado una vez"
 
 #: /home/didrya/filez/app/views/main/_file_row.php:8
 msgid "Download %x% times"
-msgstr "Téléchargé %x% fois"
+msgstr "Descargado %x% veces"
 
 #: /home/didrya/filez/app/views/main/_file_row.php:12
 msgid "Available from %from% to %to%"
-msgstr "Disponible du %from% au %to%"
+msgstr "Disponible desde %from% hasta %to%"
 
 #: /home/didrya/filez/app/views/main/_file_row.php:39
 msgid "Email"
-msgstr "Envoyer par email"
+msgstr "Email"
 
 #: /home/didrya/filez/app/views/main/_file_row.php:44
 msgid "Delete"
-msgstr "Supprimer"
+msgstr "Borrar"
 
 #: /home/didrya/filez/app/views/main/_file_row.php:50
 msgid "Extend one more day"
-msgstr "Rendre disponible un jour de plus"
+msgstr "Añadir un día de disponibilidad"
 
 #: /home/didrya/filez/app/views/auth/loginForm.php:5
 msgid "Username"
-msgstr "Nom d'utilisateur"
+msgstr "Usuario"
 
 #: /home/didrya/filez/app/views/auth/loginForm.php:9
 msgid "Password"
-msgstr "Mot de passe"
+msgstr "Contraseña"
 
 #: /home/didrya/filez/app/views/auth/loginForm.php:13
 msgid "Log me in"
-msgstr "Me connecter"
+msgstr "Conectar"
 
 #: /home/didrya/filez/app/views/layout/_footer.php:11
 msgid "Using %space% of %quota%"
-msgstr "%space% utilisés sur %quota%"
+msgstr "%space% usados de %quota%"
 
 #: /home/didrya/filez/app/views/layout/_footer.php:20
 msgid "Find help"
-msgstr "Aide"
+msgstr "Ayuda"
 
 #: /home/didrya/filez/app/views/layout/_footer.php:23
 msgid "Report a bug"
-msgstr "Signaler un bogue"
+msgstr "Notifica un error"
 
 #: /home/didrya/filez/app/views/layout/_footer.php:28
 msgid "A free software from the University of Avignon"
-msgstr "Un logiciel libre de l'Université d'Avignon et des Pays de Vaucluse"
+msgstr ""
 
 #: /home/didrya/filez/app/views/layout/_header.php:13
 msgid "Share files for a limited time."
-msgstr "Distribuez vos fichiers pour une durée limitée."
+msgstr "Comparte este archivo un tiempo determinado"
 
 #: /home/didrya/filez/app/views/layout/_header.php:27
 msgid "Log out"
-msgstr "Me déconnecter"
+msgstr "Desconectar"
 
 #: /home/didrya/filez/lib/fz_limonade.php:82
 msgid "Page not found"
-msgstr "Page non trouvée"
+msgstr "Página no encontrada"
 
 #~ msgid "Details"
 #~ msgstr "Détails"

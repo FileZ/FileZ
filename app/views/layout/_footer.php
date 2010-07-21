@@ -25,6 +25,6 @@
       </div>
 
       <?php if (fz_config_get('looknfeel', 'show_credit')): ?>
-        <a href="http://gpl.univ-avignon.fr">Un logiciel libre de l'Université d'Avignon et des Pays de Vaucluse</a>
+        <a href="http://gpl.univ-avignon.fr"><?php echo __('A free software from the University of Avignon') ?></a>
       <?php endif ?>
     </footer>
