@@ -33,7 +33,7 @@ class App_Controller_Auth extends Fz_Controller {
         if ($this->getAuthHandler ()->isSecured ())
             fz_redirect_to ('/', ($https == 'always'));
 
-        if ($https != 'off')
+        if ($https == 'always' || $https == 'login_only' )
             fz_force_https ();
 
         set ('username', (array_key_exists ('username', $_POST) ?
