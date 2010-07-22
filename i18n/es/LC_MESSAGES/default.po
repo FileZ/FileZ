@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: filez-2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-21 15:49+0100\n"
-"PO-Revision-Date: 2010-07-21 15:57+0100\n"
+"PO-Revision-Date: 2010-07-22 09:20+0100\n"
 "Last-Translator: eXo <info@neuromancer.es>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "MIME-Version: 1.0\n"
@@ -352,7 +352,7 @@ msgstr "Notifica un error"
 
 #: /home/didrya/filez/app/views/layout/_footer.php:28
 msgid "A free software from the University of Avignon"
-msgstr ""
+msgstr "Un software libre de la Universidad de Aviñón"
 
 #: /home/didrya/filez/app/views/layout/_header.php:13
 msgid "Share files for a limited time."
