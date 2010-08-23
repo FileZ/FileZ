@@ -306,3 +306,23 @@ Apache virtual host example
         CustomLog /var/log/apache2/filez-access.log combined
         LogLevel warn
 </VirtualHost>
+
+Authenticating against an ORACLE OIDDAS LDAP server
+---------------------------------------------------
+
+    [user_factory_options]
+    baseDn = "cn=Users,dc=domain,dc=fr"
+    host = "serveur.domain.fr"
+    useSsl = false
+    bindRequiresDn = true
+    username = "cn=p.nom,cn=Users,dc=domain,dc=fr"
+    password = "password"
+    accountFilterFormat = "(&(objectclass=*)(uid=%s))"
+    
+    [user_attributes_translation] firstname = "givenname"
+    lastname = "sn"
+    email = "mail"
+    id = "cn"
+
+
+
