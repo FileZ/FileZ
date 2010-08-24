@@ -103,7 +103,7 @@ $.fn.initFileActions = function () {
         console.log ('hi');
         var modal = $('#email-modal');
         var fileUrl = $(this).attr ('href')
-                .substring (0, $(this).attr ('href').lastIndexOf ('/') - 1);
+                .substring (-1, $(this).attr ('href').lastIndexOf ('/'));
         modal.dialog ('open');
         $('form', modal).attr ('action', $(this).attr ('href'));
         $('.open-email-client', modal).attr ('href', 'mailto:'
