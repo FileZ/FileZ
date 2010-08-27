@@ -224,17 +224,6 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
         'plain' => 'Plain',
         'crammd5' => 'CRAM-MD5',
     )) ?>
-    <script type="text/javascript">
-      $(document).ready (function () {
-        $('#field-email-auth').change (function (e) {
-          if ($(this).val () == '')
-            $('#smtp-auth-options').hide();
-          else
-            $('#smtp-auth-options').show();
-          e.preventDefault();
-        }).trigger ('change');
-      })
-    </script>
 
     <table id="smtp-auth-options" class="options">
       <tr>
@@ -280,7 +269,18 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
   };
 
   $(document).ready (function () {
-    $('select, checkbox').change (function () { $(this).autoShowOptions (); }).trigger ('change');
+      
+    $("select, checkbox").not ('#field-email-auth').change (function () { $(this).autoShowOptions (); });
+
+    // Specific treatment
+    $('#field-email-auth').change (function (e) {
+      if ($(this).val () == '')
+        $('#smtp-auth-options').hide();
+      else
+        $('#smtp-auth-options').show();
+    });
+    
+    $("select, checkbox").trigger ('change');
 
     jQuery.validator.addMethod("memsize", function(value, element) {
       return this.optional(element) || /^\d+[KMG]?$/.test(value);
