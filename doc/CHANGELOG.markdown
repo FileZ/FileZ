@@ -1,6 +1,13 @@
 
 
-Filez-2.0.0 (WIP)
+Filez-2.0.1
+
+* Added spannish translation
+* Documented configuration with an Onracle Ldap Serveur
+* Fixed shortened file URL when sending emails (thanks to Cédric Corazza)
+* Fixed missing smtp credentials on the install form
+
+Filez-2.0.0
 
 * Fixed some IE7 rendering bug
 * Ldap user factory now allow to retrieve accounts from baseDn subtrees
