@@ -279,6 +279,11 @@ Follow this howto to enable the "filter_var()" function of PHP :
 
 http://www.cyberciti.biz/faq/rhel-cento-linux-install-php-pecl-filter/
 
+You may also need to install the php json extension :
+
+http://linuxchunks.com/2010/04/php-fatal-error-call-to-undefined-function-json_encode/
+
+
 Apache virtual host example
 ---------------------------
 
