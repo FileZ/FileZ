@@ -329,5 +329,23 @@ Authenticating against an ORACLE OIDDAS LDAP server
     email = "mail"
     id = "cn"
 
+    
+Required Ports to install FileZ on FreeBSD (8.1)
+------------------------------------------------
+
+/usr/ports/www/php5-session
+/usr/ports/textproc/php5-simplexml
+/usr/ports/databases/php5-pdo
+/usr/ports/databases/php5-pdo_mysql
+/usr/ports/net/php5-ldap (pour l'auth ldap)
+/usr/ports/devel/php5-json
+/usr/ports/converters/php5-iconv
+/usr/ports/security/php5-filter
+/usr/ports/lang/php5
+/usr/ports/devel/pecl-uploadprogress (si vous choisissez cette option...)
+/usr/ports/net/openldap23-client/ (pour l'auth ldap)
+/usr/ports/databases/mysql51-server
+/usr/ports/databases/mysql51-client
+/usr/ports/www/apache22
 
 
