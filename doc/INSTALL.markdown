@@ -62,16 +62,12 @@ The "[app]" section contains common options :
 - "use_url_rewriting" (boolean) : Not tested with "false" yet
 - "upload_dir" (Absolute path)  : Upload directory (writtable by the web server)
 - "log_dir"    (Absolute path)  : Log directory (writtable by the web server)
-- "filez1_compat" (boolean)     : Enable the filez-1.x support for downloading
-                                  previously uploaded files
-- "max_file_lifetime" (integer) : Maximum lifetime of the file on the server
-                                  before being delete
+- "filez1_compat" (boolean)     : Enable the filez-1.x support for downloading previously uploaded files
+- "max_file_lifetime" (integer) : Maximum lifetime of the file on the server before being delete
 - "default_file_lifetime (int)  : Default lifetime
 - "min_hash_size" (integer)     : Minimum number of characters in the hash
 - "max_hash_size" (integer)     : Maximum number of characters in the hash
-- "default_locale" (string)     : Default locale used when Filez can find the
-                                  prefered user locale or when there is no
-                                  corresponding i18n for the user locale.
+- "default_locale" (string)     : Default locale used when Filez can find the prefered user locale or when there is no corresponding i18n for the user locale.
 
 
 Database
@@ -333,19 +329,19 @@ Authenticating against an ORACLE OIDDAS LDAP server
 Required Ports to install FileZ on FreeBSD (8.1)
 ------------------------------------------------
 
-/usr/ports/www/php5-session
-/usr/ports/textproc/php5-simplexml
-/usr/ports/databases/php5-pdo
-/usr/ports/databases/php5-pdo_mysql
-/usr/ports/net/php5-ldap (pour l'auth ldap)
-/usr/ports/devel/php5-json
-/usr/ports/converters/php5-iconv
-/usr/ports/security/php5-filter
-/usr/ports/lang/php5
-/usr/ports/devel/pecl-uploadprogress (si vous choisissez cette option...)
-/usr/ports/net/openldap23-client/ (pour l'auth ldap)
-/usr/ports/databases/mysql51-server
-/usr/ports/databases/mysql51-client
-/usr/ports/www/apache22
+* /usr/ports/www/php5-session
+* /usr/ports/textproc/php5-simplexml
+* /usr/ports/databases/php5-pdo
+* /usr/ports/databases/php5-pdo_mysql
+* /usr/ports/net/php5-ldap (pour l'auth ldap)
+* /usr/ports/devel/php5-json
+* /usr/ports/converters/php5-iconv
+* /usr/ports/security/php5-filter
+* /usr/ports/lang/php5
+* /usr/ports/devel/pecl-uploadprogress (if you choose this method for handling upload progress)
+* /usr/ports/net/openldap23-client/ (pour l'auth ldap)
+* /usr/ports/databases/mysql51-server
+* /usr/ports/databases/mysql51-client
+* /usr/ports/www/apache22
 
 
