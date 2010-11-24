@@ -5,20 +5,10 @@
 
   # RewriteBase /my_app/ # if your app is in a subfolder
   # RewriteBase /web/
-  
-  # protect other directories
-  RedirectMatch 404 /\\.svn
-  RedirectMatch 404 ^/scripts
-  RedirectMatch 404 ^/lib
-  RedirectMatch 404 ^/app
-  RedirectMatch 404 ^/config/
-  RedirectMatch 404 ^/i18n
 
-  # test string is a valid files or directory
-  RewriteCond %{SCRIPT_FILENAME} !-f
-  RewriteCond %{SCRIPT_FILENAME} !-d
-  
-  #RewriteRule ^(.*)$ index.php?/$1    [NC,L]
+  RewriteCond %{REQUEST_URI} !favicon.ico
+  RewriteCond %{REQUEST_URI} !doc/user/(.*)\.
+  RewriteCond %{REQUEST_URI} !resources/(.*)\.
   RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
 
