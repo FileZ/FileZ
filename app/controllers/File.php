@@ -243,7 +243,8 @@ class App_Controller_File extends Fz_Controller {
     protected function sendFile (App_Model_File $file) {
         $mime = file_mime_content_type ($file->getFileName ());
         header('Content-Type: '.$mime);
-        header('Content-Disposition: attachment; filename="'.$file->getFileName ().'"');
+        header('Content-Disposition: attachment; filename="'.
+            iconv ("UTF-8", "ISO-8859-1", $file->getFileName ()).'"');
         header('Content-Transfer-Encoding: binary');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
