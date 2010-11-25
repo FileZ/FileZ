@@ -1,4 +1,8 @@
 
+Filez-2.0.2
+
+* better handling of non ascii char in filename when downloading (thanks to C. Durocher)
+* security fix when filez is installed in a subdirectory (thanks to C. Durocher)
 
 Filez-2.0.1
 
