@@ -55,7 +55,7 @@ class App_Controller_Admin extends Fz_Controller {
     private function notifyDeletionByEmail (App_Model_File $file) {
         try {
             $mail = $this->createMail();
-            $subject = __r('[FileZ] your file "%file_name%" your file is going to be deleted', array (
+            $subject = __r('[FileZ] Your file "%file_name%" is going to be deleted', array (
                 'file_name' => $file->file_name));
             $msg = __r('email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)', array(
                 'file_name'       => $file->file_name,
