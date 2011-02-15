@@ -69,7 +69,7 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      * @return string           Hash code
      */
     protected function generateRandomHash ($min, $max) {
-        $size = mt_rand ($min, $max);
+        $size = mt_rand ($min, min ($max, 10));
         $hash = '';
         for ($i = 0; $i < $size; ++$i) {
             $hash .= base_convert (mt_rand (0, 35), 10, 36);
