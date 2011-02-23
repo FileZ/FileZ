@@ -17,7 +17,7 @@
 
       <div id="support">
         <?php if (fz_config_get('looknfeel', 'help_url')): ?>
-          <a href="<?php echo url_for (fz_config_get('looknfeel', 'help_url')) ?>" class="help"><?php echo __('Find help') ?></a>
+          <a href="<?php echo url_for (fz_config_get('looknfeel', 'help_url')) ?>" class="help" target="#_blank"><?php echo __('Find help') ?></a>
         <?php endif; ?>
         <?php if (fz_config_get('looknfeel', 'bug_report_href')): ?>
           <a href="<?php echo fz_config_get('looknfeel', 'bug_report_href') ?>" class="bug"><?php echo __('Report a bug') ?></a>
@@ -25,6 +25,6 @@
       </div>
 
       <?php if (fz_config_get('looknfeel', 'show_credit')): ?>
-        <a href="http://gpl.univ-avignon.fr"><?php echo __('A free software from the University of Avignon') ?></a>
+        <a href="http://gpl.univ-avignon.fr" target="#_blank"><?php echo __('A free software from the University of Avignon') ?></a>
       <?php endif ?>
     </footer>
