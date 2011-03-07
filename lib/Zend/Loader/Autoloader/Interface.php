@@ -15,20 +15,29 @@
  * @category   Zend
  * @package    Zend_Loader
  * @subpackage Autoloader
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Interface.php 16541 2009-07-07 06:59:03Z bkarwin $
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Interface.php 23775 2011-03-01 17:25:24Z ralph $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
  * Autoloader interface
- * 
+ *
  * @package    Zend_Loader
  * @subpackage Autoloader
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 interface Zend_Loader_Autoloader_Interface
 {
+    /**
+     * Autoload a class
+     *
+     * @abstract
+     * @param   string $class
+     * @return  mixed
+     *          False [if unable to load $class]
+     *          get_class($class) [if $class is successfully loaded]
+     */
     public function autoload($class);
 }

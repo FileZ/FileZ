@@ -15,10 +15,16 @@
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Frontcontroller.php 17737 2009-08-21 20:57:50Z matthew $
+ * @version    $Id: Frontcontroller.php 23775 2011-03-01 17:25:24Z ralph $
  */
+
+/**
+ * @see Zend_Application_Resource_ResourceAbstract
+ */
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
+
 
 /**
  * Front Controller resource
@@ -26,7 +32,7 @@
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resource_ResourceAbstract
@@ -38,13 +44,13 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
 
     /**
      * Initialize Front Controller
-     * 
+     *
      * @return Zend_Controller_Front
      */
     public function init()
     {
         $front = $this->getFrontController();
-        
+
         foreach ($this->getOptions() as $key => $value) {
             switch (strtolower($key)) {
                 case 'controllerdirectory':
@@ -56,42 +62,65 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
                         }
                     }
                     break;
-                    
+
                 case 'modulecontrollerdirectoryname':
                     $front->setModuleControllerDirectoryName($value);
                     break;
-                    
+
                 case 'moduledirectory':
-                    $front->addModuleDirectory($value);
+                    if (is_string($value)) {
+                        $front->addModuleDirectory($value);
+                    } elseif (is_array($value)) {
+                        foreach($value as $moduleDir) {
+                            $front->addModuleDirectory($moduleDir);
+                        }
+                    }
                     break;
-                    
+
                 case 'defaultcontrollername':
                     $front->setDefaultControllerName($value);
                     break;
-                    
+
                 case 'defaultaction':
                     $front->setDefaultAction($value);
                     break;
-                    
+
                 case 'defaultmodule':
                     $front->setDefaultModule($value);
                     break;
-                    
+
                 case 'baseurl':
                     if (!empty($value)) {
                         $front->setBaseUrl($value);
                     }
                     break;
-                    
+
                 case 'params':
                     $front->setParams($value);
                     break;
-                    
+
                 case 'plugins':
                     foreach ((array) $value as $pluginClass) {
+                        $stackIndex = null;
+                        if(is_array($pluginClass)) {
+                            $pluginClass = array_change_key_case($pluginClass, CASE_LOWER);
+                            if(isset($pluginClass['class']))
+                            {
+                                if(isset($pluginClass['stackindex'])) {
+                                    $stackIndex = $pluginClass['stackindex'];
+                                }
+
+                                $pluginClass = $pluginClass['class'];
+                            }
+                        }
+
                         $plugin = new $pluginClass();
-                        $front->registerPlugin($plugin);
+                        $front->registerPlugin($plugin, $stackIndex);
                     }
+                    break;
+
+                case 'returnresponse':
+                    $front->returnResponse((bool) $value);
                     break;
 
                 case 'throwexceptions':
@@ -121,7 +150,7 @@ class Zend_Application_Resource_Frontcontroller extends Zend_Application_Resourc
 
     /**
      * Retrieve front controller instance
-     * 
+     *
      * @return Zend_Controller_Front
      */
     public function getFrontController()

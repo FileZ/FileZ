@@ -13,34 +13,32 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Ldap
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Interface.php 17826 2009-08-26 15:01:34Z sgehrig $
+ * @version    $Id: DashToCamelCase.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
- * Zend_Ldap_Collection_Iterator_Interface provides a contract for
- * adapter specific collection iterators
- *
+ * @see Zend_Filter_Interface
+ */
+require_once 'Zend/Filter/Word/SeparatorToCamelCase.php';
+
+/**
  * @category   Zend
- * @package    Zend_Ldap
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @package    Zend_Filter
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Ldap_Collection_Iterator_Interface extends Iterator, Countable
+class Zend_Filter_Word_DashToCamelCase extends Zend_Filter_Word_SeparatorToCamelCase
 {
     /**
-     * Closes the current result set
+     * Constructor
      *
-     * @return boolean
+     * @return void
      */
-    public function close();
-
-    /**
-     * Gets the current LDAP connection.
-     *
-     * @return Zend_Ldap
-     */
-    public function getLdap();
+    public function __construct()
+    {
+        parent::__construct('-');
+    }
 }
