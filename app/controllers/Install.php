@@ -86,6 +86,9 @@ class App_Controller_Install extends Fz_Controller {
         // If request is post, check for errors
         if (request_is_post()) {
 
+            // prevent unchecked input from being transformed to true when merging config
+            $_POST['config']['looknfeel']['show_credit'] = (
+                array_key_exists ('show_credit', $_POST['config']['looknfeel']) ? 1 : 0);
             $config = merge_config($_POST['config'], $config);
 
             // checking rights

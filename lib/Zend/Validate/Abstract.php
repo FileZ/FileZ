@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 17846 2009-08-27 17:38:13Z thomas $
+ * @version    $Id: Abstract.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -27,7 +27,7 @@ require_once 'Zend/Validate/Interface.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
@@ -216,10 +216,10 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
         $message = $this->_messageTemplates[$messageKey];
 
         if (null !== ($translator = $this->getTranslator())) {
-            if ($translator->isTranslated($message)) {
-                $message = $translator->translate($message);
-            } elseif ($translator->isTranslated($messageKey)) {
+            if ($translator->isTranslated($messageKey)) {
                 $message = $translator->translate($messageKey);
+            } else {
+                $message = $translator->translate($message);
             }
         }
 
@@ -353,6 +353,16 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
     }
 
     /**
+     * Does this validator have its own specific translator?
+     *
+     * @return bool
+     */
+    public function hasTranslator()
+    {
+        return (bool)$this->_translator;
+    }
+
+    /**
      * Set default translation object for all validate objects
      *
      * @param  Zend_Translate|Zend_Translate_Adapter|null $translator
@@ -390,6 +400,16 @@ abstract class Zend_Validate_Abstract implements Zend_Validate_Interface
         }
 
         return self::$_defaultTranslator;
+    }
+
+    /**
+     * Is there a default translation object set?
+     *
+     * @return boolean
+     */
+    public static function hasDefaultTranslator()
+    {
+        return (bool)self::$_defaultTranslator;
     }
 
     /**

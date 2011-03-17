@@ -19,20 +19,19 @@
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.form.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery.progressbar.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/jquery-ui-1.7.2.custom.min.js') ?>"></script>
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
+    <?php if (option ('locale')->getLanguage () != 'en'): ?>
+      <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
+    <?php endif ?>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/filez.js') ?>"></script>
     <script>
-     function checkPortal()
-     {
-	if (top.location != self.document.location)
-    	  {
-	    // if filez is displayed through a web portal
-	    // hide logos and logout box
-            document.getElementById('your-logo').style.display = 'none';
-            document.getElementById('filez-logo').style.display = 'none';
-            document.getElementById('auth-box').style.display = 'none';
-	  }
-     }
+      function checkPortal() {
+        if (top.location != self.document.location) {
+          // if filez is displayed through a web portal hide logos and logout box
+          document.getElementById('your-logo').style.display = 'none';
+          document.getElementById('filez-logo').style.display = 'none';
+          document.getElementById('auth-box').style.display = 'none';
+        }
+      }
     </script>
   </head>
   <body onLoad="checkPortal();">

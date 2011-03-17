@@ -20,8 +20,8 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <?php elseif ($type == 'checkbox'): ?>
       <input type="checkbox" id="field-<?php echo $section.'-'.$var ?>"
              name="<?php echo "config[$section][$var]" ?>"
-             value="true"
-             <?php echo ($default_values[$section][$var] ? 'checked="checked"' : '') ?> />
+             value="1"
+             <?php echo (((int) $default_values[$section][$var] == 1) ? 'checked="checked"' : '') ?> />
       <label for="field-<?php echo $section.'-'.$var ?>" style="display: inline;"><?php echo $label ?></label>
     <?php endif ?>
   </p>

@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: StringLength.php 16223 2009-06-21 20:04:53Z thomas $
+ * @version    $Id: StringLength.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -27,7 +27,7 @@ require_once 'Zend/Validate/Abstract.php';
 /**
  * @category   Zend
  * @package    Zend_Validate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Validate_StringLength extends Zend_Validate_Abstract
@@ -40,9 +40,9 @@ class Zend_Validate_StringLength extends Zend_Validate_Abstract
      * @var array
      */
     protected $_messageTemplates = array(
-        self::INVALID   => "Invalid type given, value should be a string",
+        self::INVALID   => "Invalid type given. String expected",
         self::TOO_SHORT => "'%value%' is less than %min% characters long",
-        self::TOO_LONG  => "'%value%' is greater than %max% characters long"
+        self::TOO_LONG  => "'%value%' is more than %max% characters long",
     );
 
     /**
@@ -79,15 +79,39 @@ class Zend_Validate_StringLength extends Zend_Validate_Abstract
     /**
      * Sets validator options
      *
-     * @param  integer $min
-     * @param  integer $max
+     * @param  integer|array|Zend_Config $options
      * @return void
      */
-    public function __construct($min = 0, $max = null, $encoding = null)
+    public function __construct($options = array())
     {
-        $this->setMin($min);
-        $this->setMax($max);
-        $this->setEncoding($encoding);
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } else if (!is_array($options)) {
+            $options     = func_get_args();
+            $temp['min'] = array_shift($options);
+            if (!empty($options)) {
+                $temp['max'] = array_shift($options);
+            }
+
+            if (!empty($options)) {
+                $temp['encoding'] = array_shift($options);
+            }
+
+            $options = $temp;
+        }
+
+        if (!array_key_exists('min', $options)) {
+            $options['min'] = 0;
+        }
+
+        $this->setMin($options['min']);
+        if (array_key_exists('max', $options)) {
+            $this->setMax($options['max']);
+        }
+
+        if (array_key_exists('encoding', $options)) {
+            $this->setEncoding($options['encoding']);
+        }
     }
 
     /**

@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Ldap
  * @subpackage Schema
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActiveDirectory.php 13449 2008-12-23 17:49:44Z sgehrig $
+ * @version    $Id: ActiveDirectory.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -36,7 +36,7 @@ require_once 'Zend/Ldap/Node/Schema/AttributeType/Interface.php';
  * @category   Zend
  * @package    Zend_Ldap
  * @subpackage Schema
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Ldap_Node_Schema_AttributeType_ActiveDirectory extends Zend_Ldap_Node_Schema_Item

@@ -1,3 +1,4 @@
 log/*
 config/filez.ini
 nbproject/
+.idea

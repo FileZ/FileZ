@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Ldap
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Dn.php 17829 2009-08-26 15:07:10Z sgehrig $
+ * @version    $Id: Dn.php 23775 2011-03-01 17:25:24Z ralph $
  */
 
 /**
@@ -24,7 +24,7 @@
  *
  * @category   Zend
  * @package    Zend_Ldap
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Ldap_Dn implements ArrayAccess
@@ -610,8 +610,8 @@ class Zend_Ldap_Dn implements ArrayAccess
                 $ret[] = array($k[$i] => $v[$i]);
             }
         }
-        if (!is_null($keys)) $keys = $k;
-        if (!is_null($vals)) $vals = $v;
+        if ($keys !== null) $keys = $k;
+        if ($vals !== null) $vals = $v;
         return $ret;
     }
 
