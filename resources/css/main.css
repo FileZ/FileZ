@@ -331,8 +331,6 @@ section#uploaded-files ul li p.filename {
   padding: 0 1.3em;
 }
 section#uploaded-files ul li p.filename a {
-  padding-left: 20px;
-  background: transparent url(../images/icons/emblem-info.png) no-repeat left center;
   font-weight: bold;
   font-size: 1.3em;
   letter-spacing: -0.05em;
@@ -375,7 +373,6 @@ section#uploaded-files ul li .file-attributes .download-counter {
 /* File actions */
 section#uploaded-files ul li ul.actions {
   list-style: none;
-  background: #F8F6E2;
   border-bottom: 1px solid rgba(0,0,0,0.1);
   border-top: 1px solid rgba(255,255,255,1);
   -moz-box-shadow:    inset 0 -4px 4px rgba(0,0,0,0.05);

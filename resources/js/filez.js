@@ -70,13 +70,6 @@ $.fn.initFilez = function (options) {
     // Initialise actions event handlers
     $('.file .actions').initFileActions();
 
-    // Show file's actions only on hover
-    $('#uploaded-files .actions').hide ();
-    $('#uploaded-files li.file').hover (
-        function () {$('.actions', this).slideDown(100);},
-        function () {$('.actions', this).slideUp(100);}
-    );
-
     // Initialise email modal box
     $('.email-modal form').ajaxForm ({success: onEmailFormSent, dataType: 'json'});
 
@@ -301,13 +294,6 @@ var appendFile = function (html) {
         '<li class="file '+cssClass+'" style="display: none;">'+html+'</li>'
     );
     files.children ('li:first').slideDown (500);
-    $('.file:first .actions', files).initFileActions().hide();
-
-    // Show file's actions only on hover
-    $('#uploaded-files li.file').hover (
-        function () {$('.actions', this).slideDown(100);},
-        function () {$('.actions', this).slideUp(100);}
-    );
 };
 
 var reloadUploadForm = function () {

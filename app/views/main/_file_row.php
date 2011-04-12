@@ -19,12 +19,8 @@
 
 <div class="file-description">
   <p class="filename">
-    <?php // TODO add a copy to clipboard button ?>
     <a href="<?php echo $file->getDownloadUrl () ?>">
-      <span class="filename"><?php echo h ( truncate_string ($file->file_name, 40)) ?></span>
-      <span class="url"     ><?php echo str_replace (
-            $file->getHash (), '<span class="hash">'.$file->getHash ().'</span>',
-            $file->getDownloadUrl ()) ?></span>
+      <?php echo h ( truncate_string ($file->file_name, 40)) ?>
     </a>
   </p>
   <p class="comment"><?php echo $file->comment ?> &nbsp;</p>
