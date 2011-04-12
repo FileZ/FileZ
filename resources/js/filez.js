@@ -68,7 +68,7 @@ $.fn.initFilez = function (options) {
     $(this).attr ('action', $(this).attr ('action') + '?is-async=1');
 
     // Initialise actions event handlers
-    $('.file .actions').initFileActions();
+    $('.file').each (function () { $(this).initFileActions(); } );
 
     // Initialise email modal box
     $('.email-modal form').ajaxForm ({success: onEmailFormSent, dataType: 'json'});
@@ -92,7 +92,8 @@ $.fn.initFilez = function (options) {
  *
  */
 $.fn.initFileActions = function () {
-    $('.send-by-email', this).click     (function (e) {
+    // FIXME
+    $('a.send-by-email', this).click     (function (e) {
         console.log ('hi');
         var modal = $('#email-modal');
         var fileUrl = $(this).attr ('href')
@@ -104,28 +105,21 @@ $.fn.initFileActions = function () {
         e.preventDefault();
     }),
 
-    $('.delete', this).click (function (e) {
+    $('a.delete', this).click (function (e) {
         if (confirm (settings.messages.confirmDelete))
             $('<form action="'+$(this).attr('href')+'" method="post"></form>').appendTo('body').submit();
         e.preventDefault();
     });
 
-    $('.extend', this).click (function (e) {
+    $('a.extend', this).click (function (e) {
         e.preventDefault();
         var fileListItem = $(this).closest ('li.file');
         $.getJSON($(this).attr('href'), function (data) {
             if (data.status == undefined) {
                 notifyError (settings.messages.unknownErrorHappened);
             } else if (data.status == 'success') {
-                fileListItem.html (data.html)
-                $('.actions', fileListItem).initFileActions();
-
-                // Show file's actions only on hover
-                fileListItem.hover (
-                    function () {$('.actions', this).slideDown(100);},
-                    function () {$('.actions', this).slideUp(100);}
-                );
-                //notify (data.statusText);
+                fileListItem.html (data.html);
+                fileListItem.initFileActions ();
             } else if (data.status == 'error'){
                 notifyError (data.statusText);
             }
