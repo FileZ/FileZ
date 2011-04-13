@@ -57,7 +57,7 @@ function merge_config ($user, $default) {
         $result [$section] = (array_key_exists ($section, $user) ?
             array_merge ($default[$section], $user[$section]) : $default[$section]);
     }
-    return $result;
+    return $result  + array_diff_key ($user, $default);
 }
 
 /**
@@ -91,6 +91,8 @@ function fz_config_save ($config, $file) {
 
 function fz_serialize_ini_array ($assoc_arr, $has_sections = false) {
     $content = "";
+
+if ($has_sections) print_r($assoc_arr);
 
     if ($has_sections) {
         foreach ($assoc_arr as $section => $values) {
