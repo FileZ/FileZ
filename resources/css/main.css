@@ -685,6 +685,21 @@ div.lim-debug hr {display: none;}
   font-size: 0.8em;
 }
 
+/**
+ * qtip
+ */
+
+.ui-tooltip-dark .ui-tooltip-titlebar,
+.ui-tooltip-dark .ui-tooltip-content{
+	border: 0;
+}
+.ui-tooltip-dark .ui-tooltip-content{
+	background-color: #505050;
+	background-color: rgba(0,0,0,.8);
+}
+
+
+
 /*
  * Install
  */

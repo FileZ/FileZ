@@ -126,6 +126,21 @@ $.fn.initFileActions = function () {
         });
     });
 
+    // initialize tips
+    $('a.extend, a.delete, a.share').qtip({
+        content: {
+           attr: 'title'
+        },
+        position: {
+            my: 'bottom center', 
+            at: 'top center'
+        },
+        style: { 
+            tip: true,
+            classes: 'ui-tooltip-dark ui-tooltip-rounded ui-tooltip-shadow'
+        }
+    });
+
     return $(this);
 }
 
