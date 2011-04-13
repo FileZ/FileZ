@@ -24,7 +24,7 @@
     'to' =>  '<b>'.$file->getAvailableUntil ()->toString ('d MMMM').'</b>')) // FIXME I18N ?>
 
     <?php if ($file->extends_count < fz_config_get ('app', 'max_extend_count')): ?>
-      <a href="<?php echo $file->getDownloadUrl () ?>/extend" class="extend">
+      <a href="<?php echo $file->getDownloadUrl () ?>/extend" class="extend" title="<?php echo __('Extend one more day') ?>">
         <?php echo __('Extend one more day') ?>
       </a>
     <?php endif ?>
@@ -37,7 +37,7 @@
       )))); // TODO ugly DIY plural ... ?>
   </p>
   <p class="delete">
-    <a href="<?php echo $file->getDownloadUrl () ?>/delete" class="delete">
+    <a href="<?php echo $file->getDownloadUrl () ?>/delete" class="delete" title="<?php echo __('Delete') ?>">
       <?php echo __('Delete') ?>
     </a>
   </p>
