@@ -355,6 +355,17 @@ section#uploaded-files ul li p.filename a {
   font-size: 1.3em;
   letter-spacing: -0.05em;
 }
+section#uploaded-files ul li p a.copy2clipboard {
+	opacity: 0;
+}
+section#uploaded-files ul li:hover p a.copy2clipboard {
+	text-indent: -5000px;
+	background: transparent url(../images/icons/copy.png) no-repeat center bottom; 
+	width: 16px;
+	padding: 0 5px;
+	display: inline-block;
+	opacity: 1;
+}
 section#uploaded-files ul li p.comment {
 	display: none;
 	/* TODO */

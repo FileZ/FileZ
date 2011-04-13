@@ -22,6 +22,8 @@
     <?php if (option ('locale')->getLanguage () != 'en'): ?>
       <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
     <?php endif ?>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/zeroclipboard/ZeroClipboard.js') ?>"></script>
+    <script type="text/javascript">Clipboard.setMoviePath('<?php echo public_url_for ('resources/js/zeroclipboard/ZeroClipboard.swf') ?>');</script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/filez.js') ?>"></script>
     <script>
       function checkPortal() {
@@ -45,5 +47,6 @@
     <?php echo partial ('layout/_footer.php', (isset ($user) ? array('user' => $user) : array())); ?>
 
     <div id="modal-background"></div>
+
   </body>
 </html>
