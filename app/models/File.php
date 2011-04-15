@@ -306,7 +306,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         $mimetype = 'application/octet-stream';
 
         $mimes = mime_type ();
-        $ext = file_extension ($this->file_name);
+        $ext = $this->getExtension ();
         if (array_key_exists ($ext, $mimes))
             $mimetype = $mimes [$ext];
         else if (function_exists ('finfo_file')) {
@@ -316,5 +316,29 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         }
         return $mimetype;
     }
+
+    /**
+     * return the file extension
+     *
+     * @return string
+     */
+    public function getExtension () {
+        return strtolower (file_extension ($this->file_name));
+    }
+
+    /**
+     * Tells if the file is an image
+     *
+     * @return boolean
+     */
+    public function isImage () {
+        return in_array ($this->getExtension (), array (
+            'bmp',
+            'gif',
+            'jpg',
+            'png',
+        ));
+    }
+
 
 }

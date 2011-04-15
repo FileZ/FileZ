@@ -1,10 +1,16 @@
 
 
-<h2 class="filename">
+<h2 class="filename preview">
+  <img src="<?php echo get_mimetype_icon_url ($file->getMimetype (), 48) ?>" class="mimetype" />
   <?php echo h($file->file_name) ?> (<?php echo $file->getReadableFileSize () ?>)
 </h2>
 <section id="preview-file">
   <p>
+
+    <?php if ($available && ! $checkPassword && $file->isImage ()): ?>
+        <img src="<?php echo $file->getDownloadUrl ()?>/download" class="preview-image" width="617px"/>
+    <?php endif ?>
+
     <?php echo __('Uploaded by') ?> :
     <?php if (array_key_exists('firstname', $uploader)): ?>
       <?php echo h($uploader['firstname']).' '.h($uploader['lastname']) ?>
@@ -24,18 +30,27 @@
   <?php endif ?>
   <p>
   <?php if ($available): ?>
-      <?php if (! $checkPassword): ?>
+    <?php if (! $checkPassword): ?>
+
+      <?php if ($file->isImage ()): ?>
+        <a href="<?php echo $file->getDownloadUrl ()?>/download" class="awesome blue">
+          <?php echo __('Download') ?>
+        </a>
+      <?php else: ?>
         <?php echo __('Your download will start shortly...') ?>
         <a href="<?php echo $file->getDownloadUrl ()?>/download">
           <?php echo __('If not, click here') ?>
         </a>.
-      <script type="text/javascript">
-        function startDownload () {window.location= "<?php echo $file->getDownloadUrl ()?>/download";}
-        $(document).ready (function() {
-          setTimeout ('startDownload()', 1000); // Give chrome some time to finish downloading images on the page
-        });
-      </script>
-    <?php else: ?>
+        <script type="text/javascript">
+          function startDownload () {window.location= "<?php echo $file->getDownloadUrl ()?>/download";}
+          $(document).ready (function() {
+            setTimeout ('startDownload()', 1000); // Give chrome some time to finish downloading images on the page
+          });
+        </script>
+      <?php endif ?>
+
+    <?php else: // this file need a password ?>
+
       <form action="<?php echo $file->getDownloadUrl ()?>/download" method="POST">
         <label for="password">
           <?php echo __('You need a password to download this file') ?>

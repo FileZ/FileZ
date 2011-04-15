@@ -472,6 +472,9 @@ form a.open-email-client {
 }
 
 /* Section #preview-file */
+h2.preview img {
+	vertical-align: middle;
+}
 section#preview-file {
   -moz-box-shadow:    inset 0 20px 20px rgba(0,0,0,0.05);
   -webkit-box-shadow: inset 0 20px 20px rgba(0,0,0,0.05);
