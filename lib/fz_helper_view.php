@@ -107,3 +107,24 @@ function doc_img_tag ($name) {
         .'</div>';
 
 }
+
+function get_mimetype_icon_url ($mimetype, $size = 32) {
+
+    $mimetype = str_replace ('/', '-', $mimetype).'.png';
+    $path = 'resources/images/icons/mimetypes/'.$size.'/';
+    $mime_basesir = public_url_for ($path);
+    $root = option ('root_dir').'/';
+
+    if (file_exists ($root.$path.$mimetype))
+        return $mime_basesir.$mimetype;
+
+    $mimetype = str_replace ('application-', '', $mimetype);
+    if (file_exists ($root.$path.$mimetype))
+        return $mime_basesir.$mimetype;
+
+    $mimetype = 'gnome-mime-'.$mimetype;
+    if (file_exists ($root.$path.$mimetype))
+        return $mime_basesir.$mimetype;
+
+
+}

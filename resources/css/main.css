@@ -341,20 +341,27 @@ section#uploaded-files ul li.file:hover {
 /*
  * File description
  */
+section#uploaded-files ul li .file-attributes ,
 section#uploaded-files ul li .file-description {
-  padding-bottom: 0.3em;
+  padding: 0 0 0.2em 64px;
 }
 section#uploaded-files ul li .file-description p {
 	display: inline;
 }
 section#uploaded-files ul li p.filename {
-  padding: 0 0.6em 0 1.3em;
 }
 section#uploaded-files ul li p.filename a {
   font-weight: bold;
   font-size: 1.3em;
   letter-spacing: -0.05em;
 }
+section#uploaded-files ul li img.mimetype {
+	position: absolute;
+	top:  0.9em;
+	left: 1.0em;
+}
+
+
 section#uploaded-files ul li p a.copy2clipboard {
 	opacity: 0;
 }
@@ -402,7 +409,7 @@ section#uploaded-files ul li .file-attributes p + p {
 section#uploaded-files ul li .file-attributes {
   color: #7C746C;
   font-size: 0.82em;
-  padding: 0 1.3em 0.7em 1.3em;
+	padding-bottom: 0.7em;
 }
 section#uploaded-files ul li .file-attributes .availability b { color: #433C34; }
 

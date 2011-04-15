@@ -296,4 +296,25 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         $v = $this->password;
         return ($this->password == sha1 ($this->file_name.$secret));
     }
+
+    /**
+     * Return the file mimetype
+     *
+     * @return string The mimetype
+     */
+    public function getMimetype () {
+        $mimetype = 'application/octet-stream';
+
+        $mimes = mime_type ();
+        $ext = file_extension ($this->file_name);
+        if (array_key_exists ($ext, $mimes))
+            $mimetype = $mimes [$ext];
+        else if (function_exists ('finfo_file')) {
+            $file = finfo_open (FILEINFO_MIME_TYPE);
+            $mimetype = finfo_file ($file, $this->getOnDiskLocation (), FILEINFO_MIME_TYPE);
+            finfo_close ($file);
+        }
+        return $mimetype;
+    }
+
 }
