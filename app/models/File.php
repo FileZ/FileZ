@@ -131,7 +131,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      */
     public function getDownloadUrl () {
         $proto = 'http';
-        $name  = $_SERVER["SERVER_NAME"];
+        $name  = fz_config_get ('app', 'force_fqdn', $_SERVER["SERVER_NAME"]);
 
         if (fz_config_get ('app', 'https') == 'always')
             $proto .= 's';
