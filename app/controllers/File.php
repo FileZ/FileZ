@@ -43,19 +43,26 @@ class App_Controller_File extends Fz_Controller {
      */
     public function downloadAction () {
         $file = $this->getFile ();
-        if (! $file->isOwner ($this->getUser ())) {
-            if (! $file->isAvailable ()) {
-                halt (HTTP_FORBIDDEN, __('File is not available for download'));
-            } else if (! empty ($file->password)
-                    && ! $file->checkPassword ($_POST['password'])) {
-                flash ('error', __('Incorrect password'));
-                redirect ('/'.$file->getHash());
-            }
-        }
+        $this->checkFileAuthorizations ($file);
 
         $file->download_count = $file->download_count + 1;
         $file->save ();
+
         return $this->sendFile ($file);
+    }
+
+
+    /**
+     * View an image
+     */
+    public function viewAction () {
+        $file = $this->getFile ();
+        $this->checkFileAuthorizations ($file);
+
+        $file->download_count = $file->download_count + 1;
+        $file->save ();
+
+        return $this->sendFile ($file, $file->isImage () ? false : true);
     }
 
     /**
@@ -237,19 +244,39 @@ class App_Controller_File extends Fz_Controller {
     }
 
     /**
+     * Check if the client is authorized to download the file
+     *
+     * @param File $file
+     */
+    protected function checkFileAuthorizations ($file) {
+        if (! $file->isOwner ($this->getUser ())) {
+            if (! $file->isAvailable ()) {
+                halt (HTTP_FORBIDDEN, __('File is not available for download'));
+            } else if (! empty ($file->password)
+                    && ! $file->checkPassword ($_POST['password'])) {
+                flash ('error', __('Incorrect password'));
+                redirect ('/'.$file->getHash());
+            }
+        }
+    }
+
+    /**
      * Send a file through the standart output
      * @param App_Model_File $file      File to send
      */
-    protected function sendFile (App_Model_File $file) {
+    protected function sendFile (App_Model_File $file, $forceDownload = true) {
         $mime = file_mime_content_type ($file->getFileName ());
         header('Content-Type: '.$mime);
-        header('Content-Disposition: attachment; filename="'.
-            iconv ("UTF-8", "ISO-8859-1", $file->getFileName ()).'"');
         header('Content-Transfer-Encoding: binary');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
         header('Content-Length: '.$file->file_size);
+
+        if ($forceDownload)
+            header('Content-Disposition: attachment; filename="'.
+                iconv ("UTF-8", "ISO-8859-1", $file->getFileName ()).'"');
+
         return file_read ($file->getOnDiskLocation ());
     }
 
