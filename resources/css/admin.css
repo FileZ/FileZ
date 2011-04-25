@@ -1,0 +1,35 @@
+
+#content, header, footer {
+	margin: 0 auto;
+	width: 1000px
+}
+
+article,nav {
+  margin-left:  0;
+  width: 100%;
+	padding: 10px;
+}
+
+nav {
+	width: 150px;
+	margin-right: 10px;
+	float: left;
+	color: #AAA;
+}
+
+article {
+	width: 790px;
+	padding: 10px 20px;
+	margin-left: 170px;
+	background: white;
+	min-height: 300px;
+}
+
+#content {
+	background: white;
+	background: #333;
+}
+
+h2 {
+	margin-bottom: 1em;
+}
