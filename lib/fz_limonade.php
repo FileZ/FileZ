@@ -37,6 +37,7 @@ function fz_dispatch_delete ($path_or_array, $controller, $action)
 function fz_dispatcher () {
     $controller = 'App_Controller_'.params ('controller');;
     $controllerInstance = new $controller ();
+    $controllerInstance->init ();
     return call_user_func (array ($controllerInstance, params ('action').'Action'));
 }
 

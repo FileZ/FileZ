@@ -152,7 +152,7 @@ fz_dispatch_post ('/upload'                     ,'Upload'      ,'start');
 fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 
 // Backend controller
-//fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
+fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
 fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
 
 // Authentication controller
@@ -169,6 +169,7 @@ fz_dispatch_get  ('/help/:page'                 ,'Help'        ,'showPage');
 
 // Download controller
 fz_dispatch_get  ('/:file_hash'                 ,'File'        ,'preview');
+fz_dispatch_get  ('/:file_hash/view'            ,'File'        ,'view');
 fz_dispatch_get  ('/:file_hash/download'        ,'File'        ,'download');
 fz_dispatch_post ('/:file_hash/download'        ,'File'        ,'download'); // with password
 

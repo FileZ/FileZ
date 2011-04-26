@@ -68,14 +68,7 @@ $.fn.initFilez = function (options) {
     $(this).attr ('action', $(this).attr ('action') + '?is-async=1');
 
     // Initialise actions event handlers
-    $('.file .actions').initFileActions();
-
-    // Show file's actions only on hover
-    $('#uploaded-files .actions').hide ();
-    $('#uploaded-files li.file').hover (
-        function () {$('.actions', this).slideDown(100);},
-        function () {$('.actions', this).slideUp(100);}
-    );
+    $('.file').each (function () { $(this).initFileActions(); } );
 
     // Initialise email modal box
     $('.email-modal form').ajaxForm ({success: onEmailFormSent, dataType: 'json'});
@@ -99,7 +92,8 @@ $.fn.initFilez = function (options) {
  *
  */
 $.fn.initFileActions = function () {
-    $('.send-by-email', this).click     (function (e) {
+    // FIXME
+    $('a.send-by-email', this).click     (function (e) {
         console.log ('hi');
         var modal = $('#email-modal');
         var fileUrl = $(this).attr ('href')
@@ -111,32 +105,40 @@ $.fn.initFileActions = function () {
         e.preventDefault();
     }),
 
-    $('.delete', this).click (function (e) {
+    $('a.delete', this).click (function (e) {
         if (confirm (settings.messages.confirmDelete))
             $('<form action="'+$(this).attr('href')+'" method="post"></form>').appendTo('body').submit();
         e.preventDefault();
     });
 
-    $('.extend', this).click (function (e) {
+    $('a.extend', this).click (function (e) {
         e.preventDefault();
         var fileListItem = $(this).closest ('li.file');
         $.getJSON($(this).attr('href'), function (data) {
             if (data.status == undefined) {
                 notifyError (settings.messages.unknownErrorHappened);
             } else if (data.status == 'success') {
-                fileListItem.html (data.html)
-                $('.actions', fileListItem).initFileActions();
-
-                // Show file's actions only on hover
-                fileListItem.hover (
-                    function () {$('.actions', this).slideDown(100);},
-                    function () {$('.actions', this).slideUp(100);}
-                );
-                //notify (data.statusText);
+                fileListItem.html (data.html);
+                fileListItem.initFileActions ();
             } else if (data.status == 'error'){
                 notifyError (data.statusText);
             }
         });
+    });
+
+    // initialize tips
+    $('a.extend, a.delete, a.share').qtip({
+        content: {
+           attr: 'title'
+        },
+        position: {
+            my: 'bottom center', 
+            at: 'top center'
+        },
+        style: { 
+            tip: true,
+            classes: 'ui-tooltip-dark ui-tooltip-rounded ui-tooltip-shadow'
+        }
     });
 
     return $(this);
@@ -301,13 +303,6 @@ var appendFile = function (html) {
         '<li class="file '+cssClass+'" style="display: none;">'+html+'</li>'
     );
     files.children ('li:first').slideDown (500);
-    $('.file:first .actions', files).initFileActions().hide();
-
-    // Show file's actions only on hover
-    $('#uploaded-files li.file').hover (
-        function () {$('.actions', this).slideDown(100);},
-        function () {$('.actions', this).slideUp(100);}
-    );
 };
 
 var reloadUploadForm = function () {

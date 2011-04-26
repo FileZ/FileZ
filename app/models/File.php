@@ -125,16 +125,20 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
     }
 
     /**
-     * Return the absolute URL to the file
+     * Return the absolute URL of the file
      * 
      * @return string
      */
     public function getDownloadUrl () {
-        $url = 'http';
-        if (fz_config_get ('app', 'https') == 'always') {
-            $url .= 's';
-        }
-        return $url.'://'.$_SERVER["SERVER_NAME"].url_for ('/').$this->getHash ();
+        $proto = 'http';
+        $name  = fz_config_get ('app', 'force_fqdn', $_SERVER["SERVER_NAME"]);
+
+        if (fz_config_get ('app', 'https') == 'always')
+            $proto .= 's';
+        else if ($_SERVER["SERVER_PORT"] != 80)
+            $name .= ':'.$_SERVER["SERVER_PORT"];
+
+        return $proto.'://'.$name.url_for ('/').$this->getHash ();
     }
 
     /**
@@ -296,4 +300,49 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         $v = $this->password;
         return ($this->password == sha1 ($this->file_name.$secret));
     }
+
+    /**
+     * Return the file mimetype
+     *
+     * @return string The mimetype
+     */
+    public function getMimetype () {
+        $mimetype = 'application/octet-stream';
+
+        $mimes = mime_type ();
+        $ext = $this->getExtension ();
+        if (array_key_exists ($ext, $mimes))
+            $mimetype = $mimes [$ext];
+        else if (function_exists ('finfo_file')) {
+            $file = finfo_open (FILEINFO_MIME_TYPE);
+            $mimetype = finfo_file ($file, $this->getOnDiskLocation (), FILEINFO_MIME_TYPE);
+            finfo_close ($file);
+        }
+        return $mimetype;
+    }
+
+    /**
+     * return the file extension
+     *
+     * @return string
+     */
+    public function getExtension () {
+        return strtolower (file_extension ($this->file_name));
+    }
+
+    /**
+     * Tells if the file is an image
+     *
+     * @return boolean
+     */
+    public function isImage () {
+        return in_array ($this->getExtension (), array (
+            'bmp',
+            'gif',
+            'jpg',
+            'png',
+        ));
+    }
+
+
 }

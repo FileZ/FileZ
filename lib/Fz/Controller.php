@@ -37,10 +37,16 @@ class Fz_Controller {
      */
     protected function secure ($credential = null) {
         $this->getAuthHandler ()->secure ();
-        // TODO check credentials
+        $user = $this->getUser();
 
         // setting user template var
-        set ('user', $this->getUser());
+        set ('user', $user);
+
+        if ($credential == 'admin') { // 
+            $admins = (array) fz_config_get ('app', 'admins', array ());
+            if (! in_array ($user['id'], $admins))
+                halt (HTTP_FORBIDDEN, __('This page is secured'));
+        }
     }
 
     /**
@@ -60,6 +66,12 @@ class Fz_Controller {
     protected function getConfig () {
 
     }
+
+    /**
+     * Initialize the controller
+     */
+    public function init () {}
+
 
     /**
      * Return an instance of the authentication handler class

@@ -24,6 +24,16 @@
  */
 class App_Controller_Admin extends Fz_Controller {
 
+    public function init () {
+        layout ('layout'.DIRECTORY_SEPARATOR.'admin.html.php');
+    }
+
+    public function indexAction () {
+        $this->secure ('admin');
+
+        return html ('admin/index.php');
+    }
+
     /**
      * Action called to clean expired files and send mail to those who will be
      * in the next 2 days. This action is meant to be called from a cron script.
