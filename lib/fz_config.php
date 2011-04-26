@@ -92,8 +92,6 @@ function fz_config_save ($config, $file) {
 function fz_serialize_ini_array ($assoc_arr, $has_sections = false) {
     $content = "";
 
-if ($has_sections) print_r($assoc_arr);
-
     if ($has_sections) {
         foreach ($assoc_arr as $section => $values) {
             $content .= "\n[$section]\n".fz_serialize_ini_array($values);
