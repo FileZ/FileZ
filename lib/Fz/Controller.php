@@ -44,7 +44,7 @@ class Fz_Controller {
 
         if ($credential == 'admin') { // 
             $admins = (array) fz_config_get ('app', 'admins', array ());
-            if (! in_array ($user['id'], $admins))
+            if (! in_array ($user['email'], $admins))
                 halt (HTTP_FORBIDDEN, __('This page is secured'));
         }
     }
