@@ -43,8 +43,7 @@ class Fz_Controller {
         set ('user', $user);
 
         if ($credential == 'admin') { // 
-            $admins = (array) fz_config_get ('app', 'admins', array ());
-            if (! in_array ($user['id'], $admins))
+            if (! $user->is_admin)
                 halt (HTTP_FORBIDDEN, __('This page is secured'));
         }
     }
@@ -54,8 +53,21 @@ class Fz_Controller {
      */
     protected function getUser () {
         $auth = $this->getAuthHandler ();
+        $factory = $this->getUserFactory ();
         if (self::$_user === null && $auth->isSecured ()) {
-            self::$_user = $this->getUserFactory ()->findById ($auth->getUserId ());
+            self::$_user = Fz_Db::getTable('User')->findByUsername ($auth->getUserId ());
+            if (! $factory->isInternal ()) {
+                if (self::$_user === null)
+                    self::$_user = new App_Model_User ();
+
+                // Update fields
+                $userData = $factory->findById ($auth->getUserId ());
+                self::$_user->username     = $userData['id'];
+                self::$_user->email        = $userData['email'];
+                self::$_user->firstname    = $userData['firstname'];
+                self::$_user->lastname     = $userData['lastname'];
+                self::$_user->save (); // will issue an update or insert only if a property changed
+            }
         }
         return self::$_user;
     }

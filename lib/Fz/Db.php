@@ -44,7 +44,7 @@ class Fz_Db {
 
         $result = array ();
         $stmt = $db->prepare ($sql);
-        $stmt->execute ($params);
+        $stmt->execute ((array) $params);
         while ($obj = $stmt->fetchObject ($className, array (true))) {
             if (method_exists($obj, ('resetModifiedColumns')))
                 $obj->resetModifiedColumns ();

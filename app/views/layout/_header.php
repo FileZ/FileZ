@@ -23,7 +23,7 @@
 
       <?php if (isset ($user)): ?>
         <p id="auth-box">
-          <?php echo $user ['email'] ?> |
+          <?php echo $user->email ?> |
           <a href="<?php echo url_for ('/logout') ?>" title="<?php echo __('Log out') ?>">&nbsp;</a>
         </p>
       <?php endif ?>

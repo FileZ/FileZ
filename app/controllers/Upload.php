@@ -130,7 +130,7 @@ class App_Controller_Upload extends Fz_Controller {
             $file->save ();
 
             if ($file->moveUploadedFile ($uploadedFile)) {
-                fz_log ('Saved "'.$file->file_name.'"['.$file->id.'] uploaded by '.$user['email']);
+                fz_log ('Saved "'.$file->file_name.'"['.$file->id.'] uploaded by '.$user);
                 return $file;
             }
             else {
@@ -138,7 +138,7 @@ class App_Controller_Upload extends Fz_Controller {
                 return null;
             }
         } catch (Exception $e) {
-            fz_log ('Can\'t save file "'.$uploadedFile['name'].'" uploaded by '.$user['email'], FZ_LOG_ERROR);
+            fz_log ('Can\'t save file "'.$uploadedFile['name'].'" uploaded by '.$user, FZ_LOG_ERROR);
             fz_log ($e, FZ_LOG_ERROR);
             return null;
         }
@@ -168,7 +168,7 @@ class App_Controller_Upload extends Fz_Controller {
         $mail = $this->createMail();
         $mail->setBodyText ($msg);
         $mail->setSubject  ($subject);
-        $mail->addTo ($user ['email'], $user['firstname'].' '.$user['lastname']);
+        $mail->addTo ($user->email, $user);
 
         try {
             $mail->send ();
