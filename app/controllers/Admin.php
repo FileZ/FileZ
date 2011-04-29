@@ -35,6 +35,62 @@ class App_Controller_Admin extends Fz_Controller {
     }
 
     /**
+     * Action called to manage users
+     * List users.
+     */
+    public function usersAction () {
+        $this->secure ('admin');
+        //TODO
+        return html ('admin/users.php'); 
+    }
+
+    /**
+     * Action called to create a new user
+     */
+    public function createUserAction () {
+        $this->secure ('admin');
+        return html ('admin/index.php');
+        //TODO
+    }
+
+    /**
+     * Action called to edit a user
+     */
+    public function editUserAction () {
+        $this->secure ('admin');
+        return html ('admin/index.php');
+        //TODO
+    }
+
+    /**
+     * Action called to delete a user
+     */
+    public function deleteUserAction () {
+        $this->secure ('admin');
+        return html ('admin/index.php');
+        //TODO
+    }
+
+    /**
+     * Action called to manage files
+     * List files, display stats.
+     */
+    public function filesAction () {
+        $this->secure ('admin');        
+        return html ('admin/index.php');
+        //TODO
+    }
+    /**
+     * Action called to manage the config
+     * List the config settings.
+     */
+    public function configAction () {
+        $this->secure ('admin');
+        return html ('admin/index.php');
+        //TODO
+    }
+
+    /**
      * Action called to clean expired files and send mail to those who will be
      * in the next 2 days. This action is meant to be called from a cron script.
      * It should not respond any output except PHP execution errors. Everything
@@ -85,7 +141,7 @@ class App_Controller_Admin extends Fz_Controller {
         }
         catch (Exception $e) {
             fz_log ('Can\'t send email to '.$user->email
-                   .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
+                .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
         }
     }
 }

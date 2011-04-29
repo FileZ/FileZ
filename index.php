@@ -153,6 +153,9 @@ fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 
 // Backend controller
 fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
+fz_dispatch_get  ('/admin/users'                ,'Admin'       ,'users');
+fz_dispatch_get  ('/admin/files'                ,'Admin'       ,'files');
+fz_dispatch_get  ('/admin/config'               ,'Admin'       ,'config');
 fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
 
 // Authentication controller
