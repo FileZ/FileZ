@@ -19,7 +19,7 @@
  * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define ('FZ_VERSION', '2.0.0-2');
+define ('FZ_VERSION', '2.2.0-1');
 
 /**
  * Loading Zend for i18n classes and autoloader

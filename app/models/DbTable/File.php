@@ -26,17 +26,16 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     protected $_columns = array (
         'del_notif_sent',
         'file_name',
-        'uploader_email',
         'file_size',
         'nom_physique',
         'available_from',
         'available_until',
         'download_count',
         'notify_uploader',
-        'uploader_uid',
+        'created_by',
+        'created_at',
         'extends_count',
         'comment',
-        'created_at',
         'password',
     );
 
@@ -116,15 +115,15 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     /**
      * Return all file owned by $uid which are available (not deleted)
      *
-     * @param string $uid
+     * @param App_Model_User $user
      * @return array of App_Model_File
      */
-    public function findByOwnerOrderByUploadDateDesc ($uid) {
+    public function findByOwnerOrderByUploadDateDesc ($user) {
         $sql = 'SELECT * FROM '.$this->getTableName ()
-              .' WHERE uploader_uid=:uid '
+              .' WHERE created_by=:id '
               .' AND  available_until >= CURRENT_DATE() '
               .' ORDER BY created_at DESC';
-        return $this->findBySql ($sql, array (':uid' => $uid));
+        return $this->findBySql ($sql, array (':id' => $user->id));
     }
 
     /**
@@ -164,23 +163,23 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     /**
      * Return disk space used by someone
      *
-     * @param array     $user   User data
+     * @param App_Model_User    $user   User
      * @return float            Size in bytes
      */
     public function getTotalDiskSpaceByUser ($user) {
         $result = option ('db_conn')
             ->prepare ('SELECT sum(file_size) FROM `'
                 .$this->getTableName ()
-                .'` WHERE uploader_email = ?'
+                .'` WHERE created_by = ?'
                 .' AND  available_until >= CURRENT_DATE() ');
-        $result->execute (array ($user['email']));
+        $result->execute (array ($user->id));
         return (float) $result->fetchColumn ();
     }
 
     /**
      * Return remaining disk space available for user $user
      *
-     * @param array     $user   User data
+     * @param App_Model_User    $user   User data
      * @return float            Size in bytes or string if $shorthand = true
      */
     public function getRemainingSpaceForUser ($user) {

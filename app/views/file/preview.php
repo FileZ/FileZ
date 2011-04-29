@@ -22,13 +22,7 @@
   </p>
 
   <p id="owner">
-    <?php echo __('Uploaded by') ?> : <b>
-    <?php if (array_key_exists('firstname', $uploader)): ?>
-      <?php echo h($uploader['firstname']).' '.h($uploader['lastname']) ?>
-    <?php else: ?>
-      <?php echo h($uploader['email']) ?>
-    <?php endif ?>
-    </b>
+    <?php echo __('Uploaded by') ?> : <b><?php echo h($uploader) ?></b>
   </p>
 
   <?php if ($file->comment): ?>

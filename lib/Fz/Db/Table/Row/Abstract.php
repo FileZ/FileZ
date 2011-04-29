@@ -82,7 +82,9 @@ abstract class Fz_Db_Table_Row_Abstract {
      * @return mixed          Column value
      */
     public function __set ($var, $value) {
-        $method = 'set'.self::camelify ($var);
+        if (array_key_exists ($var, $this->_data) && $this->_data [$var] == $value)
+            return $value;
+
         $this->_data [$var] = $value;
         $this->_updatedColumns [] = $var;
         return $value;

@@ -48,6 +48,8 @@ class App_Controller_Admin extends Fz_Controller {
         // Send mail for files which will be deleted in less than 2 days
         $days = fz_config_get('cron', 'days_before_expiration_mail');
         foreach (Fz_Db::getTable('File')->findFilesToBeDeleted ($days) as $file) {
+            // TODO improve the SQL command to retrieve uploader email at the same time
+            //      to reduce the # of request made by notifyDeletionByEmail 
             if ($file->notify_uploader) {
                 $file->del_notif_sent = true;
                 $file->save ();
@@ -65,6 +67,7 @@ class App_Controller_Admin extends Fz_Controller {
     private function notifyDeletionByEmail (App_Model_File $file) {
         try {
             $mail = $this->createMail();
+            $user = $file->getUploader ();
             $subject = __r('[FileZ] Your file "%file_name%" is going to be deleted', array (
                 'file_name' => $file->file_name));
             $msg = __r('email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)', array(
@@ -75,13 +78,13 @@ class App_Controller_Admin extends Fz_Controller {
             ));
             $mail->setBodyText ($msg);
             $mail->setSubject  ($subject);
-            $mail->addTo ($file->uploader_email);
+            $mail->addTo ($user->email);
             $mail->send ();
 
-            fz_log ('Delete notification sent to '.$file->uploader_email, FZ_LOG_CRON);
+            fz_log ('Delete notification sent to '.$user->email, FZ_LOG_CRON);
         }
         catch (Exception $e) {
-            fz_log ('Can\'t send email to '.$file->uploader_email
+            fz_log ('Can\'t send email to '.$user->email
                    .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
         }
     }
