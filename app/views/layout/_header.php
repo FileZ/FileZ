@@ -23,8 +23,11 @@
 
       <?php if (isset ($user)): ?>
         <p id="auth-box">
+        <?php if ( $user->is_admin ): ?>
+          <a href="<?php echo url_for ('/admin') ?>" title="<?php echo __('Administration') ?>"><?php echo __('Administration') ?></a> | 
+       <?php endif ?>
           <?php echo $user->email ?> |
-          <a href="<?php echo url_for ('/logout') ?>" title="<?php echo __('Log out') ?>">&nbsp;</a>
+          <a id="logout" href="<?php echo url_for ('/logout') ?>" title="<?php echo __('Log out') ?>">&nbsp;</a>
         </p>
       <?php endif ?>
     </header>

@@ -109,7 +109,7 @@ header #auth-box {
   border-right: 1px solid #EBE6E0;
   font-size: 0.8em;
 }
-header #auth-box a {
+header #auth-box a#logout {
   background: transparent url(../images/icons/system-log-out.png) no-repeat right center;
   padding: 8px;
   text-indent: -2000px;
