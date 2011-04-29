@@ -63,5 +63,16 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
         // TODO handle the $includeExpired parameter
     }
 
+    /**
+     * List all users in filez DB.
+     * Called on /admin/users
+     * @param 
+     * @return list of users
+     *
+     */
+     public function listUsers () {
+         return Fz_Db::getTable('User');
+     }
+
 }
 

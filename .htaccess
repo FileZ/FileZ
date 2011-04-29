@@ -4,7 +4,7 @@
   RewriteEngine on
 
   # RewriteBase /my_app/ # if your app is in a subfolder
-  RewriteBase /~williaml/FileZ/
+  # RewriteBase /web/
 
   RewriteCond %{REQUEST_URI} !favicon.ico
   RewriteCond %{REQUEST_URI} !doc/user/(.*)\.
