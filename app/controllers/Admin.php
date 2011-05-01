@@ -20,7 +20,7 @@
  */
 
 /**
- * Controller used for administratives tasks
+ * General Controller used for administratives tasks
  */
 class App_Controller_Admin extends Fz_Controller {
 
@@ -30,45 +30,7 @@ class App_Controller_Admin extends Fz_Controller {
 
     public function indexAction () {
         $this->secure ('admin');
-
         return html ('admin/index.php');
-    }
-
-    /**
-     * Action called to manage users
-     * List users.
-     */
-    public function usersAction () {
-        $this->secure ('admin');
-        //TODO
-        return html ('admin/users.php'); 
-    }
-
-    /**
-     * Action called to create a new user
-     */
-    public function createUserAction () {
-        $this->secure ('admin');
-        return html ('admin/index.php');
-        //TODO
-    }
-
-    /**
-     * Action called to edit a user
-     */
-    public function editUserAction () {
-        $this->secure ('admin');
-        return html ('admin/index.php');
-        //TODO
-    }
-
-    /**
-     * Action called to delete a user
-     */
-    public function deleteUserAction () {
-        $this->secure ('admin');
-        return html ('admin/index.php');
-        //TODO
     }
 
     /**

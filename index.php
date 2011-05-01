@@ -153,9 +153,16 @@ fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 
 // Backend controller
 fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
-fz_dispatch_get  ('/admin/users'                ,'Admin'       ,'users');
+
+// Backend::Users
+fz_dispatch_get  ('/admin/users'                ,'User'        ,'index');
+fz_dispatch_get  ('/admin/users/:id'            ,'User'        ,'show');
+
+// Backend::Files
 fz_dispatch_get  ('/admin/files'                ,'Admin'       ,'files');
 fz_dispatch_get  ('/admin/config'               ,'Admin'       ,'config');
+
+// Backend::CRON
 fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
 
 // Authentication controller
