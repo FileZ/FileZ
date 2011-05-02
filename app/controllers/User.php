@@ -61,10 +61,16 @@ class App_Controller_User extends Fz_Controller {
           $user->setLastname  ($post ['lastname']);
           $user->setIs_admin  ( ('on'==$post ['is_admin']) ? 1 : 0 );
           $user->setEmail     ($post ['email']);
-          $user->save ();
+	  if(filter_var($post ['email'], FILTER_VALIDATE_EMAIL) && null!=$post ['username'] && (3 <= strlen($post['password'])) ){
           //try {
           //    $user->save ();
           //}
+     	     $user->save ();
+		// test if the email and the username are not already in DB
+	  }
+          else {
+	    echo "error: email not valid or no username or password too short.";       //return error message.
+          }
           return $this->indexAction();
     }
 
