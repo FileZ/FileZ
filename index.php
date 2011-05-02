@@ -156,7 +156,9 @@ fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
 
 // Backend::Users
 fz_dispatch_get  ('/admin/users'                ,'User'        ,'index');
+fz_dispatch_get  ('/admin/users/new'            ,'User'        ,'create');
 fz_dispatch_get  ('/admin/users/:id'            ,'User'        ,'show');
+fz_dispatch_get  ('/admin/users/:id/delete'     ,'User'        ,'delete');
 
 // Backend::Files
 fz_dispatch_get  ('/admin/files'                ,'Admin'       ,'files');
