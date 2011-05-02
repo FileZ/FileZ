@@ -48,14 +48,11 @@ class App_Controller_User extends Fz_Controller {
     }
 
     /**
-     * Action called to create a new user
+     * Action called to post values of a new user.
      */
-    public function createAction () {
+    public function postnewAction () {
         $this->secure ('admin');
         $post = $_POST;
-        if ( $post != null ) {
-          //POSTDATA
-          // Storing values
           $user = new App_Model_User ();
           $user->setUsername  ($post ['username']);
           $user->setPassword  ($post ['password']);
@@ -63,16 +60,19 @@ class App_Controller_User extends Fz_Controller {
           $user->setLastname  ($post ['lastname']);
           $user->setIs_admin  ($post ['is_admin']);
           $user->setEmail     ($post ['email']);
-          //$user->save ();
+          $user->save ();
           //try {
           //    $user->save ();
           //}
           return $this->indexAction();
-        }
-        else {
-          //PRINT FORM
-          return html ('user/create.php');
-        }
+    }
+
+    /**
+     * Action called to create a new user
+     */
+    public function createAction () {
+        $this->secure ('admin');
+        return html ('user/create.php');
     }
 
     /**

@@ -156,8 +156,8 @@ fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
 
 // Backend::Users
 fz_dispatch_get  ('/admin/users'                ,'User'        ,'index');
+fz_dispatch_post ('/admin/users'                ,'User'        ,'postnew');
 fz_dispatch_get  ('/admin/users/new'            ,'User'        ,'create');
-fz_dispatch_post ('/admin/users/new'            ,'User'        ,'create');
 fz_dispatch_get  ('/admin/users/:id'            ,'User'        ,'show');
 fz_dispatch_get  ('/admin/users/:id/delete'     ,'User'        ,'delete');
 
@@ -196,4 +196,3 @@ fz_dispatch_post ('/:file_hash/delete'          ,'File'        ,'delete');
 fz_dispatch_get  ('/:file_hash/extend'          ,'File'        ,'extend');
 
 run ();
-
