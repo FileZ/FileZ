@@ -1,16 +1,16 @@
 <h2><?php echo $user ?></h2>
 
-<p><b><?php echo _('Email') ?> :</b> <?php echo $user->email ?></p>
-<p><b><?php echo _('Account created') ?> :</b> <?php echo $user->created_at ?></p>
-<p><b><?php echo _('Administrator ?') ?> :</b> <?php echo $user->is_admin ? _('yes') : _('no') ?></p>
+<p><b><?php echo __('Email') ?> :</b> <?php echo $user->email ?></p>
+<p><b><?php echo __('Account created') ?> :</b> <?php echo $user->created_at ?></p>
+<p><b><?php echo __('Administrator ?') ?> :</b> <?php echo $user->is_admin ? __('yes') : __('no') ?></p>
 
 <table id="user_files" class="data">
   <tr>
-    <th><?php echo _('Name') ?></th>
-    <th><?php echo _('Availability') ?></th>
-    <th><?php echo _('Size') ?></th>
-    <th><?php echo _('DL count') ?></th>
-    <th><?php echo _('Actions') ?></th>
+    <th><?php echo __('Name') ?></th>
+    <th><?php echo __('Availability') ?></th>
+    <th><?php echo __('Size') ?></th>
+    <th><?php echo __('DL count') ?></th>
+    <th><?php echo __('Actions') ?></th>
   </tr>
 
 <?php foreach ($user->getFiles () as $file): ?>
@@ -24,7 +24,7 @@
     </td>
     <td><?php echo $file->getReadableFileSize () ?></td>
     <td><?php echo (int) $file->download_count ?></td>
-    <td><a href="<?php echo url_for ('TODO') ?>"><?php echo _('Delete') /* TODO */ ?></a></td>
+    <td><a href="<?php echo url_for ('TODO') ?>"><?php echo __('Delete') /* TODO */ ?></a></td>
   </tr>
 <?php endforeach ?>
 </table>
