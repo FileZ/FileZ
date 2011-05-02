@@ -20,7 +20,7 @@
  */
 
 /**
- * Controller used for administratives tasks
+ * General Controller used for administratives tasks
  */
 class App_Controller_Admin extends Fz_Controller {
 
@@ -30,8 +30,26 @@ class App_Controller_Admin extends Fz_Controller {
 
     public function indexAction () {
         $this->secure ('admin');
-
         return html ('admin/index.php');
+    }
+
+    /**
+     * Action called to manage files
+     * List files, display stats.
+     */
+    public function filesAction () {
+        $this->secure ('admin');        
+        return html ('admin/index.php');
+        //TODO
+    }
+    /**
+     * Action called to manage the config
+     * List the config settings.
+     */
+    public function configAction () {
+        $this->secure ('admin');
+        return html ('admin/index.php');
+        //TODO
     }
 
     /* Action called to manage users
@@ -139,7 +157,7 @@ class App_Controller_Admin extends Fz_Controller {
         }
         catch (Exception $e) {
             fz_log ('Can\'t send email to '.$user->email
-                   .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
+                .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
         }
     }
 }

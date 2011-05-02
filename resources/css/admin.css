@@ -33,3 +33,24 @@ article {
 h2 {
 	margin-bottom: 1em;
 }
+
+table.data {
+	width: 100%;
+	cellspacing: 1px;
+	margin: 1em 0;
+}
+table.data th, table.data td {
+	padding: 4px 6px;
+}
+table.data th {
+	background: #DDD;
+	text-align: left;
+	color: #999;
+	border: 1px solid #CCC;
+	text-shadow: 1px 1px 1px #FFF;
+}
+table.data td {
+	background: white;
+	border: 1px solid #DDD;
+	font-size: 0.8em;
+}
