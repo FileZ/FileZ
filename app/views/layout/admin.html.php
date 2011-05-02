@@ -27,7 +27,7 @@
   </head>
   <body id="admin">
 
-    <?php echo partial ('layout/_header.php', (isset ($user) ? array('user' => $user) : array())); ?>
+    <?php echo partial ('layout/_header.php', (isset ($fz_user) ? array('fz_user' => $fz_user) : array())); ?>
 
     <div id="content">
 
@@ -46,7 +46,7 @@
       <div class="clearboth"></div>
     </div>
 
-    <?php echo partial ('layout/_footer.php', (isset ($user) ? array('user' => $user) : array())); ?>
+    <?php echo partial ('layout/_footer.php', (isset ($fz_user) ? array('fz_user' => $fz_user) : array())); ?>
 
     <div id="modal-background"></div>
 
