@@ -52,10 +52,11 @@ class App_Controller_User extends Fz_Controller {
      */
     public function postnewAction () {
         $this->secure ('admin');
+//print_r($_REQUEST);
         $post = $_POST;
           $user = new App_Model_User ();
           $user->setUsername  ($post ['username']);
-          $user->setPassword  ($post ['password']);
+          $user->setPassword  ($this->encrypt($post ['password']));
           $user->setFirstname ($post ['firstname']);
           $user->setLastname  ($post ['lastname']);
           $user->setIs_admin  ( ('on'==$post ['is_admin']) ? 1 : 0 );
@@ -65,6 +66,12 @@ class App_Controller_User extends Fz_Controller {
           //    $user->save ();
           //}
           return $this->indexAction();
+    }
+
+    private function encrypt($pass) {
+       $algorithm = fz_config_get ('user_factory_options', 'db_password_algorithm');
+       $encryped_pass = ($algorithm == "SHA1") ? sha1($pass) : md5($pass) ; // TODO: allow the others password algorithms defined in filez.ini.example.
+       return $encryped_pass;
     }
 
     /**
