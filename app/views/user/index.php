@@ -23,4 +23,4 @@
   </tr>
 <?php endforeach ?>
 </table>
-<p><a href="<?php echo url_for ('/admin/users/new') ?>"><?php echo _('Create new user') /* TODO */ ?></a></p>
+<p><a href="<?php echo url_for ('/admin/users/new') ?>"><?php echo _('Create a new user') ?></a></p>
