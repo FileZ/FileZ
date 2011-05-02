@@ -63,5 +63,33 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
         // TODO handle the $includeExpired parameter
     }
     
+    /**
+     * Function used to encrypt the password
+     *
+     * @param string password
+     */
+    public function setPassword ($password) {
+        $algorithm = fz_config_get ('user_factory_options', 'db_password_algorithm');
+        $this->password = $password;
+
+        $sql = null;
+        if ($algorithm == 'MD5') {
+            $sql = 'MD5(:password)';
+        }
+        else if ($algorithm == 'SHA1') {
+            $sql = 'SHA1(:password)';
+        }
+        else if (is_callable ($algorithm)) {
+            if (strstr ($algorithm, '::') !== false)
+                $algorithm = explode ('::', $algorithm);
+            $sql = Fz_Db::getConnection ()->quote (call_user_func ($algorithm, $password));
+        }
+        else {
+            $sql = $algorithm; // Plain SQL
+        }
+
+        if ($sql !== null)
+            $this->setColumnModifier ('password', $sql);
+    }
 }
 

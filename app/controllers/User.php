@@ -51,34 +51,29 @@ class App_Controller_User extends Fz_Controller {
      * Action called to post values of a new user.
      */
     public function postnewAction () {
+        // TODO prevent CSRF
+
         $this->secure ('admin');
-//print_r($_REQUEST);
-        $post = $_POST;
-          $user = new App_Model_User ();
-          $user->setUsername  ($post ['username']);
-          $user->setPassword  ($this->encrypt($post ['password']));
-          $user->setFirstname ($post ['firstname']);
-          $user->setLastname  ($post ['lastname']);
-          $user->setIs_admin  ( ('on'==$post ['is_admin']) ? 1 : 0 );
-          $user->setEmail     ($post ['email']);
-	  if(filter_var($post ['email'], FILTER_VALIDATE_EMAIL) && null!=$post ['username'] && (3 <= strlen($post['password'])) ){
-          //try {
-          //    $user->save ();
-          //}
-     	     $user->save ();
-		// test if the email and the username are not already in DB
-	  }
-          else {
-	    echo "error: email not valid or no username or password too short.";       //return error message.
-          }
-          return $this->indexAction();
+        $user = new App_Model_User ();
+        $user->setUsername  ($_POST ['username']);
+        $user->setPassword  ($_POST ['password']);
+        $user->setFirstname ($_POST ['firstname']);
+        $user->setLastname  ($_POST ['lastname']);
+        $user->setIsAdmin   ($_POST ['is_admin'] == 'on');
+        $user->setEmail     ($_POST ['email']);
+
+        // TODO improve form check
+        // for example : test if the email and the username are not already in DB
+        if(filter_var($_POST ['email'], FILTER_VALIDATE_EMAIL) && null!=$_POST ['username'] && (3 <= strlen($_POST['password'])) ){
+            $user->save ();
+            return redirect_to ('/admin/users');
+        }
+        else {
+            flash_now ('error', "error: email not valid or no username or password too short.");
+            return $this->createAction ();
+        }
     }
 
-    private function encrypt($pass) {
-       $algorithm = fz_config_get ('user_factory_options', 'db_password_algorithm');
-       $encryped_pass = ($algorithm == "SHA1") ? sha1($pass) : md5($pass) ; // TODO: allow the others password algorithms defined in filez.ini.example.
-       return $encryped_pass;
-    }
 
     /**
      * Action called to create a new user
@@ -101,12 +96,13 @@ class App_Controller_User extends Fz_Controller {
      * Action called to delete a user
      */
     public function deleteAction () {
+        // TODO prevent CSRF
+
         $this->secure ('admin');
         $user = Fz_Db::getTable ('User')->findById (params ('id'));
-	if($user)
-	{
-		$user->delete();
-	}
-        return $this->indexAction();
+        if($user) 
+            $user->delete();
+
+        return redirect_to ('/admin/users');
     }
 }
