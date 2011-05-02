@@ -2,6 +2,8 @@
 
 <!-- TODO : find a jquery plugin to order and paginate the user list -->
 
+<p><a href="<?php echo url_for ('/admin/users/new') ?>" class="awesome"><?php echo _('Create a new user') ?></a></p>
+
 <table id="user_list" class="data">
   <tr>
     <th><?php echo _('Name') ?></th>
@@ -19,22 +21,17 @@
     <td><?php echo count ($user_item->getFiles ()) ?></td>
     <td><?php echo '125Mo' /* TODO */ ?></td>
     <td><?php echo '15' /* TODO */ ?></td>
-<?php if ( $user->id != $user_item->id ) : ?>
-    <td><a onclick="javascript:warning('<?php echo ($user_item->id."','".$user_item->firstname."','".$user_item->lastname."','".$user_item->username) ?>')" href="#"><?php echo _('Delete') /* TODO */ ?></a></td>
-<?php else : ?>
-    <td></td>
-<?php endif ?>
+    <?php if ( $fz_user->id != $user_item->id ) : ?>
+      <td>
+        <a onclick="javascript:return confirm ('<?php echo __r('Are you sure you want to delete the user "%displayname%" (%username%)', array ('displayname' => $user_item, 'username' => $user_item->username)) ?>')"
+           href="<?php echo url_for ('/admin/users/'.$user_item->id.'/delete') ?>">
+          <?php echo _('Delete') ?>
+        </a>
+      </td>
+    <?php else : ?>
+      <td></td>
+    <?php endif ?>
   </tr>
 <?php endforeach ?>
 </table>
-<p><a href="<?php echo url_for ('/admin/users/new') ?>"><?php echo _('Create a new user') ?></a></p>
-<script type="text/javascript">
-function warning(Id,Firstname,Lastname,Username) 
-{
-  var answer = confirm ("Are you sure you want to delete the user "+Firstname+" "+Lastname+" ("+Username+")?")
-  if (answer) 
-  window.location="<?php echo url_for ('/admin/users/')?>/"+Id+"/delete"
-  else
-  window.location="<?php echo url_for ('/admin/users/') ?>"
-}
-</script>
+
