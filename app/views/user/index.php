@@ -19,8 +19,18 @@
     <td><?php echo count ($user->getFiles ()) ?></td>
     <td><?php echo '125Mo' /* TODO */ ?></td>
     <td><?php echo '15' /* TODO */ ?></td>
-    <td><a href="<?php echo url_for ('/admin/users/'.$user->id.'/delete') ?>"><?php echo _('Delete') /* TODO */ ?></a></td>
+    <td><a onclick="javascript:warning('<?php echo ($user->firstname."','".$user->lastname."','".$user->username) ?>')" href="#"><?php echo _('Delete') /* TODO */ ?></a></td>
   </tr>
 <?php endforeach ?>
 </table>
 <p><a href="<?php echo url_for ('/admin/users/new') ?>"><?php echo _('Create a new user') ?></a></p>
+<script type="text/javascript">
+function warning(Firstname,Lastname,Username) 
+{
+  var answer = confirm ("Are you sure you want to delete the user "+Firstname+" "+Lastname+" ("+Username+")?")
+  if (answer) 
+  window.location="<?php echo url_for ('/admin/users/'.$user->id.'/delete') ?>"
+  else
+  window.location="<?php echo url_for ('/admin/users/') ?>"
+}
+</script>
