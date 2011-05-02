@@ -11,10 +11,10 @@
     <label for="input-email"><?php echo __('Email:') ?></label>
     <input type="text" id="input-email" name="email" value="" alt="<?php echo __('email') ?>" maxlength="200" />
   </div>
+  <input type="hidden" name="is_admin" id="is_admin" value="0" />
   <ul id="options">
     <li id="is_admin">
-      <input type="hidden" name="is_admin" id="is_admin" value="0" />
-      <input type="checkbox" name="is_admin" id="is_admin"/>
+      <input type="checkbox" name="is_admin" id="is_admin" />
       <label for="is_admin" title="<?php echo __('This user can administrate FileZ') ?>">
         <?php echo __('Admin') ?>
       </label>

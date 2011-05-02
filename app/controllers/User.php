@@ -58,7 +58,7 @@ class App_Controller_User extends Fz_Controller {
           $user->setPassword  ($post ['password']);
           $user->setFirstname ($post ['firstname']);
           $user->setLastname  ($post ['lastname']);
-          $user->setIs_admin  ($post ['is_admin']);
+          $user->setIs_admin  ( ('on'==$post ['is_admin']) ? 1 : 0 );
           $user->setEmail     ($post ['email']);
           $user->save ();
           //try {
@@ -89,8 +89,11 @@ class App_Controller_User extends Fz_Controller {
      */
     public function deleteAction () {
         $this->secure ('admin');
-        set ('user', Fz_Db::getTable ('User')->findById (params ('id')));
-        return html ('user/delete.php');
-        //TODO
+        $user = Fz_Db::getTable ('User')->findById (params ('id'));
+	if($user)
+	{
+		$user->delete();
+	}
+        return $this->indexAction();
     }
 }
