@@ -48,12 +48,11 @@ class App_Controller_Upload extends Fz_Controller {
             if ($this->checkQuota ($_FILES ['file'])) // Check user quota first
                 return $this->onFileUploadError (UPLOAD_ERR_QUOTA_EXCEEDED);
 
-            // We check if the file contains a virus and must be stopped
+            // We check if the file contains a virus before and must be stopped
             $fileFirstStep = $_FILES ['file']['tmp_name'];
             try {
     	      if ($this->checkVirus ($fileFirstStep))
               {
-                //$fileFirstStep->delete();
     	        return $this->onFileUploadError (UPLOAD_ERR_VIRUS_FOUND);
               }
     	    } catch (Exception $e) {
@@ -221,11 +220,16 @@ class App_Controller_Upload extends Fz_Controller {
         return ($fileSize > $freeSpace);
     }
 
+    /**
+     * Check if the file is infected thanks a software called clamav.
+     *
+     * @throws Exception Error during scan of the file
+     * @param  $file  File we want to check
+     * @return int    0 if everything is ok
+     */
     private function checkVirus($file) {
-       fz_log ('CHECK', FZ_LOG_DEBUG);
        $cmd = "clamscan -i --no-summary --remove";
        exec($cmd." ".$file, $output, $return_value);
-       fz_log ('VALUE', FZ_LOG_DEBUG,$return_value);
 
         if ($return_value === 1) {
         	fz_log ('VIRUS FOUND file id '.$file.', antivirus message: "'.implode ($output).'"', FZ_LOG_ERROR);
@@ -233,7 +237,7 @@ class App_Controller_Upload extends Fz_Controller {
        }
 
         if ($return_value === 2) {
-    	    throw new Exception ('Antivirus reported an error.');
+    	    throw new Exception('Antivirus reported an error.');
        }
        return 0;
     }
