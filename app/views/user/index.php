@@ -19,7 +19,9 @@
     <td><?php echo count ($user_item->getFiles ()) ?></td>
     <td><?php echo '125Mo' /* TODO */ ?></td>
     <td><?php echo '15' /* TODO */ ?></td>
+<?php if ( $user->id != $user_item->id ) : ?>
     <td><a onclick="javascript:warning('<?php echo ($user_item->id."','".$user_item->firstname."','".$user_item->lastname."','".$user_item->username) ?>')" href="#"><?php echo _('Delete') /* TODO */ ?></a></td>
+<?php endif ?>
   </tr>
 <?php endforeach ?>
 </table>
