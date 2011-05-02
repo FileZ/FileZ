@@ -12,24 +12,24 @@
     <th><?php echo _('Actions') ?></th>
   </tr>
 
-<?php foreach ($users as $user): ?>
+<?php foreach ($users as $user_item): ?>
   <tr>
-    <td><a href="<?php echo url_for ('/admin/users/'.$user->id) ?>"><?php echo $user ?></a></td>
-    <td><?php echo ($user->is_admin) ? _('admin') : '-' ?></td>
-    <td><?php echo count ($user->getFiles ()) ?></td>
+    <td><a href="<?php echo url_for ('/admin/users/'.$user_item->id) ?>"><?php echo $user_item." (".$user_item->username.")" ?></a></td>
+    <td><?php echo ($user_item->is_admin) ? _('admin') : '-' ?></td>
+    <td><?php echo count ($user_item->getFiles ()) ?></td>
     <td><?php echo '125Mo' /* TODO */ ?></td>
     <td><?php echo '15' /* TODO */ ?></td>
-    <td><a onclick="javascript:warning('<?php echo ($user->firstname."','".$user->lastname."','".$user->username) ?>')" href="#"><?php echo _('Delete') /* TODO */ ?></a></td>
+    <td><a onclick="javascript:warning('<?php echo ($user_item->id."','".$user_item->firstname."','".$user_item->lastname."','".$user_item->username) ?>')" href="#"><?php echo _('Delete') /* TODO */ ?></a></td>
   </tr>
 <?php endforeach ?>
 </table>
 <p><a href="<?php echo url_for ('/admin/users/new') ?>"><?php echo _('Create a new user') ?></a></p>
 <script type="text/javascript">
-function warning(Firstname,Lastname,Username) 
+function warning(Id,Firstname,Lastname,Username) 
 {
   var answer = confirm ("Are you sure you want to delete the user "+Firstname+" "+Lastname+" ("+Username+")?")
   if (answer) 
-  window.location="<?php echo url_for ('/admin/users/'.$user->id.'/delete') ?>"
+  window.location="<?php echo url_for ('/admin/users/')?>/"+Id+"/delete"
   else
   window.location="<?php echo url_for ('/admin/users/') ?>"
 }
