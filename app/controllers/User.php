@@ -43,7 +43,7 @@ class App_Controller_User extends Fz_Controller {
      */
     public function showAction () {
         $this->secure ('admin');
-        set ('users', Fz_Db::getTable ('User')->findById (params ('id')));
+        set ('user', Fz_Db::getTable ('User')->findById (params ('id')));
         return html ('user/show.php');
     }
 
