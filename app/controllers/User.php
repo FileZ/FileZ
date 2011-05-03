@@ -88,8 +88,8 @@ class App_Controller_User extends Fz_Controller {
      */
     public function editAction () {
         $this->secure ('admin');
+        set ('user', Fz_Db::getTable ('User')->findById (params ('id')));
         return html ('user/edit.php');
-        //TODO
     }
 
     /**

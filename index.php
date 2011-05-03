@@ -160,6 +160,7 @@ fz_dispatch_post ('/admin/users'                ,'User'        ,'postnew');
 fz_dispatch_get  ('/admin/users/new'            ,'User'        ,'create');
 fz_dispatch_get  ('/admin/users/:id'            ,'User'        ,'show');
 fz_dispatch_get  ('/admin/users/:id/delete'     ,'User'        ,'delete');
+fz_dispatch_get  ('/admin/users/:id/edit'       ,'User'        ,'edit');
 
 // Backend::Files
 fz_dispatch_get  ('/admin/files'                ,'Admin'       ,'files');
