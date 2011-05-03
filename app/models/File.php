@@ -195,8 +195,8 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @param App_Model_User $user
      * @return boolean
      */
-    public function isOwner (App_Model_User $user) {
-        return ($this->created_by === $user->id);
+    public function isOwner ($user) {
+        return ($user !== null && $this->created_by === $user->id);
     }
 
     /**
