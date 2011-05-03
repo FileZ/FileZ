@@ -51,10 +51,10 @@ class Fz_Db_Schema {
             }
 
             // Update filez version
-            $sql .= 'UPDATE `fz_info` SET `value`=\''.$matches[1].'\' WHERE `key`=\'db_version\'';
+            if (! empty ($sql))
+                $sql .= 'UPDATE `fz_info` SET `value`=\''.$matches[1].'\' WHERE `key`=\'db_version\'';
         }
 
-        print_r($sql);
         if (! empty ($sql))
             Fz_Db::getConnection ()->exec ($sql);
     }
