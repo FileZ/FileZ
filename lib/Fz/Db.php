@@ -132,6 +132,14 @@ class Fz_Db {
      */
     public static function nameEqColonName ($x) { return $x . ' = :' . $x; }
 
+    /**
+     * Helper for writing prepared queries
+     *
+     * @param   string $x 
+     * @return  string 
+     */
+    public static function nameEqSql (&$sql, $columnName) { $sql = $columnName . ' = ' . $sql; }
+
     public static function getConnection () {
         if (($conn = option ('db_conn')) !== null)
             return $conn;

@@ -177,9 +177,9 @@ abstract class Fz_Db_Table_Row_Abstract {
         if (count ($columnsName) == 0 && count ($sqlModifiersColumnsName) == 0)
             return $this;
 
-        $sql =
-            "UPDATE `$table` SET " .
-            implode (', ', array_merge (array_map (array ('Fz_Db','nameEqColonName'),$unmodifiedColumns), $this->_sqlModifiers)) .
+        array_walk ($this->_sqlModifiers, array ('Fz_Db','nameEqSql'));
+        $sql = "UPDATE `$table` SET " .
+            implode (', ', array_merge (array_map  (array ('Fz_Db','nameEqColonName'),$unmodifiedColumns), $this->_sqlModifiers)) .
             ' WHERE id = :id';
 
         fz_log ($sql, FZ_LOG_DEBUG);
@@ -237,7 +237,7 @@ abstract class Fz_Db_Table_Row_Abstract {
      */
     private function bindUpdatedColumnsValues ($stmt) {
         foreach ($this->getUpdatedColumns () as $column)
-            $stmt->bindParam (':'.$column, $this->_data[$column]);
+            $stmt->bindValue (':'.$column, $this->_data[$column]);
 
         return $stmt;
     }
