@@ -1,5 +1,3 @@
-
 <h2>Admin dashboard</h2>
 
-Hello world
-
+Manage <a href="<?php echo url_for ('admin/users') ?>">users</a>.

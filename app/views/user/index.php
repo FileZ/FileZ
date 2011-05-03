@@ -21,16 +21,17 @@
     <td><?php echo count ($user_item->getFiles ()) ?></td>
     <td><?php echo '125Mo' /* TODO */ ?></td>
     <td><?php echo '15' /* TODO */ ?></td>
+    <td>
+      <a href="<?php echo url_for ('/admin/users/'.$user_item->id.'/edit') ?>">
+         <?php echo __('Edit') ?>
+      </a>
     <?php if ( $fz_user->id != $user_item->id ) : // prevents self-deleting ?>
-      <td>
         <a onclick='javascript:return confirm (<?php echo json_encode( __r('Are you sure you want to delete the user "%displayname%" (%username%)', array ('displayname' => $user_item, 'username' => $user_item->username))) ?>)'
            href="<?php echo url_for ('/admin/users/'.$user_item->id.'/delete') ?>">
           <?php echo __('Delete') ?>
         </a>
-      </td>
-    <?php else : ?>
-      <td></td>
     <?php endif ?>
+    </td>
   </tr>
 <?php endforeach ?>
 </table>
