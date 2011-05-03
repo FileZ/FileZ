@@ -119,7 +119,7 @@ class App_Controller_File extends Fz_Controller {
         $this->secure ();
         $file = $this->getFile ();
         $user = $this->getUser ();
-        $this->checkOwner ($file, $user);
+        if (! $user->is_admin) $this->checkOwner ($file, $user);
         set ('file', $file);
 
         return html ('file/confirmDelete.php');
@@ -131,14 +131,14 @@ class App_Controller_File extends Fz_Controller {
         $this->secure ();
         $file = $this->getFile ();
         $user = $this->getUser ();
-        $this->checkOwner ($file, $user);
+        if (! $user->is_admin) $this->checkOwner ($file, $user);
         $file->delete();
 
         if ($this->isXhrRequest())
             return json (array ('status' => 'success'));
         else {
             flash ('notification', __('File deleted.'));
-            redirect_to ('/');
+            $user->is_admin ? redirect_to ('/admin/files') : redirect_to ('/');
         }
     }
 

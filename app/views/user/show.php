@@ -24,7 +24,7 @@
     </td>
     <td><?php echo $file->getReadableFileSize () ?></td>
     <td><?php echo (int) $file->download_count ?></td>
-    <td><a href="<?php echo url_for ('TODO') ?>"><?php echo __('Delete') /* TODO */ ?></a></td>
+    <td><a href="<?php echo $file->getDownloadUrl () . '/delete' ?>"><?php echo __('Delete') ?></a></td>
   </tr>
 <?php endforeach ?>
 </table>
