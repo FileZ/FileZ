@@ -86,6 +86,7 @@ function before () {
         array('scan' => Zend_Translate::LOCALE_DIRECTORY));
     option ('translate', $translate);
     option ('locale'   , $currentLocale);
+    Zend_Registry::set('Zend_Locale', $currentLocale);
 
     // Execute DB configuration only if Filez is configured
     if (! option ('installing')) {
