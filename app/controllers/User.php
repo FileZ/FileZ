@@ -74,6 +74,35 @@ class App_Controller_User extends Fz_Controller {
         }
     }
 
+    /**
+     * Action called to update values of an existing user.
+     */
+    public function updateAction () {
+        // TODO prevent CSRF
+
+        $this->secure ('admin');
+        $user = Fz_Db::getTable ('User')->findById (params ('id'));
+        $user->setUsername  ($_POST ['username']);
+        if ( 0 < strlen($_POST['password']) ) {
+          $user->setPassword  ($_POST ['password']);
+        }
+        $user->setFirstname ($_POST ['firstname']);
+        $user->setLastname  ($_POST ['lastname']);
+        $user->setIsAdmin   ($_POST ['is_admin'] == 'on');
+        $user->setEmail     ($_POST ['email']);
+        // TODO improve form check
+        // for example : test if the email and the username are not already in DB
+        if(filter_var($_POST ['email'], FILTER_VALIDATE_EMAIL) && null!=$_POST ['username'] ) {
+            $user->save ();
+            return redirect_to ('/admin/users');
+        }
+        else {
+            flash_now ('error', "error: email not valid or no username.");
+            return $this->editAction ();
+        }
+    }
+
+
 
     /**
      * Action called to create a new user

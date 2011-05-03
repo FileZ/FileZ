@@ -1,5 +1,30 @@
 <?php 
 /**
+ * @mainpage FileZ source code documentation
+ * <center>
+ * See also: <a href="http://gpl.univ-avignon.fr/filez">gpl.univ-avignon.fr/FileZ</a> - <a href="https://github.com/UAPV/FileZ">README, issues & wiki on github</a>
+ * </center>
+ *
+ * @htmlonly
+ * <style type="text/css">h2{position: relative;left: -15px;font-size: 140%;}</style>
+ * @endhtmlonly
+ *
+ * @section Model–view–controller
+ *
+ * Filez has been developed around the MVC pattern thanks to the Limonade micro framework.
+ *
+ * Limonade micro framework provide the glue between the controllers and views : * Routes declarations * Request handler/dispatcher (index.php) * and many action helpers
+ * - Domain logic is implemented in 'app/model/DOMAIN_OBJECT.php' files.
+ * - Controllers & actions reside in 'app/controller/CONTROLLER_NAME.php' files and contain a set of functions (actions). Fz_Controller
+ * - Views are raw php files stored in 'app/view/CONTROLLER_NAME/ACTION_NAME.php' Static files are stored in the 'resource' directory.
+ *
+ * See also <a href="https://github.com/UAPV/FileZ/blob/master/doc/README.DEV.markdown">doc/README.DEV.markdown</a>
+ * @section About
+ *
+ * - See <a href="http://gpl.univ-avignon.fr">gpl.univ-avignon.fr</a> for more information
+ *
+ * @section Copyright
+ *
  * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
  * email: gpl@univ-avignon.fr
  *
@@ -159,6 +184,7 @@ fz_dispatch_get  ('/admin/users'                ,'User'        ,'index');
 fz_dispatch_post ('/admin/users'                ,'User'        ,'postnew');
 fz_dispatch_get  ('/admin/users/new'            ,'User'        ,'create');
 fz_dispatch_get  ('/admin/users/:id'            ,'User'        ,'show');
+fz_dispatch_post ('/admin/users/:id'            ,'User'        ,'update');
 fz_dispatch_get  ('/admin/users/:id/delete'     ,'User'        ,'delete');
 fz_dispatch_get  ('/admin/users/:id/edit'       ,'User'        ,'edit');
 
