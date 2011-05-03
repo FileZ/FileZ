@@ -174,7 +174,7 @@ abstract class Fz_Db_Table_Row_Abstract {
         $sqlModifiersColumnsName = array_keys ($this->_sqlModifiers);
         $unmodifiedColumns =  array_diff ($columnsName, $sqlModifiersColumnsName);
 
-        if (count ($columnsName) == 0 && count ($sqlModifiersColumnsName))
+        if (count ($columnsName) == 0 && count ($sqlModifiersColumnsName) == 0)
             return $this;
 
         $sql =
