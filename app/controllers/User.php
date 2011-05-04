@@ -92,12 +92,15 @@ class App_Controller_User extends Fz_Controller {
         $user->setEmail     ($_POST ['email']);
         // TODO improve form check
         // for example : test if the email and the username are not already in DB
-        if(filter_var($_POST ['email'], FILTER_VALIDATE_EMAIL) && null!=$_POST ['username'] ) {
+//        if(filter_var($_POST ['email'], FILTER_VALIDATE_EMAIL) && null!=$_POST ['username'] ) {
+        if( $user->isValid() ) {
             $user->save ();
             return redirect_to ('/admin/users');
         }
         else {
-            flash_now ('error', "error: email not valid or no username.");
+            foreach ($user->isValid as $error) {
+               flash_now ('error', $error);
+            }
             return $this->editAction ();
         }
     }
