@@ -99,6 +99,15 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
      */
     public function isValid () {
         $return = array();
+        if (! filter_var ($this->email, FILTER_VALIDATE_EMAIL) ) {
+          $return['email']=__r('"%s%" is not a valid email.',array('s'=>$this->email));
+        }
+        if ( null == $this->username ) {
+          $return['username']=__('The username should not be blank');
+        }
+        if ( 3 < $this->password ) {
+          $return['password']=__('The password is too short.');
+        }
 	if ($this->getTable()->findByUsername ($this->username) !== null) {
 	  $return['username']=__('This username is already used.');
 	}
