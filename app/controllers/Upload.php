@@ -228,7 +228,7 @@ class App_Controller_Upload extends Fz_Controller {
      * @return int    0 if everything is ok
      */
     private function checkVirus($file) {
-       $cmd = "clamscan -i --no-summary --remove";
+       $cmd = fz_config_get('app','antivirus');
        exec($cmd." ".$file, $output, $return_value);
 
         if ($return_value === 1) {
