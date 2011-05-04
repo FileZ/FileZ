@@ -114,10 +114,12 @@ $.fn.initFileActions = function () {
     $('a.extend', this).click (function (e) {
         e.preventDefault();
         var fileListItem = $(this).closest ('li.file');
+        var link = $(this);
         $.getJSON($(this).attr('href'), function (data) {
             if (data.status == undefined) {
                 notifyError (settings.messages.unknownErrorHappened);
             } else if (data.status == 'success') {
+                link.qtip('destroy');
                 fileListItem.html (data.html);
                 fileListItem.initFileActions ();
             } else if (data.status == 'error'){
