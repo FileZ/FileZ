@@ -18,7 +18,7 @@
  * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (! console) // In case the browser don't have a console
+if (! console) // In case the browser doesn't have a console
     var console = {log: function (txt) {}};
 
 // Auto hide current notifications

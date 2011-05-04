@@ -106,7 +106,7 @@
       $('section.new-file').dialog ('option', 'title', <?php echo json_encode(__('Upload a new file')) ?>);
       $('#email-modal').dialog ('option', 'title', <?php echo json_encode(__('Send by email')) ?>);
 
-      // Replace upload form with on big button, and open a modal box on click
+      // Replace upload form with one big button, and open a modal box on click
       $('h2.new-file').wrapInner ($('<a href="#" class="awesome large"></a>'));
       $('h2.new-file a').click (function (e) {
         $('section.new-file').dialog ('open');

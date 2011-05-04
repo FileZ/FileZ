@@ -67,7 +67,7 @@ h2 span.filename {
  * Header
  */
 header {
-  padding: 3em 0 2em 0;
+  padding: 3em 0 1.4em 0;
   position: relative;
 }
 header h1 {
@@ -249,30 +249,18 @@ section.new-file ul#options li label {
 }
 
 h2.new-file a.awesome {
-  background-color: #DAD5D0;
-  background-color: #CEC9C4;
   background-image: url(../images/icons/upload.png);
-  background-position: center 10px;
+  background-position: 10px center;
   background-repeat: no-repeat;
-  display: block;
-  text-align: center;
-  padding: 80px 0 10px 0;
-  margin-bottom: 2em;
-  text-shadow: 0 0 7px #FFF;
-  border-radius: 7px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  -moz-box-shadow:    inset 0 20px 20px rgba(255,255,255,0.3);
-  -webkit-box-shadow: inset 0 20px 20px rgba(255,255,255,0.3);
-  border: 1px solid #CFCBC6;
-  border-top: 1px solid #F5F4F3;
-  border-bottom: 2px solid #B9B5B1;
-  color: #4A4947;
   font-size: 0.9em;
-  letter-spacing: -1px;
+	font-weight: normal;
+	padding-left: 40px;
+	float: right;
+	margin-bottom: .7em;
+	color: #EEE;
 }
 h2.new-file a.awesome:hover {
-  background-color: rgba(0,0,0,0.20);
+	color: #FFF;
 }
 .ui-dialog section.new-file {
     margin: 0;
@@ -305,6 +293,13 @@ label {
 /*
  * Section uploaded-files
  */
+
+h2#uploaded-files-title {
+	padding-top: .3em;
+}
+section#uploaded-files {
+	clear: both;
+}
 section#uploaded-files ul#files {
   list-style: none;
 }
@@ -648,14 +643,13 @@ div.lim-debug hr {display: none;}
   text-decoration: none;
   -moz-border-radius: 5px; 
   -webkit-border-radius: 5px;
-  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  text-shadow: -1px -1px 0px rgba(0,0,0,0.3);
   border-bottom: 1px solid rgba(0,0,0,0.25);
   position: relative;
   cursor: pointer;
   font-size: 13px;
   font-weight: bold;
   line-height: 1;
-  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
   -moz-box-shadow:    inset 0 20px 20px rgba(255,255,255,0.3);
   -webkit-box-shadow: inset 0 20px 20px rgba(255,255,255,0.3);
 }
