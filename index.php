@@ -181,16 +181,17 @@ fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
 
 // Backend::Users
 fz_dispatch_get  ('/admin/users'                ,'User'        ,'index');
-fz_dispatch_post ('/admin/users'                ,'User'        ,'postnew');
 fz_dispatch_get  ('/admin/users/new'            ,'User'        ,'create');
+fz_dispatch_post ('/admin/users/new'            ,'User'        ,'postnew');
 fz_dispatch_get  ('/admin/users/:id'            ,'User'        ,'show');
-fz_dispatch_post ('/admin/users/:id'            ,'User'        ,'update');
 fz_dispatch_get  ('/admin/users/:id/delete'     ,'User'        ,'delete');
 fz_dispatch_get  ('/admin/users/:id/edit'       ,'User'        ,'edit');
+fz_dispatch_post ('/admin/users/:id/edit'       ,'User'        ,'update');
 
 // Backend::Files
 fz_dispatch_get  ('/admin/files'                ,'Admin'       ,'files');
 fz_dispatch_get  ('/admin/config'               ,'Admin'       ,'config');
+fz_dispatch_get  ('/admin/invitations'          ,'Admin'       ,'invitations');
 
 // Backend::CRON
 fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
@@ -221,5 +222,8 @@ fz_dispatch_get  ('/:file_hash/delete'          ,'File'        ,'confirmDelete')
 fz_dispatch_post ('/:file_hash/delete'          ,'File'        ,'delete');
 
 fz_dispatch_get  ('/:file_hash/extend'          ,'File'        ,'extend');
+
+fz_dispatch_get  ('/:file_hash/invite'          ,'File'        ,'invite');
+fz_dispatch_get  ('/:file_hash/:invitation_hash','File'        ,'invited');
 
 run ();

@@ -1,6 +1,6 @@
 <h2 class="new-user"><?php echo __('Edit user') ?></h2>
 <section class="new-file fz-modal">
-  <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('/admin/users/'.$user->id) ?>" id="update_user-form">
+  <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('/admin/users/'.$user->id.'/edit') ?>" id="update_user-form">
   <div id="username">
     <label for="input-username"><?php echo __('Username:') ?></label>
     <input type="text" id="input-username" name="username" value="<?php echo $user->username ?>" alt="<?php echo __('Username') ?>" maxlength="20" />
