@@ -91,5 +91,20 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
         if ($sql !== null)
             $this->setColumnModifier ('password', $sql);
     }
-}
 
+    /**
+     * Function used to check if a new or updated user is valid
+     *
+     * @return array (attribut => message)
+     */
+    public function isValid () {
+        $return = array();
+	if ($this->getTable()->findByUsername ($username) !== null) {
+	  $return['username']=__('This username is already used.');
+	}
+	if ($this->getTable()->findByEmail ($email) !== null) {
+	  $return['email']=__('This email is already used.');
+	}
+        return $return;
+    }
+}

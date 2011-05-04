@@ -46,7 +46,14 @@ class App_Model_DbTable_User extends Fz_Db_Table_Abstract {
         return $this->findOneBySQL ($sql, $username);
     }
 
+    /**
+     * Retrieve a user by its email
+     *
+     * @param string $email
+     * @return App_Model_User or null if not found
+     */
+    public function findByEmail ($email) {
+        $sql = 'SELECT * FROM '.$this->getTableName ().' WHERE email = ?';
+        return $this->findOneBySQL ($sql, $email);
+    }
 }
-
-
-
