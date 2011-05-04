@@ -7,6 +7,7 @@
 <table id="user_list" class="data">
   <tr>
     <th><?php echo __('Name') ?></th>
+    <th><?php echo __('Username') ?></th>
     <th><?php echo __('Role') ?></th>
     <th><?php echo __('File count') ?></th>
     <th><?php echo __('Disk usage') ?></th>
@@ -16,9 +17,17 @@
 
 <?php foreach ($users as $user_item): ?>
   <tr>
-    <td><a href="<?php echo url_for ('/admin/users/'.$user_item->id) ?>"><?php echo h($user_item)." (".h($user_item->username).")" ?></a></td>
+    <td><a href="<?php echo url_for ('/admin/users/'.$user_item->id) ?>"><?php echo h($user_item) ?></a></td>
+    <td><a href="<?php echo url_for ('/admin/users/'.$user_item->id) ?>"><?php echo h($user_item->username) ?></a></td>
     <td><?php echo ($user_item->is_admin) ? __('admin') : '-' ?></td>
-    <td><?php echo count ($user_item->getFiles ()) ?></td>
+    <td><?php if (0<count ($user_item->getFiles ())): ?>
+      <a href="<?php echo url_for ('/admin/users/'.$user_item->id) ?>">
+        <?php echo count ($user_item->getFiles ()) ?>
+      </a>
+    <?php else: ?>
+      0
+    <?php endif ?>
+    </td>
     <td><?php echo '125Mo' /* TODO */ ?></td>
     <td><?php echo '15' /* TODO */ ?></td>
     <td>
