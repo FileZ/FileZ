@@ -91,14 +91,13 @@ class App_Controller_User extends Fz_Controller {
         $user->setLastname  ($_POST ['lastname']);
         $user->setIsAdmin   ($_POST ['is_admin'] == 'on');
         $user->setEmail     ($_POST ['email']);
-        if( 0 === count( $user->isValid() ) ) {
-        //TODO isValid to update should be diff than isValid for new user 
+        if( 0 === count( $user->isValid('update') ) ) {
             $user->save ();
             return redirect_to ('/admin/users');
         }
         else {
             $errors = '';
-            foreach ($user->isValid() as $error) {
+            foreach ($user->isValid('update') as $error) {
                $errors .= $error."<br />";
             }
                flash_now ('error', $errors);
