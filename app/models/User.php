@@ -110,12 +110,19 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
           $return['password']=__('The password is too short.');
         }
         if ( 'new' == $action ) {
-		if ($this->getTable()->findByUsername ($this->username) !== null) {
-		  $return['username']=__('This username is already used.');
-		}
-		if ($this->getTable()->findByEmail ($this->email) !== null) {
-		  $return['email']=__('This email is already used.');
-		}
+            if ($this->getTable()->findByUsername ($this->username) !== null) {
+               $return['username']=__('This username is already used.');
+            }
+            if ($this->getTable()->findByEmail ($this->email) !== null) {
+               $return['email']=__('This email is already used.');
+            }
+        } elseif ( 'update' == $action ) {
+            if ( params ('id') != $this->getTable()->findByUsername ($this->username)->getId() ) {
+               $return['username']=__('This username belongs to another user.');
+            }
+            if ( params ('id') != $this->getTable()->findByEmail ($this->email)->getId() ) {
+               $return['email']=__('This email belongs to another user.');
+            }
         }
         return $return;
     }
