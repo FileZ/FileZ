@@ -92,17 +92,31 @@ $.fn.initFilez = function (options) {
  *
  */
 $.fn.initFileActions = function () {
-    // FIXME
-    $('a.send-by-email', this).click     (function (e) {
-        console.log ('hi');
-        var modal = $('#email-modal');
+
+    $('a.share', this).click (function (e) {
+        e.preventDefault();
+        var modal = $('#share-modal');
         var fileUrl = $(this).attr ('href')
                 .substring (-1, $(this).attr ('href').lastIndexOf ('/'));
+
+        var filename = $('.filename a', $(this).closest('.file-description')).html();
+
+        $('#share-modal #share-link a').attr ('href', fileUrl).html (fileUrl);
+        $('#share-modal #share-destinations li a').each (function () {
+            $(this).attr ('href', this.getAttribute ('data-url')
+                .replace ('%url%', fileUrl)
+                .replace ('%filename%', $.trim(filename)));
+        });
+
+        $('#share-modal').dialog ('option', 'title', filename);
+
         modal.dialog ('open');
+        /*
         $('form', modal).attr ('action', $(this).attr ('href'));
         $('.open-email-client', modal).attr ('href', 'mailto:'
             +'?body='+settings.messages.emailMessage+' : '+fileUrl);
-        e.preventDefault();
+        */
+        return false;
     }),
 
     $('a.delete', this).click (function (e) {

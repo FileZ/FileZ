@@ -252,7 +252,7 @@ h2.new-file a.awesome {
   background-image: url(../images/icons/upload.png);
   background-position: 10px center;
   background-repeat: no-repeat;
-  font-size: 0.9em;
+  font-size: 0.85em;
 	font-weight: normal;
 	padding-left: 40px;
 	float: right;
@@ -509,6 +509,41 @@ section#preview-file #download {
 section#preview-file #download.image {
 	text-align: right;
 }
+
+/*
+ * Share modal
+ */
+ 
+#share-modal {
+	padding: 1em;
+}
+#share-modal #share-link a {
+	font-size: 1.8em;
+	line-height: 2em;
+  color: #1E52A1;
+}
+#share-modal #share-destinations {
+	padding-top: 1em;
+}
+#share-modal #share-destinations li {
+	display: block;
+	float: left;
+}
+#share-modal #share-destinations li a {
+	display: block;
+	background-position: center top;
+	background-repeat: no-repeat;
+	width: 80px;
+	padding-top : 50px;
+	text-align: center;
+	font-size: .75em;
+}
+#share-modal #share-destinations li a:hover {
+	background-position: center 2px;
+}
+#share-modal #share-destinations li.email		 a { background-image: url(../images/icons/share-email.png); }
+#share-modal #share-destinations li.facebook a { background-image: url(../images/icons/share-facebook.png); }
+#share-modal #share-destinations li.twitter  a { background-image: url(../images/icons/share-twitter.png); }
 
 
 /*
