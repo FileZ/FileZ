@@ -95,7 +95,7 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
     /**
      * Function used to check if a new or updated user is valid
      *
-     * @param $action it is valid to update or to create a new user. Value 'new' for new user, other to update a user.
+     * @param $action the action is to update or to create a user. Value 'new' or 'update'.
      * @return array (attribut => error message)
      */
     public function isValid ( $action = 'new' ) {
@@ -117,10 +117,12 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
                $return['email']=__('This email is already used.');
             }
         } elseif ( 'update' == $action ) {
-            if ( params ('id') != $this->getTable()->findByUsername ($this->username)->getId() ) {
+            if ( null != $this->getTable()->findByUsername ($this->username) 
+              && params ('id') != $this->getTable()->findByUsername ($this->username)->getId() ) {
                $return['username']=__('This username belongs to another user.');
             }
-            if ( params ('id') != $this->getTable()->findByEmail ($this->email)->getId() ) {
+            if ( null != $this->getTable()->findByEmail ($this->email) 
+              && params ('id') != $this->getTable()->findByEmail ($this->email)->getId() ) {
                $return['email']=__('This email belongs to another user.');
             }
         }
