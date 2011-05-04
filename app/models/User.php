@@ -95,17 +95,16 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
     /**
      * Function used to check if a new or updated user is valid
      *
-     * @return true or array (attribut => error message)
+     * @return array (attribut => error message)
      */
     public function isValid () {
         $return = array();
-	if ($this->getTable()->findByUsername ($username) !== null) {
+	if ($this->getTable()->findByUsername ($this->username) !== null) {
 	  $return['username']=__('This username is already used.');
 	}
-	if ($this->getTable()->findByEmail ($email) !== null) {
+	if ($this->getTable()->findByEmail ($this->email) !== null) {
 	  $return['email']=__('This email is already used.');
 	}
-        if ( 0 == count($return) ) return TRUE;
         return $return;
     }
 }

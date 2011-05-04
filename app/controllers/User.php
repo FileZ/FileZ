@@ -61,15 +61,16 @@ class App_Controller_User extends Fz_Controller {
         $user->setLastname  ($_POST ['lastname']);
         $user->setIsAdmin   ($_POST ['is_admin'] == 'on');
         $user->setEmail     ($_POST ['email']);
-
-        // TODO improve form check
-        // for example : test if the email and the username are not already in DB
-        if(filter_var($_POST ['email'], FILTER_VALIDATE_EMAIL) && null!=$_POST ['username'] && (3 <= strlen($_POST['password'])) ){
+        if( 0 === count( $user->isValid() ) ) {
             $user->save ();
             return redirect_to ('/admin/users');
         }
         else {
-            flash_now ('error', "error: email not valid or no username or password too short.");
+            $errors = '';
+            foreach ($user->isValid() as $error) {
+               $errors .= $error."<br />";
+            }
+               flash_now ('error', $errors);
             return $this->createAction ();
         }
     }
@@ -90,17 +91,17 @@ class App_Controller_User extends Fz_Controller {
         $user->setLastname  ($_POST ['lastname']);
         $user->setIsAdmin   ($_POST ['is_admin'] == 'on');
         $user->setEmail     ($_POST ['email']);
-        // TODO improve form check
-        // for example : test if the email and the username are not already in DB
-//        if(filter_var($_POST ['email'], FILTER_VALIDATE_EMAIL) && null!=$_POST ['username'] ) {
-        if( $user->isValid() ) {
+        if( 0 === count( $user->isValid() ) ) {
+        //TODO isValid to update should be diff than isValid for new user 
             $user->save ();
             return redirect_to ('/admin/users');
         }
         else {
-            foreach ($user->isValid as $error) {
-               flash_now ('error', $error);
+            $errors = '';
+            foreach ($user->isValid() as $error) {
+               $errors .= $error."<br />";
             }
+               flash_now ('error', $errors);
             return $this->editAction ();
         }
     }
