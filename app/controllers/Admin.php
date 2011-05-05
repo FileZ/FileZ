@@ -44,8 +44,8 @@ class App_Controller_Admin extends Fz_Controller {
         $this->secure ('admin');        
         set ('files', Fz_Db::getTable ('File')->findAll ()); // TODO paginat
         return html ('file/index.php');
-        //TODO
     }
+
     /**
      * Action called to manage the config
      * List the config settings.

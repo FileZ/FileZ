@@ -128,4 +128,14 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
         }
         return $return;
     }
+
+    /**
+     * Function used to get the user disk usage
+     *
+     * @return disk space used by the user
+     */
+    public function getDiskUsage () {
+        return bytesToShorthand( Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($this));
+    }
+
 }

@@ -8,7 +8,9 @@
       <?php endif ?>
 
       <?php if (isset ($fz_user)): ?>
-        <p id="disk-usage"><?php echo __r('Using %space% of %quota%', $disk_usage); ?>.
+        <p id="disk-usage"><?php echo __r('Using %space% of %quota%', array(
+                   'space' => $fz_user->getDiskUsage (), 
+                   'quota' => '<b id="disk-usage-value">'.fz_config_get('app', 'user_quota').'</b>' )); ?>.
         </p>
       <?php endif ?>
 
