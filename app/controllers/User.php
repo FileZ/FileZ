@@ -34,6 +34,7 @@ class App_Controller_User extends Fz_Controller {
      */
     public function indexAction () {
         $this->secure ('admin');
+        set ('EditUserRight', (fz_config_get ('app', 'user_factory_class') === "Fz_User_Factory_Database"));
         set ('users', Fz_Db::getTable ('User')->findAll ()); // TODO paginate
         return html ('user/index.php');
     }
@@ -104,8 +105,6 @@ class App_Controller_User extends Fz_Controller {
             return $this->editAction ();
         }
     }
-
-
 
     /**
      * Action called to create a new user

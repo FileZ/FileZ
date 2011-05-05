@@ -1,9 +1,9 @@
 <h2><?php echo __('Manage users') ?></h2>
 
 <!-- TODO : find a jquery plugin to order and paginate the user list -->
-
+<?php if ($EditUserRight): ?>
 <p><a href="<?php echo url_for ('/admin/users/new') ?>" class="awesome"><?php echo __('Create a new user') ?></a></p>
-
+<?php endif ?>
 <table id="user_list" class="data">
   <tr>
     <th><?php echo __('Name') ?></th>
@@ -12,7 +12,7 @@
     <th><?php echo __('File count') ?></th>
     <th><?php echo __('Disk usage') ?></th>
     <th><?php echo __('Expired files') ?></th>
-    <th><?php echo __('Actions') ?></th>
+    <?php if ($EditUserRight): ?><th><?php echo __('Actions') ?></th><?php endif ?>
   </tr>
 
 <?php foreach ($users as $user_item): ?>
@@ -30,7 +30,7 @@
     </td>
     <td><?php echo '125Mo' /* TODO */ ?></td>
     <td><?php echo '15' /* TODO */ ?></td>
-    <td>
+    <?php if ($EditUserRight): ?><td>
       <a href="<?php echo url_for ('/admin/users/'.$user_item->id.'/edit') ?>">
          <?php echo __('Edit') ?>
       </a>
@@ -40,7 +40,7 @@
           <?php echo __('Delete') ?>
         </a>
     <?php endif ?>
-    </td>
+    </td><?php endif /*EditUserRight*/?>
   </tr>
 <?php endforeach ?>
 </table>
