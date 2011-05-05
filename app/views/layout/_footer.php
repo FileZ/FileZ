@@ -26,4 +26,6 @@
       <?php if (fz_config_get('looknfeel', 'show_credit')): ?>
         <a href="http://gpl.univ-avignon.fr" target="#_blank"><?php echo __('A free software from the University of Avignon') ?></a>
       <?php endif ?>
+
+      <?php echo check_cron();?>
     </footer>

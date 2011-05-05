@@ -88,6 +88,8 @@ class App_Controller_Admin extends Fz_Controller {
      */
     private function notifyDeletionByEmail (App_Model_File $file) {
         try {
+            option ('translate')->setLocale(fz_config_get('app','default_locale'));
+            option ('locale')->setLocale(fz_config_get('app','default_locale'));
             $mail = $this->createMail();
             $user = $file->getUploader ();
             $subject = __r('[FileZ] Your file "%file_name%" is going to be deleted', array (

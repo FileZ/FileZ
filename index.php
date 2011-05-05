@@ -44,7 +44,7 @@
  * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define ('FZ_VERSION', '2.2.0-1');
+define ('FZ_VERSION', '2.1.0-2');
 
 /**
  * Loading Zend for i18n classes and autoloader
@@ -111,6 +111,7 @@ function before () {
         array('scan' => Zend_Translate::LOCALE_DIRECTORY));
     option ('translate', $translate);
     option ('locale'   , $currentLocale);
+    Zend_Registry::set('Zend_Locale', $currentLocale);
 
     // Execute DB configuration only if Filez is configured
     if (! option ('installing')) {
@@ -141,6 +142,13 @@ function before () {
         $userFactory = new $factoryClass ();
         $userFactory->setOptions (fz_config_get ('user_factory_options', null, array ()));
         option ('userFactory', $userFactory);
+
+        // Check the database version and migrate if necessary
+        $dbSchema = new Fz_Db_Schema (option ('root_dir').'/config/db');
+        if ($dbSchema->isOutdated ()) {
+            fz_log ('Migration needed (db_version: '.$dbSchema->getCurrentVersion ().'), executing the scripts...');
+            $dbSchema->migrate ();
+        }
     }
 }
 
@@ -152,18 +160,16 @@ require_once 'lib/limonade.php';
 require_once 'lib/fz_limonade.php';
 require_once 'lib/fz_config.php';
 
+// Check config presence, if not, force the user to the install controller
 if (fz_config_load (dirname(__FILE__).DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR) === false) {
     option ('installing', true);
-}
-
-// Check config presence, if not, force the user to the install controller
-if (option ('installing')) {
     fz_dispatch_get  ('/configure', 'Install', 'configure');
     fz_dispatch_post ('/configure', 'Install', 'configure');
     fz_dispatch_get  ('/*',         'Install', 'prepare');
     run ();
     exit;
 }
+
 
 //                                              //             // 
 // Url Schema                                   // Controller  // Action

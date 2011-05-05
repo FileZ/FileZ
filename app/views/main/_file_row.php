@@ -11,7 +11,7 @@
   <p class="comment"><?php echo $file->comment ?> &nbsp;</p>
   <p class="filesize">(<?php echo $file->getReadableFileSize () ?>)</p>
   <p class="share">
-    <a href="<?php echo $file->getDownloadUrl () ?>/email" class="awesome green share">
+    <a href="<?php echo $file->getDownloadUrl () ?>/share" class="awesome green share">
       <?php echo __('Share') ?>
     </a>
   </p>

@@ -63,8 +63,17 @@
   </ul>
 </section>
 
-<div id="email-modal" class="fz-modal" style="display: none;">
-  <?php echo partial ('file/_mailForm.php') ?>
+<div id="share-modal" class="fz-modal" style="display: none;">
+    <p class="instruction"><?php echo __('Give this link to the person you want to share this file with') ?></p>
+    <p id="share-link"><a href=""></a></p>
+    <p class="instruction"><?php echo __('or share using') ?> :</p>
+    <ul id="share-destinations">
+        <li class="email"   ><a href="" data-url="%url%/email"><?php echo __('your email') ?></a></li>
+        <!-- TODO make next share destinations configurable ! -->
+        <li class="facebook"><a href="" target="_blank" data-url="http://www.facebook.com/sharer.php?u=%url%&t=%filename%"><?php echo __('Facebook') ?></a></li>
+        <li class="twitter" ><a href="" target="_blank" data-url="http://twitter.com/home?status=%filename% %url%"><?php echo __('Twitter') ?></a></li>
+    </ul>
+    <div class="cleartboth"></div>
 </div>
 
 
@@ -104,9 +113,8 @@
 
       // Set title for each modal
       $('section.new-file').dialog ('option', 'title', <?php echo json_encode(__('Upload a new file')) ?>);
-      $('#email-modal').dialog ('option', 'title', <?php echo json_encode(__('Send by email')) ?>);
 
-      // Replace upload form with on big button, and open a modal box on click
+      // Replace upload form with one big button, and open a modal box on click
       $('h2.new-file').wrapInner ($('<a href="#" class="awesome large"></a>'));
       $('h2.new-file a').click (function (e) {
         $('section.new-file').dialog ('open');
