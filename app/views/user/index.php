@@ -11,7 +11,7 @@
     <th><?php echo __('Role') ?></th>
     <th><?php echo __('File count') ?></th>
     <th><?php echo __('Disk usage') ?></th>
-    <th><?php echo __('Expired files') ?></th>
+    <!--<th><?php echo __('Expired files') ?></th>-->
     <?php if ($EditUserRight): ?><th><?php echo __('Actions') ?></th><?php endif ?>
   </tr>
 
@@ -29,7 +29,7 @@
     <?php endif ?>
     </td>
     <td><?php echo $diskUsage[$user_item->id] ?></td>
-    <td><?php echo 'todo'/* TODO */ ?></td>
+    <!--<td><?php echo 'todo'/* TODO */ ?></td>-->
     <?php if ($EditUserRight): ?><td>
       <a href="<?php echo url_for ('/admin/users/'.$user_item->id.'/edit') ?>">
          <?php echo __('Edit') ?>
