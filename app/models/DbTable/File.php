@@ -202,6 +202,15 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         }
         return floatval ($size);
     }
+
+    /**
+     * Count the number of files
+     * 
+     * @return integer number of files
+     */
+    public function getNumberOfFiles () {
+        $sql = 'SELECT COUNT(*) AS count FROM '.$this->getTableName ();
+        $res = Fz_Db::findAssocBySQL($sql);
+        return $res[0]['count'];
+    }
 }
-
-
