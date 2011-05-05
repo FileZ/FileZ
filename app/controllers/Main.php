@@ -40,11 +40,14 @@ class App_Controller_Main extends Fz_Controller {
         set ('start_from'       , Zend_Date::now ()->get (Zend_Date::DATE_SHORT));
         set ('refresh_rate'     , 1200);
         set ('files'            , Fz_Db::getTable ('File')
-                                    ->findByOwnerOrderByUploadDateDesc ($user['id']));
+                                    ->findByOwnerOrderByUploadDateDesc ($user));
         set ('use_progress_bar' , $progressMonitor->isInstalled ());
         set ('upload_id_name'   , $progressMonitor->getUploadIdName ());
         set ('free_space_left'  , $freeSpaceLeft);
         set ('max_upload_size'  , $maxUploadSize);
+        set ('disk_usage'  , array (
+            'space' => '<b id="disk-usage-value">'.bytesToShorthand (Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)).'</b>',
+            'quota' => fz_config_get('app', 'user_quota')));
         return html ('main/index.php');
     }
 }

@@ -6,18 +6,17 @@ CREATE TABLE IF NOT EXISTS `fz_file` (
   `file_size`       INTEGER         DEFAULT 0,
   `available_from`  DATE            NOT NULL,
   `available_until` DATE            NOT NULL,
-  `created_at`      TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `comment`         varchar(200),
   `download_count`  INTEGER         DEFAULT 0,
   `notify_uploader` BOOLEAN         DEFAULT 0,
-  `uploader_uid`    varchar(30)     DEFAULT NULL,
-  `uploader_email`  varchar(60)     DEFAULT NULL,
+  `created_by`      INTEGER         NOT NULL,
+  `created_at`      TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `extends_count`   INTEGER         DEFAULT '0',
   `password`        varchar(40)     DEFAULT NULL,
-
+  INDEX       (`created_by`),
+  FOREIGN KEY (`created_by`) REFERENCES fz_user(id),
   UNIQUE KEY `id` (`id`)
 ) DEFAULT CHARSET=utf8;
-
 
 CREATE TABLE  `fz_info` (
  `key`   VARCHAR( 30 ) NOT NULL ,
@@ -25,6 +24,17 @@ CREATE TABLE  `fz_info` (
   PRIMARY KEY (  `key` )
 ) DEFAULT CHARSET=utf8;
 
+CREATE TABLE `fz_user` (
+  `id`          SERIAL      NOT NULL,
+  `username`    VARCHAR(30) NOT NULL,
+  `password`    VARCHAR(40) NOT NULL,
+  `salt`        VARCHAR(40),
+  `firstname`   VARCHAR(50) NOT NULL,
+  `lastname`    VARCHAR(50) NOT NULL,
+  `email`       VARCHAR(50) NOT NULL,
+  `is_admin`    BOOLEAN     DEFAULT 0,
+  `created_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE = MYISAM ;
 
-INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '2.0.0-2');
 INSERT INTO `fz_info` (`key`, `value`) VALUES ('cron_freq', null);
+INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '2.1.0-2');

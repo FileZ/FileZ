@@ -94,6 +94,15 @@ abstract class Fz_User_Factory_Abstract {
         return $p;
     }
 
+    /**
+     * Tells if users are retrieved from the build-in user table or from an external source
+     * 
+     * @return boolean
+     */
+    public function isInternal () {
+        return false;
+    }
+
     public function setOptions ($options = array ()) {
         $this->_options = $options;
     }
