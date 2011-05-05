@@ -76,6 +76,9 @@
     <div class="cleartboth"></div>
 </div>
 
+<div id="email-modal" class="fz-modal" style="display: none;">
+  <?php echo partial ('file/_mailForm.php') ?>
+</div>
 
 <script type="text/javascript">
     $(document).ready (function () {
