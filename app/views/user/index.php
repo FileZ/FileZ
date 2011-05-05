@@ -28,8 +28,8 @@
       0
     <?php endif ?>
     </td>
-    <td><?php echo '125Mo' /* TODO */ ?></td>
-    <td><?php echo '15' /* TODO */ ?></td>
+    <td><?php echo $diskUsage[$user_item->id] ?></td>
+    <td><?php echo 'todo'/* TODO */ ?></td>
     <?php if ($EditUserRight): ?><td>
       <a href="<?php echo url_for ('/admin/users/'.$user_item->id.'/edit') ?>">
          <?php echo __('Edit') ?>

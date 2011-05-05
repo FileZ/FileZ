@@ -177,6 +177,17 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     }
 
     /**
+     * Return readable disk space used by someone
+     *
+     * @param App_Model_User    $user   User
+     * @return string           Readable size
+     */
+    public function getReadableTotalDiskSpaceByUser ($user) {
+        return $this->getReadableSize ($this->getTotalDiskSpaceByUser ($user));
+    }
+
+
+    /**
      * Return remaining disk space available for user $user
      *
      * @param App_Model_User    $user   User data

@@ -36,6 +36,11 @@ class App_Controller_User extends Fz_Controller {
         $this->secure ('admin');
         set ('EditUserRight', (fz_config_get ('app', 'user_factory_class') === "Fz_User_Factory_Database"));
         set ('users', Fz_Db::getTable ('User')->findAll ()); // TODO paginate
+        $diskUsage=array();
+        foreach (Fz_Db::getTable ('User')->findAll () as $user_item) {
+            $diskUsage[$user_item->id] = Fz_Db::getTable ('File')->getReadableTotalDiskSpaceByUser ($user_item);
+        }
+        set ('diskUsage', $diskUsage);
         return html ('user/index.php');
     }
 
