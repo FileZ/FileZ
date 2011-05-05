@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks
+  Options +Indexes
+  RewriteEngine on
+
+  # RewriteBase /my_app/ # if your app is in a subfolder
+  # RewriteBase /web/
+
+  RewriteCond %{REQUEST_URI} !favicon.ico
+  RewriteCond %{REQUEST_URI} !doc/user/(.*)\.
+  RewriteCond %{REQUEST_URI} !resources/(.*)\.
+  RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+<IfModule mod_php5.c>
+  php_value file_uploads On
+  php_value upload_max_filesize 700M
+  php_value post_max_size       700M
+  php_value max_input_time      1200
+  php_value max_execution_time  1200
+</IfModule>
