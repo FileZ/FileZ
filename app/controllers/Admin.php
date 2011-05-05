@@ -32,6 +32,7 @@ class App_Controller_Admin extends Fz_Controller {
         $this->secure ('admin');
         set ('numberOfUsers', Fz_Db::getTable ('User')->getNumberOfUsers() );
         set ('numberOfFiles', Fz_Db::getTable ('File')->getNumberOfFiles() );
+        set ('totalDiskSpace', Fz_Db::getTable ('File')->getTotalDiskSpace() );
         return html ('admin/index.php');
     }
 
@@ -51,7 +52,7 @@ class App_Controller_Admin extends Fz_Controller {
      */
     public function configAction () {
         $this->secure ('admin');
-        return html ('admin/index.php');
+        return html ('admin/config.php');
         //TODO
     }
 

@@ -35,7 +35,7 @@
           <li><a href="<?php echo url_for ('admin') ?>">Dashboard</a></li>
           <li><a href="<?php echo url_for ('admin/users') ?>">Users</a></li>
           <li><a href="<?php echo url_for ('admin/files') ?>">Files</a></li>
-          <li><a href="<?php echo url_for ('admin/config') ?>">Config</a></li>
+          <!--<li><a href="<?php echo url_for ('admin/config') ?>">Config</a></li>-->
         </ul>
       </nav>
       <article>

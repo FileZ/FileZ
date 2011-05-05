@@ -213,4 +213,34 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         $res = Fz_Db::findAssocBySQL($sql);
         return $res[0]['count'];
     }
+
+    /**
+     * Return disk space used by everybody
+     *
+     * @return float  Size in bytes
+     */
+    public function getTotalDiskSpace () {
+        $result = option ('db_conn')
+            ->prepare ('SELECT sum(file_size) FROM `'
+                .$this->getTableName ()
+                .'` WHERE available_until >= CURRENT_DATE() ');
+        $result->execute ();
+        return $this->getReadableSize ($result->fetchColumn ());
+    }
+
+    /**
+     * Return bytes size to be read by human
+     *
+     * @param float $bytes
+     * @return string
+     */
+    public function getReadableSize ($bytes, $precision = 2) {
+        $units = array(__('B'), __('KB'), __('MB'), __('GB'), __('TB'));
+        $pow = floor (($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
+    }
 }
