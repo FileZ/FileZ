@@ -1,4 +1,8 @@
-<h2><?php echo $user ?></h2>
+<h2><?php echo $user ?><?php if ($EditUserRight): ?>
+  <a class="awesome" href="<?php echo url_for ('/admin/users/'.$user->id.'/edit') ?>">
+   <?php echo __('Edit') ?>
+  </a>
+<?php endif ?></h2>
 
 <p><b><?php echo __('Email') ?> :</b> <?php echo $user->email ?></p>
 <p><b><?php echo __('Account created') ?> :</b> <?php echo $user->created_at ?></p>

@@ -49,6 +49,7 @@ class App_Controller_User extends Fz_Controller {
      */
     public function showAction () {
         $this->secure ('admin');
+        set ('EditUserRight', (fz_config_get ('app', 'user_factory_class') === "Fz_User_Factory_Database"));
         set ('user', Fz_Db::getTable ('User')->findById (params ('id')));
         return html ('user/show.php');
     }
