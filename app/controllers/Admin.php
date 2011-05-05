@@ -30,6 +30,7 @@ class App_Controller_Admin extends Fz_Controller {
 
     public function indexAction () {
         $this->secure ('admin');
+        set ('numberOfUsers', Fz_Db::getTable ('User')->getNumberOfUsers() );
         return html ('admin/index.php');
     }
 
