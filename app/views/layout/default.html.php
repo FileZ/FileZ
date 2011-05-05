@@ -39,13 +39,13 @@
   </head>
   <body onLoad="checkPortal();">
 
-    <?php echo partial ('layout/_header.php', (isset ($user) ? array('user' => $user) : array())); ?>
+    <?php echo partial ('layout/_header.php', (isset ($fz_user) ? array('fz_user' => $fz_user) : array())); ?>
 
     <article>
       <?php echo $content ?>
     </article>
 
-    <?php echo partial ('layout/_footer.php', (isset ($user) ? array('user' => $user) : array())); ?>
+    <?php echo partial ('layout/_footer.php', (isset ($fz_user) ? array('fz_user' => $fz_user, 'disk_usage' => $disk_usage ) : array())); ?>
 
     <div id="modal-background"></div>
 
