@@ -45,7 +45,7 @@
       <?php echo $content ?>
     </article>
 
-    <?php echo partial ('layout/_footer.php', (isset ($fz_user) ? array('fz_user' => $fz_user, 'disk_usage' => $disk_usage ) : array())); ?>
+    <?php echo partial ('layout/_footer.php', (isset ($fz_user) ? array('fz_user' => $fz_user) : array())); ?>
 
     <div id="modal-background"></div>
 
