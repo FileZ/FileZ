@@ -8,6 +8,12 @@ Filez-2.1.0
 * Fixed the max length of a hash to 10
 * Added german translation
 * Redesigned file list
+* Added other share destination (FB, twitter) optional
+* Added German translation (thanks to @spiorf)
+* Added Italian translation (thanks to @tini)
+* Added optional Antivirus check (thanks to @daserzw)
+* Added admin backend (thanks to @almaghi)
+* Added automatic database update
 
 Filez-2.0.2
 
