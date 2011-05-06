@@ -8,7 +8,7 @@
       <?php echo h (truncate_string ($file->file_name, 40)) ?>
     </a>
   </p>
-  <p class="comment"><?php echo $file->comment ?> &nbsp;</p>
+  <p class="comment"><?php echo h($file->comment) ?> &nbsp;</p>
   <p class="filesize">(<?php echo $file->getReadableFileSize () ?>)</p>
   <p class="share">
     <a href="<?php echo $file->getDownloadUrl () ?>/share" class="awesome green share">
@@ -43,4 +43,3 @@
     </a>
   </p>
 </div>
-

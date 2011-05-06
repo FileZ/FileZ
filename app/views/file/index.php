@@ -14,7 +14,7 @@
 
 <?php foreach ($files as $file): ?>
   <tr>
-    <td><a href="<?php echo $file->getDownloadUrl () ?>"><?php echo $file->file_name ?></a></td>
+    <td><a href="<?php echo $file->getDownloadUrl () ?>"><?php echo h($file->file_name) ?></a></td>
     <td>
       <a href="<?php echo url_for ('/admin/users/'.$file->getUploader ()->id) ?>">
         <?php echo h($file->getUploader ()) ?> (<?php echo h($file->getUploader()->username) ?>)
