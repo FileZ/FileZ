@@ -119,7 +119,7 @@ function get_mimetype_icon_url ($mimetype, $size = 32) {
 }
 
 function check_cron() {
-print_r(option ());
+
 if (option ('installing')){
     $lastCron = Fz_Db::getTable('Info')->getLastCronTimestamp();
     $freq = fz_config_get ('cron', 'frequency');
