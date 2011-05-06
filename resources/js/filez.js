@@ -108,16 +108,23 @@ $.fn.initFileActions = function () {
                 .replace ('%filename%', $.trim(filename)));
         });
 
+        $('#share-modal #share-destinations li.email a').click (function (e) {
+            e.preventDefault ();
+            $('#share-modal').dialog ('close');
+
+            $('form', modal).attr ('action', $(this).attr ('href'));
+            $('.open-email-client')
+                .attr ('href', 'mailto:?body='+settings.messages.emailMessage+' : '+fileUrl)
+                .click (function (e) { $('.ui-dialog-content').dialog('close'); });
+
+            $('#email-modal').dialog ('open');
+        });
+
         $('#share-modal').dialog ('option', 'title', filename);
+        $('#email-modal').dialog ('option', 'title', filename);
 
         modal.dialog ('open');
-        /*
-        $('form', modal).attr ('action', $(this).attr ('href'));
-        $('.open-email-client', modal).attr ('href', 'mailto:'
-            +'?body='+settings.messages.emailMessage+' : '+fileUrl);
-        */
-        return false;
-    }),
+    });
 
     $('a.delete', this).click (function (e) {
         if (confirm (settings.messages.confirmDelete))

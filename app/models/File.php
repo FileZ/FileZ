@@ -22,16 +22,15 @@
 /**
  * @property boolean $del_notif_sent
  * @property string  $file_name
- * @property string  $uploader_email
  * @property int     $file_size
  * @property string  $available_from    DATE
  * @property string  $available_until   DATE
  * @property int     $download_count
  * @property string  $comment
  * @property boolean $notify_uploader
- * @property string  $uploader_uid
- * @property int     $extends_count
+ * @property int     $created_by
  * @property int     $created_at        TIMESTAMP
+ * @property int     $extends_count
  * @property string  $password
  */
 class App_Model_File extends Fz_Db_Table_Row_Abstract {
@@ -176,35 +175,28 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * Set the uploader of the file from an associative array containing
      * 'id' & 'email' keys.
      *
-     * @param array $user
+     * @param App_Model_User $user
      */
-    public function setUploader (array $user) {
-        $this->uploader_uid     = $user ['id'];
-        $this->uploader_email   = $user ['email'];
+    public function setUploader (App_Model_User $user) {
+        $this->created_by = $user->id;
     }
     /**
      * Return file uploader info 
      *
-     * @return array $user
+     * @return App_Model_User $user
      */
     public function getUploader () {
-        return option ('userFactory')->findById ($this->uploader_uid);
-
-        // TODO retrieve user from database if he has been invited
+        return Fz_Db::getTable('User')->findById ($this->created_by);
     }
 
     /**
      * Checks if the user passed is the owner of the file
      *
-     * @param array $user
+     * @param App_Model_User $user
      * @return boolean
      */
     public function isOwner ($user) {
-        return is_array ($user) && (
-            (array_key_exists ('email', $user) // check for invited users
-                && $this->uploader_email == $user ['email'])
-         || (array_key_exists ('id', $user) // or registered users
-                && $this->uploader_uid   == $user ['id']));
+        return ($user !== null && $this->created_by === $user->id);
     }
 
     /**

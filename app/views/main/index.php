@@ -68,14 +68,22 @@
     <p id="share-link"><a href=""></a></p>
     <p class="instruction"><?php echo __('or share using') ?> :</p>
     <ul id="share-destinations">
-        <li class="email"   ><a href="" data-url="%url%/email"><?php echo __('your email') ?></a></li>
-        <!-- TODO make next share destinations configurable ! -->
+        <?php if (in_array ('email', $sharing_destinations)): ?>
+          <li class="email"   ><a href="" data-url="%url%/email"><?php echo __('your email') ?></a></li>
+        <?php endif; ?>
+        <?php if (in_array ('facebook', $sharing_destinations)): ?>
         <li class="facebook"><a href="" target="_blank" data-url="http://www.facebook.com/sharer.php?u=%url%&t=%filename%"><?php echo __('Facebook') ?></a></li>
+        <?php endif; ?>
+        <?php if (in_array ('twitter', $sharing_destinations)): ?>
         <li class="twitter" ><a href="" target="_blank" data-url="http://twitter.com/home?status=%filename% %url%"><?php echo __('Twitter') ?></a></li>
+        <?php endif; ?>
     </ul>
     <div class="cleartboth"></div>
 </div>
 
+<div id="email-modal" class="fz-modal" style="display: none;">
+  <?php echo partial ('file/_mailForm.php') ?>
+</div>
 
 <script type="text/javascript">
     $(document).ready (function () {

@@ -20,9 +20,41 @@
  */
 
 /**
- * Controller used for administratives tasks
+ * General Controller used for administratives tasks
  */
 class App_Controller_Admin extends Fz_Controller {
+
+    public function init () {
+        layout ('layout'.DIRECTORY_SEPARATOR.'admin.html.php');
+    }
+
+    public function indexAction () {
+        $this->secure ('admin');
+        set ('numberOfUsers', Fz_Db::getTable ('User')->getNumberOfUsers() );
+        set ('numberOfFiles', Fz_Db::getTable ('File')->getNumberOfFiles() );
+        set ('totalDiskSpace', Fz_Db::getTable ('File')->getTotalDiskSpace() );
+        return html ('admin/index.php');
+    }
+
+    /**
+     * Action called to manage files
+     * List files, display stats.
+     */
+    public function filesAction () {
+        $this->secure ('admin');        
+        set ('files', Fz_Db::getTable ('File')->findAll ()); // TODO paginat
+        return html ('file/index.php');
+    }
+
+    /**
+     * Action called to manage the config
+     * List the config settings.
+     */
+    public function configAction () {
+        $this->secure ('admin');
+        return html ('admin/config.php');
+        //TODO
+    }
 
     /**
      * Action called to clean expired files and send mail to those who will be
@@ -38,6 +70,8 @@ class App_Controller_Admin extends Fz_Controller {
         // Send mail for files which will be deleted in less than 2 days
         $days = fz_config_get('cron', 'days_before_expiration_mail');
         foreach (Fz_Db::getTable('File')->findFilesToBeDeleted ($days) as $file) {
+            // TODO improve the SQL command to retrieve uploader email at the same time
+            //      to reduce the # of request made by notifyDeletionByEmail 
             if ($file->notify_uploader) {
                 $file->del_notif_sent = true;
                 $file->save ();
@@ -57,6 +91,7 @@ class App_Controller_Admin extends Fz_Controller {
             option ('translate')->setLocale(fz_config_get('app','default_locale'));
             option ('locale')->setLocale(fz_config_get('app','default_locale'));
             $mail = $this->createMail();
+            $user = $file->getUploader ();
             $subject = __r('[FileZ] Your file "%file_name%" is going to be deleted', array (
                 'file_name' => $file->file_name));
             $msg = __r('email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)', array(
@@ -67,14 +102,14 @@ class App_Controller_Admin extends Fz_Controller {
             ));
             $mail->setBodyText ($msg);
             $mail->setSubject  ($subject);
-            $mail->addTo ($file->uploader_email);
+            $mail->addTo ($user->email);
             $mail->send ();
 
-            fz_log ('Delete notification sent to '.$file->uploader_email, FZ_LOG_CRON);
+            fz_log ('Delete notification sent to '.$user->email, FZ_LOG_CRON);
         }
         catch (Exception $e) {
-            fz_log ('Can\'t send email to '.$file->uploader_email
-                   .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
+            fz_log ('Can\'t send email to '.$user->email
+                .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
         }
     }
 }
