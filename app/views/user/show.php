@@ -19,7 +19,7 @@
 
 <?php foreach ($user->getFiles () as $file): ?>
   <tr>
-    <td><a href="<?php echo h($file->getDownloadUrl ()) ?>"><?php echo h($file->file_name) ?></a></td>
+    <td><a href="<?php echo $file->getDownloadUrl () ?>"><?php echo h($file->file_name) ?></a></td>
     <td><?php echo __r('from %from% to %to%', array (
       'from' => ($file->getAvailableFrom  ()->get (Zend_Date::MONTH) ==
                  $file->getAvailableUntil ()->get (Zend_Date::MONTH)) ?
@@ -27,8 +27,8 @@
       'to' =>  '<b>'.$file->getAvailableUntil ()->toString ('d MMMM').'</b>')) // FIXME I18N ?>
     </td>
     <td><?php echo h($file->getReadableFileSize ()) ?></td>
-    <td><?php echo (int) h($file->download_count) ?></td>
-    <td><a href="<?php echo h($file->getDownloadUrl ()) . '/delete' ?>"><?php echo __('Delete') ?></a></td>
+    <td><?php echo (int) $file->download_count ?></td>
+    <td><a href="<?php echo $file->getDownloadUrl () . '/delete' ?>"><?php echo __('Delete') ?></a></td>
   </tr>
 <?php endforeach ?>
 </table>
