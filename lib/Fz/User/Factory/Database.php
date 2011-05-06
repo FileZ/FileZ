@@ -130,5 +130,14 @@ class Fz_User_Factory_Database extends Fz_User_Factory_Abstract {
         }
         return $user;
     }
+
+    /**
+     * Tells if users are retrieved from the build-in user table or from an external source
+     * 
+     * @return boolean
+     */
+    public function isInternal () {
+        return ($this->getOption ('db_table') === Fz_Db::getTable('User')->getTableName ());
+    }
 }
 ?>

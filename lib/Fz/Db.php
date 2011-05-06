@@ -44,7 +44,7 @@ class Fz_Db {
 
         $result = array ();
         $stmt = $db->prepare ($sql);
-        $stmt->execute ($params);
+        $stmt->execute ((array) $params);
         while ($obj = $stmt->fetchObject ($className, array (true))) {
             if (method_exists($obj, ('resetModifiedColumns')))
                 $obj->resetModifiedColumns ();
@@ -131,6 +131,14 @@ class Fz_Db {
      * @return  string 
      */
     public static function nameEqColonName ($x) { return $x . ' = :' . $x; }
+
+    /**
+     * Helper for writing prepared queries
+     *
+     * @param   string $x 
+     * @return  string 
+     */
+    public static function nameEqSql (&$sql, $columnName) { $sql = $columnName . ' = ' . $sql; }
 
     public static function getConnection () {
         if (($conn = option ('db_conn')) !== null)

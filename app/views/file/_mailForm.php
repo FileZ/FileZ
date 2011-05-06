@@ -9,14 +9,10 @@
     <textarea cols="80" rows="10" name="msg" value="<?php echo params ('msg') ?>"></textarea>
   </p>
   <p>
-    <a href="#" class="open-email-client" target="_blank"><?php echo __('Open in my email client') ?></a>
-    <script type="text/javascript">
-      $(document).ready (function () {
-        $('.open-email-client').click (function (e) {
-          $('.ui-dialog-content').dialog('close');
-        });
-      });
-    </script>
+    <a href="<?php echo isset ($file) ? 'mailto:?body='.__('You can download the file I uploaded here').' : '.$file->getDownloadUrl () : '#' ?>"
+       class="open-email-client" target="_blank">
+      <?php echo __('Open in my email client') ?>
+    </a>
   </p>
   <p class="submit">
     <input type="submit" class="awesome blue large" value="<?php echo __('Send') ?>" />
