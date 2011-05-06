@@ -146,6 +146,7 @@ if (option ('installing')) {
 // -----------------------------------------------------------------------------
 // Main controller
 fz_dispatch ('/'                                ,'Main'        ,'index');
+fz_dispatch ('/mobile'                          ,'Main'        ,'index');
 
 // Upload controller
 fz_dispatch_post ('/upload'                     ,'Upload'      ,'start');
