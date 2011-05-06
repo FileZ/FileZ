@@ -42,6 +42,9 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
      */
     public function __construct ($exists = false) {
         parent::__construct ($exists);
+
+        if ($exists == false)
+            $this->salt = sha1 (uniqid (mt_rand (), true));
     }
 
     /**
@@ -73,7 +76,11 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
         $this->password = $password;
 
         $sql = null;
-        if ($algorithm == 'MD5') {
+        if ($algorithm === null) {
+            $sql = 'SHA1(CONCAT(:salt,:password))';
+            $this->_updatedColumns [] = 'salt'; // to force PDO::bindValue when updating
+        }
+        else if ($algorithm == 'MD5') {
             $sql = 'MD5(:password)';
         }
         else if ($algorithm == 'SHA1') {
