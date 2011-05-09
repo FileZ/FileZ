@@ -10,7 +10,7 @@
           <a href="<?php echo public_url_for ('/') ?>" id="filez-logo">
             <img src="<?php echo public_url_for ('resources/images/filez-logo.png') ?>" title="filez" />
           </a>
-          <?php echo __('Share files for a limited time.') ?>
+          <?php echo __('Share files for a limited time') ?>
         </span>
         <span style="display: block; clear: both;"></span>
       </h1>
