@@ -36,4 +36,5 @@ CREATE TABLE `fz_user` (
   `created_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = MYISAM ;
 
-INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '2.2.0-1');
+INSERT INTO `fz_info` (`key`, `value`) VALUES ('cron_freq', NOW());
+INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '2.1.0-2');

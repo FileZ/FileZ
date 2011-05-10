@@ -36,15 +36,19 @@ class App_Controller_Main extends Fz_Controller {
         $progressMonitor = fz_config_get ('app', 'progress_monitor');
         $progressMonitor = new $progressMonitor ();
         
-        set ('upload_id'        , md5 (uniqid (mt_rand (), true)));
-        set ('start_from'       , Zend_Date::now ()->get (Zend_Date::DATE_SHORT));
-        set ('refresh_rate'     , 1200);
-        set ('files'            , Fz_Db::getTable ('File')
-                                    ->findByOwnerOrderByUploadDateDesc ($user));
-        set ('use_progress_bar' , $progressMonitor->isInstalled ());
-        set ('upload_id_name'   , $progressMonitor->getUploadIdName ());
-        set ('free_space_left'  , $freeSpaceLeft);
-        set ('max_upload_size'  , $maxUploadSize);
+        set ('upload_id'            , md5 (uniqid (mt_rand (), true)));
+        set ('start_from'           , Zend_Date::now ()->get (Zend_Date::DATE_SHORT));
+        set ('refresh_rate'         , 1200);
+        set ('files'                , Fz_Db::getTable ('File')
+                                        ->findByOwnerOrderByUploadDateDesc ($user));
+        set ('use_progress_bar'     , $progressMonitor->isInstalled ());
+        set ('upload_id_name'       , $progressMonitor->getUploadIdName ());
+        set ('free_space_left'      , $freeSpaceLeft);
+        set ('max_upload_size'      , $maxUploadSize);
+        set ('sharing_destinations' , fz_config_get ('app', 'sharing_destinations', array()));
+        set ('disk_usage'           , array (
+            'space' => '<b id="disk-usage-value">'.bytesToShorthand (Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)).'</b>',
+            'quota' => fz_config_get('app', 'user_quota')));
         return html ('main/index.php');
     }
 }

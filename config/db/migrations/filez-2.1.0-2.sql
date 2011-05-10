@@ -24,5 +24,3 @@ WHERE `uploader_uid` = `username`;
 
 ALTER TABLE `fz_file` DROP COLUMN `uploader_uid`;
 ALTER TABLE `fz_file` DROP COLUMN `uploader_email`;
-
-UPDATE `fz_info` SET `value`='2.2.0-1' WHERE `key`='db_version';

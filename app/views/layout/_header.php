@@ -10,7 +10,7 @@
           <a href="<?php echo public_url_for ('/') ?>" id="filez-logo">
             <img src="<?php echo public_url_for ('resources/images/filez-logo.png') ?>" title="filez" />
           </a>
-          <?php echo __('Share files for a limited time.') ?>
+          <?php echo __('Share files for a limited time') ?>
         </span>
         <span style="display: block; clear: both;"></span>
       </h1>
@@ -21,12 +21,12 @@
         <p class="notif error"><?php echo $flash ['error'] ?></p>
       <?php endif ?>
 
-      <?php if (isset ($user)): ?>
+      <?php if (isset ($fz_user)): ?>
         <p id="auth-box">
-        <?php if ( $user->is_admin ): ?>
+        <?php if ( $fz_user->is_admin ): ?>
           <a href="<?php echo url_for ('/admin') ?>" title="<?php echo __('Administration') ?>"><?php echo __('Administration') ?></a> | 
        <?php endif ?>
-          <?php echo $user->email ?> |
+          <?php echo $fz_user->email ?> |
           <a id="logout" href="<?php echo url_for ('/logout') ?>" title="<?php echo __('Log out') ?>">&nbsp;</a>
         </p>
       <?php endif ?>

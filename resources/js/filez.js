@@ -18,7 +18,7 @@
  * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (! console) // In case the browser don't have a console
+if (! console) // In case the browser doesn't have a console
     var console = {log: function (txt) {}};
 
 // Auto hide current notifications
@@ -92,18 +92,39 @@ $.fn.initFilez = function (options) {
  *
  */
 $.fn.initFileActions = function () {
-    // FIXME
-    $('a.send-by-email', this).click     (function (e) {
-        console.log ('hi');
-        var modal = $('#email-modal');
+
+    $('a.share', this).click (function (e) {
+        e.preventDefault();
+        var modal = $('#share-modal');
         var fileUrl = $(this).attr ('href')
                 .substring (-1, $(this).attr ('href').lastIndexOf ('/'));
+
+        var filename = $('.filename a', $(this).closest('.file-description')).html();
+
+        $('#share-modal #share-link a').attr ('href', fileUrl).html (fileUrl);
+        $('#share-modal #share-destinations li a').each (function () {
+            $(this).attr ('href', this.getAttribute ('data-url')
+                .replace ('%url%', fileUrl)
+                .replace ('%filename%', $.trim(filename)));
+        });
+
+        $('#share-modal #share-destinations li.email a').click (function (e) {
+            e.preventDefault ();
+            $('#share-modal').dialog ('close');
+
+            $('form', modal).attr ('action', $(this).attr ('href'));
+            $('.open-email-client')
+                .attr ('href', 'mailto:?body='+settings.messages.emailMessage+' : '+fileUrl)
+                .click (function (e) { $('.ui-dialog-content').dialog('close'); });
+
+            $('#email-modal').dialog ('open');
+        });
+
+        $('#share-modal').dialog ('option', 'title', filename);
+        $('#email-modal').dialog ('option', 'title', filename);
+
         modal.dialog ('open');
-        $('form', modal).attr ('action', $(this).attr ('href'));
-        $('.open-email-client', modal).attr ('href', 'mailto:'
-            +'?body='+settings.messages.emailMessage+' : '+fileUrl);
-        e.preventDefault();
-    }),
+    });
 
     $('a.delete', this).click (function (e) {
         if (confirm (settings.messages.confirmDelete))
@@ -114,10 +135,12 @@ $.fn.initFileActions = function () {
     $('a.extend', this).click (function (e) {
         e.preventDefault();
         var fileListItem = $(this).closest ('li.file');
+        var link = $(this);
         $.getJSON($(this).attr('href'), function (data) {
             if (data.status == undefined) {
                 notifyError (settings.messages.unknownErrorHappened);
             } else if (data.status == 'success') {
+                link.qtip('destroy');
                 fileListItem.html (data.html);
                 fileListItem.initFileActions ();
             } else if (data.status == 'error'){

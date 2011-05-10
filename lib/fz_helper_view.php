@@ -126,5 +126,15 @@ function get_mimetype_icon_url ($mimetype, $size = 32) {
     if (file_exists ($root.$path.$mimetype))
         return $mime_basesir.$mimetype;
 
+}
 
+function check_cron() {
+
+    $lastCron = Fz_Db::getTable('Info')->getLastCronTimestamp();
+    $freq = fz_config_get ('cron', 'frequency');
+    
+    if(strtotime($freq." ".$lastCron) <= time()) {
+        Fz_Db::getTable('Info')->setLastCronTimestamp(date('Y-m-d H:i:s'));
+        return "<script src='".url_for('admin/checkFiles')."'></script>";
+    }
 }

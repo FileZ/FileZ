@@ -64,7 +64,7 @@
       </form>
     <?php endif ?>
   <?php else: ?>
-    <?php echo __('The file is not available yet.') ?>
+    <?php echo __('The file is not available yet') ?>
   <?php endif ?>
 </section>
   

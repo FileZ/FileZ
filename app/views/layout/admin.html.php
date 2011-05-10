@@ -23,20 +23,19 @@
     <?php if (option ('locale')->getLanguage () != 'en'): ?>
       <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
     <?php endif ?>
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/filez.js') ?>"></script>
   </head>
   <body id="admin">
 
-    <?php echo partial ('layout/_header.php', (isset ($user) ? array('user' => $user) : array())); ?>
+    <?php echo partial ('layout/_header.php', (isset ($fz_user) ? array('fz_user' => $fz_user) : array())); ?>
 
     <div id="content">
 
       <nav>
-        Admin : 
         <ul>
+          <li><a href="<?php echo url_for ('admin') ?>">Dashboard</a></li>
           <li><a href="<?php echo url_for ('admin/users') ?>">Users</a></li>
           <li><a href="<?php echo url_for ('admin/files') ?>">Files</a></li>
-          <li><a href="<?php echo url_for ('admin/config') ?>">Config</a></li>
+          <!--<li><a href="<?php echo url_for ('admin/config') ?>">Config</a></li>-->
         </ul>
       </nav>
       <article>
@@ -46,9 +45,22 @@
       <div class="clearboth"></div>
     </div>
 
-    <?php echo partial ('layout/_footer.php', (isset ($user) ? array('user' => $user) : array())); ?>
+    <?php echo partial ('layout/_footer.php', (isset ($fz_user) ? array('fz_user' => $fz_user) : array())); ?>
 
     <div id="modal-background"></div>
+
+    <script type="text/javascript">
+      // small snippet to select an item in the menu
+      $(document).ready (function () {
+        $('nav a').each (function () {
+            console.log (document.location.href.indexOf ($(this).attr ('href')));
+          if (document.location.href.indexOf ($(this).attr ('href')) != -1) {
+            $('nav .selected').removeClass ('selected');
+            $(this).addClass ('selected');
+          }
+        });
+      });
+    </script>
 
   </body>
 </html>

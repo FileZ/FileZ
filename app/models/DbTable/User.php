@@ -46,7 +46,25 @@ class App_Model_DbTable_User extends Fz_Db_Table_Abstract {
         return $this->findOneBySQL ($sql, $username);
     }
 
+    /**
+     * Retrieve a user by its email
+     *
+     * @param string $email
+     * @return App_Model_User or null if not found
+     */
+    public function findByEmail ($email) {
+        $sql = 'SELECT * FROM '.$this->getTableName ().' WHERE email = ?';
+        return $this->findOneBySQL ($sql, $email);
+    }
+
+    /**
+     * Count the number of users
+     * 
+     * @return integer number of users
+     */
+    public function getNumberOfUsers () {
+        $sql = 'SELECT COUNT(*) AS count FROM '.$this->getTableName ();
+        $res = Fz_Db::findAssocBySQL($sql);
+        return $res[0]['count'];
+    }
 }
-
-
-

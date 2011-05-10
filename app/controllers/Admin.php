@@ -20,7 +20,7 @@
  */
 
 /**
- * Controller used for administratives tasks
+ * General Controller used for administratives tasks
  */
 class App_Controller_Admin extends Fz_Controller {
 
@@ -30,63 +30,31 @@ class App_Controller_Admin extends Fz_Controller {
 
     public function indexAction () {
         $this->secure ('admin');
-
+        set ('numberOfUsers', Fz_Db::getTable ('User')->getNumberOfUsers() );
+        set ('numberOfFiles', Fz_Db::getTable ('File')->getNumberOfFiles() );
+        set ('totalDiskSpace', Fz_Db::getTable ('File')->getTotalDiskSpace() );
         return html ('admin/index.php');
     }
 
-    /* Action called to manage users
-     * List users.
-     */
-    public function usersAction () {
-       $this->secure ('admin');
-       //TODO
-       return html ('admin/users.php'); 
-   }
-
-   /**
-     * Action called to create a new user
-     */
-    public function createUserAction () {
-       $this->secure ('admin');
-       return html ('admin/index.php');
-      //TODO
-    }
-
-   /**
-     * Action called to edit a user
-     */
-    public function editUserAction () {
-       $this->secure ('admin');
-       return html ('admin/index.php');
-      //TODO
-    }
-
-   /**
-     * Action called to delete a user
-     */
-    public function deleteUserAction () {
-       $this->secure ('admin');
-       return html ('admin/index.php');
-      //TODO
-    }
-
-   /**
+    /**
      * Action called to manage files
      * List files, display stats.
      */
     public function filesAction () {
-       $this->secure ('admin');        
-       return html ('admin/index.php');
-      //TODO
+        $this->secure ('admin');        
+        set ('files', Fz_Db::getTable ('File')->findAll ()); // TODO paginat
+        return html ('file/index.php');
     }
-   /**
+
+    /**
      * Action called to manage the config
      * List the config settings.
      */
     public function configAction () {
-       return html ('admin/index.php');
-       //TODO
-   }
+        $this->secure ('admin');
+        return html ('admin/config.php');
+        //TODO
+    }
 
     /**
      * Action called to clean expired files and send mail to those who will be
@@ -120,6 +88,8 @@ class App_Controller_Admin extends Fz_Controller {
      */
     private function notifyDeletionByEmail (App_Model_File $file) {
         try {
+            option ('translate')->setLocale(fz_config_get('app','default_locale'));
+            option ('locale')->setLocale(fz_config_get('app','default_locale'));
             $mail = $this->createMail();
             $user = $file->getUploader ();
             $subject = __r('[FileZ] Your file "%file_name%" is going to be deleted', array (
@@ -139,7 +109,7 @@ class App_Controller_Admin extends Fz_Controller {
         }
         catch (Exception $e) {
             fz_log ('Can\'t send email to '.$user->email
-                   .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
+                .' file_id:'.$file->id, FZ_LOG_CRON_ERROR);
         }
     }
 }

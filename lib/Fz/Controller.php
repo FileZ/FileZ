@@ -40,7 +40,7 @@ class Fz_Controller {
         $user = $this->getUser();
 
         // setting user template var
-        set ('user', $user);
+        set ('fz_user', $user);
 
         if ($credential == 'admin') { // 
             if (! $user->is_admin)
@@ -146,4 +146,5 @@ class Fz_Controller {
         redirect ($_SERVER["HTTP_REFERER"]);
     }
 }
+
 

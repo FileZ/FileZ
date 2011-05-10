@@ -42,6 +42,9 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
      */
     public function __construct ($exists = false) {
         parent::__construct ($exists);
+
+        if ($exists == false)
+            $this->salt = sha1 (uniqid (mt_rand (), true));
     }
 
     /**
@@ -62,17 +65,84 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
         return Fz_Db::getTable('File')->findByOwnerOrderByUploadDateDesc ($this);
         // TODO handle the $includeExpired parameter
     }
+    
+    /**
+     * Function used to encrypt the password
+     *
+     * @param string password
+     */
+    public function setPassword ($password) {
+        $algorithm = fz_config_get ('user_factory_options', 'db_password_algorithm');
+        $this->password = $password;
+
+        $sql = null;
+        if ($algorithm === null) {
+            $sql = 'SHA1(CONCAT(:salt,:password))';
+            $this->_updatedColumns [] = 'salt'; // to force PDO::bindValue when updating
+        }
+        else if ($algorithm == 'MD5') {
+            $sql = 'MD5(:password)';
+        }
+        else if ($algorithm == 'SHA1') {
+            $sql = 'SHA1(:password)';
+        }
+        else if (is_callable ($algorithm)) {
+            if (strstr ($algorithm, '::') !== false)
+                $algorithm = explode ('::', $algorithm);
+            $sql = Fz_Db::getConnection ()->quote (call_user_func ($algorithm, $password));
+        }
+        else {
+            $sql = $algorithm; // Plain SQL
+        }
+
+        if ($sql !== null)
+            $this->setColumnModifier ('password', $sql);
+    }
 
     /**
-     * List all users in filez DB.
-     * Called on /admin/users
-     * @param 
-     * @return list of users
+     * Function used to check if a new or updated user is valid
      *
+     * @param $action the action is to update or to create a user. Value 'new' or 'update'.
+     * @return array (attribut => error message)
      */
-     public function listUsers () {
-         return Fz_Db::getTable('User');
-     }
+    public function isValid ( $action = 'new' ) {
+        $return = array();
+        if (! filter_var ($this->email, FILTER_VALIDATE_EMAIL) ) {
+          $return['email']=__r('"%s%" is not a valid email.',array('s'=>$this->email));
+        }
+        if ( null == $this->username ) {
+          $return['username']=__('The username should not be blank');
+        }
+        if ( 4 > strlen($this->password) ) {
+          $return['password']=__('The password is too short.');
+        }
+        if ( 'new' == $action ) {
+            if ($this->getTable()->findByUsername ($this->username) !== null) {
+               $return['username']=__('This username is already used.');
+            }
+            if ($this->getTable()->findByEmail ($this->email) !== null) {
+               $return['email']=__('This email is already used.');
+            }
+        } elseif ( 'update' == $action ) {
+            if ( null != $this->getTable()->findByUsername ($this->username) 
+              && params ('id') != $this->getTable()->findByUsername ($this->username)->getId() ) {
+               $return['username']=__('This username belongs to another user.');
+            }
+            if ( null != $this->getTable()->findByEmail ($this->email) 
+              && params ('id') != $this->getTable()->findByEmail ($this->email)->getId() ) {
+               $return['email']=__('This email belongs to another user.');
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Function used to get the user disk usage
+     *
+     * @return disk space used by the user
+     */
+    public function getDiskUsage () {
+        return bytesToShorthand( Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($this));
+    }
 
 }
-
