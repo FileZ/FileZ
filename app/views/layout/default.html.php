@@ -3,12 +3,14 @@
   <head>
     <title>FileZ</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/html5-reset.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/jquery.ui/css/cupertino/jquery-ui-1.7.2.custom.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/js/qtip/jquery.qtip.min.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/main.css') ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/mobile.css') ?>" type="text/css" media="all" />
     <?php if (fz_config_get ('looknfeel', 'custom_css', '') != ''): ?>
       <link rel="stylesheet" href="<?php echo public_url_for (fz_config_get ('looknfeel', 'custom_css')) ?>" type="text/css" media="all" />
     <?php endif ?>

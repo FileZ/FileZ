@@ -1,0 +1,94 @@
+/* main content */
+
+#auth-box{
+	display:none;
+}
+header, article, footer {
+	margin-left: 2%;
+	margin-right: 2%;
+	
+	width: 96%;
+
+}
+
+header {
+	text-align: center;
+	padding: 1em 0 2em 0;
+}
+
+h2.new-file{
+	display: block;
+	font-size:1.3em;
+	
+}
+
+
+
+h2#uploaded-files-title {
+font-size: 1em;
+
+}
+
+#uploaded-files-title{
+	display: block;
+}
+
+.file-description {
+/*border: 1px solid black;*/
+	width: 130px;
+	overflow: hidden;
+}
+
+section#uploaded-files ul li p.filename {
+	width: 130px;
+	display:block;
+
+}
+
+section#uploaded-files ul li p.comment {
+	display: block;
+}
+
+section#uploaded-files ul li .file-attributes .availability, section#uploaded-files ul li .file-attributes .download-counter{
+	display: block;
+	border-left: none;
+	margin: 0;
+	padding: 0;
+}
+
+
+section#uploaded-files ul li a.extend, section#uploaded-files ul li p.delete{
+	display:none;
+}
+
+footer {
+text-align: center;
+padding: 0.5em 0;
+}
+
+footer #disk-usage {
+	font-size: 1em;
+}
+
+
+/* Preview page */
+
+.preview-image{
+	width:270px; 
+}
+
+h2.filename {
+padding-top: 0;
+}
+
+section#preview-file #owner {
+float: left;
+}
+
+section#preview-file #download {
+padding: 1.5em 0;
+}
+
+.blue.awesome, .blue.awesome:visited {
+	padding: 10px 13px 11px
+}
