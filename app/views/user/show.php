@@ -4,9 +4,9 @@
   </a>
 <?php endif ?></h2>
 
-<p><b><?php echo __('Email') ?> :</b> <?php echo h($user->email) ?></p>
-<p><b><?php echo __('Account created') ?> :</b> <?php echo h($user->created_at) ?></p>
-<p><b><?php echo __('Administrator ?') ?> :</b> <?php echo $user->is_admin ? __('yes') : __('no') ?></p>
+<p><b><?php echo __('Email:') ?></b> <?php echo h($user->email) ?></p>
+<p><b><?php echo __('Account created:') ?></b> <?php echo h($user->created_at) ?></p>
+<p><b><?php echo __('Administrator:') ?></b> <?php echo $user->is_admin ? __('yes') : __('no') ?></p>
 
 <table id="user_files" class="data">
   <tr>

@@ -1,6 +1,20 @@
-<?php 
+<?php
+
 /**
- * @mainpage FileZ source code documentation
+ * @file
+ * Front to the FileZ application. This file loads Zend, Limonade and define the URL schema.
+ * 
+ * This file loads Zend, 
+ * which autoloads Fz_* classes in lib/ dir and App_Model_* & App_Controller_* classes in app/ dir, 
+ * configure and loads Limonade PHP framework, 
+ * configure FileZ and dispatch the user according to the Url Schema. 
+ *
+ * All FileZ code is released under the GNU General Public License.
+ * See COPYING and LICENSE in doc/ directory.
+ * 
+ * @package FileZ
+ * -------------
+ * @mainpage
  * <center>
  * See also: <a href="http://gpl.univ-avignon.fr/filez">gpl.univ-avignon.fr/FileZ</a> - <a href="https://github.com/UAPV/FileZ">README, issues & wiki on github</a>
  * </center>
@@ -17,31 +31,17 @@
  * - Domain logic is implemented in 'app/model/DOMAIN_OBJECT.php' files.
  * - Controllers & actions reside in 'app/controller/CONTROLLER_NAME.php' files and contain a set of functions (actions). Fz_Controller
  * - Views are raw php files stored in 'app/view/CONTROLLER_NAME/ACTION_NAME.php' Static files are stored in the 'resource' directory.
- *
+ * 
  * See also <a href="https://github.com/UAPV/FileZ/blob/master/doc/README.DEV.markdown">doc/README.DEV.markdown</a>
+ * 
  * @section About
- *
+ * 
  * - See <a href="http://gpl.univ-avignon.fr">gpl.univ-avignon.fr</a> for more information
  *
  * @section Copyright
- *
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
- *
- * This file is part of Filez.
- *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Copyright 2010 Université d'Avignon et des Pays de Vaucluse, Arnaud Didry and others.
+ * 
  */
 
 define ('FZ_VERSION', '2.1.0-2');
