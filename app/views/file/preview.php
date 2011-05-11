@@ -22,11 +22,11 @@
   </p>
 
   <p id="owner">
-    <?php echo __('Uploaded by') ?> : <b><?php echo h($uploader) ?></b>
+    <?php echo __('Uploaded by:') ?> <b><?php echo h($uploader) ?></b>
   </p>
 
   <?php if ($file->comment): ?>
-    <p id="comment"><b><?php echo __('Comments') ?></b> : <?php echo h($file->comment) ?></p>
+    <p id="comment"><b><?php echo __('Comments:') ?></b> <?php echo h($file->comment) ?></p>
   <?php endif ?>
 
   <?php if ($available): ?>
