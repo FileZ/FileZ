@@ -66,7 +66,7 @@
 <div id="share-modal" class="fz-modal" style="display: none;">
     <p class="instruction"><?php echo __('Give this link to the person you want to share this file with') ?></p>
     <p id="share-link"><a href=""></a></p>
-    <p class="instruction"><?php echo __('or share using') ?> :</p>
+    <p class="instruction"><?php echo __('or share using:') ?></p>
     <ul id="share-destinations">
         <?php if (in_array ('email', $sharing_destinations)): ?>
           <li class="email"   ><a href="" data-url="%url%/email"><?php echo __('your email') ?></a></li>
