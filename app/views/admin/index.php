@@ -1,4 +1,5 @@
-<h2>Admin dashboard</h2>
+<h2><?php echo __('Admin dashboard') ?></h2>
 
-Manage <a href="<?php echo url_for ('admin/users') ?>"><?php echo $numberOfUsers ?> users</a>
-and <a href="<?php echo url_for ('admin/files') ?>"><?php echo $numberOfFiles ?> files</a> (<?php echo $totalDiskSpace ?>).
+<?php echo __r('Manage %NumberOfUsers% users</a> and %NumberOfFiles% files</a>.', array(
+    'NumberOfUsers'=>'<a href="'.url_for ('admin/users').'">'.$numberOfUsers,
+    'NumberOfFiles'=>'<a href="'.url_for ('admin/files').'">'.$numberOfFiles )) ?> (<?php echo $totalDiskSpace ?>).
