@@ -124,7 +124,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
         if (fz_config_get ('app', 'https') == 'always')
             $proto .= 's';
-        else if ($_SERVER["SERVER_PORT"] != 80)
+        else if ($_SERVER["SERVER_PORT"] != 80 && $_SERVER["SERVER_PORT"] != 443)
             $name .= ':'.$_SERVER["SERVER_PORT"];
 
         return $proto.'://'.$name.url_for ('/').$this->getHash ();
