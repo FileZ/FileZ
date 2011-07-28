@@ -77,6 +77,17 @@ class Fz_User_Factory_Database extends Fz_User_Factory_Abstract {
             $sql .= 'MD5(:password)';
         } else if ($algorithm == 'SHA1') {
             $sql .= 'SHA1(:password)';
+	} else if ($algorithm == 'crypt') {
+            $sql = 'SELECT * FROM '.$this->getOption ('db_table').' WHERE '
+                  .fz_config_get ('user_factory_options', 'db_username_field')
+                  .'=:username';
+            unset ($bindValues[':password']);
+            $user = $this->fetchOne ($sql, $bindValues);
+            if( crypt( $password, $user['password']) == $user['password'] ){
+                return $user;
+            }else{
+                return $algorithm;
+            }
         } else if (is_callable ($algorithm)) {
             if (strstr ($algorithm, '::') !== false)
                 $algorithm = explode ('::', $algorithm);
