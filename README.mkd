@@ -1,5 +1,4 @@
-
-FileZ is an application developped by the Avignon University. It provides a way to upload and manage files you want to share through a web interface and unique URLs (http), inspired by the perl/mod_perl application filex.
+FileZ is an application developped by the Avignon University and free software developers. It provides a way to upload and manage files you want to share through a web interface and unique URLs (http), inspired by the perl/mod_perl application filex.
 
 [![File list](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1.png)
 [![Upload Form](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2.png)
@@ -27,6 +26,8 @@ Requirement
 * Apache configured with “mod_rewrite” and the “AllowOverride” of your virtual host set to “FileInfo Options” or “All” (__important !__)
     a2enmod rewrite && apache2ctl restart
 
+* PHP cannot be in safe_mode.
+
 * To display a progress bar during the upload process you will need one of the following package installed on your system :
 
     * __APC__
@@ -46,6 +47,7 @@ Requirement
 
 * You will need __php5-ldap__ to be able to identicate with a LDAP server
 
+* To use FileZ with its own user database, you'll have to manually create a database-table holding your users. The commands to do so are in the [[FAQ]].
 
 Installation
 ============
@@ -68,5 +70,3 @@ Installation
 * Open your web browser on your FileZ web root and follow instructions
 
 * Enjoy !
-
-
