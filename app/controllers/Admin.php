@@ -42,8 +42,9 @@ class App_Controller_Admin extends Fz_Controller {
      */
     public function configAction () {
         $this->secure ('admin');
+	set ('config', option('fz_config')); # same as:  set ('config', fz_config_get());
         return html ('admin/config.php');
-        //TODO
+        //TODO: edit and save settings
     }
 
     /**
