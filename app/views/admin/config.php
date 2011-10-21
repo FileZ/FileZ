@@ -5,4 +5,5 @@
 <?php foreach ($settings as $set=> $value): ?>
 	    <li><?php echo $set." = ".$value; ?></li>
 <?php endforeach ?>
+	    <br>
 <?php endforeach ?>
