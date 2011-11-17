@@ -131,7 +131,9 @@ function before () {
             $db = new PDO (fz_config_get ('db', 'dsn'), fz_config_get ('db', 'user'),
                                                   fz_config_get ('db', 'password'));
             $db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $db->exec ('SET NAMES \'utf8\'');
+            if (fz_config_get ('db', 'db_dialect') != "Sqlite") {
+                $db->exec ('SET NAMES \'utf8\'');
+            }
             option ('db_conn', $db);
         } catch (Exception $e) {
             halt (SERVER_ERROR, 'Can\'t connect to the database');
