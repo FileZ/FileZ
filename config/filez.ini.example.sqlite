@@ -1,0 +1,142 @@
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; General configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[app]
+use_url_rewriting = true
+
+; Must be writtable by the web server
+upload_dir = /var/fz_uploads
+
+; Must be writtable by the web server
+log_dir = /var/log
+
+; Allow downloading file sent with filez 1.x
+filez1_compat = true
+
+; Max and default lifetime of a file on the server
+max_file_lifetime     = 20 
+default_file_lifetime = 10
+
+; Maximum number of days the lifetime of a file can be extended
+max_extend_count = 7
+
+; Min/Max size of files hash codes
+min_hash_size = 4
+max_hash_size = 6
+
+; Default langage when no translation exists for the user locale
+default_locale = fr
+
+; Name of the class used to authenticate the user. Built-in handler are :
+;  * Fz_Controller_Security_Cas       Log the user against a CAS server
+;  * Fz_Controller_Security_Internal  Log the user with a built-in Controller.
+;                                     This controller will check user/pass with
+;                                     'login' method in the user factory.
+auth_handler_class = Fz_Controller_Security_Internal
+
+; Name of the class used to identify the user. Built-in factories are :
+;  * Fz_User_Factory_Ldap
+;  * Fz_User_Factory_Database
+user_factory_class = Fz_User_Factory_Database
+
+; Max disk spaced per user. Support shorthand format : M (Mega), G (Giga)
+user_quota = 2G
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Cron Job
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[cron]
+; Number of days before before sending the notification mail for deletion
+days_before_expiration_mail = 2
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Look'n feel
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[looknfeel]
+; Logo image
+your_logo               = "resources/images/uapv-logo.gif"
+
+; Custom CSS
+; custom_css              = "resources/css/custom.css"
+
+; show filez credits at the bottom of the pages
+show_credit = true
+
+; Url where the user will find Filez documentation
+help_url = help ; Relative or absolute
+
+; Where does the user reports bug ?
+bug_report_href = mailto:some-one@somewhere.com ; or http://your-bug-tracker.com
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Database configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[db]
+dsn      = "mysql:host=localhost;dbname=filez"
+db_dialect = "Sqlite"
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Mail configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[email]
+from_email=filez@univ-avignon.fr
+from_name=Filez
+host=smtp.univ-avignon.fr
+; auth=login ; possible values = crammd5, login, plain
+; port=25
+; username=user
+; password=pwd
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Authentication configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[auth_options]
+; Parameters for the CAS authentication handler.
+;cas_server_host = cas.univ-avignon.fr
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Identification configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[user_factory_options]
+; Parameters passed to the Ldap user factory.
+; Available parameters : http://framework.zend.com/manual/en/zend.ldap.api.html
+;host = ldap.univ-avignon.fr
+;useSsl = false
+;baseDn = "ou=people,dc=univ-avignon,dc=fr"
+;bindRequiresDn = true
+
+; Parameters for the Database user factory
+db_use_global_conf    = false
+db_server_dsn         = "sqlite:/path_to_FileZ/config/db/filez.db"
+db_table              = user
+db_password_field     = password
+db_username_field     = username
+db_password_algorithm = sha1; use the sha1 function of PHP
+; Possible algorithm are :
+;   - MD5         (unsecure)
+;   - SHA1        (unsecure)
+;   - PHP Function name ex: "methodName"
+;   - PHP Static method ex: "ClassName::Method"
+;   - Plain SQL ex: "password=SHA1(CONCAT(salt, :password))"
+
+[user_attributes_translation]
+; In order to make the application schema agnostic with differents user storage
+; facilities, each user attributes is translated from its original name to the
+; application name. The syntax is as follow : application_name = original_name.
+; This attributes are required by filez :
+;  * firstname
+;  * lastname
+;  * email
+;  * id
+; Exemple for a sqlite, the translation seems pointless but something
+; in the code insists on having this otherwise it tries to do some
+; field conversion
+email     = email
+firstname = firstname
+lastname  = lastname
+id        = id
