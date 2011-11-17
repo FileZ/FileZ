@@ -97,9 +97,11 @@ class Fz_Db {
      */
     public static function getTable ($table) {
         if (! array_key_exists($table, self::$_tables)) {
+            $dialect = fz_config_get('db', 'db_dialect');
             $prefix = 'App_Model_DbTable_';
             $tableClass = substr ($table, 0, strlen ($prefix)) == $prefix ?
                                 $table : ($prefix.$table);
+            $tableClass = "$tableClass$dialect";
             self::$_tables [$table] = new $tableClass ();
         }
 
