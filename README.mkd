@@ -1,5 +1,5 @@
 
-FileZ is an application developped by the Avignon University. It provides a way to upload and manage files you want to share through a web interface and unique URLs (http), inspired by the perl/mod_perl application filex.
+FileZ provides a Web service to upload and manage files you want to share through a web interface and unique URLs (http), inspired by the perl/mod_perl application filex. FileZ was created by the Avignon University and is developed by people like you.
 
 [![File list](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1.png)
 [![Upload Form](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2.png)
@@ -8,8 +8,8 @@ FileZ is an application developped by the Avignon University. It provides a way 
 Features
 ========
 
-* PHP/Mysql – Limonade PHP Framework
-* Several authentication scheme : CAS+LDAP, LDAP only, BDD, or your own PHP classes
+* PHP/Mysql – [Limonade PHP Framework](http://limonade.net)
+* Several authentication scheme : CAS+LDAP, LDAP only, BDD.
 * short URL (ex: filez.univ-avignon.fr/x42ni1)
 * Upload progress bar (with non obstructive javascript)
 * Install form
@@ -19,7 +19,7 @@ Features
 * CRON task
 * Quota
 
-More informations at [http://gpl.univ-avignon.fr/filez](http://gpl.univ-avignon.fr/filez)
+More informations at [http://gpl.univ-avignon.fr/filez](http://gpl.univ-avignon.fr/filez) and the [wiki](https://github.com/FileZ/FileZ/wiki).
 
 Requirement
 ===========
@@ -54,18 +54,18 @@ Installation
 
   * from Git
 
-        git clone git://github.com/UAPV/FileZ.git filez_web_root
+        git clone git://github.com/FileZ/FileZ.git filez_web_root
 
   * from SVN
 
-        svn checkout http://svn.github.com/UAPV/FileZ.git filez_web_root
+        svn checkout http://svn.github.com/FileZ/FileZ.git filez_web_root
 
   * from a package
 
         tar -xvvf filez-2.0.tar.gz
         cp filez-2.0/* filez_web_root
 
-* Open your web browser on your FileZ web root and follow instructions
+* Open your web browser on your FileZ web root and follow instructions.
 
 * Enjoy !
 
