@@ -8,7 +8,7 @@ FileZ provides a Web service to upload and manage files you want to share throug
 Features
 ========
 
-* PHP/Mysql – [Limonade PHP Framework](http://limonade.net)
+* PHP/Mysql – [Limonade PHP Framework](http://www.limonade-php.net)
 * Several authentication scheme : CAS+LDAP, LDAP only, BDD.
 * short URL (ex: filez.univ-avignon.fr/x42ni1)
 * Upload progress bar (with non obstructive javascript)
@@ -68,5 +68,4 @@ Installation
 * Open your web browser on your FileZ web root and follow instructions.
 
 * Enjoy !
-
 
