@@ -22,7 +22,6 @@
     <p>You have to correct your configuration in config/filez.ini.</p>
   </div>
 <?php endif ?>
-
 <p><a href="<?php echo url_for('/') ?>" class="awesome large blue">Start Filez now</a></p>
 
 

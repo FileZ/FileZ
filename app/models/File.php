@@ -1,37 +1,26 @@
 <?php 
+
 /**
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
- *
- * This file is part of Filez.
- *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * @file
+ * Short description.
+ * 
+ * Long description.
+ * 
+ * @package FileZ
  */
 
 /**
  * @property boolean $del_notif_sent
  * @property string  $file_name
- * @property string  $uploader_email
  * @property int     $file_size
  * @property string  $available_from    DATE
  * @property string  $available_until   DATE
  * @property int     $download_count
  * @property string  $comment
  * @property boolean $notify_uploader
- * @property string  $uploader_uid
- * @property int     $extends_count
+ * @property int     $created_by
  * @property int     $created_at        TIMESTAMP
+ * @property int     $extends_count
  * @property string  $password
  */
 class App_Model_File extends Fz_Db_Table_Row_Abstract {
@@ -125,16 +114,20 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
     }
 
     /**
-     * Return the absolute URL to the file
+     * Return the absolute URL of the file
      * 
      * @return string
      */
     public function getDownloadUrl () {
-        $url = 'http';
-        if (fz_config_get ('app', 'https') == 'always') {
-            $url .= 's';
-        }
-        return $url.'://'.$_SERVER["SERVER_NAME"].url_for ('/').$this->getHash ();
+        $proto = 'http';
+        $name  = fz_config_get ('app', 'force_fqdn', $_SERVER["SERVER_NAME"]);
+
+        if (fz_config_get ('app', 'https') == 'always')
+            $proto .= 's';
+        else if ($_SERVER["SERVER_PORT"] != 80)
+            $name .= ':'.$_SERVER["SERVER_PORT"];
+
+        return $proto.'://'.$name.url_for ('/').$this->getHash ();
     }
 
     /**
@@ -172,35 +165,28 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * Set the uploader of the file from an associative array containing
      * 'id' & 'email' keys.
      *
-     * @param array $user
+     * @param App_Model_User $user
      */
-    public function setUploader (array $user) {
-        $this->uploader_uid     = $user ['id'];
-        $this->uploader_email   = $user ['email'];
+    public function setUploader (App_Model_User $user) {
+        $this->created_by = $user->id;
     }
     /**
      * Return file uploader info 
      *
-     * @return array $user
+     * @return App_Model_User $user
      */
     public function getUploader () {
-        return option ('userFactory')->findById ($this->uploader_uid);
-
-        // TODO retrieve user from database if he has been invited
+        return Fz_Db::getTable('User')->findById ($this->created_by);
     }
 
     /**
      * Checks if the user passed is the owner of the file
      *
-     * @param array $user
+     * @param App_Model_User $user
      * @return boolean
      */
     public function isOwner ($user) {
-        return is_array ($user) && (
-            (array_key_exists ('email', $user) // check for invited users
-                && $this->uploader_email == $user ['email'])
-         || (array_key_exists ('id', $user) // or registered users
-                && $this->uploader_uid   == $user ['id']));
+        return ($user !== null && $this->created_by === $user->id);
     }
 
     /**
@@ -296,4 +282,49 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         $v = $this->password;
         return ($this->password == sha1 ($this->file_name.$secret));
     }
+
+    /**
+     * Return the file mimetype
+     *
+     * @return string The mimetype
+     */
+    public function getMimetype () {
+        $mimetype = 'application/octet-stream';
+
+        $mimes = mime_type ();
+        $ext = $this->getExtension ();
+        if (array_key_exists ($ext, $mimes))
+            $mimetype = $mimes [$ext];
+        else if (function_exists ('finfo_file')) {
+            $file = finfo_open (FILEINFO_MIME_TYPE);
+            $mimetype = finfo_file ($file, $this->getOnDiskLocation (), FILEINFO_MIME_TYPE);
+            finfo_close ($file);
+        }
+        return $mimetype;
+    }
+
+    /**
+     * return the file extension
+     *
+     * @return string
+     */
+    public function getExtension () {
+        return strtolower (file_extension ($this->file_name));
+    }
+
+    /**
+     * Tells if the file is an image
+     *
+     * @return boolean
+     */
+    public function isImage () {
+        return in_array ($this->getExtension (), array (
+            'bmp',
+            'gif',
+            'jpg',
+            'png',
+        ));
+    }
+
+
 }

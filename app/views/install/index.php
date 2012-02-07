@@ -101,7 +101,36 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
       </tr>
     </table>
   </fieldset>
-    
+
+  <fieldset>
+    <legend>Email (SMTP)</legend>
+    <table>
+      <tr>
+        <td><?php echo config_form_row ('email', 'host', 'SMTP Host' , 'text', $config) ?></td>
+        <td width="20%"><?php echo config_form_row ('email', 'port', 'Port (optional)', 'text', $config) ?></td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td><?php echo config_form_row ('email', 'from_email', 'Sender email' , 'text', $config) ?></td>
+        <td><?php echo config_form_row ('email', 'from_name',  'Sender name'  , 'text', $config) ?></td>
+      </tr>
+    </table>
+    <?php echo config_form_row ('email', 'auth', 'Authentication method (optional)', 'select', $config, array(
+        '' => 'Anonymous',
+        'login' => 'Login',
+        'plain' => 'Plain',
+        'crammd5' => 'CRAM-MD5',
+    )) ?>
+
+    <table id="smtp-auth-options" class="options">
+      <tr>
+        <td><?php echo config_form_row ('email', 'username', 'Username (if authentication)', 'text', $config) ?></td>
+        <td><?php echo config_form_row ('email', 'password', 'Password (if authentication)', 'password', $config) ?></td>
+      </tr>
+    </table>
+  </fieldset>
+
   <fieldset>
     <legend>Filez Database</legend>
     <?php echo config_form_row ('app', 'filez1_compat', 'Migrate Filez 1.x data. WARNING : Old website will not work anymore, you should backup your database before' , 'checkbox', $config) ?>
@@ -202,35 +231,6 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <?php echo config_form_row ('user_attributes_translation', 'lastname',  'Lastname field name' , 'text', $config) ?>
     <?php echo config_form_row ('user_attributes_translation', 'email',     'Email field name' , 'text', $config) ?>
     <?php echo config_form_row ('user_attributes_translation', 'id',        'ID field name' , 'text', $config) ?>
-  </fieldset>
-
-  <fieldset>
-    <legend>Email (SMTP)</legend>
-    <table>
-      <tr>
-        <td><?php echo config_form_row ('email', 'host', 'SMTP Host' , 'text', $config) ?></td>
-        <td width="20%"><?php echo config_form_row ('email', 'port', 'Port (optional)', 'text', $config) ?></td>
-      </tr>
-    </table>
-    <table>
-      <tr>
-        <td><?php echo config_form_row ('email', 'from_email', 'Sender email' , 'text', $config) ?></td>
-        <td><?php echo config_form_row ('email', 'from_name',  'Sender name'  , 'text', $config) ?></td>
-      </tr>
-    </table>
-    <?php echo config_form_row ('email', 'auth', 'Authentication method (optional)', 'select', $config, array(
-        '' => 'Anonymous',
-        'login' => 'Login',
-        'plain' => 'Plain',
-        'crammd5' => 'CRAM-MD5',
-    )) ?>
-
-    <table id="smtp-auth-options" class="options">
-      <tr>
-        <td><?php echo config_form_row ('email', 'username', 'Username (if authentication)', 'text', $config) ?></td>
-        <td><?php echo config_form_row ('email', 'password', 'Password (if authentication)', 'password', $config) ?></td>
-      </tr>
-    </table>
   </fieldset>
 
   <fieldset>

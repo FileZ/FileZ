@@ -1,22 +1,12 @@
 <?php
+
 /**
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
- *
- * This file is part of Filez.
- *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * @file
+ * Short description.
+ * 
+ * Long description.
+ * 
+ * @package FileZ
  */
 
 /**
@@ -106,4 +96,36 @@ function doc_img_tag ($name) {
         .'<img src="'.url_for('/').'doc/user/'.option ('locale')->getLanguage ().'/images/'.$name.'" />'
         .'</div>';
 
+}
+
+function get_mimetype_icon_url ($mimetype, $size = 32) {
+
+    $mimetype = str_replace ('/', '-', $mimetype).'.png';
+    $path = 'resources/images/icons/mimetypes/'.$size.'/';
+    $mime_basesir = public_url_for ($path);
+    $root = option ('root_dir').'/';
+
+    if (file_exists ($root.$path.$mimetype))
+        return $mime_basesir.$mimetype;
+
+    $mimetype = str_replace ('application-', '', $mimetype);
+    if (file_exists ($root.$path.$mimetype))
+        return $mime_basesir.$mimetype;
+
+    $mimetype = 'gnome-mime-'.$mimetype;
+    if (file_exists ($root.$path.$mimetype))
+        return $mime_basesir.$mimetype;
+
+}
+
+function check_cron() {
+    if (! option ('installing')) {
+        $lastCron = Fz_Db::getTable('Info')->getLastCronTimestamp();
+        $freq = fz_config_get ('cron', 'frequency');
+
+        if(strtotime($freq." ".$lastCron) <= time()) {
+            Fz_Db::getTable('Info')->setLastCronTimestamp(date('Y-m-d H:i:s'));
+            return "<script src='".url_for('admin/checkFiles')."'></script>";
+        }
+    }
 }

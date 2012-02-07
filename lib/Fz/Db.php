@@ -1,22 +1,12 @@
 <?php
+
 /**
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
- *
- * This file is part of Filez.
- *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * @file
+ * Short description.
+ * 
+ * Long description.
+ * 
+ * @package FileZ
  */
 
 /**
@@ -44,7 +34,7 @@ class Fz_Db {
 
         $result = array ();
         $stmt = $db->prepare ($sql);
-        $stmt->execute ($params);
+        $stmt->execute ((array) $params);
         while ($obj = $stmt->fetchObject ($className, array (true))) {
             if (method_exists($obj, ('resetModifiedColumns')))
                 $obj->resetModifiedColumns ();
@@ -131,6 +121,14 @@ class Fz_Db {
      * @return  string 
      */
     public static function nameEqColonName ($x) { return $x . ' = :' . $x; }
+
+    /**
+     * Helper for writing prepared queries
+     *
+     * @param   string $x 
+     * @return  string 
+     */
+    public static function nameEqSql (&$sql, $columnName) { $sql = $columnName . ' = ' . $sql; }
 
     public static function getConnection () {
         if (($conn = option ('db_conn')) !== null)

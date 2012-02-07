@@ -1,22 +1,12 @@
 <?php
+
 /**
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
- *
- * This file is part of Filez.
- *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * @file
+ * Short description.
+ * 
+ * Long description.
+ * 
+ * @package FileZ
  */
 
 define ('UPLOAD_ERR_QUOTA_EXCEEDED', 99);
@@ -130,7 +120,7 @@ class App_Controller_Upload extends Fz_Controller {
             $file->save ();
 
             if ($file->moveUploadedFile ($uploadedFile)) {
-                fz_log ('Saved "'.$file->file_name.'"['.$file->id.'] uploaded by '.$user['email']);
+                fz_log ('Saved "'.$file->file_name.'"['.$file->id.'] uploaded by '.$user);
                 return $file;
             }
             else {
@@ -138,7 +128,7 @@ class App_Controller_Upload extends Fz_Controller {
                 return null;
             }
         } catch (Exception $e) {
-            fz_log ('Can\'t save file "'.$uploadedFile['name'].'" uploaded by '.$user['email'], FZ_LOG_ERROR);
+            fz_log ('Can\'t save file "'.$uploadedFile['name'].'" uploaded by '.$user, FZ_LOG_ERROR);
             fz_log ($e, FZ_LOG_ERROR);
             return null;
         }
@@ -168,7 +158,7 @@ class App_Controller_Upload extends Fz_Controller {
         $mail = $this->createMail();
         $mail->setBodyText ($msg);
         $mail->setSubject  ($subject);
-        $mail->addTo ($user ['email'], $user['firstname'].' '.$user['lastname']);
+        $mail->addTo ($user->email, $user);
 
         try {
             $mail->send ();

@@ -1,25 +1,50 @@
-<?php 
+<?php
+
 /**
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
+ * @file
+ * Front to the FileZ application. This file loads Zend, Limonade and define the URL schema.
+ * 
+ * This file loads Zend, 
+ * which autoloads Fz_* classes in lib/ dir and App_Model_* & App_Controller_* classes in app/ dir, 
+ * configure and loads Limonade PHP framework, 
+ * configure FileZ and dispatch the user according to the Url Schema. 
  *
- * This file is part of Filez.
+ * All FileZ code is released under the GNU General Public License.
+ * See COPYING and LICENSE in doc/ directory.
+ * 
+ * @package FileZ
+ * -------------
+ * @mainpage
+ * <center>
+ * See also: <a href="http://gpl.univ-avignon.fr/filez">gpl.univ-avignon.fr/FileZ</a> - <a href="https://github.com/UAPV/FileZ">README, issues & wiki on github</a>
+ * </center>
  *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * @htmlonly
+ * <style type="text/css">h2{position: relative;left: -15px;font-size: 140%;}</style>
+ * @endhtmlonly
  *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * @section Model–view–controller
  *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * Filez has been developed around the MVC pattern thanks to the Limonade micro framework.
+ *
+ * Limonade micro framework provide the glue between the controllers and views : * Routes declarations * Request handler/dispatcher (index.php) * and many action helpers
+ * - Domain logic is implemented in 'app/model/DOMAIN_OBJECT.php' files.
+ * - Controllers & actions reside in 'app/controller/CONTROLLER_NAME.php' files and contain a set of functions (actions). Fz_Controller
+ * - Views are raw php files stored in 'app/view/CONTROLLER_NAME/ACTION_NAME.php' Static files are stored in the 'resource' directory.
+ * 
+ * See also <a href="https://github.com/UAPV/FileZ/blob/master/doc/README.DEV.markdown">doc/README.DEV.markdown</a>
+ * 
+ * @section About
+ * 
+ * - See <a href="http://gpl.univ-avignon.fr">gpl.univ-avignon.fr</a> for more information
+ *
+ * @section Copyright
+ * 
+ * Copyright 2010 Université d'Avignon et des Pays de Vaucluse, Arnaud Didry and others.
+ * 
  */
 
-define ('FZ_VERSION', '2.0.0-2');
+define ('FZ_VERSION', '3.0-alpha');
 
 /**
  * Loading Zend for i18n classes and autoloader
@@ -86,6 +111,7 @@ function before () {
         array('scan' => Zend_Translate::LOCALE_DIRECTORY));
     option ('translate', $translate);
     option ('locale'   , $currentLocale);
+    Zend_Registry::set('Zend_Locale', $currentLocale);
 
     // Execute DB configuration only if Filez is configured
     if (! option ('installing')) {
@@ -116,6 +142,13 @@ function before () {
         $userFactory = new $factoryClass ();
         $userFactory->setOptions (fz_config_get ('user_factory_options', null, array ()));
         option ('userFactory', $userFactory);
+
+        // Check the database version and migrate if necessary
+        $dbSchema = new Fz_Db_Schema (option ('root_dir').'/config/db');
+        if ($dbSchema->isOutdated ()) {
+            fz_log ('Migration needed (db_version: '.$dbSchema->getCurrentVersion ().'), executing the scripts...');
+            $dbSchema->migrate ();
+        }
     }
 }
 
@@ -127,18 +160,16 @@ require_once 'lib/limonade.php';
 require_once 'lib/fz_limonade.php';
 require_once 'lib/fz_config.php';
 
+// Check config presence, if not, force the user to the install controller
 if (fz_config_load (dirname(__FILE__).DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR) === false) {
     option ('installing', true);
-}
-
-// Check config presence, if not, force the user to the install controller
-if (option ('installing')) {
     fz_dispatch_get  ('/configure', 'Install', 'configure');
     fz_dispatch_post ('/configure', 'Install', 'configure');
     fz_dispatch_get  ('/*',         'Install', 'prepare');
     run ();
     exit;
 }
+
 
 //                                              //             // 
 // Url Schema                                   // Controller  // Action
@@ -152,7 +183,23 @@ fz_dispatch_post ('/upload'                     ,'Upload'      ,'start');
 fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
 
 // Backend controller
-//fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
+fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');
+
+// Backend::Users
+fz_dispatch_get  ('/admin/users'                ,'User'        ,'index');
+fz_dispatch_get  ('/admin/users/new'            ,'User'        ,'create');
+fz_dispatch_post ('/admin/users/new'            ,'User'        ,'postnew');
+fz_dispatch_get  ('/admin/users/:id'            ,'User'        ,'show');
+fz_dispatch_get  ('/admin/users/:id/delete'     ,'User'        ,'delete');
+fz_dispatch_get  ('/admin/users/:id/edit'       ,'User'        ,'edit');
+fz_dispatch_post ('/admin/users/:id/edit'       ,'User'        ,'update');
+
+// Backend::Files
+fz_dispatch_get  ('/admin/files'                ,'Admin'       ,'files');
+fz_dispatch_get  ('/admin/config'               ,'Admin'       ,'config');
+fz_dispatch_get  ('/admin/invitations'          ,'Admin'       ,'invitations');
+
+// Backend::CRON
 fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
 
 // Authentication controller
@@ -169,6 +216,7 @@ fz_dispatch_get  ('/help/:page'                 ,'Help'        ,'showPage');
 
 // Download controller
 fz_dispatch_get  ('/:file_hash'                 ,'File'        ,'preview');
+fz_dispatch_get  ('/:file_hash/view'            ,'File'        ,'view');
 fz_dispatch_get  ('/:file_hash/download'        ,'File'        ,'download');
 fz_dispatch_post ('/:file_hash/download'        ,'File'        ,'download'); // with password
 
@@ -181,5 +229,7 @@ fz_dispatch_post ('/:file_hash/delete'          ,'File'        ,'delete');
 
 fz_dispatch_get  ('/:file_hash/extend'          ,'File'        ,'extend');
 
-run ();
+fz_dispatch_get  ('/:file_hash/invite'          ,'File'        ,'invite');
+fz_dispatch_get  ('/:file_hash/:invitation_hash','File'        ,'invited');
 
+run ();

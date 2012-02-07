@@ -1,22 +1,12 @@
 <?php
+
 /**
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
- *
- * This file is part of Filez.
- *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * @file
+ * Short description.
+ * 
+ * Long description.
+ * 
+ * @package FileZ
  */
 
 /**
@@ -118,8 +108,9 @@ class App_Controller_Install extends Fz_Controller {
             // Checking User factory connection
             if ($config['app']['user_factory_class'] == 'Fz_User_Factory_Ldap')
                 $this->checkUserFactoryLdapConf ($errors, $config);
-            elseif ($config['app']['user_factory_class'] == 'Fz_User_Factory_Database')
-                $this->checkUserFactoryDatabaseConf ($errors, $config);
+	    // do not check user factory if database.
+            //elseif ($config['app']['user_factory_class'] == 'Fz_User_Factory_Database')
+            //    $this->checkUserFactoryDatabaseConf ($errors, $config);
 
             // Checking email
             $this->checkEmailConf ($errors, $config);
@@ -145,8 +136,9 @@ class App_Controller_Install extends Fz_Controller {
                 }
 
                 try {
-                    if ($this->initDatabase())
-                        $notifs [] = 'Database configured ';
+                    $this->initDatabase();
+                    $notifs [] = 'Database configured.<br/><br/>
+A default admin account has been created. Login ("<tt>admin</tt>" / "<tt>filez</tt>") and choose a new password.';
                 } catch (Exception $e) {
                     $errors [] = array (
                         'title' => 'Can\'t initialize the database ('.$e->getMessage ().')',
@@ -299,40 +291,6 @@ class App_Controller_Install extends Fz_Controller {
     }
 
     /**
-     * Tells if filez table 'fz_file' (or 'Fichiers' if Fz1) exists on the
-     * configured connection
-     *
-     * @return boolean
-     */
-    public function databaseExists () {
-        $sql = 'SELECT table_name '
-              .'FROM information_schema.tables '
-              .'WHERE table_name=\'fz_file\''
-              .'  or  table_name=\'fz_info\''
-              .'  or  table_name=\'Fichiers\'';
-
-        $res = Fz_Db::findAssocBySQL($sql);
-        if (count ($res) == 0)
-            return false;
-        else {
-            $version = false;
-            foreach ($res as $table) {
-                if ($table['table_name'] == 'Fichiers') {
-                    return '1.2'; // TODO add more check
-                } else if ($table['table_name'] == 'fz_file') {
-                    $version = '2.0.0';
-                } else if ($table['table_name'] == 'fz_info') {
-                    $res = Fz_Db::findAssocBySQL(
-                        'SELECT `value` FROM `fz_info` WHERE `key`=\'db_version\'');
-                    if (! empty ($res))
-                        return $res [0]['value'];
-                }
-            }
-            return $version;
-        }
-    }
-
-    /**
      * Tells if a rewrite module is enable on the server
      *
      * @return boolean or null if we can't find a hint
@@ -347,38 +305,11 @@ class App_Controller_Install extends Fz_Controller {
             return null;
     }
 
-    public function getDatabaseInitScript () {
-        $sql = '';
-        // Check if database exists
-        if (($version = $this->databaseExists()) !== false) {
-            $pattern = '/filez-(([0-9]*)\.([0-9]*)\.([0-9]*)-([0-9]*))\.sql$/';
-            foreach (glob (option ('root_dir').'/config/db/migrations/filez-*.sql') as $file) {
-                $matches = array ();
-                if (preg_match ($pattern, $file, $matches) === 1) {
-                    if (strcmp ($matches [1], $version) > 0)
-                        $sql .= file_get_contents ($file);
-                }
-            }
-        } else {
-            $sql = file_get_contents (option ('root_dir').'/config/db/schema.sql');
-        }
-         return $sql;
-    }
-
     public function initDatabase () {
         if (option ('db_conn') === null)
             throw new Exception ('Database connection not found.');
 
-        $sql = $this->getDatabaseInitScript ();
-
-        if (! empty ($sql)) {
-            if ($sql === false)
-                throw new Exception ('Database script not found "'.$initDbScript.'"');
-
-            option ('db_conn')->exec ($sql);
-
-            return true;
-        }
-        return false;
+        $schema = new Fz_Db_Schema (option ('root_dir').'/config/db');
+        $schema->migrate ();
     }
 }
