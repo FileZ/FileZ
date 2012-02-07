@@ -108,8 +108,9 @@ class App_Controller_Install extends Fz_Controller {
             // Checking User factory connection
             if ($config['app']['user_factory_class'] == 'Fz_User_Factory_Ldap')
                 $this->checkUserFactoryLdapConf ($errors, $config);
-            elseif ($config['app']['user_factory_class'] == 'Fz_User_Factory_Database')
-                $this->checkUserFactoryDatabaseConf ($errors, $config);
+	    // do not check user factory if database.
+            //elseif ($config['app']['user_factory_class'] == 'Fz_User_Factory_Database')
+            //    $this->checkUserFactoryDatabaseConf ($errors, $config);
 
             // Checking email
             $this->checkEmailConf ($errors, $config);
@@ -136,7 +137,8 @@ class App_Controller_Install extends Fz_Controller {
 
                 try {
                     $this->initDatabase();
-                    $notifs [] = 'Database configured ';
+                    $notifs [] = 'Database configured.<br/><br/>
+A default admin account has been created. Login ("<tt>admin</tt>" / "<tt>filez</tt>") and choose a new password.';
                 } catch (Exception $e) {
                     $errors [] = array (
                         'title' => 'Can\'t initialize the database ('.$e->getMessage ().')',

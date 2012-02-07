@@ -490,7 +490,7 @@ msgstr "Rôle"
 
 #: /home/didrya/filez/app/views/user/index.php:12
 msgid "File count"
-msgstr "Nom de fichiers"
+msgstr "Nombre de fichiers"
 
 #: /home/didrya/filez/app/views/user/index.php:13
 msgid "Disk usage"
