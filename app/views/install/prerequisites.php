@@ -21,6 +21,7 @@
 
 <div class="help">
     <p>The next form will help you to configure filez by generating the file "<i>config/filez.ini</i>".</p>
+    <p>If there is an error 404, Apache rewrite module isn't configured correctly. <a href="https://github.com/FileZ/FileZ/wiki/FAQ">Read the FAQ</a>.</p>
     <!--[if lte IE 8]>
     <p>This form has not been tested in a potential phase of the moon bug trigger browser (IE for example). <b>PLEASE USE A DECENT BROWSER TO AVOID BUGs</b>.</p>
     <![endif]-->

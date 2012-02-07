@@ -1,4 +1,20 @@
 
+Filez-2.1.0
+
+* Added the possibility to force filez fqdn fixes#24
+* Improved image preview
+* Added MIME support
+* Fixed config 
+* Fixed the max length of a hash to 10
+* Added german translation
+* Redesigned file list
+* Added other share destination (FB, twitter) optional
+* Added German translation (thanks to @spiorf)
+* Added Italian translation (thanks to @tini)
+* Added optional Antivirus check (thanks to @daserzw)
+* Added admin backend (thanks to @almaghi)
+* Added automatic database update
+
 Filez-2.0.2
 
 * better handling of non ascii char in filename when downloading (thanks to C. Durocher)

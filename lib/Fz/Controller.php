@@ -1,23 +1,14 @@
 <?php
+
 /**
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
- *
- * This file is part of Filez.
- *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * @file
+ * Short description.
+ * 
+ * Long description.
+ * 
+ * @package FileZ
  */
+
 /**
  * Application controller
  */
@@ -37,10 +28,15 @@ class Fz_Controller {
      */
     protected function secure ($credential = null) {
         $this->getAuthHandler ()->secure ();
-        // TODO check credentials
+        $user = $this->getUser();
 
         // setting user template var
-        set ('user', $this->getUser());
+        set ('fz_user', $user);
+
+        if ($credential == 'admin') { // 
+            if (! $user->is_admin)
+                halt (HTTP_FORBIDDEN, __('This page is secured'));
+        }
     }
 
     /**
@@ -48,8 +44,21 @@ class Fz_Controller {
      */
     protected function getUser () {
         $auth = $this->getAuthHandler ();
+        $factory = $this->getUserFactory ();
         if (self::$_user === null && $auth->isSecured ()) {
-            self::$_user = $this->getUserFactory ()->findById ($auth->getUserId ());
+            self::$_user = Fz_Db::getTable('User')->findByUsername ($auth->getUserId ());
+            if (! $factory->isInternal ()) {
+                if (self::$_user === null)
+                    self::$_user = new App_Model_User ();
+
+                // Update fields
+                $userData = $factory->findById ($auth->getUserId ());
+                self::$_user->username     = $userData['id'];
+                self::$_user->email        = $userData['email'];
+                self::$_user->firstname    = $userData['firstname'];
+                self::$_user->lastname     = $userData['lastname'];
+                self::$_user->save (); // will issue an update or insert only if a property changed
+            }
         }
         return self::$_user;
     }
@@ -60,6 +69,12 @@ class Fz_Controller {
     protected function getConfig () {
 
     }
+
+    /**
+     * Initialize the controller
+     */
+    public function init () {}
+
 
     /**
      * Return an instance of the authentication handler class
@@ -122,4 +137,5 @@ class Fz_Controller {
         redirect ($_SERVER["HTTP_REFERER"]);
     }
 }
+
 

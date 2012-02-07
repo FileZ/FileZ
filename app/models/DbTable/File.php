@@ -1,22 +1,12 @@
 <?php
+
 /**
- * Copyright 2010  Université d'Avignon et des Pays de Vaucluse 
- * email: gpl@univ-avignon.fr
- *
- * This file is part of Filez.
- *
- * Filez is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Filez is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
+ * @file
+ * Short description.
+ * 
+ * Long description.
+ * 
+ * @package FileZ
  */
 
 class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
@@ -26,17 +16,16 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     protected $_columns = array (
         'del_notif_sent',
         'file_name',
-        'uploader_email',
         'file_size',
         'nom_physique',
         'available_from',
         'available_until',
         'download_count',
         'notify_uploader',
-        'uploader_uid',
+        'created_by',
+        'created_at',
         'extends_count',
         'comment',
-        'created_at',
         'password',
     );
 
@@ -116,15 +105,15 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     /**
      * Return all file owned by $uid which are available (not deleted)
      *
-     * @param string $uid
+     * @param App_Model_User $user
      * @return array of App_Model_File
      */
-    public function findByOwnerOrderByUploadDateDesc ($uid) {
+    public function findByOwnerOrderByUploadDateDesc ($user) {
         $sql = 'SELECT * FROM '.$this->getTableName ()
-              .' WHERE uploader_uid=:uid '
+              .' WHERE created_by=:id '
               .' AND  available_until >= CURRENT_DATE() '
               .' ORDER BY created_at DESC';
-        return $this->findBySql ($sql, array (':uid' => $uid));
+        return $this->findBySql ($sql, array (':id' => $user->id));
     }
 
     /**
@@ -164,23 +153,34 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
     /**
      * Return disk space used by someone
      *
-     * @param array     $user   User data
+     * @param App_Model_User    $user   User
      * @return float            Size in bytes
      */
     public function getTotalDiskSpaceByUser ($user) {
         $result = option ('db_conn')
             ->prepare ('SELECT sum(file_size) FROM `'
                 .$this->getTableName ()
-                .'` WHERE uploader_email = ?'
+                .'` WHERE created_by = ?'
                 .' AND  available_until >= CURRENT_DATE() ');
-        $result->execute (array ($user['email']));
+        $result->execute (array ($user->id));
         return (float) $result->fetchColumn ();
     }
 
     /**
+     * Return readable disk space used by someone
+     *
+     * @param App_Model_User    $user   User
+     * @return string           Readable size
+     */
+    public function getReadableTotalDiskSpaceByUser ($user) {
+        return $this->getReadableSize ($this->getTotalDiskSpaceByUser ($user));
+    }
+
+
+    /**
      * Return remaining disk space available for user $user
      *
-     * @param array     $user   User data
+     * @param App_Model_User    $user   User data
      * @return float            Size in bytes or string if $shorthand = true
      */
     public function getRemainingSpaceForUser ($user) {
@@ -203,6 +203,45 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
         }
         return floatval ($size);
     }
+
+    /**
+     * Count the number of files
+     * 
+     * @return integer number of files
+     */
+    public function getNumberOfFiles () {
+        $sql = 'SELECT COUNT(*) AS count FROM '.$this->getTableName ();
+        $res = Fz_Db::findAssocBySQL($sql);
+        return $res[0]['count'];
+    }
+
+    /**
+     * Return disk space used by everybody
+     *
+     * @return float  Size in bytes
+     */
+    public function getTotalDiskSpace () {
+        $result = option ('db_conn')
+            ->prepare ('SELECT sum(file_size) FROM `'
+                .$this->getTableName ()
+                .'` WHERE available_until >= CURRENT_DATE() ');
+        $result->execute ();
+        return $this->getReadableSize ($result->fetchColumn ());
+    }
+
+    /**
+     * Return bytes size to be read by human
+     *
+     * @param float $bytes
+     * @return string
+     */
+    public function getReadableSize ($bytes, $precision = 2) {
+        $units = array(__('B'), __('KB'), __('MB'), __('GB'), __('TB'));
+        $pow = floor (($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
+    }
 }
-
-
