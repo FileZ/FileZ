@@ -18,7 +18,7 @@
  * along with Filez.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (! console) // In case the browser don't have a console
+if (! console) // In case the browser doesn't have a console
     var console = {log: function (txt) {}};
 
 // Auto hide current notifications
@@ -68,14 +68,7 @@ $.fn.initFilez = function (options) {
     $(this).attr ('action', $(this).attr ('action') + '?is-async=1');
 
     // Initialise actions event handlers
-    $('.file .actions').initFileActions();
-
-    // Show file's actions only on hover
-    $('#uploaded-files .actions').hide ();
-    $('#uploaded-files li.file').hover (
-        function () {$('.actions', this).slideDown(100);},
-        function () {$('.actions', this).slideUp(100);}
-    );
+    $('.file').each (function () { $(this).initFileActions(); } );
 
     // Initialise email modal box
     $('.email-modal form').ajaxForm ({success: onEmailFormSent, dataType: 'json'});
@@ -99,44 +92,76 @@ $.fn.initFilez = function (options) {
  *
  */
 $.fn.initFileActions = function () {
-    $('.send-by-email', this).click     (function (e) {
-        console.log ('hi');
-        var modal = $('#email-modal');
+
+    $('a.share', this).click (function (e) {
+        e.preventDefault();
+        var modal = $('#share-modal');
         var fileUrl = $(this).attr ('href')
                 .substring (-1, $(this).attr ('href').lastIndexOf ('/'));
-        modal.dialog ('open');
-        $('form', modal).attr ('action', $(this).attr ('href'));
-        $('.open-email-client', modal).attr ('href', 'mailto:'
-            +'?body='+settings.messages.emailMessage+' : '+fileUrl);
-        e.preventDefault();
-    }),
 
-    $('.delete', this).click (function (e) {
+        var filename = $('.filename a', $(this).closest('.file-description')).html();
+
+        $('#share-modal #share-link a').attr ('href', fileUrl).html (fileUrl);
+        $('#share-modal #share-destinations li a').each (function () {
+            $(this).attr ('href', this.getAttribute ('data-url')
+                .replace ('%url%', fileUrl)
+                .replace ('%filename%', $.trim(filename)));
+        });
+
+        $('#share-modal #share-destinations li.email a').click (function (e) {
+            e.preventDefault ();
+            $('#share-modal').dialog ('close');
+
+            $('form', modal).attr ('action', $(this).attr ('href'));
+            $('.open-email-client')
+                .attr ('href', 'mailto:?body='+settings.messages.emailMessage+' : '+fileUrl)
+                .click (function (e) { $('.ui-dialog-content').dialog('close'); });
+
+            $('#email-modal').dialog ('open');
+        });
+
+        $('#share-modal').dialog ('option', 'title', filename);
+        $('#email-modal').dialog ('option', 'title', filename);
+
+        modal.dialog ('open');
+    });
+
+    $('a.delete', this).click (function (e) {
         if (confirm (settings.messages.confirmDelete))
             $('<form action="'+$(this).attr('href')+'" method="post"></form>').appendTo('body').submit();
         e.preventDefault();
     });
 
-    $('.extend', this).click (function (e) {
+    $('a.extend', this).click (function (e) {
         e.preventDefault();
         var fileListItem = $(this).closest ('li.file');
+        var link = $(this);
         $.getJSON($(this).attr('href'), function (data) {
             if (data.status == undefined) {
                 notifyError (settings.messages.unknownErrorHappened);
             } else if (data.status == 'success') {
-                fileListItem.html (data.html)
-                $('.actions', fileListItem).initFileActions();
-
-                // Show file's actions only on hover
-                fileListItem.hover (
-                    function () {$('.actions', this).slideDown(100);},
-                    function () {$('.actions', this).slideUp(100);}
-                );
-                //notify (data.statusText);
+                link.qtip('destroy');
+                fileListItem.html (data.html);
+                fileListItem.initFileActions ();
             } else if (data.status == 'error'){
                 notifyError (data.statusText);
             }
         });
+    });
+
+    // initialize tips
+    $('a.extend, a.delete, a.share').qtip({
+        content: {
+           attr: 'title'
+        },
+        position: {
+            my: 'bottom center', 
+            at: 'top center'
+        },
+        style: { 
+            tip: true,
+            classes: 'ui-tooltip-dark ui-tooltip-rounded ui-tooltip-shadow'
+        }
     });
 
     return $(this);
@@ -301,13 +326,6 @@ var appendFile = function (html) {
         '<li class="file '+cssClass+'" style="display: none;">'+html+'</li>'
     );
     files.children ('li:first').slideDown (500);
-    $('.file:first .actions', files).initFileActions().hide();
-
-    // Show file's actions only on hover
-    $('#uploaded-files li.file').hover (
-        function () {$('.actions', this).slideDown(100);},
-        function () {$('.actions', this).slideUp(100);}
-    );
 };
 
 var reloadUploadForm = function () {

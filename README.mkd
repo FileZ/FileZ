@@ -32,13 +32,13 @@ Requirement
 
     * __APC__
 
-          aptitude install php-apc
+          apt-get install php-apc
           echo "apc.rfc1867 = On"   >> /etc/php5/apache2/conf.d/apc.ini
           apache2ctl restart
 
     * __PECL::UploadProgress__
 
-          aptitude install php5-dev
+          apt-get install php5-dev
           pecl install uploadprogress
           echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
           apache2ctl restart

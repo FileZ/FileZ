@@ -37,10 +37,15 @@ class Fz_Controller {
      */
     protected function secure ($credential = null) {
         $this->getAuthHandler ()->secure ();
-        // TODO check credentials
+        $user = $this->getUser();
 
         // setting user template var
-        set ('user', $this->getUser());
+        set ('fz_user', $user);
+
+        if ($credential == 'admin') { // 
+            if (! $user->is_admin)
+                halt (HTTP_FORBIDDEN, __('This page is secured'));
+        }
     }
 
     /**
@@ -48,8 +53,21 @@ class Fz_Controller {
      */
     protected function getUser () {
         $auth = $this->getAuthHandler ();
+        $factory = $this->getUserFactory ();
         if (self::$_user === null && $auth->isSecured ()) {
-            self::$_user = $this->getUserFactory ()->findById ($auth->getUserId ());
+            self::$_user = Fz_Db::getTable('User')->findByUsername ($auth->getUserId ());
+            if (! $factory->isInternal ()) {
+                if (self::$_user === null)
+                    self::$_user = new App_Model_User ();
+
+                // Update fields
+                $userData = $factory->findById ($auth->getUserId ());
+                self::$_user->username     = $userData['id'];
+                self::$_user->email        = $userData['email'];
+                self::$_user->firstname    = $userData['firstname'];
+                self::$_user->lastname     = $userData['lastname'];
+                self::$_user->save (); // will issue an update or insert only if a property changed
+            }
         }
         return self::$_user;
     }
@@ -60,6 +78,12 @@ class Fz_Controller {
     protected function getConfig () {
 
     }
+
+    /**
+     * Initialize the controller
+     */
+    public function init () {}
+
 
     /**
      * Return an instance of the authentication handler class
@@ -122,4 +146,5 @@ class Fz_Controller {
         redirect ($_SERVER["HTTP_REFERER"]);
     }
 }
+
 

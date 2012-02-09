@@ -7,11 +7,10 @@
         </div>
       <?php endif ?>
 
-      <?php if (isset ($user)): ?>
-        <p id="disk-usage"><?php echo __r('Using %space% of %quota%', array (
-            // TODO this code should not be here
-            'space' => '<b id="disk-usage-value">'.bytesToShorthand (Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)).'</b>',
-            'quota' => fz_config_get('app', 'user_quota'))); ?>.
+      <?php if (isset ($fz_user)): ?>
+        <p id="disk-usage"><?php echo __r('Using %space% of %quota%', array(
+                   'space' => '<b id="disk-usage-value">'.$fz_user->getDiskUsage ().'</b>', 
+                   'quota' => fz_config_get('app', 'user_quota') )); ?>.
         </p>
       <?php endif ?>
 
@@ -27,4 +26,6 @@
       <?php if (fz_config_get('looknfeel', 'show_credit')): ?>
         <a href="http://gpl.univ-avignon.fr" target="#_blank"><?php echo __('A free software from the University of Avignon') ?></a>
       <?php endif ?>
+
+      <?php echo check_cron();?>
     </footer>

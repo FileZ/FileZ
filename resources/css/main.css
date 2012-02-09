@@ -34,7 +34,9 @@ a:hover {
 	display: block;
 }
 
-/* Section new-file & uploaded-files */
+/* 
+ * Section new-file & uploaded-files
+ */
 section {
   background-color: #FFF;
   -moz-border-radius:    6px;
@@ -61,9 +63,11 @@ h2 span.filename {
   font-size: 0.8em;
 }
 
-/* Header */
+/*
+ * Header
+ */
 header {
-  padding: 3em 0 2em 0;
+  padding: 3em 0 1.4em 0;
   position: relative;
 }
 header h1 {
@@ -105,14 +109,16 @@ header #auth-box {
   border-right: 1px solid #EBE6E0;
   font-size: 0.8em;
 }
-header #auth-box a {
+header #auth-box a#logout {
   background: transparent url(../images/icons/system-log-out.png) no-repeat right center;
   padding: 8px;
   text-indent: -2000px;
   overflow: hidden;
 }
 
-/* Notifications */
+/*
+ * Notifications
+ */
 .notif {
     -moz-border-radius:		 10px;
     -webkit-border-radius: 10px;
@@ -147,7 +153,9 @@ header #auth-box a {
     filter:alpha(opacity=100);
 }
 
-/* Section new-file */
+/*
+ * Section new-file
+ */
 section.new-file {
   -moz-box-shadow:    inset 0 20px 20px rgba(0,0,0,0.04);
   -webkit-box-shadow: inset 0 20px 20px rgba(0,0,0,0.04);
@@ -241,37 +249,27 @@ section.new-file ul#options li label {
 }
 
 h2.new-file a.awesome {
-  background-color: #DAD5D0;
-  background-color: #CEC9C4;
   background-image: url(../images/icons/upload.png);
-  background-position: center 10px;
+  background-position: 10px center;
   background-repeat: no-repeat;
-  display: block;
-  text-align: center;
-  padding: 80px 0 10px 0;
-  margin-bottom: 2em;
-  text-shadow: 0 0 7px #FFF;
-  border-radius: 7px;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  -moz-box-shadow:    inset 0 20px 20px rgba(255,255,255,0.3);
-  -webkit-box-shadow: inset 0 20px 20px rgba(255,255,255,0.3);
-  border: 1px solid #CFCBC6;
-  border-top: 1px solid #F5F4F3;
-  border-bottom: 2px solid #B9B5B1;
-  color: #4A4947;
-  font-size: 0.9em;
-  letter-spacing: -1px;
+  font-size: 0.85em;
+	font-weight: normal;
+	padding-left: 40px;
+	float: right;
+	margin-bottom: .7em;
+	color: #EEE;
 }
 h2.new-file a.awesome:hover {
-  background-color: rgba(0,0,0,0.20);
+	color: #FFF;
 }
 .ui-dialog section.new-file {
     margin: 0;
 }
 
  
-/* form */
+/*
+ * form
+ */
 select ,
 textarea ,
 input {
@@ -292,7 +290,16 @@ label {
   color: #7C746C;
 }
 
-/* Section uploaded-files */
+/*
+ * Section uploaded-files
+ */
+
+h2#uploaded-files-title {
+	padding-top: .3em;
+}
+section#uploaded-files {
+	clear: both;
+}
 section#uploaded-files ul#files {
   list-style: none;
 }
@@ -322,79 +329,86 @@ section#uploaded-files ul li.file:last-child {
   -webkit-border-bottom-left-radius:  5px;
   border-radius-bottomleft:           5px;
 }
+section#uploaded-files ul li.file:hover {
+  background: #FFFDE9;
+}
 
-/* File description */
+/*
+ * File description
+ */
+section#uploaded-files ul li .file-attributes ,
 section#uploaded-files ul li .file-description {
-  padding-bottom: 0.6em;
+  padding: 0 0 0.2em 64px;
+}
+section#uploaded-files ul li .file-description p {
+	display: inline;
 }
 section#uploaded-files ul li p.filename {
-  padding: 0 1.3em;
 }
 section#uploaded-files ul li p.filename a {
-  padding-left: 20px;
-  background: transparent url(../images/icons/emblem-info.png) no-repeat left center;
   font-weight: bold;
   font-size: 1.3em;
   letter-spacing: -0.05em;
 }
-section#uploaded-files ul li:hover p.filename  span.filename {
-  display: none;
+section#uploaded-files ul li img.mimetype {
+	position: absolute;
+	top:  0.9em;
+	left: 1.0em;
 }
-section#uploaded-files ul li:hover p.filename span.url {
-  display: inline;
-}
-section#uploaded-files ul li p.filename span.url {
-  display: none;
-  font-weight: normal;
-  color: #67665E;
-}
-section#uploaded-files ul li p.filename span.hash {
-  font-weight: bold;
-  color: #000;
-  letter-spacing: 0.05em;
-}
-section#uploaded-files ul li p.comment {margin: 0.3em 1.3em 0 1.3em;}
 
-/* File attributes */
+
+section#uploaded-files ul li p a.copy2clipboard {
+	opacity: 0;
+}
+section#uploaded-files ul li:hover p a.copy2clipboard {
+	text-indent: -5000px;
+	background: transparent url(../images/icons/copy.png) no-repeat center bottom; 
+	width: 16px;
+	padding: 0 5px;
+	display: inline-block;
+	opacity: 1;
+}
+section#uploaded-files ul li p.comment {
+	display: none;
+	/* TODO */
+}
+section#uploaded-files ul li .filesize {
+	color: #B0ABA6;
+  font-size: 0.82em;
+}
+section#uploaded-files ul li p.share {
+	padding-left: 1em;
+}
+section#uploaded-files ul li p.share a {
+	background-image: url(../images/icons/share-this-icon.png); 
+  background-position: 7px center;
+  background-repeat: no-repeat;
+	padding-left: 26px;
+	padding-top:    4px;
+	padding-bottom: 4px;
+	position: absolute;
+	top:   20px;
+	right: 20px;
+}
+/*
+ * File attributes
+ */
+section#uploaded-files ul li .file-attributes p {
+	display: inline;
+}
+section#uploaded-files ul li .file-attributes p + p {
+	border-left: 1px solid #DDD;
+	padding-left: 0.5em;
+	margin-left:  0.5em;
+}
 section#uploaded-files ul li .file-attributes {
-  float: right;
-  clear: right;
   color: #7C746C;
   font-size: 0.82em;
-  text-align: right;
-  padding: 0 1.3em 0.7em 1.3em;
+	padding-bottom: 0.7em;
 }
-section#uploaded-files ul li .file-attributes .filesize { color: #B0ABA6; }
 section#uploaded-files ul li .file-attributes .availability b { color: #433C34; }
 
-section#uploaded-files ul li .file-attributes .filesize ,
-section#uploaded-files ul li .file-attributes .download-counter {
-      display: inline;
-}
-
-/* File actions */
-section#uploaded-files ul li ul.actions {
-  list-style: none;
-  background: #F8F6E2;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  border-top: 1px solid rgba(255,255,255,1);
-  -moz-box-shadow:    inset 0 -4px 4px rgba(0,0,0,0.05);
-  -webkit-box-shadow: inset 0 -4px 4px rgba(0,0,0,0.05);
-  padding: 0.2em 1.3em;
-  font-size: 0.8em;
-  zoom: 1;
-}
-section#uploaded-files ul li ul.actions li {
-  display: inline;
-  padding-right: 0.8em;
-}
-section#uploaded-files ul li ul.actions li + li {
-  padding-left: 0.8em;
-  border-left: 1px solid #EDEBE6;
-}
-section#uploaded-files ul li ul.actions a.send-by-email ,
-section#uploaded-files ul li ul.actions a.delete ,
-section#uploaded-files ul li ul.actions a.extend {
+section#uploaded-files ul li a.extend {
   padding-left: 20px;
   line-height: 16px;
   height: 16px;
@@ -403,14 +417,21 @@ section#uploaded-files ul li ul.actions a.extend {
   background-repeat: no-repeat;
   background-color: transparent;
 }
-section#uploaded-files ul li ul.actions a.extend { background-image: url(../images/icons/edit-redo.png); }
-section#uploaded-files ul li ul.actions a.send-by-email { background-image: url(../images/icons/mail-message-new.png); }
-section#uploaded-files ul li ul.actions a.delete { background-image: url(../images/icons/user-trash.png); }
-section#uploaded-files ul li.file:hover {
-  background: #FFFDE9;
+section#uploaded-files ul li a.extend { background-image: url(../images/icons/add.png); }
+section#uploaded-files ul li a.send-by-email { background-image: url(../images/icons/mail-message-new.png); }
+section#uploaded-files ul li a.extend { text-indent: -5000px; width: 16px; padding: 0; }
+section#uploaded-files ul li a.delete {
+	background: transparent url(../images/icons/remove.png) no-repeat left center;
+	text-indent: -5000px;
+  line-height: 16px;
+  height: 16px;
+  width: 16px;
+	display: inline-block;
 }
 
-/* send-email-form */
+/*
+ * send-email-form
+ */
 
 .send-email-form label {
   display: block;
@@ -446,22 +467,88 @@ form a.open-email-client {
 }
 
 /* Section #preview-file */
-section#preview-file {
-  -moz-box-shadow:    inset 0 20px 20px rgba(0,0,0,0.05);
-  -webkit-box-shadow: inset 0 20px 20px rgba(0,0,0,0.05);
-  padding: 0.7em;
-  margin-top: 1em;
-}
-section#preview-file p {
-  padding: 0.5em 0;
+h2.preview img {
+	vertical-align: middle;
 }
 h2.filename {
   font-size: 1.3em;
   font-weight: bold;
   padding-top: 2em;
 }
+section#preview-file {
+  color: #7C746C;
+  -moz-box-shadow:    inset 0 20px 20px rgba(0,0,0,0.05);
+  -webkit-box-shadow: inset 0 20px 20px rgba(0,0,0,0.05);
+  margin-top: 1em;
+	padding: 1.1em;
+}
+section#preview-file form,
+section#preview-file p {
+  padding: 0.5em 0;
+}
+section#preview-file b {
+	color: #433C34;
+}
+section#preview-file #preview-image {
+  text-align: center;
+}
+section#preview-file #availability {
+	float: left;
+}
+section#preview-file #owner {
+	float: right;
+}
+section#preview-file #download,
+section#preview-file #comment {
+	clear: both;
+}
+section#preview-file #download {
+	padding: 1.2em 0;
+	text-align: center;
+}
+section#preview-file #download.image {
+	text-align: right;
+}
 
-/* Login form */
+/*
+ * Share modal
+ */
+ 
+#share-modal {
+	padding: 1em;
+}
+#share-modal #share-link a {
+	font-size: 1.8em;
+	line-height: 2em;
+  color: #1E52A1;
+}
+#share-modal #share-destinations {
+	padding-top: 1em;
+}
+#share-modal #share-destinations li {
+	display: block;
+	float: left;
+}
+#share-modal #share-destinations li a {
+	display: block;
+	background-position: center top;
+	background-repeat: no-repeat;
+	width: 80px;
+	padding-top : 50px;
+	text-align: center;
+	font-size: .75em;
+}
+#share-modal #share-destinations li a:hover {
+	background-position: center 2px;
+}
+#share-modal #share-destinations li.email		 a { background-image: url(../images/icons/share-email.png); }
+#share-modal #share-destinations li.facebook a { background-image: url(../images/icons/share-facebook.png); }
+#share-modal #share-destinations li.twitter  a { background-image: url(../images/icons/share-twitter.png); }
+
+
+/*
+ * Login form
+ */
 
 form#login-form {
   width: 230px;
@@ -506,7 +593,9 @@ input.username {
 }
 
 
-/* Footer */
+/*
+ * Footer
+ */
 footer {
   text-align: center;
   padding: 4em 0;
@@ -539,7 +628,9 @@ footer div.debug pre {
 }
 div.lim-debug hr {display: none;}
 
-/* Support */
+/*
+ * Support
+ */
 #support {
   padding: 0.7em 0;
 }
@@ -560,7 +651,9 @@ div.lim-debug hr {display: none;}
 #support a.bug  {background-image: url(../images/icons/bug.png); }
 #support a.help {background-image: url(../images/icons/help.png);}
 
-/* Modal */
+/*
+ * Modal
+ */
 
 #modal-background {
     position: fixed;
@@ -585,14 +678,13 @@ div.lim-debug hr {display: none;}
   text-decoration: none;
   -moz-border-radius: 5px; 
   -webkit-border-radius: 5px;
-  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  text-shadow: -1px -1px 0px rgba(0,0,0,0.3);
   border-bottom: 1px solid rgba(0,0,0,0.25);
   position: relative;
   cursor: pointer;
   font-size: 13px;
   font-weight: bold;
   line-height: 1;
-  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
   -moz-box-shadow:    inset 0 20px 20px rgba(255,255,255,0.3);
   -webkit-box-shadow: inset 0 20px 20px rgba(255,255,255,0.3);
 }
@@ -601,6 +693,10 @@ div.lim-debug hr {display: none;}
 
 .blue.awesome, .blue.awesome:visited { background-color: #1E52A1; }
 .blue.awesome:hover                  { background-color: #376EBF; }
+
+.green.awesome, .green.awesome:visited { background-color: #019652; }
+.green.awesome:hover                   { background-color: #008653; }
+
 .awesome.large {
   padding: 6px 20px 6px 20px;
 }
@@ -654,7 +750,24 @@ div.lim-debug hr {display: none;}
   font-size: 0.8em;
 }
 
-/* Install */
+/**
+ * qtip
+ */
+
+.ui-tooltip-dark .ui-tooltip-titlebar,
+.ui-tooltip-dark .ui-tooltip-content{
+	border: 0;
+}
+.ui-tooltip-dark .ui-tooltip-content{
+	background-color: #505050;
+	background-color: rgba(0,0,0,.8);
+}
+
+
+
+/*
+ * Install
+ */
 
 #install fieldset {
     margin: 1em 0;
@@ -797,7 +910,9 @@ div.lim-debug hr {display: none;}
     font-weight: bold;
 }
 
-/* documentation */
+/*
+ * documentation
+ */
 article.doc section {
   padding: 1em;
 }

@@ -25,6 +25,7 @@
 abstract class Fz_Db_Table_Row_Abstract {
 
     protected $_updatedColumns  = array ();
+    protected $_sqlModifiers    = array ();
     protected $_data            = array ();
     protected $_exists          = false;
     protected $_tableClass      ;
@@ -82,7 +83,9 @@ abstract class Fz_Db_Table_Row_Abstract {
      * @return mixed          Column value
      */
     public function __set ($var, $value) {
-        $method = 'set'.self::camelify ($var);
+        if (array_key_exists ($var, $this->_data) && $this->_data [$var] == $value)
+            return $value;
+
         $this->_data [$var] = $value;
         $this->_updatedColumns [] = $var;
         return $value;
@@ -139,7 +142,7 @@ abstract class Fz_Db_Table_Row_Abstract {
      * @return array Columns name
      */
     public function getUpdatedColumns () {
-        return $this->_updatedColumns;
+        return array_unique ($this->_updatedColumns);
     }
 
     /**
@@ -168,23 +171,22 @@ abstract class Fz_Db_Table_Row_Abstract {
         $db = option ('db_conn');
         $table = $this->getTableName ();
         $columnsName = $this->getUpdatedColumns ();
+        $sqlModifiersColumnsName = array_keys ($this->_sqlModifiers);
+        $unmodifiedColumns =  array_diff ($columnsName, $sqlModifiersColumnsName);
 
-        if (count ($columnsName) == 0)
+        if (count ($columnsName) == 0 && count ($sqlModifiersColumnsName) == 0)
             return $this;
 
-        $sql =
-            "UPDATE `$table` SET " .
-            implode (', ', array_map (array ('Fz_Db','nameEqColonName'), $columnsName)) .
+        array_walk ($this->_sqlModifiers, array ('Fz_Db','nameEqSql'));
+        $sql = "UPDATE `$table` SET " .
+            implode (', ', array_merge (array_map  (array ('Fz_Db','nameEqColonName'),$unmodifiedColumns), $this->_sqlModifiers)) .
             ' WHERE id = :id';
 
         fz_log ($sql, FZ_LOG_DEBUG);
 
         $stmt = $db->prepare ($sql);
         $stmt->bindValue (':id', $this->id);
-        foreach ($columnsName as $column) {
-            $stmt->bindValue (':' . $column, $this->$column);
-        }
-
+        $this->bindUpdatedColumnsValues ($stmt);
         $stmt->execute ();
 
         return $this;
@@ -198,21 +200,20 @@ abstract class Fz_Db_Table_Row_Abstract {
     protected function insert () {
         $db = option ('db_conn');
         $table = $this->getTableName ();
-        $obj_columns = $this->getUpdatedColumns ();
+        $columnsName = $this->getUpdatedColumns ();
+        $sqlModifiersColumnsName = array_keys ($this->_sqlModifiers);
+        $unmodifiedColumns =  array_diff ($columnsName, $sqlModifiersColumnsName);
 
         $sql =
             "INSERT INTO `$table` (" .
-            implode (', ', $obj_columns) .
+            implode (', ', array_merge ($unmodifiedColumns, $sqlModifiersColumnsName)) . // reorder columns
             ') VALUES (' .
-            implode (', ', array_map (array ('Fz_Db','addColon'), $obj_columns)) . ')';
+            implode (', ', array_merge (array_map (array ('Fz_Db','addColon'), $unmodifiedColumns), $this->_sqlModifiers)) . ')';
 
         fz_log ($sql, FZ_LOG_DEBUG);
 
         $stmt = $db->prepare ($sql);
-        foreach ($obj_columns as $column) {
-            $stmt->bindValue (':' . $column, $this->$column);
-        }
-
+        $this->bindUpdatedColumnsValues ($stmt);
         $stmt->execute ();
 
         return $db->lastInsertId ();
@@ -226,6 +227,19 @@ abstract class Fz_Db_Table_Row_Abstract {
         if ($this->_exists === false) return;
         $stmt = $db->prepare ('DELETE FROM `'.$this->getTableName ().'` WHERE id = ?');
         $stmt->execute (array ($this->id));
+    }
+
+    /**
+     * Bind updated object values to the prepared statement
+     *
+     * @param PDO_Statement $stmt
+     * @return PDO_Statement
+     */
+    private function bindUpdatedColumnsValues ($stmt) {
+        foreach ($this->getUpdatedColumns () as $column)
+            $stmt->bindValue (':'.$column, $this->_data[$column]);
+
+        return $stmt;
     }
 
     /**
@@ -277,9 +291,25 @@ abstract class Fz_Db_Table_Row_Abstract {
     }
 
     /**
-     * 
+     * Reset the updated columns references
      */
     public function resetModifiedColumns () {
         $this->_updatedColumns = array ();
+    }
+
+    /**
+     * Use this method when you want to execute your custom sql to alter the 
+     * value of a column.
+     *
+     * To make a reference to the user value, for the password column for
+     * example, use :password in your sql command.
+     *
+     * Ex: $user->setColumnModifier ('password', 'SHA1(:password)');
+     *
+     * @param string $columnName
+     * @param string $sql
+     */
+    public function setColumnModifier ($columnName, $sql) {
+        $this->_sqlModifiers [$columnName] = $sql;
     }
 }
