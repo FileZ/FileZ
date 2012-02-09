@@ -17,6 +17,11 @@
 class App_Controller_Main extends Fz_Controller {
 
     public function indexAction () {
+	// Display the send_us_a_file.html page if the "Send us a file" feature is on and the user is not logged in. 
+	if ( fz_config_get ('app', 'send_us_a_file_feature') && false == $this->getUser () ) {
+	        return html ('send_us_a_file.html');
+	}
+
         $this->secure ();
         $user = $this->getUser ();
         $freeSpaceLeft = max (0, Fz_Db::getTable('File')->getRemainingSpaceForUser ($user));

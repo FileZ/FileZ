@@ -92,7 +92,7 @@ header #your-logo {
   padding-right: 1em;
   border-right: 1px solid #D9D4CF;
 }
-header #auth-box {
+#auth-box {
   position: absolute;
   top: 0;
   right: 0;
