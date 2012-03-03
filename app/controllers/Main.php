@@ -19,6 +19,11 @@ class App_Controller_Main extends Fz_Controller {
     public function indexAction () {
 	// Display the send_us_a_file.html page if the "Send us a file" feature is on and the user is not logged in. 
 	if ( fz_config_get ('app', 'send_us_a_file_feature') && false == $this->getUser () ) {
+                set ('start_from'       , Zend_Date::now ()->get (Zend_Date::DATE_SHORT));
+                $maxUploadSize = min (
+                  Fz_Db::getTable('File')->shorthandSizeToBytes (ini_get ('upload_max_filesize')),
+                  Fz_Db::getTable('File')->shorthandSizeToBytes (ini_get ('post_max_size')) );
+                set ('max_upload_size'   , $maxUploadSize);
 	        return html ('send_us_a_file.html');
 	}
 
