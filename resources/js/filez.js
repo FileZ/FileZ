@@ -112,7 +112,7 @@ $.fn.initFileActions = function () {
             e.preventDefault ();
             $('#share-modal').dialog ('close');
 
-            $('form', modal).attr ('action', $(this).attr ('href'));
+            $('form', $('#email-modal')).attr ('action', $(this).attr ('href'))
             $('.open-email-client')
                 .attr ('href', 'mailto:?body='+settings.messages.emailMessage+' : '+fileUrl)
                 .click (function (e) { $('.ui-dialog-content').dialog('close'); });
