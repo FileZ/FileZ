@@ -26,7 +26,7 @@ CREATE TABLE  `fz_info` (
 
 CREATE TABLE `fz_user` (
   `id`          SERIAL      NOT NULL,
-  `username`    VARCHAR(30) NOT NULL,
+  `username`    VARCHAR(40) NOT NULL,
   `password`    VARCHAR(40) NOT NULL,
   `salt`        VARCHAR(40),
   `firstname`   VARCHAR(50) NOT NULL,
