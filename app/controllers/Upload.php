@@ -158,7 +158,7 @@ class App_Controller_Upload extends Fz_Controller {
         $mail = $this->createMail();
         $mail->setBodyText ($msg);
         $mail->setSubject  ($subject);
-        $mail->addTo ($user->email, $user);
+        $mail->addTo ($user->email, $user->firstname.' '.$user->lastname);
 
         try {
             $mail->send ();
