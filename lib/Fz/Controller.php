@@ -118,8 +118,8 @@ class Fz_Controller {
      * @return Zend_Mail
      */
     protected function createMail () {
+        $config = fz_config_get ('email');    
         if (self::$_mailTransportSet === false) {
-            $config = fz_config_get ('email');
             $config ['name'] = 'filez';
             $transport = new Zend_Mail_Transport_Smtp ($config ['host'], $config);
             Zend_Mail::setDefaultTransport ($transport);
