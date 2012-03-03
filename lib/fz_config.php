@@ -92,7 +92,7 @@ function fz_serialize_ini_array ($assoc_arr, $has_sections = false) {
             if (is_array ($value))
                 foreach ($value as $v)
                     $content .= "{$key}[] = \"$v\"\n";
-            if (is_numeric ($value))
+            elseif (is_numeric ($value))
                 $content .= "$key = $value\n";
             else if($value != "")
                 $content .= "$key = \"$value\"\n";
