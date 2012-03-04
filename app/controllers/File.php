@@ -267,7 +267,7 @@ class App_Controller_File extends Fz_Controller {
      * @param App_Model_File $file      File to send
      */
     protected function sendFile (App_Model_File $file, $forceDownload = true) {
-        $mime = file_mime_content_type ($file->getFileName ());
+        $mime = $file->getMimetype();
         header('Content-Type: '.$mime);
         header('Content-Transfer-Encoding: binary');
         header('Expires: 0');
