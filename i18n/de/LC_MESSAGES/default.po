@@ -1,11 +1,12 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: filez-2.0\n"
+"Project-Id-Version: filez\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-21 15:30+0100\n"
-"PO-Revision-Date: 2011-01-03 11:28+0100\n"
-"Last-Translator: Martin Bächtold <martin.baechtold@tph.ch>\n"
+"POT-Creation-Date: 2012-03-05 00:28+0100\n"
+"PO-Revision-Date: 2012-03-05 00:29+0100\n"
+"Last-Translator: William Larrieu <w@larri.eu>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,52 +14,459 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __r;__;__p\n"
-"X-Poedit-Basepath: /home/didrya/filez/\n"
+"X-Poedit-Basepath: /home/w/Public/fileZ/\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-SearchPath-0: /home/didrya/filez\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: /home/didrya/filez/app/models/File.php:146
-msgid "B"
-msgstr "B"
+#: FileZ/lib/fz_limonade.php:73
+msgid "Page not found"
+msgstr "Seite nicht gefunden"
 
-#: /home/didrya/filez/app/models/File.php:146
-msgid "KB"
-msgstr "KB"
-
-#: /home/didrya/filez/app/models/File.php:146
-msgid "MB"
-msgstr "MB"
-
-#: /home/didrya/filez/app/models/File.php:146
-msgid "GB"
-msgstr "GB"
-
-#: /home/didrya/filez/app/models/File.php:146
-msgid "TB"
-msgstr "TB"
-
-#: /home/didrya/filez/app/controllers/Admin.php:58
-msgid "[FileZ] Your file \"%file_name%\" is going to be deleted"
-msgstr "[FileZ] Ihre Datei \"%file_name%\" wird demnächst gelöscht"
-
-#: /home/didrya/filez/app/controllers/Admin.php:60
-msgid "email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)"
+#: FileZ/lib/Fz/Controller.php:38
+msgid "This page is secured"
 msgstr ""
-"Hallo,\n"
-"\n"
-"Die Dauer der Datei '%file_name%' erreicht bald ihr Ende, sie wird am %available_until% automatisch gelöscht.\n"
-"\n"
-"Adresse der Datei: %file_url%\n"
-"\n"
-"\n"
-"\n"
-"-----BITTE ANTWORTEN SIE NICHT AUF DIESE NACHRICHT! Diese ist eine automatisch generierte Nachricht, Ihre Antwort wird nicht gelesen!"
 
-#: /home/didrya/filez/app/controllers/Upload.php:157
+#: FileZ/app/views/file/_share_link.php:1
+msgid "Give this link to the person you want to share this file with"
+msgstr ""
+
+#: FileZ/app/views/file/_share_link.php:3
+msgid "or share using:"
+msgstr ""
+
+#: FileZ/app/views/file/_share_link.php:6
+#, fuzzy
+msgid "your email"
+msgstr "E"
+
+#: FileZ/app/views/file/_share_link.php:9
+msgid "Facebook"
+msgstr ""
+
+#: FileZ/app/views/file/_share_link.php:12
+msgid "Twitter"
+msgstr ""
+
+#: FileZ/app/views/file/email.php:2
+#, fuzzy
+msgid "Send via email:"
+msgstr "Per E-Mail schicken"
+
+#: FileZ/app/views/file/_mailForm.php:4
+msgid "Email addresses (space separated)"
+msgstr "E-Mail-Adressen (mit Leerschlag getrennt)"
+
+#: FileZ/app/views/file/_mailForm.php:8
+msgid "Message (file url will automatically be added)"
+msgstr "Nachricht (die Download-Adresse wird automatisch hinzugefügt)"
+
+#: FileZ/app/views/file/_mailForm.php:12
+msgid "You can download the file I uploaded here"
+msgstr "Hier können Sie die hochgeladenen Datei herunterladen"
+
+#: FileZ/app/views/file/_mailForm.php:14
+msgid "Open in my email client"
+msgstr "In meinem E-Mail-Programm öffnen"
+
+#: FileZ/app/views/file/_mailForm.php:18
+msgid "Send"
+msgstr "Abschicken"
+
+#: FileZ/app/views/file/index.php:1
+#, fuzzy
+msgid "Manage files"
+msgstr "Verfügbare Dateien"
+
+#: FileZ/app/views/file/index.php:7
+msgid "Name"
+msgstr ""
+
+#: FileZ/app/views/file/index.php:8
+msgid "Author"
+msgstr ""
+
+#: FileZ/app/views/file/index.php:9
+msgid "Availability"
+msgstr "Verfügbarkeit"
+
+#: FileZ/app/views/file/index.php:10
+msgid "Size"
+msgstr ""
+
+#: FileZ/app/views/file/index.php:11
+msgid "DL count"
+msgstr ""
+
+#: FileZ/app/views/file/index.php:12
+msgid "Actions"
+msgstr ""
+
+#: FileZ/app/views/file/index.php:23
+#, fuzzy
+msgid "from %from% to %to%"
+msgstr "Verfügbar vom %from% bis %to%"
+
+#: FileZ/app/views/file/index.php:31
+msgid "Delete"
+msgstr "Löschen"
+
+#: FileZ/app/views/file/preview.php:18
+#, fuzzy
+msgid "Available from %available_from% to %available_until%"
+msgstr "vom %available_from%. bis %available_until%"
+
+#: FileZ/app/views/file/preview.php:25
+#, fuzzy
+msgid "Uploaded by:"
+msgstr "Hochgeladen von"
+
+#: FileZ/app/views/file/preview.php:29
+#, fuzzy
+msgid "Comments:"
+msgstr "Kommentare"
+
+#: FileZ/app/views/file/preview.php:38
+#: FileZ/app/views/file/preview.php:63
+msgid "Download"
+msgstr "Download"
+
+#: FileZ/app/views/file/preview.php:43
+msgid "Your download will start shortly..."
+msgstr "Der Download beginnt in wenigen Augenblicken..."
+
+#: FileZ/app/views/file/preview.php:45
+msgid "If not, click here"
+msgstr "Falls nicht, klicken Sie hier"
+
+#: FileZ/app/views/file/preview.php:60
+msgid "You need a password to download this file"
+msgstr "Sie benötigen ein Passwort, um diese Datei herunterzuladen"
+
+#: FileZ/app/views/file/preview.php:67
+#, fuzzy
+msgid "The file is not available yet"
+msgstr "Die Datei ist noch nicht verfügbar."
+
+#: FileZ/app/views/file/confirmDelete.php:2
+#, fuzzy
+msgid "Do you really want to delete: %filename%?"
+msgstr "Möchten Sie diese Datei wirklich löschen?"
+
+#: FileZ/app/views/file/confirmDelete.php:6
+#, fuzzy
+msgid "Yes, delete that file"
+msgstr "Möchten Sie diese Datei wirklich löschen?"
+
+#: FileZ/app/views/file/confirmDelete.php:7
+msgid "No, go back to previous page"
+msgstr ""
+
+#: FileZ/app/views/admin/config.php:1
+msgid "FileZ settings"
+msgstr ""
+
+#: FileZ/app/views/admin/config.php:3
+msgid "System administrators can edit the settings in the file config/filez.ini"
+msgstr ""
+
+#: FileZ/app/views/admin/index.php:1
+msgid "Admin dashboard"
+msgstr ""
+
+#: FileZ/app/views/admin/index.php:3
+msgid "Manage %NumberOfUsers% users</a> and %NumberOfFiles% files</a>."
+msgstr ""
+
+#: FileZ/app/views/user/show.php:3
+#: FileZ/app/views/user/index.php:35
+msgid "Edit"
+msgstr ""
+
+#: FileZ/app/views/user/show.php:7
+#, fuzzy
+msgid "Email:"
+msgstr "E-Mail"
+
+#: FileZ/app/views/user/show.php:8
+msgid "Account created:"
+msgstr ""
+
+#: FileZ/app/views/user/show.php:9
+msgid "Administrator:"
+msgstr ""
+
+#: FileZ/app/views/user/show.php:9
+msgid "yes"
+msgstr ""
+
+#: FileZ/app/views/user/show.php:9
+msgid "no"
+msgstr ""
+
+#: FileZ/app/views/user/index.php:1
+msgid "Manage users"
+msgstr ""
+
+#: FileZ/app/views/user/index.php:5
+#: FileZ/app/views/user/create.php:1
+msgid "Create a new user"
+msgstr ""
+
+#: FileZ/app/views/user/index.php:10
+#: FileZ/app/views/user/create.php:5
+#: FileZ/app/views/user/create.php:6
+#: FileZ/app/views/user/edit.php:5
+#: FileZ/app/views/user/edit.php:6
+#: FileZ/app/views/auth/loginForm.php:5
+msgid "Username"
+msgstr "Login"
+
+#: FileZ/app/views/user/index.php:11
+msgid "Role"
+msgstr ""
+
+#: FileZ/app/views/user/index.php:12
+msgid "File count"
+msgstr ""
+
+#: FileZ/app/views/user/index.php:13
+msgid "Disk usage"
+msgstr ""
+
+#: FileZ/app/views/user/index.php:14
+#, fuzzy
+msgid "Expired files"
+msgstr "Verfügbare Dateien"
+
+#: FileZ/app/views/user/index.php:22
+msgid "admin"
+msgstr ""
+
+#: FileZ/app/views/user/index.php:38
+#, fuzzy
+msgid "Are you sure you want to delete the user \"%displayname%\" (%username%)"
+msgstr "Möchten Sie diese Datei wirklich löschen?"
+
+#: FileZ/app/views/user/create.php:7
+#: FileZ/app/views/user/edit.php:7
+#: FileZ/app/views/auth/loginForm.php:9
+msgid "Password"
+msgstr "Passwort"
+
+#: FileZ/app/views/user/create.php:11
+#: FileZ/app/views/user/create.php:12
+#: FileZ/app/views/user/edit.php:11
+msgid "Email"
+msgstr "E-Mail"
+
+#: FileZ/app/views/user/create.php:18
+#: FileZ/app/views/user/edit.php:18
+msgid "This user can administrate FileZ"
+msgstr ""
+
+#: FileZ/app/views/user/create.php:19
+#: FileZ/app/views/user/edit.php:19
+msgid "Admin"
+msgstr ""
+
+#: FileZ/app/views/user/create.php:24
+#: FileZ/app/views/user/create.php:25
+#: FileZ/app/views/user/edit.php:24
+#: FileZ/app/views/user/edit.php:25
+msgid "Firstname"
+msgstr ""
+
+#: FileZ/app/views/user/create.php:28
+#: FileZ/app/views/user/create.php:29
+#: FileZ/app/views/user/edit.php:28
+#: FileZ/app/views/user/edit.php:29
+#, fuzzy
+msgid "Lastname"
+msgstr "Login"
+
+#: FileZ/app/views/user/create.php:32
+msgid "Create"
+msgstr ""
+
+#: FileZ/app/views/user/edit.php:1
+msgid "Edit user"
+msgstr ""
+
+#: FileZ/app/views/user/edit.php:12
+#, fuzzy
+msgid "email"
+msgstr "E-Mail"
+
+#: FileZ/app/views/user/edit.php:32
+msgid "Update"
+msgstr ""
+
+#: FileZ/app/views/main/_upload_form.php:4
+msgid "File (Max size: %size%)"
+msgstr "Datei (maximale Dateigrösse: %size%)"
+
+#: FileZ/app/views/main/_upload_form.php:6
+msgid "File"
+msgstr "Datei"
+
+#: FileZ/app/views/main/_upload_form.php:10
+msgid "Lifetime"
+msgstr "Dauer"
+
+#: FileZ/app/views/main/_upload_form.php:11
+msgid "Select a lifetime"
+msgstr "Wählen Sie die Dauer der Datei"
+
+#: FileZ/app/views/main/_upload_form.php:16
+msgid "%n% days"
+msgstr "%n% Tage"
+
+#: FileZ/app/views/main/_upload_form.php:16
+msgid "%n% day"
+msgstr "%n% Tag"
+
+#: FileZ/app/views/main/_upload_form.php:22
+msgid "Starts from"
+msgstr "Startdatum"
+
+#: FileZ/app/views/main/_upload_form.php:23
+msgid "Select a starting date"
+msgstr "Wählen Sie das Startdatum"
+
+#: FileZ/app/views/main/_upload_form.php:26
+msgid "Comments"
+msgstr "Kommentare"
+
+#: FileZ/app/views/main/_upload_form.php:27
+msgid "Add a comment (optional)"
+msgstr "Kommentar hinzufügen (optional)"
+
+#: FileZ/app/views/main/_upload_form.php:32
+msgid "Send me email notifications when the file is uploaded and before it will be deleted"
+msgstr "Schicken Sie mir eine Benachrichtigung per E-Mail, wenn die Datei hochgeladen wurde und bevor sie gelöscht wird"
+
+#: FileZ/app/views/main/_upload_form.php:33
+msgid "Send me email notifications"
+msgstr "Schicken Sie mir Benachrichtigungen per E-Mail"
+
+#: FileZ/app/views/main/_upload_form.php:38
+msgid "Ask a password to people who will download your file"
+msgstr "Passwort zum Schutz der Datei verwenden"
+
+#: FileZ/app/views/main/_upload_form.php:39
+msgid "Use a password to download"
+msgstr "Passwort verwenden"
+
+#: FileZ/app/views/main/_upload_form.php:45
+msgid "Upload"
+msgstr "Upload"
+
+#: FileZ/app/views/main/_file_row.php:15
+msgid "Share"
+msgstr ""
+
+#: FileZ/app/views/main/_file_row.php:21
+msgid "Available from %from% to %to%"
+msgstr "Verfügbar vom %from% bis %to%"
+
+#: FileZ/app/views/main/_file_row.php:28
+#: FileZ/app/views/main/_file_row.php:29
+msgid "Extend one more day"
+msgstr "Um einen Tag verlängern"
+
+#: FileZ/app/views/main/_file_row.php:34
+msgid "Never downloaded"
+msgstr "Noch nie heruntergeladen"
+
+#: FileZ/app/views/main/_file_row.php:35
+msgid "Downloaded once"
+msgstr "Einmal heruntergeladen"
+
+#: FileZ/app/views/main/_file_row.php:36
+msgid "Download %x% times"
+msgstr "%x% Mal heruntergeladen"
+
+#: FileZ/app/views/main/index.php:2
+#: FileZ/app/views/main/index.php:61
+msgid "Upload a new file"
+msgstr "Eine neue Datei hochladen"
+
+#: FileZ/app/views/main/index.php:7
+msgid "Uploaded files"
+msgstr "Verfügbare Dateien"
+
+#: FileZ/app/views/main/index.php:43
+msgid "Are you sure to delete this file ?"
+msgstr "Möchten Sie diese Datei wirklich löschen?"
+
+#: FileZ/app/views/main/index.php:44
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+#: FileZ/app/views/main/index.php:45
+msgid "An unknown error hapenned while uploading the file"
+msgstr "Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten"
+
+#: FileZ/app/views/main/index.php:46
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: FileZ/app/views/auth/loginForm.php:13
+msgid "Log me in"
+msgstr "Anmelden"
+
+#: FileZ/app/views/layout/admin.html.php:35
+msgid "Dashboard"
+msgstr ""
+
+#: FileZ/app/views/layout/admin.html.php:36
+#, fuzzy
+msgid "Users"
+msgstr "Login"
+
+#: FileZ/app/views/layout/admin.html.php:37
+#, fuzzy
+msgid "Files"
+msgstr "Datei"
+
+#: FileZ/app/views/layout/admin.html.php:38
+msgid "Settings"
+msgstr ""
+
+#: FileZ/app/views/layout/_footer.php:11
+msgid "Using %space% of %quota%"
+msgstr "%space% von %quota% Festplattenspeicher verwendet"
+
+#: FileZ/app/views/layout/_footer.php:19
+msgid "Find help"
+msgstr "Hilfe"
+
+#: FileZ/app/views/layout/_footer.php:22
+msgid "Report a bug"
+msgstr "Fehlerbericht senden"
+
+#: FileZ/app/views/layout/_footer.php:27
+msgid "A free software from the University of Avignon"
+msgstr "Open-Source Software von der Université d'Avignon"
+
+#: FileZ/app/views/layout/_header.php:13
+#, fuzzy
+msgid "Share files for a limited time"
+msgstr "Share files for a limited time."
+
+#: FileZ/app/views/layout/_header.php:27
+msgid "Administration"
+msgstr ""
+
+#: FileZ/app/views/layout/_header.php:30
+msgid "Log out"
+msgstr "Abmelden"
+
+#: FileZ/app/controllers/Upload.php:147
 msgid "[FileZ] \"%file_name%\" uploaded successfuly"
 msgstr "[Filez] Ihre Datei \"%file_name%\" wurde erfolgreich hochgeladen"
 
-#: /home/didrya/filez/app/controllers/Upload.php:159
+#: FileZ/app/controllers/Upload.php:149
 msgid "email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)"
 msgstr ""
 "Hallo,\n"
@@ -73,68 +481,52 @@ msgstr ""
 "\n"
 "-----BITTE ANTWORTEN SIE NICHT AUF DIESE NACHRICHT! Diese ist eine automatisch generierte Nachricht, Ihre Antwort wird nicht gelesen!"
 
-#: /home/didrya/filez/app/controllers/Upload.php:237
+#: FileZ/app/controllers/Upload.php:227
 msgid "The file was successfuly uploaded"
 msgstr "Die Datei wurde erfolgreich hochgeladen"
 
-#: /home/didrya/filez/app/controllers/Upload.php:254
+#: FileZ/app/controllers/Upload.php:244
 msgid "An error occured while uploading the file."
 msgstr "Beim Hochladen der Datei ist ein Fehler aufgetreten."
 
-#: /home/didrya/filez/app/controllers/Upload.php:271
+#: FileZ/app/controllers/Upload.php:261
 msgid "The uploaded file exceeds the max file size."
 msgstr "Die hochgeladene Datei ist zu gross."
 
-#: /home/didrya/filez/app/controllers/Upload.php:276
+#: FileZ/app/controllers/Upload.php:266
 msgid "The uploaded file was only partially uploaded."
 msgstr "Die Datei wurde nur teilweise hochgeladen."
 
-#: /home/didrya/filez/app/controllers/Upload.php:280
+#: FileZ/app/controllers/Upload.php:270
 msgid "No file was uploaded."
 msgstr "Es wurde keine Datei hochgeladen."
 
-#: /home/didrya/filez/app/controllers/Upload.php:283
+#: FileZ/app/controllers/Upload.php:273
 msgid "You exceeded your disk space quota (%space%)."
 msgstr "Der verfügbare Festplattenspeicher wurde überschritten (%space%)."
 
-#: /home/didrya/filez/app/controllers/Help.php:54
-msgid "This documentation does not exist"
-msgstr "Diese Dokumentation existiert nicht"
-
-#: /home/didrya/filez/app/controllers/Auth.php:55
-msgid "Wrong username or password"
-msgstr "Falscher Login oder falsches Passwort"
-
-#: /home/didrya/filez/app/controllers/File.php:48
-msgid "File is not available for download"
-msgstr "Datei ist steht nicht as Download zur Verfügung"
-
-#: /home/didrya/filez/app/controllers/File.php:51
-msgid "Incorrect password"
-msgstr "Falsches Passwort"
-
-#: /home/didrya/filez/app/controllers/File.php:72
+#: FileZ/app/controllers/File.php:69
 msgid "Lifetime extended"
 msgstr "Dauer wurde verlängert"
 
-#: /home/didrya/filez/app/controllers/File.php:76
+#: FileZ/app/controllers/File.php:73
 msgid "You can't extend a file lifetime more than %x% times"
 msgstr "Sie können die Dauer einer Datei nicht mehr als %x% Mal verlängern"
 
-#: /home/didrya/filez/app/controllers/File.php:99
-#: /home/didrya/filez/app/controllers/File.php:234
+#: FileZ/app/controllers/File.php:96
+#: FileZ/app/controllers/File.php:243
 msgid "There is no file for this code"
 msgstr "Für diesen Code existiert keine Datei"
 
-#: /home/didrya/filez/app/controllers/File.php:133
+#: FileZ/app/controllers/File.php:130
 msgid "File deleted."
 msgstr "Die Datei wurde gelöscht."
 
-#: /home/didrya/filez/app/controllers/File.php:163
+#: FileZ/app/controllers/File.php:174
 msgid "[FileZ] \"%sender%\" wants to share a file with you"
 msgstr "[FileZ] %sender% möchte eine Datei mit Ihnen teilen"
 
-#: /home/didrya/filez/app/controllers/File.php:165
+#: FileZ/app/controllers/File.php:176
 msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
 msgstr ""
 "Hallo,\n"
@@ -144,240 +536,113 @@ msgstr ""
 "Ihre persönliche Nachricht:\n"
 "%msg%"
 
-#: /home/didrya/filez/app/controllers/File.php:187
+#: FileZ/app/controllers/File.php:196
 msgid "Email address \"%email%\" is incorrect, please correct it."
 msgstr "Die E-Mail-Adresse \"%email%\" ist falsch, bitte korrigieren."
 
-#: /home/didrya/filez/app/controllers/File.php:199
+#: FileZ/app/controllers/File.php:208
 msgid "An error occured during email submission. Please try again."
 msgstr "Beim Versand der E-Mail ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
 
-#: /home/didrya/filez/app/controllers/File.php:265
+#: FileZ/app/controllers/File.php:256
+msgid "File is not available for download"
+msgstr "Datei ist steht nicht as Download zur Verfügung"
+
+#: FileZ/app/controllers/File.php:259
+msgid "Incorrect password"
+msgstr "Falsches Passwort"
+
+#: FileZ/app/controllers/File.php:295
 msgid "You are not the owner of the file"
 msgstr "Sie sind nicht der Besitzer dieser Datei"
 
-#: /home/didrya/filez/app/views/file/preview.php:8
-msgid "Uploaded by"
-msgstr "Hochgeladen von"
+#: FileZ/app/controllers/Admin.php:86
+msgid "[FileZ] Your file \"%file_name%\" is going to be deleted"
+msgstr "[FileZ] Ihre Datei \"%file_name%\" wird demnächst gelöscht"
 
-#: /home/didrya/filez/app/views/file/preview.php:16
-msgid "Availability"
-msgstr "Verfügbarkeit"
+#: FileZ/app/controllers/Admin.php:88
+msgid "email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)"
+msgstr ""
+"Hallo,\n"
+"\n"
+"Die Dauer der Datei '%file_name%' erreicht bald ihr Ende, sie wird am %available_until% automatisch gelöscht.\n"
+"\n"
+"Adresse der Datei: %file_url%\n"
+"\n"
+"\n"
+"\n"
+"-----BITTE ANTWORTEN SIE NICHT AUF DIESE NACHRICHT! Diese ist eine automatisch generierte Nachricht, Ihre Antwort wird nicht gelesen!"
 
-#: /home/didrya/filez/app/views/file/preview.php:17
-msgid "between %available_from% and %available_until%"
-msgstr "vom %available_from%. bis %available_until%"
+#: FileZ/app/controllers/Auth.php:45
+msgid "Wrong username or password"
+msgstr "Falscher Login oder falsches Passwort"
 
-#: /home/didrya/filez/app/views/file/preview.php:23
-#: /home/didrya/filez/app/views/main/index.php:29
-msgid "Comments"
-msgstr "Kommentare"
+#: FileZ/app/controllers/Help.php:44
+msgid "This documentation does not exist"
+msgstr "Diese Dokumentation existiert nicht"
 
-#: /home/didrya/filez/app/views/file/preview.php:28
-msgid "Your download will start shortly..."
-msgstr "Der Download beginnt in wenigen Augenblicken..."
+#: FileZ/app/models/File.php:139
+msgid "B"
+msgstr "B"
 
-#: /home/didrya/filez/app/views/file/preview.php:30
-msgid "If not, click here"
-msgstr "Falls nicht, klicken Sie hier"
+#: FileZ/app/models/File.php:139
+msgid "KB"
+msgstr "KB"
 
-#: /home/didrya/filez/app/views/file/preview.php:41
-msgid "You need a password to download this file"
-msgstr "Sie benötigen ein Passwort, um diese Datei herunterzuladen"
+#: FileZ/app/models/File.php:139
+msgid "MB"
+msgstr "MB"
 
-#: /home/didrya/filez/app/views/file/preview.php:44
-msgid "Download"
-msgstr "Download"
+#: FileZ/app/models/File.php:139
+msgid "GB"
+msgstr "GB"
 
-#: /home/didrya/filez/app/views/file/preview.php:48
-msgid "The file is not available yet."
-msgstr "Die Datei ist noch nicht verfügbar."
+#: FileZ/app/models/File.php:139
+msgid "TB"
+msgstr "TB"
 
-#: /home/didrya/filez/app/views/file/_mailForm.php:4
-msgid "Email addresses (space separated)"
-msgstr "E-Mail-Adressen (mit Leerschlag getrennt)"
+#: FileZ/app/models/User.php:101
+msgid "\"%s%\" is not a valid email."
+msgstr ""
 
-#: /home/didrya/filez/app/views/file/_mailForm.php:8
-msgid "Message (file url will automatically be added)"
-msgstr "Nachricht (die Download-Adresse wird automatisch hinzugefügt)"
+#: FileZ/app/models/User.php:104
+msgid "The username should not be blank"
+msgstr ""
 
-#: /home/didrya/filez/app/views/file/_mailForm.php:12
-msgid "Open in my email client"
-msgstr "In meinem E-Mail-Programm öffnen"
+#: FileZ/app/models/User.php:107
+msgid "The password is too short."
+msgstr ""
 
-#: /home/didrya/filez/app/views/file/_mailForm.php:22
-msgid "Send"
-msgstr "Abschicken"
+#: FileZ/app/models/User.php:111
+msgid "This username is already used."
+msgstr ""
 
-#: /home/didrya/filez/app/views/main/index.php:2
-#: /home/didrya/filez/app/views/main/index.php:106
-msgid "Upload a new file"
-msgstr "Eine neue Datei hochladen"
+#: FileZ/app/models/User.php:114
+msgid "This email is already used."
+msgstr ""
 
-#: /home/didrya/filez/app/views/main/index.php:7
-msgid "File (Max size: %size%)"
-msgstr "Datei (maximale Dateigrösse: %size%)"
+#: FileZ/app/models/User.php:119
+msgid "This username belongs to another user."
+msgstr ""
 
-#: /home/didrya/filez/app/views/main/index.php:9
-msgid "File"
-msgstr "Datei"
-
-#: /home/didrya/filez/app/views/main/index.php:13
-msgid "Lifetime"
-msgstr "Dauer"
-
-#: /home/didrya/filez/app/views/main/index.php:14
-msgid "Select a lifetime"
-msgstr "Wählen Sie die Dauer der Datei"
-
-#: /home/didrya/filez/app/views/main/index.php:19
-msgid "%n% days"
-msgstr "%n% Tage"
-
-#: /home/didrya/filez/app/views/main/index.php:19
-msgid "%n% day"
-msgstr "%n% Tag"
-
-#: /home/didrya/filez/app/views/main/index.php:25
-msgid "Starts from"
-msgstr "Startdatum"
-
-#: /home/didrya/filez/app/views/main/index.php:26
-msgid "Select a starting date"
-msgstr "Wählen Sie das Startdatum"
-
-#: /home/didrya/filez/app/views/main/index.php:30
-msgid "Add a comment (optional)"
-msgstr "Kommentar hinzufügen (optional)"
-
-#: /home/didrya/filez/app/views/main/index.php:35
-msgid "Send me email notifications when the file is uploaded and before it will be deleted"
-msgstr "Schicken Sie mir eine Benachrichtigung per E-Mail, wenn die Datei hochgeladen wurde und bevor sie gelöscht wird"
-
-#: /home/didrya/filez/app/views/main/index.php:36
-msgid "Send me email notifications"
-msgstr "Schicken Sie mir Benachrichtigungen per E-Mail"
-
-#: /home/didrya/filez/app/views/main/index.php:41
-msgid "Ask a password to people who will download your file"
-msgstr "Passwort zum Schutz der Datei verwenden"
-
-#: /home/didrya/filez/app/views/main/index.php:42
-msgid "Use a password to download"
-msgstr "Passwort verwenden"
-
-#: /home/didrya/filez/app/views/main/index.php:48
-msgid "Upload"
-msgstr "Upload"
-
-#: /home/didrya/filez/app/views/main/index.php:55
-msgid "Uploaded files"
-msgstr "Verfügbare Dateien"
-
-#: /home/didrya/filez/app/views/main/index.php:88
-msgid "Are you sure to delete this file ?"
-msgstr "Möchten Sie diese Datei wirklich löschen?"
-
-#: /home/didrya/filez/app/views/main/index.php:89
-msgid "Unknown error"
-msgstr "Unbekannter Fehler"
-
-#: /home/didrya/filez/app/views/main/index.php:90
-msgid "An unknown error hapenned while uploading the file"
-msgstr "Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten"
-
-#: /home/didrya/filez/app/views/main/index.php:91
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: /home/didrya/filez/app/views/main/index.php:92
-msgid "You can download the file I uploaded here"
-msgstr "Hier können Sie die hochgeladenen Datei herunterladen"
-
-#: /home/didrya/filez/app/views/main/index.php:107
-msgid "Send by email"
-msgstr "Per E-Mail schicken"
-
-#: /home/didrya/filez/app/views/main/_file_row.php:6
-msgid "Never downloaded"
-msgstr "Noch nie heruntergeladen"
-
-#: /home/didrya/filez/app/views/main/_file_row.php:7
-msgid "Downloaded once"
-msgstr "Einmal heruntergeladen"
-
-#: /home/didrya/filez/app/views/main/_file_row.php:8
-msgid "Download %x% times"
-msgstr "%x% Mal heruntergeladen"
-
-#: /home/didrya/filez/app/views/main/_file_row.php:12
-msgid "Available from %from% to %to%"
-msgstr "Verfügbar vom %from% bis %to%"
-
-#: /home/didrya/filez/app/views/main/_file_row.php:39
-msgid "Email"
-msgstr "E-Mail"
-
-#: /home/didrya/filez/app/views/main/_file_row.php:44
-msgid "Delete"
-msgstr "Löschen"
-
-#: /home/didrya/filez/app/views/main/_file_row.php:50
-msgid "Extend one more day"
-msgstr "Um einen Tag verlängern"
-
-#: /home/didrya/filez/app/views/auth/loginForm.php:5
-msgid "Username"
-msgstr "Login"
-
-#: /home/didrya/filez/app/views/auth/loginForm.php:9
-msgid "Password"
-msgstr "Passwort"
-
-#: /home/didrya/filez/app/views/auth/loginForm.php:13
-msgid "Log me in"
-msgstr "Anmelden"
-
-#: /home/didrya/filez/app/views/layout/_footer.php:11
-msgid "Using %space% of %quota%"
-msgstr "%space% von %quota% Festplattenspeicher verwendet"
-
-#: /home/didrya/filez/app/views/layout/_footer.php:20
-msgid "Find help"
-msgstr "Hilfe"
-
-#: /home/didrya/filez/app/views/layout/_footer.php:23
-msgid "Report a bug"
-msgstr "Fehlerbericht senden"
-
-#: /home/didrya/filez/app/views/layout/_footer.php:28
-msgid "A free software from the University of Avignon"
-msgstr "Open-Source Software von der Université d'Avignon"
-
-#: /home/didrya/filez/app/views/layout/_header.php:13
-msgid "Share files for a limited time."
-msgstr "Share files for a limited time."
-
-#: /home/didrya/filez/app/views/layout/_header.php:27
-msgid "Log out"
-msgstr "Abmelden"
-
-#: /home/didrya/filez/lib/fz_limonade.php:82
-msgid "Page not found"
-msgstr "Seite nicht gefunden"
+#: FileZ/app/models/User.php:123
+msgid "This email belongs to another user."
+msgstr ""
 
 #~ msgid "Details"
 #~ msgstr "Détails"
+
 #~ msgid "Your file was uploaded successfuly."
 #~ msgstr "Votre fichier correctement a été envoyé."
+
 #~ msgid "There is no error, the file uploaded with success."
 #~ msgstr "Il n'y a pas d'erreurs, le fichier a correctement été envoyé."
+
 #~ msgid "Missing a temporary folder."
 #~ msgstr "Répertoire temporaire manquant"
+
 #~ msgid "Failed to write file to disk."
 #~ msgstr "Impossible d'écrire le fichier sur le disque."
+
 #~ msgid "File upload stopped by extension."
 #~ msgstr "Envoi stoppé pour cause d'extension non autorisée."
-#~ msgid "Envoyer un email"
-#~ msgstr "E"
-
