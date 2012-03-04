@@ -133,6 +133,20 @@ class App_Controller_File extends Fz_Controller {
     }
 
     /**
+     * Share a file url
+     */
+    public function shareAction () {
+        $this->secure ();
+        $user = $this->getUser ();
+        $file = $this->getFile ();
+        $this->checkOwner ($file, $user);
+        set ('sharing_destinations', fz_config_get('app', 'sharing_destinations'));
+        set ('downloadUrl', $file->getDownloadUrl ());
+        return html ('file/_share_link.php');
+    }
+
+
+    /**
      * Share a file url by mail (show email form only)
      */
     public function emailFormAction () {
