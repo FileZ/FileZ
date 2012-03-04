@@ -125,7 +125,7 @@ bindRequiresDn = true
 ;   - SHA1        (unsecure)
 ;   - PHP Function name ex: "methodName"
 ;   - PHP Static method ex: "ClassName::Method"
-;   - Plain SQL ex: "password=SHA1(CONCAT(salt, :password))"
+;   - Plain SQL ex: "SHA1(CONCAT(salt, :password))"
 
 [user_attributes_translation]
 ; In order to make the application schema agnostic with differents user storage
