@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: filez-2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-09 14:52+0100\n"
-"PO-Revision-Date: 2011-05-09 15:08+0100\n"
-"Last-Translator: João Alexandre <jalexandre@mlgts.pt>\n"
+"PO-Revision-Date: 2012-03-04 23:07+0100\n"
+"Last-Translator: William Larrieu <w@larri.eu>\n"
 "Language-Team: João Alexandre <jalexandre@mlgts.pt>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -271,7 +271,6 @@ msgid "You need a password to download this file"
 msgstr "Necessita de uma palavra passe para descarregar este ficheiro"
 
 #: /home/didrya/filez/app/views/file/preview.php:67
-#, fuzzy
 msgid "The file is not available yet"
 msgstr "O ficheiro ainda não está disponível"
 
@@ -367,7 +366,7 @@ msgstr "Dê este endereço à pessoa com quem deseja partilhar este ficheiro"
 
 #: /home/didrya/filez/app/views/main/index.php:69
 msgid "or share using"
-msgstr "ou partilhe utilizando”
+msgstr "ou partilhe utilizando"
 
 #: /home/didrya/filez/app/views/main/index.php:72
 msgid "your email"
@@ -552,7 +551,7 @@ msgstr "Ajuda"
 
 #: /home/didrya/filez/app/views/layout/_footer.php:22
 msgid "Report a bug"
-msgstr "Reportar um \”bug\”"
+msgstr "Reportar um \"bug\""
 
 #: /home/didrya/filez/app/views/layout/_footer.php:27
 msgid "A free software from the University of Avignon"
