@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: FileZ\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-05 00:18+0100\n"
-"PO-Revision-Date: 2012-03-05 00:24+0100\n"
+"PO-Revision-Date: 2012-03-09 22:05+0100\n"
 "Last-Translator: William Larrieu <w@larri.eu>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -86,7 +86,7 @@ msgstr ""
 
 #: app/views/file/index.php:10
 msgid "Size"
-msgstr ""
+msgstr "Size"
 
 #: app/views/file/index.php:11
 msgid "DL count"
