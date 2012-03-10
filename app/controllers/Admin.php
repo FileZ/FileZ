@@ -33,6 +33,8 @@ class App_Controller_Admin extends Fz_Controller {
     public function filesAction () {
         $this->secure ('admin');        
         set ('files', Fz_Db::getTable ('File')->findAll ()); // TODO paginat
+	// Flash 'back_to' to come back here after a file deletion.
+        flash ('back_to', '/admin/files');
         return html ('file/index.php');
     }
 

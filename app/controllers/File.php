@@ -106,6 +106,7 @@ class App_Controller_File extends Fz_Controller {
      * Delete a file
      */
     public function confirmDeleteAction () {
+        flash('back_to', flash_now('back_to'));
         $this->secure ();
         $file = $this->getFile ();
         $user = $this->getUser ();
@@ -128,7 +129,7 @@ class App_Controller_File extends Fz_Controller {
             return json (array ('status' => 'success'));
         else {
             flash ('notification', __('File deleted.'));
-            $user->is_admin ? redirect_to ('/admin/files') : redirect_to ('/');
+            redirect_to ( flash_now('back_to') );
         }
     }
 
