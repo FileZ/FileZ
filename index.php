@@ -50,9 +50,9 @@ define ('FZ_VERSION', '3.0-alpha');
  * Loading Zend for i18n classes and autoloader
  */
 set_include_path (
- '.'.PATH_SEPARATOR.dirname (FILE).DIRECTORY_SEPARATOR.'lib'
-    .PATH_SEPARATOR.dirname (FILE).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'pear'
-    .PATH_SEPARATOR.dirname (FILE).DIRECTORY_SEPARATOR.'plugins'
+ '.'.PATH_SEPARATOR.dirname (__FILE__).DIRECTORY_SEPARATOR.'lib'
+    .PATH_SEPARATOR.dirname (__FILE__).DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'pear'
+    .PATH_SEPARATOR.dirname (__FILE__).DIRECTORY_SEPARATOR.'plugins'
     .PATH_SEPARATOR.get_include_path ());
 
 require_once 'Zend/Loader/Autoloader.php';
