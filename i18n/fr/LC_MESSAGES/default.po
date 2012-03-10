@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: filez\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-05 00:32+0100\n"
-"PO-Revision-Date: 2012-03-05 00:34+0100\n"
+"PO-Revision-Date: 2012-03-10 23:30+0100\n"
 "Last-Translator: William Larrieu <w@larri.eu>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "Language: \n"
@@ -32,7 +32,7 @@ msgstr "Donner cette adresse internet aux personnes avec qui vous souhaitez part
 
 #: FileZ/app/views/file/_share_link.php:3
 msgid "or share using:"
-msgstr "ou partagez en utilisant :"
+msgstr "ou partagez en utilisant:"
 
 #: FileZ/app/views/file/_share_link.php:6
 msgid "your email"
@@ -47,9 +47,8 @@ msgid "Twitter"
 msgstr "Twitter"
 
 #: FileZ/app/views/file/email.php:2
-#, fuzzy
 msgid "Send via email:"
-msgstr "Envoyer par email"
+msgstr "Envoyer par email:"
 
 #: FileZ/app/views/file/_mailForm.php:4
 msgid "Email addresses (space separated)"
@@ -85,7 +84,7 @@ msgstr "Auteur"
 
 #: FileZ/app/views/file/index.php:9
 msgid "Availability"
-msgstr "disponibilité"
+msgstr "Disponibilité"
 
 #: FileZ/app/views/file/index.php:10
 msgid "Size"
@@ -112,13 +111,12 @@ msgid "Available from %available_from% to %available_until%"
 msgstr "Disponible du  %available_from% au %available_until%"
 
 #: FileZ/app/views/file/preview.php:25
-#, fuzzy
 msgid "Uploaded by:"
-msgstr "Envoyé par"
+msgstr "Envoyé par:"
 
 #: FileZ/app/views/file/preview.php:29
 msgid "Comments:"
-msgstr "Commentaire"
+msgstr "Commentaire:"
 
 #: FileZ/app/views/file/preview.php:38
 #: FileZ/app/views/file/preview.php:63
@@ -138,7 +136,6 @@ msgid "You need a password to download this file"
 msgstr "Vous devez entrer un mot de passe pour pouvoir télécharger ce fichier"
 
 #: FileZ/app/views/file/preview.php:67
-#, fuzzy
 msgid "The file is not available yet"
 msgstr "Le fichier n'est pas encore disponible au téléchargement"
 
@@ -147,17 +144,16 @@ msgid "Do you really want to delete: %filename%?"
 msgstr "Êtes vous sûr de vouloir supprimer le fichier %filename% ?"
 
 #: FileZ/app/views/file/confirmDelete.php:6
-#, fuzzy
 msgid "Yes, delete that file"
-msgstr "Êtes vous sûr de vouloir supprimer ce fichier ?"
+msgstr "Oui, supprimer ce fichier"
 
 #: FileZ/app/views/file/confirmDelete.php:7
 msgid "No, go back to previous page"
-msgstr ""
+msgstr "Non, retourner à la page précédente"
 
 #: FileZ/app/views/admin/config.php:1
 msgid "FileZ settings"
-msgstr ""
+msgstr "Paramètres de Filez"
 
 #: FileZ/app/views/admin/config.php:3
 msgid "System administrators can edit the settings in the file config/filez.ini"
@@ -165,7 +161,7 @@ msgstr "Les administrateurs peuvent modifier la configuration dans le fichier co
 
 #: FileZ/app/views/admin/index.php:1
 msgid "Admin dashboard"
-msgstr ""
+msgstr "Tableau de bord Admin"
 
 #: FileZ/app/views/admin/index.php:3
 msgid "Manage %NumberOfUsers% users</a> and %NumberOfFiles% files</a>."
@@ -178,14 +174,13 @@ msgstr "Modifier"
 
 #: FileZ/app/views/user/show.php:7
 msgid "Email:"
-msgstr "Email :"
+msgstr "Email:"
 
 #: FileZ/app/views/user/show.php:8
 msgid "Account created:"
-msgstr "Compte créé :"
+msgstr "Compte créé:"
 
 #: FileZ/app/views/user/show.php:9
-#, fuzzy
 msgid "Administrator:"
 msgstr "Administrateur"
 
@@ -407,7 +402,7 @@ msgstr "Me connecter"
 
 #: FileZ/app/views/layout/admin.html.php:35
 msgid "Dashboard"
-msgstr ""
+msgstr "Tableau de bord"
 
 #: FileZ/app/views/layout/admin.html.php:36
 msgid "Users"
@@ -447,7 +442,7 @@ msgstr "Administration"
 
 #: FileZ/app/views/layout/_header.php:30
 msgid "Log out"
-msgstr "Me déconnecter"
+msgstr "Se déconnecter"
 
 #: FileZ/app/controllers/Upload.php:147
 msgid "[FileZ] \"%file_name%\" uploaded successfuly"
@@ -486,7 +481,7 @@ msgstr "Le fichier n'a été que partiellement envoyé."
 
 #: FileZ/app/controllers/Upload.php:270
 msgid "No file was uploaded."
-msgstr "Aucun fichier n'a été envoyé"
+msgstr "Aucun fichier n'a été envoyé."
 
 #: FileZ/app/controllers/Upload.php:273
 msgid "You exceeded your disk space quota (%space%)."
@@ -507,7 +502,7 @@ msgstr "Aucun fichier n'existe pour ce code"
 
 #: FileZ/app/controllers/File.php:130
 msgid "File deleted."
-msgstr "Fichier supprimé"
+msgstr "Fichier supprimé."
 
 #: FileZ/app/controllers/File.php:174
 msgid "[FileZ] \"%sender%\" wants to share a file with you"
@@ -544,7 +539,6 @@ msgid "You are not the owner of the file"
 msgstr "Vous n'êtes pas le propriétaire du fichier"
 
 #: FileZ/app/controllers/Admin.php:86
-#, fuzzy
 msgid "[FileZ] Your file \"%file_name%\" is going to be deleted"
 msgstr "[FileZ] Votre fichier \"%file_name%\" va prochainement être supprimé"
 
