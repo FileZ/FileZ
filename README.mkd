@@ -1,25 +1,29 @@
 
-FileZ provides a Web service to upload and manage files you want to share through a web interface and unique URLs (http), inspired by the perl/mod_perl application filex. FileZ was created by the Avignon University and is developed by people like you.
+FileZ provides a Web service to upload and manage files you want to share through a web interface and unique URLs (http), inspired by the perl/mod_perl application filex. 
+
+FileZ was created by the Avignon University and is developed by people like you. Please join us and report your [issues](https://github.com/FileZ/FileZ/issues), edit our [wiki](https://github.com/FileZ/FileZ/wiki), [fork](https://github.com/FileZ/FileZ/forkqueue), [translate](https://github.com/FileZ/FileZ/tree/master/i18n) and [commit](https://github.com/FileZ/FileZ/commits) your code!
+
 
 [![File list](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-1.png)
 [![Upload Form](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2007/12/Capture-2.png)
+[![Admin backend](https://a248.e.akamai.net/assets.github.com/img/2ae14055f509a26a0bc9be71c3bc6b2b69a4c401/687474703a2f2f692e696d6775722e636f6d2f534b4f75542e706e67)](https://a248.e.akamai.net/assets.github.com/img/2ae14055f509a26a0bc9be71c3bc6b2b69a4c401/687474703a2f2f692e696d6775722e636f6d2f534b4f75542e706e67)
 [![Install Form](http://gpl.univ-avignon.fr/wp-content/uploads/2010/03/fz-beta2-2-150x150.png)](http://gpl.univ-avignon.fr/wp-content/uploads/2010/03/fz-beta2-2.png)
 
 Features
 ========
 
-* PHP/Mysql – [Limonade PHP Framework](http://www.limonade-php.net)
+* PHP/Mysql or PHP/Sqlite with the [Limonade PHP Framework](http://www.limonade-php.net)
 * Several authentication scheme : CAS+LDAP, LDAP only, BDD.
 * short URL (ex: filez.univ-avignon.fr/x42ni1)
 * Upload progress bar (with non obstructive javascript)
-* Install form
-* I18N
+* Install form & admin backend
+* [i18n](https://github.com/FileZ/FileZ/tree/master/i18n)
 * Password protected files
 * Email notifications
 * CRON task
 * Quota
 
-More informations at [http://gpl.univ-avignon.fr/filez](http://gpl.univ-avignon.fr/filez) and the [wiki](https://github.com/FileZ/FileZ/wiki).
+More informations on the [wiki](https://github.com/FileZ/FileZ/wiki) and at [http://gpl.univ-avignon.fr/filez](http://gpl.univ-avignon.fr/filez).
 
 Requirement
 ===========
@@ -65,7 +69,6 @@ Installation
         tar -xvvf filez-2.0.tar.gz
         cp filez-2.0/* filez_web_root
 
-* Open your web browser on your FileZ web root and follow instructions.
+* Open your web browser on your FileZ web root and run the installation. Check the [FAQ](https://github.com/FileZ/FileZ/wiki/FAQ) on our [wiki](https://github.com/FileZ/FileZ/wiki).
 
-* Enjoy !
-
+* Enjoy!
