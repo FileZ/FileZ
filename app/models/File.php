@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 /**
  * @file
  * Short description.
- * 
+ *
  * Long description.
- * 
+ *
  * @package FileZ
  */
 
@@ -41,7 +41,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
     /**
      * Return the unique hash code of the file
-     * 
+     *
      * @return string
      */
     public function getHash () {
@@ -115,7 +115,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
     /**
      * Return the absolute URL of the file
-     * 
+     *
      * @return string
      */
     public function getDownloadUrl () {
@@ -149,7 +149,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
     /**
      * Initialise file attributes from an array.
-     * 
+     *
      * @param array $file       Associative array with the following keys :
      *                              - name
      *                              - size
@@ -171,7 +171,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         $this->created_by = $user->id;
     }
     /**
-     * Return file uploader info 
+     * Return file uploader info
      *
      * @return App_Model_User $user
      */
@@ -203,7 +203,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
     /**
      * Delete the file from disk and database
-     * 
+     *
      * @return void
      */
     public function delete () {
@@ -241,7 +241,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
 
     /**
      * Return the absolute location of the file on disk
-     * 
+     *
      * @return string
      */
     public function getOnDiskLocation () {
@@ -263,7 +263,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * Set the password for the file. This function use the filename to salt
      * the password hash meaning that 'file_name' must have been already set
      * before setting the password.
-     * 
+     *
      * @param string    $secret
      * @return void
      */
@@ -297,7 +297,7 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
             $mimetype = $mimes [$ext];
         else if (function_exists ('finfo_file')) {
             $file = finfo_open (FILEINFO_MIME_TYPE);
-            $mimetype = finfo_file ($file, $this->getOnDiskLocation (), FILEINFO_MIME_TYPE);
+            $mimetype = finfo_file ($file, $this->getOnDiskLocation(), FILEINFO_MIME_TYPE);
             finfo_close ($file);
         }
         return $mimetype;
