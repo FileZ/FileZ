@@ -171,6 +171,16 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
         $this->created_by = $user->id;
     }
     /**
+     * Set the * visitor * uploader of the file
+     * from an associative array containing
+     * 'id' & 'email' keys.
+     *
+     * @param
+     */
+    public function setVisitorUploader () {
+        $this->created_by = '*visitor*';
+    }
+    /**
      * Return file uploader info
      *
      * @return App_Model_User $user

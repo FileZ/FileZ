@@ -1,44 +1,28 @@
 <?php
 
 /**
- * @file
  * Front to the FileZ application. This file loads Zend, Limonade and define the URL schema.
  * 
- * This file loads Zend, 
- * which autoloads Fz_* classes in lib/ dir and App_Model_* & App_Controller_* classes in app/ dir, 
- * configure and loads Limonade PHP framework, 
- * configure FileZ and dispatch the user according to the Url Schema. 
+ * This file:
+ * - loads Zend, which autoloads Fz_* classes in lib/ dir and App_Model_* & App_Controller_* classes in app/ dir, 
+ * - configure and loads Limonade PHP framework, 
+ * - configure FileZ and dispatch the user according to the Url Schema. 
  *
- * All FileZ code is released under the GNU General Public License.
- * See COPYING and LICENSE in doc/ directory.
- * 
+ * All FileZ code is released under the GNU General Public License. See COPYING and LICENSE in doc/ directory.
+ *
  * @package FileZ
  * -------------
  * @mainpage
- * <center>
- * See also: <a href="http://gpl.univ-avignon.fr/filez">gpl.univ-avignon.fr/FileZ</a> - <a href="https://github.com/UAPV/FileZ">README, issues & wiki on github</a>
- * </center>
  *
- * @htmlonly
- * <style type="text/css">h2{position: relative;left: -15px;font-size: 140%;}</style>
- * @endhtmlonly
- *
- * @section Model–view–controller
- *
- * Filez has been developed around the MVC pattern thanks to the Limonade micro framework.
+ * Filez has been developed around the Model–View–Controller pattern thanks to the Limonade micro framework.
  *
  * Limonade micro framework provide the glue between the controllers and views : * Routes declarations * Request handler/dispatcher (index.php) * and many action helpers
+ *
  * - Domain logic is implemented in 'app/model/DOMAIN_OBJECT.php' files.
  * - Controllers & actions reside in 'app/controller/CONTROLLER_NAME.php' files and contain a set of functions (actions). Fz_Controller
- * - Views are raw php files stored in 'app/view/CONTROLLER_NAME/ACTION_NAME.php' Static files are stored in the 'resource' directory.
+ * - Views are raw php files stored in 'app/view/CONTROLLER_NAME/ACTION_NAME.php'. Static files are stored in the 'resources' directory.
  * 
- * See also <a href="https://github.com/UAPV/FileZ/blob/master/doc/README.DEV.markdown">doc/README.DEV.markdown</a>
- * 
- * @section About
- * 
- * - See <a href="http://gpl.univ-avignon.fr">gpl.univ-avignon.fr</a> for more information
- *
- * @section Copyright
+ * See also <a href="https://github.com/FileZ/FileZ">README, issues & wiki on github</a>
  * 
  * Copyright 2010 Université d'Avignon et des Pays de Vaucluse, Arnaud Didry and others.
  * 
@@ -183,6 +167,7 @@ fz_dispatch ('/'                                ,'Main'        ,'index');
 // Upload controller
 fz_dispatch_post ('/upload'                     ,'Upload'      ,'start');
 fz_dispatch_get  ('/upload/progress/:upload_id' ,'Upload'      ,'getProgress');
+fz_dispatch_post ('/visitor'                    ,'Upload'      ,'visitorStart');
 
 // Backend controller
 fz_dispatch_get  ('/admin'                      ,'Admin'       ,'index');

@@ -17,7 +17,7 @@ define ('UPLOAD_ERR_QUOTA_EXCEEDED', 99);
 class App_Controller_Upload extends Fz_Controller {
 
     /**
-     * Action called when uploading a file
+     * Action called when a user is uploading a file
      * @return string   json if request is made async or html otherwise
      */
     public function startAction () {
@@ -35,6 +35,38 @@ class App_Controller_Upload extends Fz_Controller {
         else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK) {
             if ($this->checkQuota ($_FILES ['file'])) // Check user quota first
                 return $this->onFileUploadError (UPLOAD_ERR_QUOTA_EXCEEDED);
+
+            // Still no error ? we can move the file to its final destination
+            $file = $this->saveFile ($_POST, $_FILES ['file']);
+            if ($file !== null) {
+                $this->sendFileUploadedMail ($file);
+                return $this->onFileUploadSuccess ($file);
+
+            } else { // Errors happened while saving or moving the uploaded file
+                return $this->onFileUploadError ();
+            }
+        } else { // Errors happened during file upload
+            return $this->onFileUploadError ($_FILES ['file']['error']);
+        }
+    }
+
+    /**
+     * Action called when a * visitor * is uploading a file
+     * @return string   json if request is made async or html otherwise
+     */
+    public function visitorStartAction () {
+        fz_log ('visitor uploading');
+        fz_log ('visitor uploading', FZ_LOG_DEBUG, $_FILES);
+        $response = array (); // returned data
+        option('visitor',true);
+
+        // check if request exceed php.ini post_max_size
+        if ($_SERVER ['CONTENT_LENGTH'] > $this->shorthandSizeToBytes (
+                                                   ini_get ('post_max_size'))) {
+            fz_log ('upload error (POST request > post_max_size)', FZ_LOG_ERROR);
+            return $this->onFileUploadError (UPLOAD_ERR_INI_SIZE);
+        }
+        else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK) {
 
             // Still no error ? we can move the file to its final destination
             $file = $this->saveFile ($_POST, $_FILES ['file']);
@@ -107,7 +139,8 @@ class App_Controller_Upload extends Fz_Controller {
         // Storing values
         $file = new App_Model_File ();
         $file->setFileInfo      ($uploadedFile);
-        $file->setUploader      ($user);
+        if (option('visitor')) $file->setVisitorUploader();
+        else $file->setUploader      ($user);
         $file->setCreatedAt     (new Zend_Date ());
         $file->comment          = substr ($comment, 0, 199);
         $file->setAvailableFrom ($availableFrom);
