@@ -1,15 +1,8 @@
 <?php
 
-/**
- * @file
- * Short description.
- * 
- * Long description.
- * 
- * @package FileZ
- */
-
 define ('UPLOAD_ERR_QUOTA_EXCEEDED', 99);
+define('UPLOAD_ERR_VIRUS_FOUND', 100);
+define('UPLOAD_ERR_ANTIVIRUS', 101);
 
 /**
  * Controller used to upload files and monitor progression
@@ -36,6 +29,7 @@ class App_Controller_Upload extends Fz_Controller {
             if ($this->checkQuota ($_FILES ['file'])) // Check user quota first
                 return $this->onFileUploadError (UPLOAD_ERR_QUOTA_EXCEEDED);
 
+            $this->runAntivirus();
             // Still no error ? we can move the file to its final destination
             $file = $this->saveFile ($_POST, $_FILES ['file']);
             if ($file !== null) {
@@ -68,6 +62,7 @@ class App_Controller_Upload extends Fz_Controller {
         }
         else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK) {
 
+            $this->runAntivirus();
             // Still no error ? we can move the file to its final destination
             $file = $this->saveFile ($_POST, $_FILES ['file']);
             if ($file !== null) {
@@ -107,7 +102,44 @@ class App_Controller_Upload extends Fz_Controller {
         return json ($progress);
     }
 
+    /**
+     * run the antivirus if [app] antivirus=true
+     */
+    private function runAntivirus () {
+        if ( fz_config_get ('app', 'antivirus') )
+        {
+            // We check if the file contains a virus and must be stopped
+            $fileFirstStep = $_FILES ['file']['tmp_name'];
+            try {
+              if ($this->checkVirus ($fileFirstStep))
+              {
+                //$fileFirstStep->delete();
+                return $this->onFileUploadError (UPLOAD_ERR_VIRUS_FOUND);
+              }
+            } catch (Exception $e) {
+              fz_log ($e, FZ_LOG_ERROR);
+              return $this->onFileUploadError (UPLOAD_ERR_ANTIVIRUS);
+            }
+        }
+    }
 
+    /**
+     * Check virus with clamscan
+     */
+    private function checkVirus($file) {
+
+       $cmd = "clamscan -i --no-summary --remove";
+       exec($cmd." ".$file, $output, $return_value);
+       fz_log ('Clamscan antivirus check returns:', FZ_LOG_DEBUG,$return_value);
+       if ($return_value === 1) {
+         fz_log ('VIRUS FOUND file id '.$file.', antivirus message: "'.implode ($output).'"', FZ_LOG_ERROR);
+         return 1;
+       }
+       if ($return_value === 2) {
+         throw new Exception ('Antivirus reported an error.');
+       }
+       return 0;
+    }
 
     /**
      * Create a new File object from posted values and store it into the database.
