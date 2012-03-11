@@ -126,6 +126,9 @@ bindRequiresDn = true
 ;   - PHP Function name ex: "methodName"
 ;   - PHP Static method ex: "ClassName::Method"
 ;   - Plain SQL ex: "SHA1(CONCAT(salt, :password))"
+;
+; You have the possibility to block certain users with: (see also https://github.com/FileZ/FileZ/issues/12)
+; accountFilterFormat   = "(&(objectClass=posixAccount)(uid=%s)(mailenable=true))"
 
 [user_attributes_translation]
 ; In order to make the application schema agnostic with differents user storage
