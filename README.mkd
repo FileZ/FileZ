@@ -47,7 +47,7 @@ Requirement
           echo "extension = uploadprogress.so" >> /etc/php5/apache2/conf.d/uploadprogress.ini
           apache2ctl restart
 
-* You will need __php5-curl__ to be able to authenticate against a CAS server
+* You will need __php5-curl__ and __php5-dom__ to be able to authenticate against a CAS server
 
 * You will need __php5-ldap__ to be able to identicate with a LDAP server
 
