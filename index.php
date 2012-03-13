@@ -89,6 +89,9 @@ function before () {
         option ('debug', false);
     }
 
+   // Shared hosting often needs to specify a temp dir. Fix the Zend error: "should specify a cache_dir"
+   if (fz_config_get ('app', 'cache_dir', false)) $_SERVER['TEMP'] =  realpath(dirname(__FILE__) . '/' . fz_config_get ('app', 'cache_dir'));
+
     // I18N
     $currentLocale = new Zend_Locale (fz_config_get ('app', 'default_locale', 'fr'));
     $translate     = new Zend_Translate ('gettext', option ('root_dir').DIRECTORY_SEPARATOR.'i18n', $currentLocale,
