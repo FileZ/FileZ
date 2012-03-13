@@ -187,7 +187,9 @@ class App_Controller_File extends Fz_Controller {
         $mail->setFrom     ($user->email, $user);
 
         $emailValidator = new Zend_Validate_EmailAddress();
-        foreach (explode (' ', $_POST['to']) as $email) {
+        $to = str_replace(',',' ',$_POST['to']);
+        $to = str_replace(';',' ',$to);
+        foreach (explode (' ', $to) as $email) {
             $email = trim ($email);
             if (empty ($email))
                 continue;
@@ -206,7 +208,7 @@ class App_Controller_File extends Fz_Controller {
         }
         catch (Exception $e) {
             fz_log ('Error while sending email', FZ_LOG_ERROR, $e);
-            $msg = __('An error occured during email submission. Please try again.');
+            $msg = __('An error occured during email submission, probably too many emails. Please try again.');
             return $this->returnError ($msg, 'file/email.php');
         }
     }
@@ -228,6 +230,7 @@ class App_Controller_File extends Fz_Controller {
         if ($this->isXhrRequest ()) {
             return json (array ('status' => 'success'));
         } else {
+    		flash ('notification', __('Successfully sent.'));
             redirect_to ($url);
         }
     }
