@@ -13,7 +13,7 @@ Please join us and report your [**issues**](https://github.com/FileZ/FileZ/issue
 Features
 ========
 
-* PHP/Mysql or PHP/Sqlite with the [Limonade PHP Framework](http://www.limonade-php.net)
+* PHP/Mysql or PHP/Sqlite with the [Limonade PHP Framework](http://limonade-php.github.com/)
 * Several authentication scheme : CAS+LDAP, LDAP only, BDD.
 * short URL (ex: filez.univ-avignon.fr/x42ni1)
 * Upload progress bar (with non obstructive javascript)

@@ -37,7 +37,7 @@ CREATE TABLE `fz_user` (
 ) ENGINE = MYISAM ;
 
 INSERT INTO `fz_info` (`key`, `value`) VALUES ('cron_freq', NOW());
-INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '3.0-alpha');
+INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '3.0-alpha') ON DUPLICATE KEY UPDATE value = '3.0-alpha';
 
 INSERT INTO `fz_user` (`username`, `password`, `firstname`, `lastname`, `email`, `is_admin`) 
 VALUES ('admin', SHA1('filez'), 'FileZ', 'admin', 'foo@bar.com', 1);
