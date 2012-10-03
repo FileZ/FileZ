@@ -26,8 +26,13 @@ class App_Controller_Auth extends Fz_Controller {
         if ($https == 'always' || $https == 'login_only' )
             fz_force_https ();
 
-        set ('username', (array_key_exists ('username', $_POST) ?
+		if (isset($_SESSION['token']) && $_POST['token'] == $_SESSION['token']) {
+			set ('username', (array_key_exists ('username', $_POST) ?
             $_POST['username'] : ''));
+		}
+
+		$token = md5(uniqid(rand(), true));
+		$_SESSION['token'] = $token;
 
         return html ('auth/loginForm.php');
     }
