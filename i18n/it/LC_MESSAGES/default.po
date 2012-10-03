@@ -504,6 +504,10 @@ msgstr "Nessun file è stato caricato"
 msgid "You exceeded your disk space quota (%space%)."
 msgstr "Hai superato la tua quota di spazio su disco (%space%)."
 
+#: app/controllers/Upload.php:275
+msgid "The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%."
+msgstr "Il file non può essere caricato. Si noti che i file devono essere autorizzati %allowed_exts%"
+
 #: FileZ/app/controllers/File.php:69
 msgid "Lifetime extended"
 msgstr "Scadenza rimandata"

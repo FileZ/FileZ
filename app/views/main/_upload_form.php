@@ -1,3 +1,20 @@
+  <?php // Check file extensions
+  		$matches = (fz_config_get ('app', 'allowed_exts') ) ? fz_config_get ('app', 'allowed_exts') : '';
+	  	if ('' !== $matches) {
+  			$matches = explode(',', $matches);
+			$matches = implode(')|(', $matches);
+			$matches = '/\.(' . $matches . ')$/'; ?>
+
+  <script>
+  function checkExt(e) {
+    value=e.value;
+	if( !value.match(<?php echo $matches; ?>) ){
+	  alert(<?php echo __r('The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%.',
+	                      array ('allowed_exts' => fz_config_get ('app', 'allowed_exts'))); ?>)
+	}
+  }
+  </script>
+  <?php } ?>
   <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('upload') ?>" id="upload-form">
   <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_upload_size ?>" />
   <div id="file">
@@ -42,8 +59,9 @@
     </li>
   </ul>
   <div id="upload">
-    <input type="submit" id="start-upload" name="upload" class="awesome blue large" value="&raquo; <?php echo __('Upload') ?>" />
+    <input type="submit" id="start-upload" name="upload" class="awesome blue large" value="&raquo; <?php echo __('Upload') ?>" <?php if ('' !== $matches) echo "onClick=\"checkExt(this);\""; ?>/>
     <div id="upload-loading"  style="display: none;"></div>
     <div id="upload-progress" style="display: none;"></div>
   </div>
   </form>
+

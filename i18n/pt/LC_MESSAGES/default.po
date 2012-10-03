@@ -498,6 +498,10 @@ msgstr "Nenhum ficheiro enviado."
 msgid "You exceeded your disk space quota (%space%)."
 msgstr "Excedeu a sua quota de disco (%space%)."
 
+#: app/controllers/Upload.php:275
+msgid "The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%."
+msgstr "O arquivo não está autorizado a ser carregado. Note que os ficheiros têm de ser autorizados %allowed_exts%"
+
 #: FileZ/app/controllers/File.php:69
 msgid "Lifetime extended"
 msgstr "Vida útil prolongada"
