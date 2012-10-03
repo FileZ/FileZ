@@ -45,7 +45,7 @@ user_factory_class = Fz_User_Factory_Ldap
 user_quota = 2G
 
 ; File extension allowed to be uploaded. Empty means no restriction
-allowed_exts = mp3,avi,doc,docx
+allowed_extensions = png,jpg,jpeg,gif
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Cron Job

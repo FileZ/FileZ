@@ -77,6 +77,19 @@
         }
 
       });
+  <?php // Check file extensions
+        $matches = (fz_config_get ('app', 'allowed_extensions') ) ?  fz_config_get ('app', 'allowed_extensions') : '';
+        if ('' !== $matches) { ?>
+     $("#upload-form").validate({
+        rules: {
+          'start-upload' : {
+            required: true,
+            accept: "<?php echo $matches; ?>"
+          }
+        }
+     });  
+  <?php } ?>
+
     });
 </script>
 

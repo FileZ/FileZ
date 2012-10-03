@@ -316,7 +316,7 @@ class App_Controller_Upload extends Fz_Controller {
 		// Extension restriction
 		// Check extension
 		$allowed_exts = explode(',', $allowed_exts);
-		$extension = end(explode('.', $_FILE['file']['name']));
+		$extension = end(explode('.', $_FILES['file']['name']));
 
 		// TODO : add chack with mime-type
 		if (in_array($extension, $allowed_exts)) return false;
