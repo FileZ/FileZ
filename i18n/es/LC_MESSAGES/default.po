@@ -505,6 +505,10 @@ msgstr "No se subió ningún archivo"
 msgid "You exceeded your disk space quota (%space%)."
 msgstr "Has sobrepasado la cuota de espacio en disco (%space%)."
 
+#: app/controllers/Upload.php:275
+msgid "The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%."
+msgstr "El archivo no puede ser cargado. Tenga en cuenta que los archivos deseados necesitan estar %allowed_exts%"
+
 #: FileZ/app/controllers/File.php:69
 msgid "Lifetime extended"
 msgstr "Fecha de caducidad ampliada"

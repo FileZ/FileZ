@@ -23,6 +23,8 @@
     <?php if (option ('locale')->getLanguage () != 'en'): ?>
       <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
     <?php endif ?>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.tablesorter/jquery.tablesorter.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/jquery.tablesorter.page.js') ?>"></script>
   </head>
   <body id="admin">
 
@@ -59,8 +61,14 @@
             $(this).addClass ('selected');
           }
         });
+        // call the tablesorter plugin 
+	    $("table").tablesorter({ 
+          // sort on the first column and third column, order asc 
+          sortList: [[0,0], [1,0]],
+          widgets: ['zebra']
+        })
+        .tablesorterPager({container: $("#pager")}); 
       });
     </script>
-
   </body>
 </html>

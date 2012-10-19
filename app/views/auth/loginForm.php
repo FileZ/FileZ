@@ -1,6 +1,7 @@
 
 
 <form action="" method="post" id="login-form">
+  <input type="hidden" name="token" value="<?php echo $token; ?>" />
   <p id="username">
     <label><?php echo __('Username') ?></label>
     <input type="text" name="username" class="username" value="<?php echo $username ?>"/>

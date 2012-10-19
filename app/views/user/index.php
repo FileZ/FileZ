@@ -1,10 +1,10 @@
 <h2><?php echo __('Manage users') ?></h2>
 
-<!-- TODO : find a jquery plugin to order and paginate the user list -->
 <?php if ($EditUserRight): ?>
 <p><a href="<?php echo url_for ('/admin/users/new') ?>" class="awesome"><?php echo __('Create a new user') ?></a></p>
 <?php endif ?>
-<table id="user_list" class="data">
+<table id="user_list" class="data" class="tablesorter">
+<thead>
   <tr>
     <th><?php echo __('Name') ?></th>
     <th><?php echo __('Username') ?></th>
@@ -14,7 +14,9 @@
     <!--<th><?php echo __('Expired files') ?></th>-->
     <?php if ($EditUserRight): ?><th><?php echo __('Actions') ?></th><?php endif ?>
   </tr>
+</thead>
 
+<tbody>
 <?php foreach ($users as $user_item): ?>
   <tr>
     <td><a href="<?php echo url_for ('/admin/users/'.$user_item->id) ?>"><?php echo h($user_item) ?></a></td>
@@ -43,5 +45,20 @@
     </td><?php endif /*EditUserRight*/?>
   </tr>
 <?php endforeach ?>
+</tbody>
 </table>
-
+<div id="pager" class="pager">
+	<form>
+		<img src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/icons/first.png'); ?>" class="first"/>
+		<img src="<?php echo public_url_for ('ressources/jquery.tablesorter/addons/pager/icons/prev.png'); ?>" class="prev"/>
+		<input type="text" class="pagedisplay"/>
+		<img src="<?php echo public_url_for ('ressources/jquery.tablesorter/addons/pager/icons/next.png'); ?>" class="next"/>
+		<img src="<?php echo public_url_for ('ressources/jquery.tablesorter/addons/pager/icons/last.png'); ?>" class="last"/>
+		<select class="pagesize">
+			<option selected="selected"  value="10">10</option>
+			<option value="20">20</option>
+			<option value="30">30</option>
+			<option  value="40">40</option>
+		</select>
+	</form>
+</div>

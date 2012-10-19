@@ -8,7 +8,8 @@
 <p><b><?php echo __('Account created:') ?></b> <?php echo h($user->created_at) ?></p>
 <p><b><?php echo __('Administrator:') ?></b> <?php echo $user->is_admin ? __('yes') : __('no') ?></p>
 
-<table id="user_files" class="data">
+<table id="user_files" class="data" class="tablesorter">
+<thead>
   <tr>
     <th><?php echo __('Name') ?></th>
     <th><?php echo __('Availability') ?></th>
@@ -16,7 +17,9 @@
     <th><?php echo __('DL count') ?></th>
     <th><?php echo __('Actions') ?></th>
   </tr>
+</thead>
 
+<tbody>
 <?php foreach ($user->getFiles () as $file): ?>
   <tr>
     <td><a href="<?php echo $file->getDownloadUrl () ?>"><?php echo h($file->file_name) ?></a></td>
@@ -31,4 +34,5 @@
     <td><a href="<?php echo $file->getDownloadUrl () . '/delete' ?>"><?php echo __('Delete') ?></a></td>
   </tr>
 <?php endforeach ?>
+</tbody>
 </table>
