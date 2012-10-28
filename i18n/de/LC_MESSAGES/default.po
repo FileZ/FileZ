@@ -505,6 +505,10 @@ msgstr "Es wurde keine Datei hochgeladen."
 msgid "You exceeded your disk space quota (%space%)."
 msgstr "Der verfügbare Festplattenspeicher wurde überschritten (%space%)."
 
+#: app/controllers/Upload.php:275
+msgid "The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%."
+msgstr "Die Datei darf nicht hochgeladen werden. Beachten Sie, dass Dateien erlaubt sein müssen %allowed_exts%"
+
 #: FileZ/app/controllers/File.php:69
 msgid "Lifetime extended"
 msgstr "Dauer wurde verlängert"

@@ -3,6 +3,7 @@
 define ('UPLOAD_ERR_QUOTA_EXCEEDED', 99);
 define('UPLOAD_ERR_VIRUS_FOUND', 100);
 define('UPLOAD_ERR_ANTIVIRUS', 101);
+define('UPLOAD_ERR_ALLOWED_EXTS', 102);
 
 /**
  * Controller used to upload files and monitor progression
@@ -18,6 +19,9 @@ class App_Controller_Upload extends Fz_Controller {
         fz_log ('uploading');
         fz_log ('uploading', FZ_LOG_DEBUG, $_FILES);
         $response = array (); // returned data
+
+		// First of all check if file's type is allowed
+		if ($this->extensionNotAllowed()) return $this->onFileUploadError (UPLOAD_ERR_ALLOWED_EXTS);
 
         // check if request exceed php.ini post_max_size
         if ($_SERVER ['CONTENT_LENGTH'] > $this->shorthandSizeToBytes (
@@ -53,6 +57,9 @@ class App_Controller_Upload extends Fz_Controller {
         fz_log ('visitor uploading', FZ_LOG_DEBUG, $_FILES);
         $response = array (); // returned data
         option('visitor',true);
+
+		// First of all check if file's type is allowed
+		if ($this->extensionNotAllowed()) return $this->onFileUploadError (UPLOAD_ERR_ALLOWED_EXTS);
 
         // check if request exceed php.ini post_max_size
         if ($_SERVER ['CONTENT_LENGTH'] > $this->shorthandSizeToBytes (
@@ -296,6 +303,27 @@ class App_Controller_Upload extends Fz_Controller {
         return $this->returnData ($response);
     }
 
+	/**
+	 * Function called to check if file's type is allowed or not to be downloaded
+	 *
+	 */ 
+	private function extensionNotAllowed() {
+        $allowed_exts = ( fz_config_get ('app', 'allowed_extensions') ) ? fz_config_get ('app', 'allowed_extensions') : '';
+
+		// No extension restriction
+		if ('' === $allowed_exts) return false;
+
+		// Extension restriction
+		// Check extension
+		$allowed_exts = explode(',', $allowed_exts);
+		$extension = end(explode('.', $_FILES['file']['name']));
+
+		// TODO : add chack with mime-type
+		if (in_array($extension, $allowed_exts)) return false;
+
+		return true;
+	}
+
     /**
      * Function called on file upload error. A message corresponding to the error
      * code passed as parameter is return to the user. Error codes come from
@@ -337,6 +365,9 @@ class App_Controller_Upload extends Fz_Controller {
             case UPLOAD_ERR_QUOTA_EXCEEDED:
                 $response ['statusText'] .= __r('You exceeded your disk space quota (%space%).',
                     array ('space' => fz_config_get ('app', 'user_quota')));
+			case UPLOAD_ERR_ALLOWED_EXTS:
+				$response ['statusText'] .= __r('The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%.',
+					array ('allowed_exts' => fz_config_get ('app', 'allowed_exts')));
         }
         return $this->returnData ($response);
     }
