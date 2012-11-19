@@ -1,0 +1,9 @@
+Translations
+============
+
+This directory contains the gettext translations.
+
+A `Makefile` is provided to do the usual actions:
+
+- update the messages, type `make update-po`
+
