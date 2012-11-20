@@ -1,178 +1,199 @@
+# Esperanto translations for FileZ package.
+# Copyright (C) 2012 THE FileZ'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the FileZ package.
+#
+# Automatically generated, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-19 12:50+0100\n"
+"PO-Revision-Date: 2012-11-19 12:57+0000\n"
+"Last-Translator: Eliovir <eliovir@gmail.com>\n"
+"Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.5\n"
+
 #: ../app/views/auth/loginForm.php:6 ../app/views/user/edit.php:5
 #: ../app/views/user/edit.php:6 ../app/views/user/create.php:5
 #: ../app/views/user/create.php:6 ../app/views/user/index.php:10
 msgid "Username"
-msgstr ""
+msgstr "Uzantkonto"
 
 #: ../app/views/auth/loginForm.php:10 ../app/views/user/edit.php:7
 #: ../app/views/user/create.php:7
 msgid "Password"
-msgstr ""
+msgstr "Pasvorto"
 
 #: ../app/views/auth/loginForm.php:14
 msgid "Log me in"
-msgstr ""
+msgstr "Ensaluti"
 
 #: ../app/views/file/email.php:2
 msgid "Send via email:"
-msgstr ""
+msgstr "Sendi repoŝte"
 
 #: ../app/views/file/_mailForm.php:4
 msgid "Email addresses (space separated)"
-msgstr ""
+msgstr "Retpoŝtaj adresoj (disigitaj de spaco)"
 
 #: ../app/views/file/_mailForm.php:8
 msgid "Message (file url will automatically be added)"
-msgstr ""
+msgstr "Mesaĝo (la adreso de la dosiero estos aŭtomate aldonita)"
 
 #: ../app/views/file/_mailForm.php:12 ../app/views/main/index.php:47
 msgid "You can download the file I uploaded here"
-msgstr ""
+msgstr "Vi povas elŝuti la dosieron kiun mi alŝutis tie"
 
 #: ../app/views/file/_mailForm.php:14
 msgid "Open in my email client"
-msgstr ""
+msgstr "Malfermi mian retmesaĝilon"
 
 #: ../app/views/file/_mailForm.php:18
 msgid "Send"
-msgstr ""
+msgstr "Sendi"
 
 #: ../app/views/file/preview.php:25
 msgid "Uploaded by:"
-msgstr ""
+msgstr "Alŝutita de:"
 
 #: ../app/views/file/preview.php:29
 msgid "Comments:"
-msgstr ""
+msgstr "Komentoj:"
 
 #: ../app/views/file/preview.php:38 ../app/views/file/preview.php:63
 msgid "Download"
-msgstr ""
+msgstr "Elŝuti"
 
 #: ../app/views/file/preview.php:43
 msgid "Your download will start shortly..."
-msgstr ""
+msgstr "Via elŝuto ekos baldaŭ..."
 
 #: ../app/views/file/preview.php:45
 msgid "If not, click here"
-msgstr ""
+msgstr "Si ĝi ne ekas, BV alklaki ĉi-tie"
 
 #: ../app/views/file/preview.php:60
 msgid "You need a password to download this file"
-msgstr ""
+msgstr "Vi bezonas pasvorton por elŝuti tiun dosieron"
 
 #: ../app/views/file/preview.php:67
 msgid "The file is not available yet"
-msgstr ""
+msgstr "Tiu dosiero ne disponeblas nun"
 
 #: ../app/views/file/index.php:1
 msgid "Manage files"
-msgstr ""
+msgstr "Administri dosierojn "
 
 #: ../app/views/file/index.php:8 ../app/views/user/show.php:14
 #: ../app/views/user/index.php:9
 msgid "Name"
-msgstr ""
+msgstr "Nomo"
 
 #: ../app/views/file/index.php:9
 msgid "Author"
-msgstr ""
+msgstr "Aŭtoro"
 
 #: ../app/views/file/index.php:10 ../app/views/user/show.php:15
 msgid "Availability"
-msgstr ""
+msgstr "Disponebleco"
 
 #: ../app/views/file/index.php:11 ../app/views/user/show.php:16
 msgid "Size"
-msgstr ""
+msgstr "Grandeco"
 
 #: ../app/views/file/index.php:12 ../app/views/user/show.php:17
 msgid "DL count"
-msgstr ""
+msgstr "Nombro da elŝutoj"
 
 #: ../app/views/file/index.php:13 ../app/views/user/show.php:18
 #: ../app/views/user/index.php:15
 msgid "Actions"
-msgstr ""
+msgstr "Agoj"
 
 #: ../app/views/file/index.php:34 ../app/views/main/_file_row.php:41
 #: ../app/views/main/_file_row.php:42 ../app/views/user/show.php:34
 #: ../app/views/user/index.php:42
 msgid "Delete"
-msgstr ""
+msgstr "Forigi"
 
 #: ../app/views/file/confirmDelete.php:6
 msgid "Yes, delete that file"
-msgstr ""
+msgstr "Yes, foriti tiun dosieron"
 
 #: ../app/views/file/confirmDelete.php:7
 msgid "No, go back to previous page"
-msgstr ""
+msgstr "Ne, reen al la antaŭa paĝo"
 
 #: ../app/views/file/_share_link.php:1
 msgid "Give this link to the person you want to share this file with"
 msgstr ""
+"Sendi la ligilon al la persono kun kiu vi volas kunhavigi tiun dosieron"
 
 #: ../app/views/file/_share_link.php:3
 msgid "or share using:"
-msgstr ""
+msgstr "aŭ kunhavigi pere de:"
 
 #: ../app/views/file/_share_link.php:6
 msgid "your email"
-msgstr ""
+msgstr "via retadreso"
 
 #: ../app/views/file/_share_link.php:9
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: ../app/views/file/_share_link.php:12
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: ../app/views/main/_visitor_upload_form.php:6
 #: ../app/views/main/_upload_form.php:6
 msgid "File"
-msgstr ""
+msgstr "File"
 
 #: ../app/views/main/_visitor_upload_form.php:10
 #: ../app/views/main/_upload_form.php:10
 msgid "Lifetime"
-msgstr ""
+msgstr "Vivtempo"
 
 #: ../app/views/main/_visitor_upload_form.php:11
 #: ../app/views/main/_upload_form.php:11
 msgid "Select a lifetime"
-msgstr ""
+msgstr "Elektu vivtempon"
 
 #: ../app/views/main/_visitor_upload_form.php:16
 #: ../app/views/main/_upload_form.php:16
 msgid "%n% days"
-msgstr ""
+msgstr "%n% tagoj"
 
 #: ../app/views/main/_visitor_upload_form.php:16
 #: ../app/views/main/_upload_form.php:16
 msgid "%n% day"
-msgstr ""
+msgstr "%n% tago"
 
 #: ../app/views/main/_visitor_upload_form.php:22
 #: ../app/views/main/_upload_form.php:22
 msgid "Starts from"
-msgstr ""
+msgstr "Ekas el"
 
 #: ../app/views/main/_visitor_upload_form.php:23
 #: ../app/views/main/_upload_form.php:23
 msgid "Select a starting date"
-msgstr ""
+msgstr "Elektu komencan daton"
 
 #: ../app/views/main/_visitor_upload_form.php:26
 #: ../app/views/main/_upload_form.php:26
 msgid "Comments"
-msgstr ""
+msgstr "Komentoj"
 
 #: ../app/views/main/_visitor_upload_form.php:27
 #: ../app/views/main/_upload_form.php:27
 msgid "Add a comment (optional)"
-msgstr ""
+msgstr "Aldoni komenton (malnepre)"
 
 #: ../app/views/main/_visitor_upload_form.php:32
 #: ../app/views/main/_upload_form.php:32
@@ -180,321 +201,327 @@ msgid ""
 "Send me email notifications when the file is uploaded and before it will be "
 "deleted"
 msgstr ""
+"Averti min retpoŝte kiam la dosiero estas elŝutita kaj antaŭ gia forigo"
 
 #: ../app/views/main/_visitor_upload_form.php:33
 #: ../app/views/main/_upload_form.php:33
 msgid "Send me email notifications"
-msgstr ""
+msgstr "Averti min retpoŝte"
 
 #: ../app/views/main/_visitor_upload_form.php:38
 #: ../app/views/main/_upload_form.php:38
 msgid "Ask a password to people who will download your file"
-msgstr ""
+msgstr "Peti pasvorton al tiuj kiuj elŝutoj vian dosieron"
 
 #: ../app/views/main/_visitor_upload_form.php:39
 #: ../app/views/main/_upload_form.php:39
 msgid "Use a password to download"
-msgstr ""
+msgstr "Uzi pasvorton por elŝuti"
 
 #: ../app/views/main/_visitor_upload_form.php:45
 #: ../app/views/main/_upload_form.php:45
 msgid "Upload"
-msgstr ""
+msgstr "Alŝuti"
 
 #: ../app/views/main/index.php:2 ../app/views/main/index.php:61
 msgid "Upload a new file"
-msgstr ""
+msgstr "Alŝuti novan dosieron"
 
 #: ../app/views/main/index.php:7
 msgid "Uploaded files"
-msgstr ""
+msgstr "Alŝutitaj dosieroj"
 
 #: ../app/views/main/index.php:43
-msgid "Are you sure to delete this file ?"
-msgstr ""
+msgid "Are you sure to delete this file?"
+msgstr "Ĉu vi certas, ke vi volas forigi tiun ĉi dosieron?"
 
 #: ../app/views/main/index.php:44
 msgid "Unknown error"
-msgstr ""
+msgstr "Nekonata eraro"
 
 #: ../app/views/main/index.php:45
-msgid "An unknown error hapenned while uploading the file"
-msgstr ""
+msgid "An unknown error happened while uploading the file"
+msgstr "Nekonata eraro okazis dum alŝuto de la dosiero"
 
 #: ../app/views/main/index.php:46
 msgid "Cancel"
-msgstr ""
+msgstr "Rezigni"
 
 #: ../app/views/main/_file_row.php:15
 msgid "Share"
-msgstr ""
+msgstr "Kunhavigi"
 
 #: ../app/views/main/_file_row.php:28 ../app/views/main/_file_row.php:29
 msgid "Extend one more day"
-msgstr ""
+msgstr "Aldoni plian tagon"
 
 #: ../app/views/main/_file_row.php:34
 msgid "Never downloaded"
-msgstr ""
+msgstr "Neniam elŝutita"
 
 #: ../app/views/main/_file_row.php:35
 msgid "Downloaded once"
-msgstr ""
+msgstr "Elŝutita unufoje"
 
 #: ../app/views/user/edit.php:1
 msgid "Edit user"
-msgstr ""
+msgstr "Modifi uzanton"
 
 #: ../app/views/user/edit.php:11 ../app/views/user/create.php:11
 #: ../app/views/user/create.php:12
 msgid "Email"
-msgstr ""
+msgstr "Retadreso"
 
 #: ../app/views/user/edit.php:12
 msgid "email"
-msgstr ""
+msgstr "retadreso"
 
 #: ../app/views/user/edit.php:18 ../app/views/user/create.php:18
 msgid "This user can administrate FileZ"
-msgstr ""
+msgstr "La uzanto povas administri FileZ"
 
 #: ../app/views/user/edit.php:19 ../app/views/user/create.php:19
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: ../app/views/user/edit.php:24 ../app/views/user/edit.php:25
 #: ../app/views/user/create.php:24 ../app/views/user/create.php:25
 msgid "Firstname"
-msgstr ""
+msgstr "Antaŭnomo"
 
 #: ../app/views/user/edit.php:28 ../app/views/user/edit.php:29
 #: ../app/views/user/create.php:28 ../app/views/user/create.php:29
 msgid "Lastname"
-msgstr ""
+msgstr "Familinomo"
 
 #: ../app/views/user/edit.php:32
 msgid "Update"
-msgstr ""
+msgstr "Ĝisdatigi"
 
 #: ../app/views/user/show.php:3 ../app/views/user/index.php:37
 msgid "Edit"
-msgstr ""
+msgstr "Modifi"
 
 #: ../app/views/user/show.php:7
 msgid "Email:"
-msgstr ""
+msgstr "Retadreso:"
 
 #: ../app/views/user/show.php:8
 msgid "Account created:"
-msgstr ""
+msgstr "Konto kreita:"
 
 #: ../app/views/user/show.php:9
 msgid "Administrator:"
-msgstr ""
+msgstr "Administranto:"
 
 #: ../app/views/user/show.php:9
 msgid "yes"
-msgstr ""
+msgstr "jes"
 
 #: ../app/views/user/show.php:9
 msgid "no"
-msgstr ""
+msgstr "ne"
 
 #: ../app/views/user/create.php:1 ../app/views/user/index.php:4
 msgid "Create a new user"
-msgstr ""
+msgstr "Krei novan uzanton"
 
 #: ../app/views/user/create.php:32
 msgid "Create"
-msgstr ""
+msgstr "Krei"
 
 #: ../app/views/user/index.php:1
 msgid "Manage users"
-msgstr ""
+msgstr "Administri uzantojn"
 
 #: ../app/views/user/index.php:11
 msgid "Role"
-msgstr ""
+msgstr "Rolo"
 
 #: ../app/views/user/index.php:12
 msgid "File count"
-msgstr ""
+msgstr "Nombro da dosieroj"
 
 #: ../app/views/user/index.php:13
 msgid "Disk usage"
-msgstr ""
+msgstr "Uzado de diskospaco"
 
 #: ../app/views/user/index.php:14
 msgid "Expired files"
-msgstr ""
+msgstr "Senvalidiĝaj dosieroj"
 
 #: ../app/views/user/index.php:24
 msgid "admin"
-msgstr ""
+msgstr "admin"
 
 #: ../app/views/admin/config.php:1
 msgid "FileZ settings"
-msgstr ""
+msgstr "Agordoj de FileZ"
 
 #: ../app/views/admin/config.php:3
 msgid ""
 "System administrators can edit the settings in the file config/filez.ini"
 msgstr ""
+"Sistemadministrantoj povas redakti la agordoj en la dosiero config/filez.ini"
 
 #: ../app/views/admin/index.php:1
 msgid "Admin dashboard"
-msgstr ""
+msgstr "Administrada panelo"
 
 #: ../app/views/layout/admin.html.php:37
 msgid "Dashboard"
-msgstr ""
+msgstr "Panelo"
 
 #: ../app/views/layout/admin.html.php:38
 msgid "Users"
-msgstr ""
+msgstr "Uzantoj"
 
 #: ../app/views/layout/admin.html.php:39
 msgid "Files"
-msgstr ""
+msgstr "Dosieroj"
 
 #: ../app/views/layout/admin.html.php:40
 msgid "Settings"
-msgstr ""
+msgstr "Agordoj"
 
 #: ../app/views/layout/_footer.php:19
 msgid "Find help"
-msgstr ""
+msgstr "Trovi helpon"
 
 #: ../app/views/layout/_footer.php:22
 msgid "Report a bug"
-msgstr ""
+msgstr "Raporti cimon"
 
 #: ../app/views/layout/_footer.php:27
 msgid "A free software from the University of Avignon and the FileZ community"
-msgstr ""
+msgstr "Libera programo el la Universitato de Avignon kaj la komunumo de FileZ"
 
 #: ../app/views/layout/_header.php:13
 msgid "Share files for a limited time"
-msgstr ""
+msgstr "Kunhavigi dosierojn por limigita periodo"
 
 #: ../app/views/layout/_header.php:27
 msgid "Administration"
-msgstr ""
+msgstr "Administrado"
 
 #: ../app/views/layout/_header.php:30
 msgid "Log out"
-msgstr ""
+msgstr "Elsaluti"
 
 #: ../app/controllers/File.php:69
 msgid "Lifetime extended"
-msgstr ""
+msgstr "Vivtempo pliigita"
 
 #: ../app/controllers/File.php:96 ../app/controllers/File.php:247
 msgid "There is no file for this code"
-msgstr ""
+msgstr "Neniu dosiero ekzistas por tiu kodo"
 
 #: ../app/controllers/File.php:131
 msgid "File deleted."
-msgstr ""
+msgstr "Dosiero forigita."
 
 #: ../app/controllers/File.php:211
 msgid ""
-"An error occured during email submission, probably too many emails. Please "
+"An error occurred during email submission, probably too many emails. Please "
 "try again."
 msgstr ""
+"Eraro okazis dum sendo de retpoŝto, eble tro da retpoŝtoj. Bonvolu provi "
+"denove."
 
 #: ../app/controllers/File.php:233
 msgid "Successfully sent."
-msgstr ""
+msgstr "Sukcese sendita."
 
 #: ../app/controllers/File.php:260
 msgid "File is not available for download"
-msgstr ""
+msgstr "Dosiero ne disponeblas por elŝuto"
 
 #: ../app/controllers/File.php:263
 msgid "Incorrect password"
-msgstr ""
+msgstr "Nekorekta pasvorto"
 
 #: ../app/controllers/File.php:299
 msgid "You are not the owner of the file"
-msgstr ""
+msgstr "Vi ne estas la posedanto de la dosiero"
 
 #: ../app/controllers/Upload.php:299
-msgid "The file was successfuly uploaded"
-msgstr ""
+msgid "The file was successfully uploaded"
+msgstr "La dosiero estis sukcese alŝutita"
 
 #: ../app/controllers/Upload.php:337
-msgid "An error occured while uploading the file."
-msgstr ""
+msgid "An error occurred while uploading the file."
+msgstr "Nekonata eraro okazis dum alŝuto de la dosiero"
 
 #: ../app/controllers/Upload.php:354
 msgid "The uploaded file exceeds the max file size."
-msgstr ""
+msgstr "La alŝutita dosiero pli grandas ol permesata."
 
 #: ../app/controllers/Upload.php:359
 msgid "The uploaded file was only partially uploaded."
-msgstr ""
+msgstr "La alŝutita dosiero estis nur parte alŝutita."
 
 #: ../app/controllers/Upload.php:363
 msgid "No file was uploaded."
-msgstr ""
+msgstr "Neniu dosiero estis alŝutita."
 
 #: ../app/controllers/Help.php:44
 msgid "This documentation does not exist"
-msgstr ""
+msgstr "Tiu helpa teksto ne eksiztas"
 
 #: ../app/controllers/Auth.php:50
 msgid "Wrong username or password"
-msgstr ""
+msgstr "Nekorektaj uzantnomo aŭ pasvorto"
 
 #: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "B"
-msgstr ""
+msgstr "b"
 
 #: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "KB"
-msgstr ""
+msgstr "Kb"
 
 #: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "MB"
-msgstr ""
+msgstr "Mb"
 
 #: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "GB"
-msgstr ""
+msgstr "Gb"
 
 #: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "TB"
-msgstr ""
+msgstr "Tb"
 
 #: ../app/models/User.php:104
 msgid "The username should not be blank"
-msgstr ""
+msgstr "La uzantonomo ne devus esti malplena"
 
 #: ../app/models/User.php:107
 msgid "The password is too short."
-msgstr ""
+msgstr "La pasvorto estas tro mallonga."
 
 #: ../app/models/User.php:111
 msgid "This username is already used."
-msgstr ""
+msgstr "Tiu uzantnomo jam estas uzata."
 
 #: ../app/models/User.php:114
 msgid "This email is already used."
-msgstr ""
+msgstr "Tiu retadreso jam estas uzata."
 
 #: ../app/models/User.php:119
 msgid "This username belongs to another user."
-msgstr ""
+msgstr "Tiu uzantnomo apartenas al alia uzanto."
 
 #: ../app/models/User.php:123
 msgid "This email belongs to another user."
-msgstr ""
+msgstr "Tiu retadreso apartenas al alia uzanto."
 
 #: ../lib/Fz/Controller.php:38
 msgid "This page is secured"
-msgstr ""
+msgstr "Tiu paĝo estas sekurigita"
 
 #: ../lib/fz_limonade.php:73
 msgid "Page not found"
-msgstr ""
+msgstr "Netrovita paĝo"
+
+

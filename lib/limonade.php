@@ -358,7 +358,7 @@ function run($env = null)
   if(!defined('SID') && option('session'))
   {
     if(!is_bool(option('session'))) session_name(option('session'));
-    if(!session_start()) trigger_error("An error occured while trying to start the session", E_USER_WARNING);
+    if(!session_start()) trigger_error("An error occurred while trying to start the session", E_USER_WARNING);
   }
 
   # 5. Set some default methods if needed

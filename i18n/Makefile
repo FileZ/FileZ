@@ -5,31 +5,45 @@ DOMAIN=default
 
 all:   update-po mo
 
-$(DOMAIN).pot:
-	find ../ -name "*.php" ! -path "*.svn*" > ../i18n/potfiles.txt ;
-	# Generate POT File (Template).
-	# # `--keyword=tr' tells xgettext not to use the default _() function but your own tr() function.
-	xgettext --keyword=__ --from-code=utf-8 --default-domain=$(DOMAIN) --output=$(DOMAIN).pot --files-from=../i18n/potfiles.txt ;
-	#
-	rm -f ../i18n/potfiles.txt
+help:
+	cat README.mkd
+
+pot: $(DOMAIN).pot
+
+$(DOMAIN).pot: $(SRC)
+	find ../ -name "*.php" ! -path "*.svn*" ! -path "*.bzr*" > ./potfiles.txt ;
+	@# Generate POT File (Template).
+	@# # `--keyword=tr' tells xgettext not to use the default _() function but your own tr() function.
+	xgettext --keyword=__ --from-code=utf-8 --default-domain=$(DOMAIN) --output=$(DOMAIN).pot --files-from=./potfiles.txt ;
+	@#
+	rm -f ./potfiles.txt
 
 mo:
-	@for PO in `ls ../i18n/*/LC_MESSAGES/$(DOMAIN).po` ; do \
+	@for PO in `ls ./*/LC_MESSAGES/$(DOMAIN).po` ; do \
 		msgfmt $$PO --output `echo $$PO | sed -e "s/\.po$$/.mo/"` ; \
 	done ;
 
-update-po: $(DOMAIN).pot
-	for PO in `ls ../i18n/*/LC_MESSAGES/$(DOMAIN).po` ; do \
-		echo -n "$$PO : "; \
-		msgmerge --update $$PO ../i18n/$(DOMAIN).pot ; \
-	done ;
-	rm -f ../i18n/$(DOMAIN).pot
+clean:
+	rm -f ./*/LC_MESSAGES/$(DOMAIN).po~
+
+create: pot
+	@mkdir -p $(LANG)/LC_MESSAGES/
+	msginit --no-translator --locale $(LANG) --output-file $(LANG)/LC_MESSAGES/$(DOMAIN).po --input ./$(DOMAIN).pot
+	@rm -f ./$(DOMAIN).pot
 
 edit: update-po
-	$(EDITOR) ../i18n/$(LANG)/LC_MESSAGES/$(DOMAIN).po
+	$(EDITOR) ./$(LANG)/LC_MESSAGES/$(DOMAIN).po
+
+update-po: $(DOMAIN).pot
+	@for PO in `ls ./*/LC_MESSAGES/$(DOMAIN).po` ; do \
+		echo -n "$$PO : "; \
+		msgmerge --update $$PO ./$(DOMAIN).pot ; \
+	done ;
+	@rm -f ./$(DOMAIN).pot
 
 stat:
-	@for PO in `ls ../i18n/*/LC_MESSAGES/$(DOMAIN).po` ; do \
+	@for PO in `ls ./*/LC_MESSAGES/$(DOMAIN).po` ; do \
 		echo -n "$$PO : "; \
 		msgfmt --statistics $$PO ; \
 	done ;
+	@rm -f messages.mo
