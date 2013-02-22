@@ -217,7 +217,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
           <li>"<b>SHA1</b>" (unsecure)</li>
           <li>PHP Function name ex: "<b>methodName</b>"</li>
           <li>PHP Static method ex: "<b>ClassName::Method</b>"</li>
-          <li>Plain SQL ex: "<b>SHA1(CONCAT(salt_column, :password))</b>"</li>
+          <li>Plain SQL ex: "<b>SHA1(CONCAT(salt_column, :password))</b> (default)"</li>
         </ul>
       </div>
     </div>
