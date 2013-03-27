@@ -33,7 +33,8 @@ CREATE TABLE `fz_user` (
   `lastname`    VARCHAR(50) NOT NULL,
   `email`       VARCHAR(50) NOT NULL,
   `is_admin`    BOOLEAN     DEFAULT 0,
-  `created_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `quota`       VARCHAR(25) NOT NULL DEFAULT '2G',
 ) ENGINE = MYISAM ;
 
 INSERT INTO `fz_info` (`key`, `value`) VALUES ('cron_freq', NOW());

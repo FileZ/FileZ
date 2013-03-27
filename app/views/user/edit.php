@@ -28,6 +28,11 @@
     <label for="input-lastname"><?php echo __('Lastname') ?> :</label>
     <input type="text" id="input-lastname" name="lastname" value="<?php echo $user->lastname ?>" alt="<?php echo __('Lastname') ?>" maxlength="20" />
   </div>
+  <div id="quota">
+    <label for="input-quota"><?php echo __('Quota') ?> :</label>
+    <input type="text" id="input-quota" name="quota" value="<?php echo $user->quota ?>" alt="<?php echo __('Quota') ?>" maxlength="20" />
+  </div>
+
   <div id="upload">
     <input type="submit" id="update_user" name="update_user" class="awesome blue large" value="&raquo; <?php echo __('Update') ?>" />
   </div>
