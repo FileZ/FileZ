@@ -208,7 +208,7 @@ class App_Controller_File extends Fz_Controller {
         }
         catch (Exception $e) {
             fz_log ('Error while sending email', FZ_LOG_ERROR, $e);
-            $msg = __('An error occured during email submission, probably too many emails. Please try again.');
+            $msg = __('An error occurred during email submission, probably too many emails. Please try again.');
             return $this->returnError ($msg, 'file/email.php');
         }
     }

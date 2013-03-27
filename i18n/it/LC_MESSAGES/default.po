@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: filez-2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-05 00:25+0100\n"
+"POT-Creation-Date: 2012-11-19 12:50+0100\n"
 "PO-Revision-Date: 2012-03-05 00:25+0100\n"
 "Last-Translator: William Larrieu <w@larri.eu>\n"
 "Language-Team: Federico Corradino <corradino@dylog.it>\n"
@@ -18,634 +18,509 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: FileZ/lib/fz_limonade.php:73
-msgid "Page not found"
-msgstr "Pagina non trovata"
+#: ../app/views/auth/loginForm.php:6 ../app/views/user/edit.php:5
+#: ../app/views/user/edit.php:6 ../app/views/user/create.php:5
+#: ../app/views/user/create.php:6 ../app/views/user/index.php:10
+msgid "Username"
+msgstr "Nome utente"
 
-#: FileZ/lib/Fz/Controller.php:38
-msgid "This page is secured"
-msgstr ""
+#: ../app/views/auth/loginForm.php:10 ../app/views/user/edit.php:7
+#: ../app/views/user/create.php:7
+msgid "Password"
+msgstr "Password"
 
-#: FileZ/app/views/file/_share_link.php:1
-msgid "Give this link to the person you want to share this file with"
-msgstr ""
+#: ../app/views/auth/loginForm.php:14
+msgid "Log me in"
+msgstr "Autenticami"
 
-#: FileZ/app/views/file/_share_link.php:3
-msgid "or share using:"
-msgstr ""
-
-#: FileZ/app/views/file/_share_link.php:6
-#, fuzzy
-msgid "your email"
-msgstr "Invia una mail"
-
-#: FileZ/app/views/file/_share_link.php:9
-msgid "Facebook"
-msgstr ""
-
-#: FileZ/app/views/file/_share_link.php:12
-msgid "Twitter"
-msgstr ""
-
-#: FileZ/app/views/file/email.php:2
-#, fuzzy
+#: ../app/views/file/email.php:2
 msgid "Send via email:"
-msgstr "Invia per email"
+msgstr "Invia per email:"
 
-#: FileZ/app/views/file/_mailForm.php:4
+#: ../app/views/file/_mailForm.php:4
 msgid "Email addresses (space separated)"
 msgstr "Indirizzi email (separati da spazi"
 
-#: FileZ/app/views/file/_mailForm.php:8
+#: ../app/views/file/_mailForm.php:8
 msgid "Message (file url will automatically be added)"
-msgstr "Messaggio ( il link per lo scaricamento verrà aggiunto automaticamente)"
+msgstr ""
+"Messaggio ( il link per lo scaricamento verrà aggiunto automaticamente)"
 
-#: FileZ/app/views/file/_mailForm.php:12
+#: ../app/views/file/_mailForm.php:12 ../app/views/main/index.php:47
 msgid "You can download the file I uploaded here"
 msgstr "Puoi scaricare qui il file che ho caricato"
 
-#: FileZ/app/views/file/_mailForm.php:14
+#: ../app/views/file/_mailForm.php:14
 msgid "Open in my email client"
 msgstr "Apri con il client di posta elettronica"
 
-#: FileZ/app/views/file/_mailForm.php:18
+#: ../app/views/file/_mailForm.php:18
 msgid "Send"
 msgstr "Invia"
 
-#: FileZ/app/views/file/index.php:1
+#: ../app/views/file/preview.php:25
+msgid "Uploaded by:"
+msgstr "Caricato da:"
+
+#: ../app/views/file/preview.php:29
+msgid "Comments:"
+msgstr "Commenti:"
+
+#: ../app/views/file/preview.php:38 ../app/views/file/preview.php:63
+msgid "Download"
+msgstr "Download"
+
+#: ../app/views/file/preview.php:43
+msgid "Your download will start shortly..."
+msgstr "Il download inizierà tra breve..."
+
+#: ../app/views/file/preview.php:45
+msgid "If not, click here"
+msgstr "Altrimenti, clicca qui"
+
+#: ../app/views/file/preview.php:60
+msgid "You need a password to download this file"
+msgstr "Hai bisogno di una password per scaricare il file"
+
+#: ../app/views/file/preview.php:67
+msgid "The file is not available yet"
+msgstr "Il file non è ancora disponibile"
+
+#: ../app/views/file/index.php:1
 #, fuzzy
 msgid "Manage files"
 msgstr "Files caricati"
 
-#: FileZ/app/views/file/index.php:7
+#: ../app/views/file/index.php:8 ../app/views/user/show.php:14
+#: ../app/views/user/index.php:9
 msgid "Name"
 msgstr ""
 
-#: FileZ/app/views/file/index.php:8
+#: ../app/views/file/index.php:9
 msgid "Author"
 msgstr ""
 
-#: FileZ/app/views/file/index.php:9
+#: ../app/views/file/index.php:10 ../app/views/user/show.php:15
 msgid "Availability"
 msgstr "Disponibilità"
 
-#: FileZ/app/views/file/index.php:10
+#: ../app/views/file/index.php:11 ../app/views/user/show.php:16
 msgid "Size"
 msgstr ""
 
-#: FileZ/app/views/file/index.php:11
+#: ../app/views/file/index.php:12 ../app/views/user/show.php:17
 msgid "DL count"
 msgstr ""
 
-#: FileZ/app/views/file/index.php:12
+#: ../app/views/file/index.php:13 ../app/views/user/show.php:18
+#: ../app/views/user/index.php:15
 msgid "Actions"
 msgstr ""
 
-#: FileZ/app/views/file/index.php:23
-#, fuzzy
-msgid "from %from% to %to%"
-msgstr "Disponibile dal %from% al %to%"
-
-#: FileZ/app/views/file/index.php:31
+#: ../app/views/file/index.php:34 ../app/views/main/_file_row.php:41
+#: ../app/views/main/_file_row.php:42 ../app/views/user/show.php:34
+#: ../app/views/user/index.php:42
 msgid "Delete"
 msgstr "Cancella"
 
-#: FileZ/app/views/file/preview.php:18
-#, fuzzy
-msgid "Available from %available_from% to %available_until%"
-msgstr "dal  %available_from% al %available_until%"
-
-#: FileZ/app/views/file/preview.php:25
-#, fuzzy
-msgid "Uploaded by:"
-msgstr "Caricato da"
-
-#: FileZ/app/views/file/preview.php:29
-#, fuzzy
-msgid "Comments:"
-msgstr "Commenti"
-
-#: FileZ/app/views/file/preview.php:38
-#: FileZ/app/views/file/preview.php:63
-msgid "Download"
-msgstr "Download"
-
-#: FileZ/app/views/file/preview.php:43
-msgid "Your download will start shortly..."
-msgstr "Il download inizierà tra breve..."
-
-#: FileZ/app/views/file/preview.php:45
-msgid "If not, click here"
-msgstr "Altrimenti, clicca qui"
-
-#: FileZ/app/views/file/preview.php:60
-msgid "You need a password to download this file"
-msgstr "Hai bisogno di una password per scaricare il file"
-
-#: FileZ/app/views/file/preview.php:67
-#, fuzzy
-msgid "The file is not available yet"
-msgstr "Il file non è ancora disponibile"
-
-#: FileZ/app/views/file/confirmDelete.php:2
-#, fuzzy
-msgid "Do you really want to delete: %filename%?"
-msgstr "Sei sicuro di voler eliminare il file?"
-
-#: FileZ/app/views/file/confirmDelete.php:6
-#, fuzzy
+#: ../app/views/file/confirmDelete.php:6
 msgid "Yes, delete that file"
 msgstr "Sei sicuro di voler eliminare il file?"
 
-#: FileZ/app/views/file/confirmDelete.php:7
+#: ../app/views/file/confirmDelete.php:7
 msgid "No, go back to previous page"
 msgstr ""
 
-#: FileZ/app/views/admin/config.php:1
-msgid "FileZ settings"
+#: ../app/views/file/_share_link.php:1
+msgid "Give this link to the person you want to share this file with"
 msgstr ""
 
-#: FileZ/app/views/admin/config.php:3
-msgid "System administrators can edit the settings in the file config/filez.ini"
+#: ../app/views/file/_share_link.php:3
+msgid "or share using:"
 msgstr ""
 
-#: FileZ/app/views/admin/index.php:1
-msgid "Admin dashboard"
+#: ../app/views/file/_share_link.php:6
+msgid "your email"
 msgstr ""
 
-#: FileZ/app/views/admin/index.php:3
-msgid "Manage %NumberOfUsers% users</a> and %NumberOfFiles% files</a>."
+#: ../app/views/file/_share_link.php:9
+msgid "Facebook"
 msgstr ""
 
-#: FileZ/app/views/user/show.php:3
-#: FileZ/app/views/user/index.php:35
-msgid "Edit"
+#: ../app/views/file/_share_link.php:12
+msgid "Twitter"
 msgstr ""
 
-#: FileZ/app/views/user/show.php:7
-#, fuzzy
-msgid "Email:"
-msgstr "Invia per email"
-
-#: FileZ/app/views/user/show.php:8
-msgid "Account created:"
-msgstr ""
-
-#: FileZ/app/views/user/show.php:9
-msgid "Administrator:"
-msgstr ""
-
-#: FileZ/app/views/user/show.php:9
-msgid "yes"
-msgstr ""
-
-#: FileZ/app/views/user/show.php:9
-msgid "no"
-msgstr ""
-
-#: FileZ/app/views/user/index.php:1
-msgid "Manage users"
-msgstr ""
-
-#: FileZ/app/views/user/index.php:5
-#: FileZ/app/views/user/create.php:1
-msgid "Create a new user"
-msgstr ""
-
-#: FileZ/app/views/user/index.php:10
-#: FileZ/app/views/user/create.php:5
-#: FileZ/app/views/user/create.php:6
-#: FileZ/app/views/user/edit.php:5
-#: FileZ/app/views/user/edit.php:6
-#: FileZ/app/views/auth/loginForm.php:5
-msgid "Username"
-msgstr "Nome utente"
-
-#: FileZ/app/views/user/index.php:11
-msgid "Role"
-msgstr ""
-
-#: FileZ/app/views/user/index.php:12
-msgid "File count"
-msgstr ""
-
-#: FileZ/app/views/user/index.php:13
-msgid "Disk usage"
-msgstr ""
-
-#: FileZ/app/views/user/index.php:14
-#, fuzzy
-msgid "Expired files"
-msgstr "Files caricati"
-
-#: FileZ/app/views/user/index.php:22
-msgid "admin"
-msgstr ""
-
-#: FileZ/app/views/user/index.php:38
-#, fuzzy
-msgid "Are you sure you want to delete the user \"%displayname%\" (%username%)"
-msgstr "Sei sicuro di voler eliminare il file?"
-
-#: FileZ/app/views/user/create.php:7
-#: FileZ/app/views/user/edit.php:7
-#: FileZ/app/views/auth/loginForm.php:9
-msgid "Password"
-msgstr "Password"
-
-#: FileZ/app/views/user/create.php:11
-#: FileZ/app/views/user/create.php:12
-#: FileZ/app/views/user/edit.php:11
-msgid "Email"
-msgstr "Invia per email"
-
-#: FileZ/app/views/user/create.php:18
-#: FileZ/app/views/user/edit.php:18
-msgid "This user can administrate FileZ"
-msgstr ""
-
-#: FileZ/app/views/user/create.php:19
-#: FileZ/app/views/user/edit.php:19
-msgid "Admin"
-msgstr ""
-
-#: FileZ/app/views/user/create.php:24
-#: FileZ/app/views/user/create.php:25
-#: FileZ/app/views/user/edit.php:24
-#: FileZ/app/views/user/edit.php:25
-msgid "Firstname"
-msgstr ""
-
-#: FileZ/app/views/user/create.php:28
-#: FileZ/app/views/user/create.php:29
-#: FileZ/app/views/user/edit.php:28
-#: FileZ/app/views/user/edit.php:29
-#, fuzzy
-msgid "Lastname"
-msgstr "Nome utente"
-
-#: FileZ/app/views/user/create.php:32
-msgid "Create"
-msgstr ""
-
-#: FileZ/app/views/user/edit.php:1
-msgid "Edit user"
-msgstr ""
-
-#: FileZ/app/views/user/edit.php:12
-#, fuzzy
-msgid "email"
-msgstr "Invia per email"
-
-#: FileZ/app/views/user/edit.php:32
-msgid "Update"
-msgstr ""
-
-#: FileZ/app/views/main/_upload_form.php:4
-msgid "File (Max size: %size%)"
-msgstr "File (dimensione massima: %size%)"
-
-#: FileZ/app/views/main/_upload_form.php:6
+#: ../app/views/main/_visitor_upload_form.php:6
+#: ../app/views/main/_upload_form.php:6
 msgid "File"
 msgstr "File"
 
-#: FileZ/app/views/main/_upload_form.php:10
+#: ../app/views/main/_visitor_upload_form.php:10
+#: ../app/views/main/_upload_form.php:10
 msgid "Lifetime"
 msgstr "Durata"
 
-#: FileZ/app/views/main/_upload_form.php:11
+#: ../app/views/main/_visitor_upload_form.php:11
+#: ../app/views/main/_upload_form.php:11
 msgid "Select a lifetime"
 msgstr "Seleziona una scadenza"
 
-#: FileZ/app/views/main/_upload_form.php:16
+#: ../app/views/main/_visitor_upload_form.php:16
+#: ../app/views/main/_upload_form.php:16
 msgid "%n% days"
 msgstr "%n% giorni"
 
-#: FileZ/app/views/main/_upload_form.php:16
+#: ../app/views/main/_visitor_upload_form.php:16
+#: ../app/views/main/_upload_form.php:16
 msgid "%n% day"
 msgstr "%n% giorno"
 
-#: FileZ/app/views/main/_upload_form.php:22
+#: ../app/views/main/_visitor_upload_form.php:22
+#: ../app/views/main/_upload_form.php:22
 msgid "Starts from"
 msgstr "A partire da"
 
-#: FileZ/app/views/main/_upload_form.php:23
+#: ../app/views/main/_visitor_upload_form.php:23
+#: ../app/views/main/_upload_form.php:23
 msgid "Select a starting date"
 msgstr "Seleziona una data di partenza"
 
-#: FileZ/app/views/main/_upload_form.php:26
+#: ../app/views/main/_visitor_upload_form.php:26
+#: ../app/views/main/_upload_form.php:26
 msgid "Comments"
 msgstr "Commenti"
 
-#: FileZ/app/views/main/_upload_form.php:27
+#: ../app/views/main/_visitor_upload_form.php:27
+#: ../app/views/main/_upload_form.php:27
 msgid "Add a comment (optional)"
 msgstr "Aggiungi un commento (opzionale)"
 
-#: FileZ/app/views/main/_upload_form.php:32
-msgid "Send me email notifications when the file is uploaded and before it will be deleted"
-msgstr "Inviami una email di notifica quando il file è stato caricato e quando sta per essere eliminato"
+#: ../app/views/main/_visitor_upload_form.php:32
+#: ../app/views/main/_upload_form.php:32
+msgid ""
+"Send me email notifications when the file is uploaded and before it will be "
+"deleted"
+msgstr ""
+"Inviami una email di notifica quando il file è stato caricato e quando sta "
+"per essere eliminato"
 
-#: FileZ/app/views/main/_upload_form.php:33
+#: ../app/views/main/_visitor_upload_form.php:33
+#: ../app/views/main/_upload_form.php:33
 msgid "Send me email notifications"
 msgstr "Inviami una email di notifica"
 
-#: FileZ/app/views/main/_upload_form.php:38
+#: ../app/views/main/_visitor_upload_form.php:38
+#: ../app/views/main/_upload_form.php:38
 msgid "Ask a password to people who will download your file"
 msgstr "Richiedi una password per scaricare il file"
 
-#: FileZ/app/views/main/_upload_form.php:39
+#: ../app/views/main/_visitor_upload_form.php:39
+#: ../app/views/main/_upload_form.php:39
 msgid "Use a password to download"
 msgstr "Usa la password per scaricare"
 
-#: FileZ/app/views/main/_upload_form.php:45
+#: ../app/views/main/_visitor_upload_form.php:45
+#: ../app/views/main/_upload_form.php:45
 msgid "Upload"
 msgstr "Upload"
 
-#: FileZ/app/views/main/_file_row.php:15
-msgid "Share"
-msgstr ""
-
-#: FileZ/app/views/main/_file_row.php:21
-msgid "Available from %from% to %to%"
-msgstr "Disponibile dal %from% al %to%"
-
-#: FileZ/app/views/main/_file_row.php:28
-#: FileZ/app/views/main/_file_row.php:29
-msgid "Extend one more day"
-msgstr "Prolunga la scadenza di un giorno"
-
-#: FileZ/app/views/main/_file_row.php:34
-msgid "Never downloaded"
-msgstr "Mai scaricato"
-
-#: FileZ/app/views/main/_file_row.php:35
-msgid "Downloaded once"
-msgstr "Scaricato una volta"
-
-#: FileZ/app/views/main/_file_row.php:36
-msgid "Download %x% times"
-msgstr "Scaricato  %x% volte"
-
-#: FileZ/app/views/main/index.php:2
-#: FileZ/app/views/main/index.php:61
+#: ../app/views/main/index.php:2 ../app/views/main/index.php:61
 msgid "Upload a new file"
 msgstr "Carica un nuovo file"
 
-#: FileZ/app/views/main/index.php:7
+#: ../app/views/main/index.php:7
 msgid "Uploaded files"
 msgstr "Files caricati"
 
-#: FileZ/app/views/main/index.php:43
-msgid "Are you sure to delete this file ?"
+#: ../app/views/main/index.php:43
+msgid "Are you sure to delete this file?"
 msgstr "Sei sicuro di voler eliminare il file?"
 
-#: FileZ/app/views/main/index.php:44
+#: ../app/views/main/index.php:44
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
 
-#: FileZ/app/views/main/index.php:45
-msgid "An unknown error hapenned while uploading the file"
+#: ../app/views/main/index.php:45
+msgid "An unknown error happened while uploading the file"
 msgstr "Si è verificato un errore sconosciuto durante il caricamento del file."
 
-#: FileZ/app/views/main/index.php:46
+#: ../app/views/main/index.php:46
 msgid "Cancel"
 msgstr "Annulla"
 
-#: FileZ/app/views/auth/loginForm.php:13
-msgid "Log me in"
-msgstr "Autenticami"
+#: ../app/views/main/_file_row.php:15
+msgid "Share"
+msgstr ""
 
-#: FileZ/app/views/layout/admin.html.php:35
+#: ../app/views/main/_file_row.php:28 ../app/views/main/_file_row.php:29
+msgid "Extend one more day"
+msgstr "Prolunga la scadenza di un giorno"
+
+#: ../app/views/main/_file_row.php:34
+msgid "Never downloaded"
+msgstr "Mai scaricato"
+
+#: ../app/views/main/_file_row.php:35
+msgid "Downloaded once"
+msgstr "Scaricato una volta"
+
+#: ../app/views/user/edit.php:1
+msgid "Edit user"
+msgstr ""
+
+#: ../app/views/user/edit.php:11 ../app/views/user/create.php:11
+#: ../app/views/user/create.php:12
+msgid "Email"
+msgstr "Email"
+
+#: ../app/views/user/edit.php:12
+msgid "email"
+msgstr "email"
+
+#: ../app/views/user/edit.php:18 ../app/views/user/create.php:18
+msgid "This user can administrate FileZ"
+msgstr ""
+
+#: ../app/views/user/edit.php:19 ../app/views/user/create.php:19
+msgid "Admin"
+msgstr ""
+
+#: ../app/views/user/edit.php:24 ../app/views/user/edit.php:25
+#: ../app/views/user/create.php:24 ../app/views/user/create.php:25
+msgid "Firstname"
+msgstr ""
+
+#: ../app/views/user/edit.php:28 ../app/views/user/edit.php:29
+#: ../app/views/user/create.php:28 ../app/views/user/create.php:29
+msgid "Lastname"
+msgstr ""
+
+#: ../app/views/user/edit.php:32
+msgid "Update"
+msgstr ""
+
+#: ../app/views/user/show.php:3 ../app/views/user/index.php:37
+msgid "Edit"
+msgstr ""
+
+#: ../app/views/user/show.php:7
+msgid "Email:"
+msgstr "Email:"
+
+#: ../app/views/user/show.php:8
+msgid "Account created:"
+msgstr ""
+
+#: ../app/views/user/show.php:9
+msgid "Administrator:"
+msgstr ""
+
+#: ../app/views/user/show.php:9
+msgid "yes"
+msgstr ""
+
+#: ../app/views/user/show.php:9
+msgid "no"
+msgstr ""
+
+#: ../app/views/user/create.php:1 ../app/views/user/index.php:4
+msgid "Create a new user"
+msgstr ""
+
+#: ../app/views/user/create.php:32
+msgid "Create"
+msgstr ""
+
+#: ../app/views/user/index.php:1
+msgid "Manage users"
+msgstr ""
+
+#: ../app/views/user/index.php:11
+msgid "Role"
+msgstr ""
+
+#: ../app/views/user/index.php:12
+msgid "File count"
+msgstr ""
+
+#: ../app/views/user/index.php:13
+msgid "Disk usage"
+msgstr ""
+
+#: ../app/views/user/index.php:14
+msgid "Expired files"
+msgstr ""
+
+#: ../app/views/user/index.php:24
+msgid "admin"
+msgstr ""
+
+#: ../app/views/admin/config.php:1
+msgid "FileZ settings"
+msgstr ""
+
+#: ../app/views/admin/config.php:3
+msgid ""
+"System administrators can edit the settings in the file config/filez.ini"
+msgstr ""
+
+#: ../app/views/admin/index.php:1
+msgid "Admin dashboard"
+msgstr ""
+
+#: ../app/views/layout/admin.html.php:37
 msgid "Dashboard"
 msgstr ""
 
-#: FileZ/app/views/layout/admin.html.php:36
-#, fuzzy
+#: ../app/views/layout/admin.html.php:38
 msgid "Users"
-msgstr "Nome utente"
+msgstr ""
 
-#: FileZ/app/views/layout/admin.html.php:37
-#, fuzzy
+#: ../app/views/layout/admin.html.php:39
 msgid "Files"
-msgstr "File"
+msgstr ""
 
-#: FileZ/app/views/layout/admin.html.php:38
+#: ../app/views/layout/admin.html.php:40
 msgid "Settings"
 msgstr ""
 
-#: FileZ/app/views/layout/_footer.php:11
-msgid "Using %space% of %quota%"
-msgstr "%space% occupati su %quota%"
-
-#: FileZ/app/views/layout/_footer.php:19
+#: ../app/views/layout/_footer.php:19
 msgid "Find help"
 msgstr "Aiuto"
 
-#: FileZ/app/views/layout/_footer.php:22
+#: ../app/views/layout/_footer.php:22
 msgid "Report a bug"
 msgstr "Segnala un bug"
 
-#: FileZ/app/views/layout/_footer.php:27
-msgid "A free software from the University of Avignon"
+#: ../app/views/layout/_footer.php:27
+#, fuzzy
+msgid "A free software from the University of Avignon and the FileZ community"
 msgstr "Un software Libero dall'Università di Avignone "
 
-#: FileZ/app/views/layout/_header.php:13
-#, fuzzy
+#: ../app/views/layout/_header.php:13
 msgid "Share files for a limited time"
-msgstr "Condivisione file..."
+msgstr ""
 
-#: FileZ/app/views/layout/_header.php:27
+#: ../app/views/layout/_header.php:27
 msgid "Administration"
 msgstr ""
 
-#: FileZ/app/views/layout/_header.php:30
+#: ../app/views/layout/_header.php:30
 msgid "Log out"
 msgstr "Esci"
 
-#: FileZ/app/controllers/Upload.php:147
-msgid "[FileZ] \"%file_name%\" uploaded successfuly"
-msgstr "Il file \"%file_name%\" è stato caricato correttamente"
-
-#: FileZ/app/controllers/Upload.php:149
-msgid "email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)"
-msgstr ""
-"Buongiorno! \n"
-"Il file \"%file_name%\" è stato caricato.\n"
-"\n"
-"Questo è il collegamento per recuperarlo : %file_url%\n"
-"\n"
-"Il file sarà disponibile dal %available_from% al  %available_until%.\n"
-"\n"
-"\n"
-"\n"
-"-----Non rispondere al messaggio, è generato automaticamente e nessuno leggerà mai le vostre eventuali risposte."
-
-#: FileZ/app/controllers/Upload.php:227
-msgid "The file was successfuly uploaded"
-msgstr "Il file è stato caricato correttamente"
-
-#: FileZ/app/controllers/Upload.php:244
-msgid "An error occured while uploading the file."
-msgstr "Si è verificato un errore durante il caricamento del file"
-
-#: FileZ/app/controllers/Upload.php:261
-msgid "The uploaded file exceeds the max file size."
-msgstr "Il file è troppo grande."
-
-#: FileZ/app/controllers/Upload.php:266
-msgid "The uploaded file was only partially uploaded."
-msgstr "Il file è stato caricato solo parzialmente"
-
-#: FileZ/app/controllers/Upload.php:270
-msgid "No file was uploaded."
-msgstr "Nessun file è stato caricato"
-
-#: FileZ/app/controllers/Upload.php:273
-msgid "You exceeded your disk space quota (%space%)."
-msgstr "Hai superato la tua quota di spazio su disco (%space%)."
-
-#: app/controllers/Upload.php:275
-msgid "The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%."
-msgstr "Il file non può essere caricato. Si noti che i file devono essere autorizzati %allowed_exts%"
-
-#: FileZ/app/controllers/File.php:69
+#: ../app/controllers/File.php:69
 msgid "Lifetime extended"
 msgstr "Scadenza rimandata"
 
-#: FileZ/app/controllers/File.php:73
-msgid "You can't extend a file lifetime more than %x% times"
-msgstr "Non puoi rimandare la scadenza più di  %x% volte"
-
-#: FileZ/app/controllers/File.php:96
-#: FileZ/app/controllers/File.php:243
+#: ../app/controllers/File.php:96 ../app/controllers/File.php:247
 msgid "There is no file for this code"
 msgstr "Non c'è nessun file con questo codice"
 
-#: FileZ/app/controllers/File.php:130
+#: ../app/controllers/File.php:131
 msgid "File deleted."
 msgstr "File cancellato"
 
-#: FileZ/app/controllers/File.php:174
-msgid "[FileZ] \"%sender%\" wants to share a file with you"
-msgstr "%sender% vuole condividere un file con te."
-
-#: FileZ/app/controllers/File.php:176
-msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
-msgstr ""
-"Buongiorno,\n"
-"\n"
-"%sender% ha condiviso il file \"%file_name%\" . Lo si può scaricare da questo link : %file_url% .\n"
-"\n"
-"\n"
-"%msg%"
-
-#: FileZ/app/controllers/File.php:196
-msgid "Email address \"%email%\" is incorrect, please correct it."
-msgstr "L'indirizzo email  \"%email%\" è sbagliato."
-
-#: FileZ/app/controllers/File.php:208
-msgid "An error occured during email submission. Please try again."
+#: ../app/controllers/File.php:211
+msgid ""
+"An error occurred during email submission, probably too many emails. Please "
+"try again."
 msgstr "Errore durante l'invio della email. Riprova."
 
-#: FileZ/app/controllers/File.php:256
+#: ../app/controllers/File.php:233
+msgid "Successfully sent."
+msgstr ""
+
+#: ../app/controllers/File.php:260
 msgid "File is not available for download"
 msgstr "Il file non è disponibile per lo scaricamento"
 
-#: FileZ/app/controllers/File.php:259
+#: ../app/controllers/File.php:263
 msgid "Incorrect password"
 msgstr "Password sbagliata"
 
-#: FileZ/app/controllers/File.php:295
+#: ../app/controllers/File.php:299
 msgid "You are not the owner of the file"
 msgstr "Non sei il proprietario del file"
 
-#: FileZ/app/controllers/Admin.php:86
-msgid "[FileZ] Your file \"%file_name%\" is going to be deleted"
-msgstr "Il file \"%file_name%\" sta per essere eliminato"
+#: ../app/controllers/Upload.php:299
+msgid "The file was successfully uploaded"
+msgstr "Il file è stato caricato correttamente"
 
-#: FileZ/app/controllers/Admin.php:88
-msgid "email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)"
-msgstr ""
-"Buongiorno,\n"
-"\n"
-"Il file '%file_name%' sta per raggiungere la data di scadenza, sarà automaticamente eliminato il %available_until%.\n"
-"\n"
-"Link al file : %file_url%\n"
-"\n"
-"\n"
-"\n"
-"-----Non rispondere al messaggio, è generato automaticamente e nessuno leggerà mai le vostre eventuali risposte."
+#: ../app/controllers/Upload.php:337
+msgid "An error occurred while uploading the file."
+msgstr "Si è verificato un errore durante il caricamento del file."
 
-#: FileZ/app/controllers/Auth.php:45
-msgid "Wrong username or password"
-msgstr "Nome utente o password sbagliati"
+#: ../app/controllers/Upload.php:354
+msgid "The uploaded file exceeds the max file size."
+msgstr "Il file è troppo grande."
 
-#: FileZ/app/controllers/Help.php:44
+#: ../app/controllers/Upload.php:359
+msgid "The uploaded file was only partially uploaded."
+msgstr "Il file è stato caricato solo parzialmente"
+
+#: ../app/controllers/Upload.php:363
+msgid "No file was uploaded."
+msgstr "Nessun file è stato caricato"
+
+#: ../app/controllers/Help.php:44
 msgid "This documentation does not exist"
 msgstr "La documentazione non esiste"
 
-#: FileZ/app/models/File.php:139
+#: ../app/controllers/Auth.php:50
+msgid "Wrong username or password"
+msgstr "Nome utente o password sbagliati"
+
+#: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "B"
 msgstr "B"
 
-#: FileZ/app/models/File.php:139
+#: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "KB"
 msgstr "KB"
 
-#: FileZ/app/models/File.php:139
+#: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "MB"
 msgstr "MB"
 
-#: FileZ/app/models/File.php:139
+#: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "GB"
 msgstr "GB"
 
-#: FileZ/app/models/File.php:139
+#: ../app/models/File.php:139 ../app/models/DbTable/File.php:239
 msgid "TB"
 msgstr "TB"
 
-#: FileZ/app/models/User.php:101
-msgid "\"%s%\" is not a valid email."
-msgstr ""
-
-#: FileZ/app/models/User.php:104
+#: ../app/models/User.php:104
 msgid "The username should not be blank"
 msgstr ""
 
-#: FileZ/app/models/User.php:107
+#: ../app/models/User.php:107
 msgid "The password is too short."
 msgstr ""
 
-#: FileZ/app/models/User.php:111
+#: ../app/models/User.php:111
 msgid "This username is already used."
 msgstr ""
 
-#: FileZ/app/models/User.php:114
+#: ../app/models/User.php:114
 msgid "This email is already used."
 msgstr ""
 
-#: FileZ/app/models/User.php:119
+#: ../app/models/User.php:119
 msgid "This username belongs to another user."
 msgstr ""
 
-#: FileZ/app/models/User.php:123
+#: ../app/models/User.php:123
 msgid "This email belongs to another user."
 msgstr ""
 
-#~ msgid "Details"
-#~ msgstr "Dettagli"
+#: ../lib/Fz/Controller.php:38
+msgid "This page is secured"
+msgstr ""
 
-#~ msgid "Your file was uploaded successfuly."
-#~ msgstr "Il file è stato caricato con successo."
+#: ../lib/fz_limonade.php:73
+msgid "Page not found"
+msgstr "Pagina non trovata"
 
-#~ msgid "There is no error, the file uploaded with success."
-#~ msgstr "Non ci sono stati errori, il file è stato caricato correttamente."
-
-#~ msgid "Missing a temporary folder."
-#~ msgstr "Manca la cartella temporanea"
-
-#~ msgid "Failed to write file to disk."
-#~ msgstr "Scrittura sul disco fallita."
-
-#~ msgid "File upload stopped by extension."
-#~ msgstr "Non è possibile caricare questo tipo di file."

@@ -216,7 +216,7 @@ class App_Controller_Upload extends Fz_Controller {
             return;
 
         $user = $this->getUser ();
-        $subject = __r('[FileZ] "%file_name%" uploaded successfuly',
+        $subject = __r('[FileZ] "%file_name%" uploaded successfully',
             array('file_name' => $file->file_name));
         $msg = __r('email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)',
             array('file_name' => $file->file_name,
@@ -296,7 +296,7 @@ class App_Controller_Upload extends Fz_Controller {
     private function onFileUploadSuccess (App_Model_File $file) {
         $user                    = $this->getUser();
         $response ['status']     = 'success';
-        $response ['statusText'] = __('The file was successfuly uploaded');
+        $response ['statusText'] = __('The file was successfully uploaded');
         $response ['html']       = partial ('main/_file_row.php', array ('file' => $file));
         $response ['disk_usage'] = bytesToShorthand (max (0,
                      Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)));
@@ -334,7 +334,7 @@ class App_Controller_Upload extends Fz_Controller {
      */
     private function onFileUploadError ($errorCode = null) {
         $response ['status']     = 'error';
-        $response ['statusText'] = __('An error occured while uploading the file.').' ';
+        $response ['statusText'] = __('An error occurred while uploading the file.').' ';
 
         if ($errorCode === null)
             return $this->returnData ($response);
