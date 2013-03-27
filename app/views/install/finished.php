@@ -11,7 +11,7 @@
 
 <?php if (! empty ($errors)): ?>
   <div id="install-errors">
-    <p>Errors occured while finishing the installation</p>
+    <p>Errors occurred while finishing the installation</p>
 
     <ul>
     <?php foreach ($errors as $e): ?>

@@ -1,0 +1,12 @@
+Translations
+============
+
+This directory contains the gettext translations.
+
+A `Makefile` is provided to do the usual actions:
+
+- update the messages, type `make update-po`
+- compile the .po files into .mo files, type `make mo`
+- edit the Esperanto translation file with `lokalize`, type `make edit` or `make edit LANG=eo EDITOR=lokalize`. To edit the French file with `poedit`, type `make edit LANG=fr EDITOR=poedit`,
+- add a new language, type `make create LANG=XX`, where XX is the language code,
+- see the translation statistics, type `make stat`

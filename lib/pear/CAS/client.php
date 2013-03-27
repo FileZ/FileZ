@@ -2246,7 +2246,7 @@ class CASClient
 	/**
 	 * This method is used to print the HTML output when the user was not authenticated.
 	 *
-	 * @param $failure the failure that occured
+	 * @param $failure the failure that occurred
 	 * @param $cas_url the URL the CAS server was asked for
 	 * @param $no_response the response from the CAS server (other 
 	 * parameters are ignored if TRUE)
