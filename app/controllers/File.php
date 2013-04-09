@@ -38,6 +38,8 @@ class App_Controller_File extends Fz_Controller {
         $file->download_count = $file->download_count + 1;
         $file->save ();
 
+        fz_log ('downloading '.$file->getFileName ());
+
         return $this->sendFile ($file);
     }
 
@@ -51,6 +53,8 @@ class App_Controller_File extends Fz_Controller {
 
         $file->download_count = $file->download_count + 1;
         $file->save ();
+        
+        fz_log ('viewing '.$file->getFileName ());
 
         return $this->sendFile ($file, $file->isImage () ? false : true);
     }
@@ -65,10 +69,14 @@ class App_Controller_File extends Fz_Controller {
         if ($file->extends_count < fz_config_get ('app', 'max_extend_count')) {
             $file->extendLifetime ();
             $file->save ();
+            fz_log ('extending life of '.$file->getFileName ());
+
             $result ['status']     = 'success';
             $result ['statusText'] = __('Lifetime extended');
             $result ['html']       = partial ('main/_file_row.php', array ('file' => $file));
         } else {
+            fz_log ('error extending life of '.$file->getFileName ());
+
             $result ['status']     = 'error';
             $result ['statusText'] = __r('You can\'t extend a file lifetime more than %x% times',
                                     array ('x' => fz_config_get ('app', 'max_extend_count')));
@@ -124,6 +132,7 @@ class App_Controller_File extends Fz_Controller {
         $user = $this->getUser ();
         if (! $user->is_admin) $this->checkOwner ($file, $user);
         $file->delete();
+        fz_log ($user.' deleting '.$file->getFileName ());
 
         if ($this->isXhrRequest())
             return json (array ('status' => 'success'));
@@ -208,7 +217,7 @@ class App_Controller_File extends Fz_Controller {
         }
         catch (Exception $e) {
             fz_log ('Error while sending email', FZ_LOG_ERROR, $e);
-            $msg = __('An error occured during email submission, probably too many emails. Please try again.');
+            $msg = __('An error occurred during email submission, probably too many emails. Please try again.');
             return $this->returnError ($msg, 'file/email.php');
         }
     }
