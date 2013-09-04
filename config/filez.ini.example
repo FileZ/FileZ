@@ -101,6 +101,8 @@ host=smtp.univ-avignon.fr
 [auth_options]
 ; Parameters for the CAS authentication handler.
 cas_server_host = cas.univ-avignon.fr
+; Filter : Grant or deny access to authenticated users if a set of criteria is satisfied of not.
+;filter = "(|(REMOTE_ADDR=^192.168.1.\d+)(HTTP_HOST=mydomain))"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
