@@ -1,5 +1,4 @@
 
-
 <h2 class="filename preview">
   <img src="<?php echo get_mimetype_icon_url ($file->getMimetype (), 48) ?>" class="mimetype" />
   <?php echo h($file->file_name) ?> (<?php echo $file->getReadableFileSize () ?>)
@@ -9,7 +8,7 @@
   <?php if ($available && ! $checkPassword && $file->isImage ()): ?>
     <p id="preview-image">
       <a href="<?php echo $file->getDownloadUrl ()?>/view">
-        <img src="<?php echo $file->getDownloadUrl ()?>/view" class="preview-image" width="617px"/>
+        <img src="<?php echo $file->getDownloadUrl ()?>/view" class="preview-image" width="100%"/>
       </a>
     </p>
   <?php endif ?>
