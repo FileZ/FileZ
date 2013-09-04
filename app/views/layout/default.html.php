@@ -24,7 +24,7 @@
     <?php if (option ('locale')->getLanguage () != 'en'): ?>
       <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
     <?php endif ?>
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.validate/jquery.validate.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.validate/js/jquery.validate.min.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/zeroclipboard/ZeroClipboard.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/filez.js') ?>"></script>
     <script>
