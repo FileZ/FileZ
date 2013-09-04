@@ -13,8 +13,6 @@ class App_Model_DbTable_User extends Fz_Db_Table_Abstract {
 
     protected $_rowClass = 'App_Model_User';
     protected $_name = 'fz_user';
-
-    // Quota
     protected $_columns = array (
         'id',
         'username',
@@ -25,7 +23,7 @@ class App_Model_DbTable_User extends Fz_Db_Table_Abstract {
         'email',
         'is_admin',
         'created_at',
-	'quota'
+        'quota'
     );
 
     /**

@@ -183,20 +183,6 @@ class App_Model_DbTable_File extends Fz_Db_Table_Abstract {
      * @param App_Model_User    $user   User data
      * @return float            Size in bytes or string if $shorthand = true
      */
-/*
-    public function getRemainingSpaceForUser ($user) {
-        return ($this->shorthandSizeToBytes (fz_config_get ('app', 'user_quota'))
-              - $this->getTotalDiskSpaceByUser ($user));
-    }
-*/
-
-    /**
-     * MDE | quota par utilisateur
-     * Return remaining disk space available for user $user
-     *
-     * @param array     $user   User data
-     * @return float            Size in bytes or string if $shorthand = true
-     */
     public function getRemainingSpaceForUser ($user) {
 
         return ($this->shorthandSizeToBytes ($user->quota)
