@@ -28,6 +28,11 @@
     <label for="input-lastname"><?php echo __('Lastname') ?> :</label>
     <input type="text" id="input-lastname" name="lastname" value="" alt="<?php echo __('Lastname') ?>" maxlength="20" />
   </div>
+  <div id="quota">
+    <label for="input-quota"><?php echo __('Quota') ?> :</label>
+    <input type="text" id="input-quota" name="lastname" value="<?php echo fz_config_get('app', 'user_quota') ?>" alt="<?php echo __('Quota') ?>" maxlength="20" />
+  </div>
+
   <div id="upload">
     <input type="submit" id="start-new_user" name="new_user" class="awesome blue large" value="&raquo; <?php echo __('Create') ?>" />
   </div>

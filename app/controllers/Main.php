@@ -50,7 +50,7 @@ class App_Controller_Main extends Fz_Controller {
         set ('sharing_destinations' , fz_config_get ('app', 'sharing_destinations', array()));
         set ('disk_usage'           , array (
             'space' => '<b id="disk-usage-value">'.bytesToShorthand (Fz_Db::getTable('File')->getTotalDiskSpaceByUser ($user)).'</b>',
-            'quota' => fz_config_get('app', 'user_quota')));
+            'quota' => $user->quota));
         return html ('main/index.php');
     }
 }

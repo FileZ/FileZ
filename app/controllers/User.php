@@ -60,6 +60,8 @@ class App_Controller_User extends Fz_Controller {
         $user->setLastname  ($_POST ['lastname']);
         $user->setIsAdmin   ($_POST ['is_admin'] == 'on');
         $user->setEmail     ($_POST ['email']);
+        $user->setQuota     ($_POST ['quota']);
+
         if( 0 === count( $user->isValid() ) ) {
             $user->save ();
             return redirect_to ('/admin/users');
@@ -90,6 +92,7 @@ class App_Controller_User extends Fz_Controller {
         $user->setLastname  ($_POST ['lastname']);
         $user->setIsAdmin   ($_POST ['is_admin'] == 'on');
         $user->setEmail     ($_POST ['email']);
+	$user->setQuota	    ($_POST ['quota']);
         if( 0 === count( $user->isValid('update') ) ) {
             $user->save ();
             return redirect_to ('/admin/users');
