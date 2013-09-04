@@ -1,0 +1,3 @@
+[submodule "lib/phpCAS"]
+	path = lib/phpCAS
+	url = https://github.com/FileZ/phpCAS.git
