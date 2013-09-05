@@ -1,0 +1,7 @@
+{
+	"require": {
+		"sofadesign/limonade":"dev-master",
+		"zendframework/zendframework1": "1.2.3",
+		"pear/archive_tar": "dev-master"
+	}
+}
