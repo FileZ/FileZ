@@ -1,6 +1,6 @@
 SET NAMES 'utf8';
 CREATE TABLE IF NOT EXISTS `fz_file` (
-  `id`              BIGINT UNSIGNED NOT NULL,
+  `id`              BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
   `del_notif_sent`  BOOLEAN         DEFAULT 0,
   `file_name`       varchar(100)    NOT NULL,
   `file_size`       INTEGER         DEFAULT 0,
@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `fz_file` (
   `created_at`      TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `extends_count`   INTEGER         DEFAULT '0',
   `password`        varchar(40)     DEFAULT NULL,
+  PRIMARY KEY (`id`),
   INDEX       (`created_by`),
   FOREIGN KEY (`created_by`) REFERENCES fz_user(id),
   UNIQUE KEY `id` (`id`)
