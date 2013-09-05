@@ -20,7 +20,9 @@ env:
 
 # execute any number of scripts before the test run, custom env's are available as variables
 before_script:
-  - mysql -e "create database IF NOT EXISTS filez_test;" -utravis; sleep 1; mysql -utravisfilez_test < ./config/db/schema.sql; fi
+  - mysql -e "create database IF NOT EXISTS filez_test;" -utravis
+  - sleep 1
+  - mysql -utravis filez_test < ./config/db/schema.sql
   - composer install --prefer-source  --dev
 
 # omitting "script:" will default to phpunit
