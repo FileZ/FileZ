@@ -1,6 +1,27 @@
 SET NAMES 'utf8';
+
+CREATE TABLE  `fz_info` (
+ `key`   VARCHAR( 30 ) NOT NULL ,
+ `value` VARCHAR( 50 ) NOT NULL ,
+  PRIMARY KEY (  `key` )
+) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `fz_user` (
+  `id`          INTEGER AUTO_INCREMENT NOT NULL,
+  `username`    VARCHAR(40) NOT NULL,
+  `password`    VARCHAR(40) NOT NULL,
+  `salt`        VARCHAR(40),
+  `firstname`   VARCHAR(50) NOT NULL,
+  `lastname`    VARCHAR(50) NOT NULL,
+  `email`       VARCHAR(50) NOT NULL,
+  `is_admin`    BOOLEAN     DEFAULT 0,
+  `created_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `quota`       VARCHAR(25) NOT NULL DEFAULT '2G',
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS `fz_file` (
-  `id`              BIGINT UNSIGNED AUTO_INCREMENT NOT NULL,
+  `id`              BIGINT UNSIGNED NOT NULL,
   `del_notif_sent`  BOOLEAN         DEFAULT 0,
   `file_name`       varchar(100)    NOT NULL,
   `file_size`       INTEGER         DEFAULT 0,
@@ -13,30 +34,10 @@ CREATE TABLE IF NOT EXISTS `fz_file` (
   `created_at`      TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `extends_count`   INTEGER         DEFAULT '0',
   `password`        varchar(40)     DEFAULT NULL,
-  PRIMARY KEY (`id`),
   INDEX       (`created_by`),
   FOREIGN KEY (`created_by`) REFERENCES fz_user(id),
   UNIQUE KEY `id` (`id`)
 ) DEFAULT CHARSET=utf8;
-
-CREATE TABLE  `fz_info` (
- `key`   VARCHAR( 30 ) NOT NULL ,
- `value` VARCHAR( 50 ) NOT NULL ,
-  PRIMARY KEY (  `key` )
-) DEFAULT CHARSET=utf8;
-
-CREATE TABLE `fz_user` (
-  `id`          SERIAL      NOT NULL,
-  `username`    VARCHAR(40) NOT NULL,
-  `password`    VARCHAR(40) NOT NULL,
-  `salt`        VARCHAR(40),
-  `firstname`   VARCHAR(50) NOT NULL,
-  `lastname`    VARCHAR(50) NOT NULL,
-  `email`       VARCHAR(50) NOT NULL,
-  `is_admin`    BOOLEAN     DEFAULT 0,
-  `created_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `quota`       VARCHAR(25) NOT NULL DEFAULT '2G',
-) ENGINE = MYISAM ;
 
 INSERT INTO `fz_info` (`key`, `value`) VALUES ('cron_freq', NOW());
 INSERT INTO `fz_info` (`key`, `value`) VALUES ('db_version', '3.0-alpha') ON DUPLICATE KEY UPDATE value = '3.0-alpha';
