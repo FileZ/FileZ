@@ -30,7 +30,7 @@
   </div>
   <div id="quota">
     <label for="input-quota"><?php echo __('Quota') ?> :</label>
-    <input type="text" id="input-quota" name="lastname" value="<?php echo fz_config_get('app', 'user_quota') ?>" alt="<?php echo __('Quota') ?>" maxlength="20" />
+    <input type="text" id="input-quota" name="quota" value="<?php echo fz_config_get('app', 'user_quota') ?>" alt="<?php echo __('Quota') ?>" maxlength="20" />
   </div>
 
   <div id="upload">
