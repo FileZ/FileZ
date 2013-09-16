@@ -357,7 +357,7 @@ class App_Controller_File extends Fz_Controller {
             $mail->setSubject  ($subject);
             $mail->setReplyTo  ($user->email, $user);
             $mail->clearFrom();
-            $mail->setFrom(fz_config_get('from_email'), fz_config_get('from_name'));   
+            $mail->setFrom(fz_config_get('email', 'from_email'), fz_config_get('email', from_name'));   
         try {
             $mail->send ();
         }
