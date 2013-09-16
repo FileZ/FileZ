@@ -343,8 +343,6 @@ class App_Controller_File extends Fz_Controller {
 
             $mail = $this->createMail();
             $mail->addTo($user->email);
-            $mail->setBodyText ($msg);
-            $mail->setSubject  ($subject);
             $mail->addTo ($user->email, $user->firstname.' '.$user->lastname);
             $subject = __r('[FileZ] "%file_name%" downloaded', array (
                 'file_name' => $file->file_name));
