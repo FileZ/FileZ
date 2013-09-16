@@ -39,6 +39,8 @@ class App_Controller_File extends Fz_Controller {
         $file->save ();
 
         fz_log ('downloading '.$file->getFileName ());
+        
+        $this->sendFileDownloadedMail ($file);
 
         return $this->sendFile ($file);
     }
@@ -308,6 +310,63 @@ class App_Controller_File extends Fz_Controller {
         halt (HTTP_UNAUTHORIZED, __('You are not the owner of the file'));
     }
 
+    /**
+     * Notify the file's owner by email that its file has been downloaded
+     *
+     * @param App_Model_File $file
+     */
+    private function sendFileDownloadedMail (App_Model_File $file) {
+        if (! $file->notify_uploader)
+            return;
+
+            // find user IP
+            // TODO: extract this function to generic place
+            $ipaddress = '';
+            if ($_SERVER['HTTP_CLIENT_IP'])
+                $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+            else if($_SERVER['HTTP_X_FORWARDED_FOR'])
+                $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            else if($_SERVER['HTTP_X_FORWARDED'])
+                $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+            else if($_SERVER['HTTP_FORWARDED_FOR'])
+                $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+            else if($_SERVER['HTTP_FORWARDED'])
+                $ipaddress = $_SERVER['HTTP_FORWARDED'];
+            else if($_SERVER['REMOTE_ADDR'])
+                $ipaddress = $_SERVER['REMOTE_ADDR'];
+            else
+                $ipaddress = 'UNKNOWN';
+
+
+            // Send confirmation mail
+            $user = Fz_Db::getTable('User')->findById ($file->created_by); // I don't get why $user = $this->getUser (); doesn't work ???
+
+            $mail = $this->createMail();
+            $mail->addTo($user->email);
+            $mail->setBodyText ($msg);
+            $mail->setSubject  ($subject);
+            $mail->addTo ($user->email, $user->firstname.' '.$user->lastname);
+            $subject = __r('[FileZ] "%file_name%" downloaded', array (
+                'file_name' => $file->file_name));
+                $msg = __r('email_file_downloaded (%file_name%, %file_url%, %sender%, %ip%)', array(
+                'file_name' => $file->file_name,
+                'file_url'  => $file->getDownloadUrl(),
+                'sender'    => $user,
+                'ip'        => $ipaddress,
+            ));
+
+            $mail->setBodyText ($msg);
+            $mail->setSubject  ($subject);
+            $mail->setReplyTo  ($user->email, $user);
+            $mail->clearFrom();
+            $mail->setFrom(fz_config_get('from_email'), fz_config_get('from_name');   
+        try {
+            $mail->send ();
+        }
+        catch (Exception $e) {
+            fz_log ('Can\'t send email "File Downloaded" : '.$e, FZ_LOG_ERROR);
+        }
+    }
 
 }
 
