@@ -24,7 +24,7 @@
       <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
     <?php endif ?>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.tablesorter/jquery.tablesorter.min.js') ?>"></script>
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/jquery.tablesorter.page.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/jquery.tablesorter.pager.js') ?>"></script>
   </head>
   <body id="admin">
 
