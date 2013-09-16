@@ -52,10 +52,10 @@
 <div id="pager" class="pager">
 	<form>
 		<img src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/icons/first.png'); ?>" class="first"/>
-		<img src="<?php echo public_url_for ('ressources/jquery.tablesorter/addons/pager/icons/prev.png'); ?>" class="prev"/>
+		<img src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/icons/prev.png'); ?>" class="prev"/>
 		<input type="text" class="pagedisplay"/>
-		<img src="<?php echo public_url_for ('ressources/jquery.tablesorter/addons/pager/icons/next.png'); ?>" class="next"/>
-		<img src="<?php echo public_url_for ('ressources/jquery.tablesorter/addons/pager/icons/last.png'); ?>" class="last"/>
+		<img src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/icons/next.png'); ?>" class="next"/>
+		<img src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/icons/last.png'); ?>" class="last"/>
 		<select class="pagesize">
 			<option selected="selected"  value="10">10</option>
 			<option value="20">20</option>
