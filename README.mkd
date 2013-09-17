@@ -1,5 +1,7 @@
 **FileZ provides a Web service to upload and manage files you want to share through a web interface and unique URLs** (http). It was inspired by the perl/mod_perl application filex. 
 
+[![Project Status](https://stillmaintained.com/FileZ/FileZ.png)](https://stillmaintained.com/FileZ/FileZ)
+
 FileZ was created by the Avignon University and is developed by people like you.
 
 Please join us and report your [**issues**](https://github.com/FileZ/FileZ/issues), edit our [**wiki**](https://github.com/FileZ/FileZ/wiki), [translate](https://github.com/FileZ/FileZ/tree/master/i18n), [fork](https://github.com/FileZ/FileZ/forkqueue) and [commit](https://github.com/FileZ/FileZ/commits) your code!
