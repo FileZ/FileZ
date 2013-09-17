@@ -1,6 +1,6 @@
 **FileZ provides a Web service to upload and manage files you want to share through a web interface and unique URLs** (http). It was inspired by the perl/mod_perl application filex. 
 
-[![Project Status](https://stillmaintained.com/FileZ/FileZ.png)](https://stillmaintained.com/FileZ/FileZ)
+[![Project Status](http://stillmaintained.com/FileZ/FileZ.png)](http://stillmaintained.com/FileZ/FileZ)
 
 FileZ was created by the Avignon University and is developed by people like you.
 
