@@ -23,11 +23,11 @@
         <?php echo h($file->getUploader ()) ?> (<?php echo h($file->getUploader()->username) ?>)
       </a>
     </td>
-    <td><?php echo __r(__('from %from% to %to%'), array (
-      'from' => ($file->getAvailableFrom  ()->get (Zend_Date::MONTH) ==
-                 $file->getAvailableUntil ()->get (Zend_Date::MONTH)) ?
-                 $file->getAvailableFrom ()->toString ('d') : $file->getAvailableFrom ()->toString ('d MMMM'),
-      'to' =>  '<b>'.$file->getAvailableUntil ()->toString ('d MMMM').'</b>')) // FIXME I18N ?>
+    <td><?php echo __r(__('from %available_from% to %available_until%'), array (
+      'available_from' =>  ($file->getAvailableFrom  ()->get (Zend_Date::MONTH) ==
+                            $file->getAvailableUntil ()->get (Zend_Date::MONTH)) ?
+                            $file->getAvailableFrom ()->toString ('d') : $file->getAvailableFrom ()->toString ('d MMMM'),
+      'available_until' =>  '<b>'.$file->getAvailableUntil ()->toString ('d MMMM').'</b>')) // FIXME I18N ?>
     </td>
     <td><?php echo $file->getReadableFileSize () ?></td>
     <td><?php echo (int) $file->download_count ?></td>
