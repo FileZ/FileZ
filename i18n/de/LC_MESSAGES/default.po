@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: filez\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-28 11:22+0100\n"
+"POT-Creation-Date: 2014-02-28 15:27+0100\n"
 "PO-Revision-Date: 2014-02-28 11:55+0100\n"
 "Last-Translator: Nicolai Ehemann <en@enlightened.de>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
@@ -24,6 +24,10 @@ msgstr "Diese Seite ist gesperrt"
 msgid "Lifetime extended"
 msgstr "Ablaufzeit wurde verlängert"
 
+#: ../app/controllers/File.php:83
+msgid "You can't extend a file lifetime more than %x% times"
+msgstr "Sie können die Ablaufzeit nicht öfter als %x% mal verlängern"
+
 #: ../app/controllers/File.php:106 ../app/controllers/File.php:258
 msgid "There is no file for this code"
 msgstr "Für diesen Code existiert keine Datei"
@@ -31,6 +35,18 @@ msgstr "Für diesen Code existiert keine Datei"
 #: ../app/controllers/File.php:142
 msgid "File deleted."
 msgstr "Die Datei wurde gelöscht."
+
+#: ../app/controllers/File.php:186
+msgid "[FileZ] \"%sender%\" wants to share a file with you"
+msgstr "[FileZ] \"%sender%\" möchte eine Datei mit Ihnen teilen"
+
+#: ../app/controllers/File.php:188
+msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
+msgstr ""
+
+#: ../app/controllers/File.php:210
+msgid "Email address \"%email%\" is incorrect, please correct it."
+msgstr "E-Mail-Adresse \"%email%\" ist nicht korrekt, bitte korrigieren."
 
 #: ../app/controllers/File.php:222
 msgid ""
@@ -56,6 +72,24 @@ msgstr "Falsches Passwort"
 msgid "You are not the owner of the file"
 msgstr "Sie sind nicht der Besitzer dieser Datei"
 
+#: ../app/controllers/File.php:347
+msgid "[FileZ] \"%file_name%\" downloaded"
+msgstr "[FileZ] \"%file_name%\" heruntergeladen"
+
+#: ../app/controllers/File.php:349
+msgid "email_file_downloaded (%file_name%, %file_url%, %sender%, %ip%)"
+msgstr ""
+
+#: ../app/controllers/Upload.php:219
+msgid "[FileZ] \"%file_name%\" uploaded successfully"
+msgstr "[FileZ] \"%file_name%\" erfolgreich hochgeladen"
+
+#: ../app/controllers/Upload.php:221
+msgid ""
+"email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from"
+"%, %available_until%)"
+msgstr ""
+
 #: ../app/controllers/Upload.php:299
 msgid "The file was successfully uploaded"
 msgstr "Die Datei wurde erfolgreich hochgeladen"
@@ -76,6 +110,18 @@ msgstr "Die Datei wurde nur teilweise hochgeladen."
 msgid "No file was uploaded."
 msgstr "Es wurde keine Datei hochgeladen."
 
+#: ../app/controllers/Upload.php:366
+msgid "You exceeded your disk space quota (%space%)."
+msgstr "Sie haben den verfügbaren Speicherplatz (%space%) überschritten."
+
+#: ../app/controllers/Upload.php:369
+msgid ""
+"The file is not allowed to be uploaded. Note that files allowed need to be "
+"%allowed_exts%."
+msgstr ""
+"Die Datei darf nicht hochgeladen werden. Erlaubte Dateiendungen sind "
+"%allowed_exts%."
+
 #: ../app/controllers/Help.php:44
 msgid "This documentation does not exist"
 msgstr "Diese Dokumentation existiert nicht"
@@ -84,9 +130,23 @@ msgstr "Diese Dokumentation existiert nicht"
 msgid "Wrong username or password"
 msgstr "Falscher Benutzername oder falsches Passwort"
 
+#: ../app/controllers/Admin.php:88
+msgid "[FileZ] Your file \"%file_name%\" is going to be deleted"
+msgstr "[FileZ] Ihre Datei \"%file_name%\" wird bald gelöscht"
+
+#: ../app/controllers/Admin.php:90
+msgid ""
+"email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)"
+msgstr ""
+
 #: ../app/views/admin/index.php:1
 msgid "Admin dashboard"
 msgstr "Admin Dashboard"
+
+#: ../app/views/admin/index.php:3
+msgid "Manage %NumberOfUsers% users</a> and %NumberOfFiles% files</a>."
+msgstr ""
+"Verwaltung von %NumberOfUsers% Benutzern</a> und %NumberOfFiles% Dateien</a>."
 
 #: ../app/views/admin/config.php:1
 msgid "FileZ settings"
@@ -96,8 +156,8 @@ msgstr "FileZ Einstellung"
 msgid ""
 "System administrators can edit the settings in the file config/filez.ini"
 msgstr ""
-"Systemadministratoren können die Einstellungen in der Datei "
-"config/filez.ini bearbeiten"
+"Systemadministratoren können die Einstellungen in der Datei config/filez.ini "
+"bearbeiten"
 
 #: ../app/views/auth/loginForm.php:6 ../app/views/user/create.php:5
 #: ../app/views/user/create.php:6 ../app/views/user/edit.php:5
@@ -159,6 +219,10 @@ msgstr "Anzahl DLs"
 #: ../app/views/file/index.php:13
 msgid "Actions"
 msgstr "Aktionen"
+
+#: ../app/views/user/show.php:26 ../app/views/file/index.php:26
+msgid "from %available_from% to %available_until%"
+msgstr "vom %available_from% bis zum %available_until%"
 
 #: ../app/views/user/show.php:34 ../app/views/user/index.php:44
 #: ../app/views/main/_file_row.php:41 ../app/views/main/_file_row.php:42
@@ -239,6 +303,11 @@ msgstr "Abgelaufene Dateien"
 msgid "admin"
 msgstr "admin"
 
+#: ../app/views/user/index.php:42
+msgid "Are you sure you want to delete the user \"%displayname%\" (%username%)"
+msgstr ""
+"Wollen Sie wirklich den Benutzer \"%displayname%\" (%username%) löschen"
+
 #: ../app/views/layout/admin.html.php:37
 msgid "Dashboard"
 msgstr "Dashboard"
@@ -255,6 +324,10 @@ msgstr "Dateien"
 msgid "Settings"
 msgstr "Einstellungen"
 
+#: ../app/views/layout/_footer.php:11
+msgid "Using %space% of %quota%"
+msgstr "Verwende %space% von %quota%"
+
 #: ../app/views/layout/_footer.php:19
 msgid "Find help"
 msgstr "Hilfe"
@@ -265,7 +338,8 @@ msgstr "Fehlerbericht senden"
 
 #: ../app/views/layout/_footer.php:27
 msgid "A free software from the University of Avignon and the FileZ community"
-msgstr "Eine freie Software von der Universität von Avignon und der FileZ Community"
+msgstr ""
+"Eine freie Software von der Universität von Avignon und der FileZ Community"
 
 #: ../app/views/layout/_header.php:13
 msgid "Share files for a limited time"
@@ -278,6 +352,11 @@ msgstr "Administration"
 #: ../app/views/layout/_header.php:30
 msgid "Log out"
 msgstr "Abmelden"
+
+#: ../app/views/main/_visitor_upload_form.php:4
+#: ../app/views/main/_upload_form.php:4
+msgid "File (Max size: %size%)"
+msgstr "Datei (Maximalgröße: %size%)"
 
 #: ../app/views/main/_visitor_upload_form.php:6
 #: ../app/views/main/_upload_form.php:6
@@ -357,6 +436,10 @@ msgstr "Upload"
 msgid "Share"
 msgstr "Teilen"
 
+#: ../app/views/main/_file_row.php:21
+msgid "Available from %from% to %to%"
+msgstr "Verfügbar vom %from% bis zum %to%"
+
 #: ../app/views/main/_file_row.php:28 ../app/views/main/_file_row.php:29
 msgid "Extend one more day"
 msgstr "Um einen Tag verlängern"
@@ -368,6 +451,10 @@ msgstr "Noch nie heruntergeladen"
 #: ../app/views/main/_file_row.php:35
 msgid "Downloaded once"
 msgstr "Einmal heruntergeladen"
+
+#: ../app/views/main/_file_row.php:36
+msgid "Download %x% times"
+msgstr "%x% mal heruntergeladen"
 
 #: ../app/views/main/index.php:2 ../app/views/main/index.php:61
 msgid "Upload a new file"
@@ -396,6 +483,10 @@ msgstr "Abbrechen"
 #: ../app/views/main/index.php:47 ../app/views/file/_mailForm.php:12
 msgid "You can download the file I uploaded here"
 msgstr "Hier können Sie die hochgeladene Datei herunterladen"
+
+#: ../app/views/file/preview.php:17
+msgid "Available from %available_from% to %available_until%"
+msgstr "Verfügbar vom %available_from% bis zum %available_until%"
 
 #: ../app/views/file/preview.php:24
 msgid "Uploaded by:"
@@ -444,8 +535,8 @@ msgstr "Abschicken"
 #: ../app/views/file/_share_link.php:1
 msgid "Give this link to the person you want to share this file with"
 msgstr ""
-"Geben Sie diesen Link an Personen weiter, mit denen Sie diese Datei "
-"teilen möchten"
+"Geben Sie diesen Link an Personen weiter, mit denen Sie diese Datei teilen "
+"möchten"
 
 #: ../app/views/file/_share_link.php:3
 msgid "or share using:"
@@ -470,6 +561,10 @@ msgstr "Verfügbare Dateien"
 #: ../app/views/file/index.php:9
 msgid "Author"
 msgstr "Autor"
+
+#: ../app/views/file/confirmDelete.php:2
+msgid "Do you really want to delete: %filename%?"
+msgstr "Möchten Sie die Datei %filename% wirklich löschen?"
 
 #: ../app/views/file/confirmDelete.php:6
 msgid "Yes, delete that file"
@@ -503,6 +598,10 @@ msgstr "GB"
 msgid "TB"
 msgstr "TB"
 
+#: ../app/models/User.php:101
+msgid "\"%s%\" is not a valid email."
+msgstr "\"%s%\" ist keine gültige E-Mail-Adresse"
+
 #: ../app/models/User.php:104
 msgid "The username should not be blank"
 msgstr "Der Benutzername darf nicht leer sein"
@@ -526,3 +625,6 @@ msgstr "Dieser Benutzername gehört zu einem anderen Benutzer."
 #: ../app/models/User.php:123
 msgid "This email belongs to another user."
 msgstr "Diese E-Mail-Adresse gehört zu einem anderen Benutzer"
+
+#~ msgid "from %from% to %to%"
+#~ msgstr "vom %from% bis zum %to%"
