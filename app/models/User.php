@@ -98,7 +98,7 @@ class App_Model_User extends Fz_Db_Table_Row_Abstract {
     public function isValid ( $action = 'new' ) {
         $return = array();
         if (! filter_var ($this->email, FILTER_VALIDATE_EMAIL) ) {
-          $return['email']=__r('"%s%" is not a valid email.',array('s'=>$this->email));
+          $return['email']=__r(__('"%s%" is not a valid email.'),array('s'=>$this->email));
         }
         if ( null == $this->username ) {
           $return['username']=__('The username should not be blank');

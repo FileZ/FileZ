@@ -80,7 +80,7 @@ class App_Controller_File extends Fz_Controller {
             fz_log ('error extending life of '.$file->getFileName ());
 
             $result ['status']     = 'error';
-            $result ['statusText'] = __r('You can\'t extend a file lifetime more than %x% times',
+            $result ['statusText'] = __r(__('You can\'t extend a file lifetime more than %x% times'),
                                     array ('x' => fz_config_get ('app', 'max_extend_count')));
         }
 
@@ -183,9 +183,9 @@ class App_Controller_File extends Fz_Controller {
         // Send mails
         $user = $this->getUser ();
         $mail = $this->createMail();
-        $subject = __r('[FileZ] "%sender%" wants to share a file with you', array (
+        $subject = __r(__('[FileZ] "%sender%" wants to share a file with you'), array (
             'sender' => $user));
-        $msg = __r('email_share_file (%file_name%, %file_url%, %sender%, %msg%)', array(
+        $msg = __r(__('email_share_file (%file_name%, %file_url%, %sender%, %msg%)'), array(
             'file_name' => $file->file_name,
             'file_url'  => $file->getDownloadUrl(),
             'msg'       => $_POST ['msg'],
@@ -207,7 +207,7 @@ class App_Controller_File extends Fz_Controller {
             if ($emailValidator->isValid ($email))
                 $mail->addBcc ($email);
             else {
-                $msg = __r('Email address "%email%" is incorrect, please correct it.',
+                $msg = __r(__('Email address "%email%" is incorrect, please correct it.'),
                     array ('email' => $email));
                 return $this->returnError ($msg, 'file/email.php');
             }
@@ -344,9 +344,9 @@ class App_Controller_File extends Fz_Controller {
             $mail = $this->createMail();
             $mail->addTo($user->email);
             $mail->addTo ($user->email, $user->firstname.' '.$user->lastname);
-            $subject = __r('[FileZ] "%file_name%" downloaded', array (
+            $subject = __r(__('[FileZ] "%file_name%" downloaded'), array (
                 'file_name' => $file->file_name));
-                $msg = __r('email_file_downloaded (%file_name%, %file_url%, %sender%, %ip%)', array(
+                $msg = __r(__('email_file_downloaded (%file_name%, %file_url%, %sender%, %ip%)'), array(
                 'file_name' => $file->file_name,
                 'file_url'  => $file->getDownloadUrl(),
                 'sender'    => $user,

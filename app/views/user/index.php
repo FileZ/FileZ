@@ -39,7 +39,7 @@
          <?php echo __('Edit') ?>
       </a>
     <?php if ( $fz_user->id != $user_item->id ) : // prevents self-deleting ?>
-        <a onclick='javascript:return confirm (<?php echo json_encode( __r('Are you sure you want to delete the user "%displayname%" (%username%)', array ('displayname' => $user_item, 'username' => $user_item->username))) ?>)'
+        <a onclick='javascript:return confirm (<?php echo json_encode( __r(__('Are you sure you want to delete the user "%displayname%" (%username%)'), array ('displayname' => $user_item, 'username' => $user_item->username))) ?>)'
            href="<?php echo url_for ('/admin/users/'.$user_item->id.'/delete') ?>">
           <?php echo __('Delete') ?>
         </a>

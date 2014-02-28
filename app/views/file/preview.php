@@ -14,7 +14,7 @@
   <?php endif ?>
 
   <p id="availability">
-    <?php echo __r('Available from %available_from% to %available_until%', array (
+    <?php echo __r(__('Available from %available_from% to %available_until%'), array (
         'available_from'  => $file->getAvailableFrom()->toString  (Zend_Date::DATE_LONG),
         'available_until' => '<b>'.$file->getAvailableUntil()->toString (Zend_Date::DATE_LONG).'</b>',
     )) ?>

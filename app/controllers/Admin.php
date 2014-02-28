@@ -85,9 +85,9 @@ class App_Controller_Admin extends Fz_Controller {
             option ('locale')->setLocale(fz_config_get('app','default_locale'));
             $mail = $this->createMail();
             $user = $file->getUploader ();
-            $subject = __r('[FileZ] Your file "%file_name%" is going to be deleted', array (
+            $subject = __r(__('[FileZ] Your file "%file_name%" is going to be deleted'), array (
                 'file_name' => $file->file_name));
-            $msg = __r('email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)', array(
+            $msg = __r(__('email_delete_notif (%file_name%, %file_url%, %filez_url%, %available_until%)'), array(
                 'file_name'       => $file->file_name,
                 'file_url'        => $file->getDownloadUrl(),
                 'filez_url'       => url_for('/'),

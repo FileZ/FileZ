@@ -216,9 +216,9 @@ class App_Controller_Upload extends Fz_Controller {
             return;
 
         $user = $this->getUser ();
-        $subject = __r('[FileZ] "%file_name%" uploaded successfully',
+        $subject = __r(__('[FileZ] "%file_name%" uploaded successfully'),
             array('file_name' => $file->file_name));
-        $msg = __r('email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)',
+        $msg = __r(__('email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from%, %available_until%)'),
             array('file_name' => $file->file_name,
                   'available_from'  => $file->getAvailableFrom()->toString  (Zend_Date::DATE_LONG),
                   'available_until' => $file->getAvailableUntil()->toString (Zend_Date::DATE_LONG),
@@ -363,10 +363,10 @@ class App_Controller_Upload extends Fz_Controller {
                      __('No file was uploaded.');
                 break;
             case UPLOAD_ERR_QUOTA_EXCEEDED:
-                $response ['statusText'] .= __r('You exceeded your disk space quota (%space%).',
+                $response ['statusText'] .= __r(__('You exceeded your disk space quota (%space%).'),
                     array ('space' => fz_config_get ('app', 'user_quota')));
 			case UPLOAD_ERR_ALLOWED_EXTS:
-				$response ['statusText'] .= __r('The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%.',
+				$response ['statusText'] .= __r(__('The file is not allowed to be uploaded. Note that files allowed need to be %allowed_exts%.'),
 					array ('allowed_exts' => fz_config_get ('app', 'allowed_exts')));
         }
         return $this->returnData ($response);

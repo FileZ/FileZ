@@ -1,5 +1,5 @@
 
-<h2><?php echo __r('Do you really want to delete: %filename%?', array('filename'=>'<span class="filename">'.h($file->file_name))) ?></span></h2>
+<h2><?php echo __r(__('Do you really want to delete: %filename%?'), array('filename'=>'<span class="filename">'.h($file->file_name))) ?></span></h2>
 
 <form method="post">
   <p style="padding: 2em 0;">

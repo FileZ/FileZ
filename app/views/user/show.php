@@ -23,7 +23,7 @@
 <?php foreach ($user->getFiles () as $file): ?>
   <tr>
     <td><a href="<?php echo $file->getDownloadUrl () ?>"><?php echo h($file->file_name) ?></a></td>
-    <td><?php echo __r('from %from% to %to%', array (
+    <td><?php echo __r(__('from %from% to %to%'), array (
       'from' => ($file->getAvailableFrom  ()->get (Zend_Date::MONTH) ==
                  $file->getAvailableUntil ()->get (Zend_Date::MONTH)) ?
                  $file->getAvailableFrom ()->toString ('d') : $file->getAvailableFrom ()->toString ('d MMMM'),
