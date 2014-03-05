@@ -229,6 +229,9 @@ section.new-file div#upload {
 }
 section.new-file div#upload * {
 }
+section.new-file div#upload div#upload-prospect {
+  margin-top: 0.5em;
+}
 section.new-file div#upload-loading {
   width: 220px; height: 19px;
   background: transparent url('../images/ajax-loader.gif') no-repeat center center;

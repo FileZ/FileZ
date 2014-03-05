@@ -1,7 +1,7 @@
 
 <h2 class="new-file"><?php echo __('Upload a new file') ?></h2>
 <section class="new-file fz-modal">
-        <?php echo partial ('main/_upload_form.php') ?> 
+        <?php echo partial ('main/_upload_form.php') ?>
 </section>
 
 <h2 id="uploaded-files-title"><?php echo __('Uploaded files') ?></h2>
@@ -9,14 +9,14 @@
   <ul id="files">
     <?php $odd = true; foreach ($files as $file): ?>
       <li class="file <?php echo $odd ? 'odd' : 'even'; $odd = ! $odd ?>" id="<?php echo 'file-'.$file->getHash() ?>">
-        <?php echo partial ('main/_file_row.php', array ('file' => $file)) ?> 
+        <?php echo partial ('main/_file_row.php', array ('file' => $file)) ?>
       </li>
     <?php endforeach ?>
   </ul>
 </section>
 
 <div id="share-modal" class="fz-modal" style="display: none;">
-        <?php echo partial ('file/_share_link.php') ?> 
+        <?php echo partial ('file/_share_link.php') ?>
 </div>
 
 <div id="email-modal" class="fz-modal" style="display: none;">
@@ -37,7 +37,10 @@
           barImage:     '<?php echo public_url_for ('resources/images/progressbg_green.gif') ?>',
           boxImage:     '<?php echo public_url_for ('resources/images/progressbar.gif') ?>',
           refreshRate:   <?php echo $refresh_rate ?>,
-          progressUrl:  '<?php echo url_for ('upload/progress/') ?>'
+          progressUrl:  '<?php echo url_for ('upload/progress/') ?>',
+          prospectMsg:  <?php echo json_encode (__('Estimated time remaining: %time%')) ?>,
+          prospectSeconds: <?php echo json_encode (__('%seconds% seconds')) ?>,
+          prospectMinSec: <?php echo json_encode (__('%minutes% minutes %seconds% seconds')) ?>
         },
         messages: {
           confirmDelete: <?php echo  json_encode (__('Are you sure to delete this file?')) ?>,
@@ -66,7 +69,7 @@
         $('section.new-file').dialog ('open');
         e.preventDefault();
       });
-      
+
       // Show password box on checkbox click
       $('input.password').hide();
       $('#use-password, #option-use-password label').click (function () { // IE quirk fix
@@ -87,7 +90,7 @@
             accept: "<?php echo $matches; ?>"
           }
         }
-     });  
+     });
   <?php } ?>
 
     });

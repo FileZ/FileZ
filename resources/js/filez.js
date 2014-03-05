@@ -31,6 +31,8 @@ var settings = {};
 
 // interval ID
 var progressCheckerLoop = 0;
+// progress status entries
+var progressStatus = [];
 
 var uploadForm = null;
 
@@ -215,7 +217,7 @@ var onEmailFormSent = function (data, status, form) {
 /**
  * Process informations returned by the server about current file upload progress
  */
-var onFileUpoadProgress = function (data, textStatus, xhr) {
+var onFileUploadProgress = function (data, textStatus, xhr) {
     console.log (data);
 
     if (data == false || data == null) {
@@ -228,8 +230,31 @@ var onFileUpoadProgress = function (data, textStatus, xhr) {
         clearInterval (progressCheckerLoop);
     }
     else {
+        progressStatus.unshift(data);
         var percentage = Math.floor (100 * parseInt (data.current) / parseInt (data.total));
         $("#upload-progress").progressBar (percentage);
+        var maxIndex = Math.min(progressStatus.length - 1, (60000 / settings.progressBar.refreshRate) - 1);
+        var bytes = progressStatus[0].current - progressStatus[maxIndex].current;
+        var bps = bytes / (maxIndex + 1) * settings.progressBar.refreshRate / 1000;
+        if (1 < maxIndex) {
+            var kbpsCur = (progressStatus[0].current - progressStatus[1].current) / 1024 / (settings.progressBar.refreshRate / 1000);
+        } else {
+            var kbpsCur = 0;
+        }
+        console.log('maxIndex ' + maxIndex + ' bytes ' + bytes + ' bps ' + bps);
+        if (1 < maxIndex) {
+            var timeRemaining = Math.round((data.total - data.current) / bps);
+            if (60 > timeRemaining) {
+               var timeString = settings.progressBar.prospectSeconds;
+               timeString = timeString.replace("%seconds%", timeRemaining);
+            } else {
+                var timeString = settings.progressBar.prospectMinSec;
+                timeString = timeString.replace("%minutes%", Math.floor(timeRemaining / 60));
+                timeString = timeString.replace("%seconds%", timeRemaining - Math.floor(timeRemaining / 60) * 60);
+            }
+            $("#upload-prospect").text(settings.progressBar.prospectMsg.replace("%time%", timeString));
+        }
+        //'Cur: ' + kbpsCur + "kB/s - Remaining: " + timeRemaining + " seconds"
     }
 };
 
@@ -266,23 +291,27 @@ var onFormSubmit = function (data, form, options) {
     // If the progress bar is enabled
     if (settings.progressBar.enable) {
         $("#upload-loading").hide ();
+        $("#upload-prospect").text('');
+        $('#upload-prospect').show();
         $('#upload-progress').show ().progressBar ({
             barImage: settings.progressBar.barImage,
             boxImage: settings.progressBar.boxImage
         });
 
+        progressStatus = [];
         // Checking progress
         progressCheckerLoop = setInterval (function () {
             $.ajax({
                 url:      settings.progressBar.progressUrl + '/' + $('#upload-id').val (),
                 dataType: "json",
                 error:    onCheckProgressError,
-                success:  onFileUpoadProgress
+                success:  onFileUploadProgress
             });
         }, settings.progressBar.refreshRate);
 
     } else /* the progress bar is disabled */ {
         $("#upload-loading").show ();
+        $('#upload-prospect').hide();
         $('#upload-progress').hide ();
     }
 };
