@@ -1,7 +1,7 @@
   <form method="POST" enctype="multipart/form-data" action="<?php echo url_for ('visitor') ?>" id="upload-form">
   <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $max_upload_size ?>" />
   <div id="file">
-    <label for="file-input"><?php echo __r('File (Max size: %size%)', array ('size' => bytesToShorthand ($max_upload_size))) ?> :</label>
+    <label for="file-input"><?php echo __r(__('File (Max size: %size%)'), array ('size' => bytesToShorthand ($max_upload_size))) ?> :</label>
     <div id="input-file">
       <input type="file" id="file-input" name="file" value="" alt="<?php echo __('File') ?>" />
     </div>

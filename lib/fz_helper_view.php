@@ -62,7 +62,7 @@ function __p($sing, $plur, $nb) {
 }
 
 /**
- * Translate a string and subtitute values defined in $subtitution
+ * Subtitute values defined in $subtitution in translated string
  *
  * @param string    $msg
  * @param array     $subtitutions   ex: array('var'=>'real value') will replace
@@ -70,7 +70,6 @@ function __p($sing, $plur, $nb) {
  * @return string
  */
 function __r($msg, array $subtitutions) {
-    $msg = __($msg);
     foreach ($subtitutions as $key => $value)
         $msg = str_replace ("%$key%", $value, $msg);
     return $msg;
