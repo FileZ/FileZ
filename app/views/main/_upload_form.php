@@ -45,6 +45,7 @@
     <input type="submit" id="start-upload" name="upload" class="awesome blue large" value="&raquo; <?php echo __('Upload') ?>" />
     <div id="upload-loading"  style="display: none;"></div>
     <div id="upload-progress" style="display: none;"></div>
+    <div id="upload-prospect" style="display: none;"></div>
   </div>
   </form>
 
