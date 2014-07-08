@@ -950,3 +950,22 @@ article.doc .img-block {
   text-align: center;
 	margin: 1em 0;
 }
+
+
+#sizeTooBig{
+  height: 45px;
+  margin-top: 10px;
+  margin-right: 4px;
+  margin-left: 4px;
+  display: none;
+  background: #f2e1dc;
+  -moz-border-radius:    8px;
+  -webkit-border-radius: 8px;
+  border-radius:         8px;
+}
+
+#sizeTooBig h2 {
+  padding-top: 15px;
+  text-align: center;
+  font-size: 1,25em;  
+}
