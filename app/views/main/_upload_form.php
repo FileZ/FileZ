@@ -4,6 +4,10 @@
     <label for="file-input"><?php echo __r('File (Max size: %size%)', array ('size' => bytesToShorthand ($max_upload_size))) ?> :</label>
     <div id="input-file">
       <input type="file" id="file-input" name="file" value="" alt="<?php echo __('File') ?>" />
+      <p>
+        <input type="hidden" id="taille" name="taille"  value="" alt="" />
+        <label  id='textTailleMax' for="taille" style="display:none" ><?php echo(ini_get ('post_max_size')); ?></label>
+      </p>
     </div>
   </div>
   <div id="lifetime">
@@ -41,6 +45,7 @@
       <input type="password" id="input-password" name="password" class="password" autocomplete="off" size="5"/>
     </li>
   </ul>
+  <div id="sizeTooBig"><h2>La taille du fichier dépasse la limite autorisée !</h2></div>
   <div id="upload">
     <input type="submit" id="start-upload" name="upload" class="awesome blue large" value="&raquo; <?php echo __('Upload') ?>" />
     <div id="upload-loading"  style="display: none;"></div>
@@ -48,4 +53,29 @@
     <div id="upload-prospect" style="display: none;"></div>
   </div>
   </form>
+  
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $('#sizeTooBig').hide();
+    $("#file-input").change(function(){
+      
+      var selectedFile = this.files[0].size;
+      var sizeMaxFile = $('#textTailleMax').html();
+      sizeMaxFile = parseInt(sizeMaxFile);
+      console.log(typeof(sizeMaxFile));
+
+      if(selectedFile > sizeMaxFile){
+        $('#sizeTooBig').fadeIn();
+        $('#start-upload').attr('disabled', true);
+      }
+      else{
+        $('#sizeTooBig').hide();
+        $('#start-upload').attr('disabled', false);
+      }
+
+
+      $("#taille").val(selectedFile);
+    });
+  });
+</script>
 

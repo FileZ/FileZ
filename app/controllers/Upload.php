@@ -30,7 +30,7 @@ class App_Controller_Upload extends Fz_Controller {
             return $this->onFileUploadError (UPLOAD_ERR_INI_SIZE);
         }
         else if ($_FILES ['file']['error'] === UPLOAD_ERR_OK) {
-            if ($this->checkQuota ($_FILES ['file'])) // Check user quota first
+            if ($this->checkQuota ($_FILES ['file'], $_POST['taille'])) // Check user quota first
                 return $this->onFileUploadError (UPLOAD_ERR_QUOTA_EXCEEDED);
 
             $this->runAntivirus();
@@ -177,7 +177,7 @@ class App_Controller_Upload extends Fz_Controller {
 
         // Storing values
         $file = new App_Model_File ();
-        $file->setFileInfo      ($uploadedFile);
+        $file->setFileInfo      ($uploadedFile, $post['taille']);
         if (option('visitor')) $file->setVisitorUploader();
         else $file->setUploader      ($user);
         $file->setCreatedAt     (new Zend_Date ());
@@ -262,8 +262,17 @@ class App_Controller_Upload extends Fz_Controller {
      * @param array $file   File element from $_FILES
      * @return boolean      true if he will exceed, false else
      */
-    private function checkQuota ($file) {
+    private function checkQuota ($file, $taille) {
         $fileSize = $_FILES['file']['size'];
+        if ($taille < 2147483648) {
+            $fileSize = $taille;
+        }
+        elseif ($taille >= 2147483648 && $taille < 6442450944) {
+            $fileSize = 4*1024*1024*1024 + $_FILES['file']['size'];
+        }
+        else{
+            $fileSize = 8*1024*1024*1024 + $_FILES['file']['size'];
+        }    
         $freeSpace = Fz_Db::getTable('File')->getRemainingSpaceForUser ($this->getUser());
         return ($fileSize > $freeSpace);
     }

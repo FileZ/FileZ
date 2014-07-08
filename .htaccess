@@ -14,8 +14,8 @@
 
 <IfModule mod_php5.c>
   php_value file_uploads On
-  php_value upload_max_filesize 700M
-  php_value post_max_size       700M
+  php_value upload_max_filesize 0
+  php_value post_max_size       10737418240
   php_value max_input_time      1200
   php_value max_execution_time  1200
 </IfModule>

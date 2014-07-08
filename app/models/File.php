@@ -156,9 +156,21 @@ class App_Model_File extends Fz_Db_Table_Row_Abstract {
      * @return void
      *
      */
-    public function setFileInfo (array $file) {
+    public function setFileInfo (array $file, $taille) {
         $this->file_name = $file ['name'];
         $this->file_size = $file ['size'];
+        
+        // Gestion de la taille réelle du fichier
+        if ($taille < 2147483648) {
+            $this->file_size = $taille;
+        }
+        elseif ($taille >= 2147483648 && $taille < 6442450944) {
+            $this->file_size = 4*1024*1024*1024 + $file ['size'];
+        }
+        else{
+            $this->file_size = 8*1024*1024*1024 + $file ['size'];
+        }
+
     }
 
     /**
