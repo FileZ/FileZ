@@ -34,7 +34,8 @@
       </label>
     </li>
     <li id="option-use-password">
-      <input type="checkbox" name="use-password" id="use-password"/>
+      <input type="hidden" name="use-password" value="0" />
+      <input type="checkbox" name="use-password" id="use-password" value="1" />
       <label for="use-password" title="<?php echo __('Ask a password to people who will download your file') ?>">
         <?php echo __('Use a password to download') ?>
       </label>
