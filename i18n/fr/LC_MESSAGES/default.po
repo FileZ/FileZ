@@ -44,8 +44,7 @@ msgstr "Adresses courriel (séparées par des espaces)"
 
 #: ../app/views/file/_mailForm.php:8
 msgid "Message (file url will automatically be added)"
-msgstr ""
-"Message (l'adresse de téléchargement du fichier sera automatiquement ajoutée)"
+msgstr "Message (l'adresse de téléchargement du fichier sera automatiquement ajoutée)"
 
 #: ../app/views/file/_mailForm.php:12 ../app/views/main/index.php:47
 msgid "You can download the file I uploaded here"
@@ -429,6 +428,28 @@ msgid ""
 "try again."
 msgstr ""
 "Une erreur est survenue pendant l'envoi du fichier. Veuillez réessayer."
+
+#: ../app/controllers/File.php:175
+msgid "[FileZ] \"%sender%\" wants to share a file with you"
+msgstr "[FileZ] %sender% souhaite partager un fichier avec vous"
+
+#: ../app/controllers/File.php:177
+msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
+msgstr ""
+"Bonjour,\n"
+"\n"
+"%sender% souhaite partager le fichier \"%file_name%\" avec vous. Vous pourrez le télécharger à l'adresse : %file_url% .\n"
+"\n"
+"Voici le contenu de son message :\n"
+"%msg%"
+
+#: FileZ/app/controllers/File.php:199
+msgid "Email address \"%email%\" is incorrect, please correct it."
+msgstr "L'adresse email \"%email%\" est incorrecte, veuillez la corriger."
+
+#: FileZ/app/controllers/File.php:210
+msgid "An error occured during email submission. Please try again."
+msgstr "Une erreur est survenue pendant l'envoi du fichier. Veuillez réessayer."
 
 #: ../app/controllers/File.php:233
 msgid "Successfully sent."
