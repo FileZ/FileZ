@@ -3,21 +3,19 @@ msgstr ""
 "Project-Id-Version: filez\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-19 12:50+0100\n"
-"PO-Revision-Date: 2012-11-19 13:02+0000\n"
-"Last-Translator: Eliovir <eliovir@gmail.com>\n"
+"PO-Revision-Date: 2014-11-14 13:25+0100\n"
+"Last-Translator: alex <alex@inios.fr>\n"
 "Language-Team: Arnaud Didry <arnaud.didry@univ-avignon.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __r;__;__p\n"
 "X-Poedit-Basepath: /home/w/Public/fileZ/\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.6.10\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Generator: Lokalize 1.5\n"
 
 #: ../app/views/auth/loginForm.php:6 ../app/views/user/edit.php:5
 #: ../app/views/user/edit.php:6 ../app/views/user/create.php:5
@@ -430,6 +428,30 @@ msgid ""
 msgstr ""
 "Une erreur est survenue pendant l'envoi du fichier. Veuillez réessayer."
 
+#: ../app/controllers/File.php:175
+msgid "[FileZ] \"%sender%\" wants to share a file with you"
+msgstr "[FileZ] %sender% souhaite partager un fichier avec vous"
+
+#: ../app/controllers/File.php:177
+msgid "email_share_file (%file_name%, %file_url%, %sender%, %msg%)"
+msgstr ""
+"Bonjour,\n"
+"\n"
+"%sender% souhaite partager le fichier \"%file_name%\" avec vous. Vous "
+"pourrez le télécharger à l'adresse : %file_url% .\n"
+"\n"
+"Voici le contenu de son message :\n"
+"%msg%"
+
+#: FileZ/app/controllers/File.php:199
+msgid "Email address \"%email%\" is incorrect, please correct it."
+msgstr "L'adresse email \"%email%\" est incorrecte, veuillez la corriger."
+
+#: FileZ/app/controllers/File.php:210
+msgid "An error occured during email submission. Please try again."
+msgstr ""
+"Une erreur est survenue pendant l'envoi du fichier. Veuillez réessayer."
+
 #: ../app/controllers/File.php:233
 msgid "Successfully sent."
 msgstr "Envoyé avec succès."
@@ -445,6 +467,27 @@ msgstr "Mot de passe incorrect"
 #: ../app/controllers/File.php:299
 msgid "You are not the owner of the file"
 msgstr "Vous n'êtes pas le propriétaire du fichier"
+
+#: ../app/controllers/Upload.php:219
+msgid "[FileZ] \"%file_name%\" uploaded successfully"
+msgstr "[FileZ] \"%file_name%\" envoyé avec succès"
+
+#: ../app/controllers/Upload.php:221
+msgid ""
+"email_upload_success (%file_name%, %file_url%, %filez_url%, %available_from"
+"%, %available_until%)"
+msgstr ""
+"Bonjour,\n"
+"\n"
+"Un fichier vient d'être correctement déposé :\n"
+"\t-\tNom du fichier : %file_name%\n"
+"\t-\tLien FileZ : %file_url%\n"
+"\t-\tDisponible depuis : %available_from%\n"
+"\t-\tDisponible jusqu'à : %available_until%"
+
+#: FileZ/app/controllers/Upload.php:239
+msgid "Can't send email \"File Uploaded\" : "
+msgstr "Impossible d'envoyer la notification d'envoir : "
 
 #: ../app/controllers/Upload.php:299
 msgid "The file was successfully uploaded"
@@ -525,5 +568,3 @@ msgstr "Cette page est sécurisée"
 #: ../lib/fz_limonade.php:73
 msgid "Page not found"
 msgstr "Page non trouvée"
-
-
