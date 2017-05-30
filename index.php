@@ -57,9 +57,10 @@ $autoloader->addResourceTypes (array ('controller' => array (
  * Configuration of the limonade framework. Automatically called by run()
  */
 function configure() {
+
     option ('session'   , 'filez'); // specific session name
     option ('views_dir' , option ('root_dir').DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR);
-    
+    option('session', false);
     // Layout settings
     error_layout ('layout'.DIRECTORY_SEPARATOR.'error.html.php');
     layout       ('layout'.DIRECTORY_SEPARATOR.'default.html.php');
@@ -142,12 +143,14 @@ function before () {
 }
 
 
+
 /**
  * Loading Limonade PHP
  */
 require_once 'lib/limonade.php';
 require_once 'lib/fz_limonade.php';
 require_once 'lib/fz_config.php';
+
 
 // Check config presence, if not, force the user to the install controller
 if (fz_config_load (dirname(__FILE__).DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR) === false) {
@@ -159,8 +162,29 @@ if (fz_config_load (dirname(__FILE__).DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEP
     exit;
 }
 
+/**
+ * To prevent problem with session and SimpleSAMLPhp, the login/logout will be done here
+ */
 
-//                                              //             // 
+if(fz_config_get ('app', 'auth_handler_class') == 'Fz_Controller_Security_Saml'){
+
+    //var_dump($_SERVER); die;
+    include fz_config_get ('user_factory_options', 'samlIncludeDir');
+
+    if(strpos($_SERVER['REDIRECT_URL'], 'logout') === false && strpos($_SERVER['REDIRECT_URL'], 'login') != false) {
+        $objAuthSaml = new SimpleSAML_Auth_Simple(fz_config_get('user_factory_options', 'spName'));
+        $objAuthSaml->requireAuth();
+    }
+
+    if(strpos($_SERVER['REDIRECT_URL'], 'logout') !== false && strpos($_SERVER['REQUEST_URI'], 'logout_saml') === false){
+        $objAuthSaml = new SimpleSAML_Auth_Simple(fz_config_get ('user_factory_options', 'spName'));
+        $location = str_replace('admin', '', $_SERVER['HTTP_REFERER']);
+        $objAuthSaml->logout($location . 'logout_saml');
+    }
+}
+
+
+//                                              //             //
 // Url Schema                                   // Controller  // Action
 //                                              //             // 
 // -----------------------------------------------------------------------------
@@ -195,6 +219,7 @@ fz_dispatch_get  ('/admin/checkFiles'           ,'Admin'       ,'checkFiles');
 fz_dispatch_get  ('/login'                      ,'Auth'        ,'loginForm');
 fz_dispatch_post ('/login'                      ,'Auth'        ,'login');
 fz_dispatch_get  ('/logout'                     ,'Auth'        ,'logout');
+fz_dispatch_get  ('/logout_saml'                ,'Auth'        ,'logoutSaml');
 
 // Filez-1.x url compatibility
 fz_dispatch_get  ('/download.php'               ,'File'        ,'downloadFzOne');

@@ -64,6 +64,14 @@ class App_Controller_Auth extends Fz_Controller {
         $this->redirectHome ();
     }
 
+    /**
+     * Logout page from SSO SAML
+     */
+    public function logoutSamlAction(){
+        set('url_app', fz_url_for('/', (fz_config_get ('app', 'https') == 'always')));
+        return html ('auth/logoutSaml.php');
+    }
+
     private function redirectHome () {
         return fz_redirect_to ('/', (fz_config_get ('app', 'https') == 'always'));
     }

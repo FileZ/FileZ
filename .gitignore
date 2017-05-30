@@ -1,1 +1,9 @@
 i18n/*/LC_MESSAGES/default.po~
+.idea/deployment.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/FileZ.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/php.xml
+.idea/workspace.xml

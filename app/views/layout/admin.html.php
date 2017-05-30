@@ -6,7 +6,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/html5-reset.css') ?>" type="text/css" media="all" />
-    <link rel="stylesheet" href="<?php echo public_url_for ('resources/jquery.ui/css/cupertino/jquery-ui-1.7.2.custom.css') ?>" type="text/css" media="all" />
+    <link rel="stylesheet" href="<?php echo public_url_for ('resources/jquery.ui/jquery-ui.min.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/js/qtip/jquery.qtip.min.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/main.css') ?>" type="text/css" media="all" />
     <link rel="stylesheet" href="<?php echo public_url_for ('resources/css/admin.css') ?>" type="text/css" media="all" />
@@ -17,13 +17,13 @@
     <!--[if lte IE 8]>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/js/html5.js') ?>"></script>
     <![endif]-->
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery-1.4.2.min.js') ?>"></script>
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/jquery-ui-1.7.2.custom.min.js') ?>"></script>
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/qtip/jquery.qtip.pack.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/jquery-1.12.4.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/jquery-ui.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/js/qtip/jquery.qtip.min.js') ?>"></script>
     <?php if (option ('locale')->getLanguage () != 'en'): ?>
-      <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/js/i18n/ui.datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
+      <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.ui/i18n/datepicker-'.option ('locale')->getLanguage ().'.js') ?>"></script>
     <?php endif ?>
-    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.tablesorter/jquery.tablesorter.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.tablesorter/js/jquery.tablesorter.combined.js') ?>"></script>
     <script type="text/javascript" src="<?php echo public_url_for ('resources/jquery.tablesorter/addons/pager/jquery.tablesorter.pager.js') ?>"></script>
   </head>
   <body id="admin">
@@ -55,19 +55,18 @@
       // small snippet to select an item in the menu
       $(document).ready (function () {
         $('nav a').each (function () {
-            console.log (document.location.href.indexOf ($(this).attr ('href')));
           if (document.location.href.indexOf ($(this).attr ('href')) != -1) {
             $('nav .selected').removeClass ('selected');
             $(this).addClass ('selected');
           }
         });
-        // call the tablesorter plugin 
-	    $("table").tablesorter({ 
-          // sort on the first column and third column, order asc 
+        // call the tablesorter plugin
+	    $("table").tablesorter({
+          // sort on the first column and third column, order asc
           sortList: [[0,0], [1,0]],
           widgets: ['zebra']
         })
-        .tablesorterPager({container: $("#pager")}); 
+        .tablesorterPager({container: $("#pager")});
       });
     </script>
   </body>

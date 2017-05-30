@@ -114,7 +114,7 @@ $.fn.initFileActions = function () {
             e.preventDefault ();
             $('#share-modal').dialog ('close');
 
-            $('form', $('#email-modal')).attr ('action', $(this).attr ('href'))
+            $('form', $('#email-modal')).attr ('action', $(this).attr ('href'));
             $('.open-email-client')
                 .attr ('href', 'mailto:?body='+settings.messages.emailMessage+' : '+fileUrl)
                 .click (function (e) { $('.ui-dialog-content').dialog('close'); });
@@ -157,17 +157,18 @@ $.fn.initFileActions = function () {
            attr: 'title'
         },
         position: {
-            my: 'bottom center', 
+            my: 'bottom center',
             at: 'top center'
         },
-        style: { 
+        style: {
             tip: true,
             classes: 'ui-tooltip-dark ui-tooltip-rounded ui-tooltip-shadow'
         }
     });
 
+
     return $(this);
-}
+};
 
 $.fn.hideNotifDelayed = function () {
     $(this).delay (10000).animate({
@@ -178,7 +179,7 @@ $.fn.hideNotifDelayed = function () {
         duration: 3000,
         complete:  function () {$(this).remove ()}
     });
-}
+};
 
 $.fn.configureNotification = function () {
     if ($(this).hasClass ('ok'))
@@ -191,7 +192,7 @@ $.fn.configureNotification = function () {
         });
 
     return $(this);
-}
+};
 
 
 /*******************************************************************************
@@ -212,7 +213,7 @@ var onEmailFormSent = function (data, status, form) {
     } else {
         alert (settings.messages.unknownError);
     }
-}
+};
 
 /**
  * Process informations returned by the server about current file upload progress

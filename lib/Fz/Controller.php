@@ -45,6 +45,7 @@ class Fz_Controller {
     protected function getUser () {
         $auth = $this->getAuthHandler ();
         $factory = $this->getUserFactory ();
+
         if (self::$_user === null && $auth->isSecured ()) {
             self::$_user = Fz_Db::getTable('User')->findByUsername ($auth->getUserId ());
             if (! $factory->isInternal ()) {
@@ -57,6 +58,11 @@ class Fz_Controller {
                 self::$_user->email        = $userData['email'];
                 self::$_user->firstname    = $userData['firstname'];
                 self::$_user->lastname     = $userData['lastname'];
+                self::$_user->quota = !empty($userData['quota']) ? $userData['quota'] :  fz_config_get ('app', 'user_quota');
+                if(!empty($userData['is_admin'])){
+                    self::$_user->is_admin = filter_var($userData['is_admin'], FILTER_VALIDATE_BOOLEAN) ? true : false;
+                }
+
                 self::$_user->save (); // will issue an update or insert only if a property changed
             }
         }
