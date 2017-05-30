@@ -676,11 +676,11 @@ div.lim-debug hr {display: none;}
 .awesome,
 .awesome:visited {
   background: #222;
-  display: inline-block; 
-  padding: 5px 10px 6px; 
-  color: #fff; 
+  display: inline-block;
+  padding: 5px 10px 6px;
+  color: #fff;
   text-decoration: none;
-  -moz-border-radius: 5px; 
+  -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   text-shadow: -1px -1px 0px rgba(0,0,0,0.3);
   border-bottom: 1px solid rgba(0,0,0,0.25);
@@ -722,7 +722,7 @@ div.lim-debug hr {display: none;}
     opacity: 0.5;
     filter:alpha(opacity=50);
 }
-.ui-dialog { 
+.ui-dialog {
     position: relative; padding: 0; width: 300px; background: #FFF;
   -moz-box-shadow:    0 5px 20px rgba(0,0,0,0.2);
   -webkit-box-shadow: 0 5px 20px rgba(0,0,0,0.2);
@@ -741,12 +741,8 @@ div.lim-debug hr {display: none;}
     text-shadow: 0 0 4px #000;
 }
 .ui-dialog .ui-dialog-title { float: left; margin: 0; }
-.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
-.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
-.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.ui-dialog .ui-dialog-titlebar-close{background:#4b4b4b;}
 .ui-dialog .ui-dialog-content { border: 0; padding: 0; background: none; overflow: auto; zoom: 1; }
-.ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
-.ui-dialog .ui-dialog-buttonpane button { float: right; margin: .5em .4em .5em 0; cursor: pointer; padding: .2em .6em .3em .6em; line-height: 1.4em; width:auto; overflow:visible; }
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
 

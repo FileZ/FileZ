@@ -159,6 +159,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <legend>Authentication</legend>
     <?php echo config_form_row ('app', 'auth_handler_class', 'Authentication method' , 'select', $config, array (
         'Fz_Controller_Security_Internal' => 'Internal (Database or Ldap)',
+        'Fz_Controller_Security_Saml' => 'SSO SAML',
         'Fz_Controller_Security_Cas' => 'CAS',
     )) ?>
     <div class="options" id="Fz_Controller_Security_Cas">
@@ -173,6 +174,7 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
     <?php echo config_form_row ('app', 'user_factory_class', 'User profile source' , 'select', $config, array (
         'Fz_User_Factory_Ldap' => 'Ldap',
         'Fz_User_Factory_Database' => 'Database',
+        'Fz_User_Factory_Saml' => 'SSO SAML',
     )) ?>
     <div class="options" id="Fz_User_Factory_Ldap">
       <h2>Ldap options :</h2>
@@ -184,6 +186,18 @@ function config_form_row ($section, $var, $label, $type, $default_values, $choic
         <p>For other parameters, you will have to add them manually to filez.ini in the "[user_factory_options]" section once you have validated this form.</p>
         <p>Please refer to <a href="http://framework.zend.com/manual/en/zend.ldap.api.html" target="_blank">the Zend Framework documentation</a> for a list of possible options</p>
       </div>
+    </div>
+    <div class="options" id="Fz_User_Factory_Saml">
+        <h2>SimpleSAMLPhp options :</h2>
+        <?php echo config_form_row ('user_factory_options ', 'samlIncludeDir', 'PhpSimpleSAML Include Directory' , 'text', $config) ?>
+       <h2>Mapping</h2>
+        <?php echo config_form_row ('user_attributes_translation ', 'quota', 'Quota' , 'text', $config) ?>
+        <?php echo config_form_row ('user_attributes_translation ', 'is_admin', 'User admin' , 'text', $config) ?>
+        <div class="help">
+            <p>You need to install SimpleSAMLPhp and configure a Service Provider before using this part. The file you need to include looks like this : /xxx/simplesaml/lib/_autoload.php</p>
+            <p>Please refer to <a href="https://simplesamlphp.org/docs/stable/simplesamlphp-sp" target="_blank">the SimpleSAML Documentation</a>.</p>
+            <p>You can map Quota and User admin with your own fields.</p>
+        </div>
     </div>
     <div class="options" id="Fz_User_Factory_Database">
       <h2>Database options :</h2>
